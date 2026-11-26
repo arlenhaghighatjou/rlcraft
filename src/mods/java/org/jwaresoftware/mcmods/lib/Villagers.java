@@ -5,7 +5,6 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.village.Village;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public final class Villagers {
    public static final ResourceLocation FARMER_TYPE = new ResourceLocation("minecraft:farmer");
@@ -27,7 +26,7 @@ public final class Villagers {
    public static final Village getVillagerVillage(@Nullable EntityVillager villager) {
       if (villager != null) {
          try {
-            return (Village)ReflectionHelper.getPrivateValue(EntityVillager.class, villager, new String[]{"villageObj", "village"});
+            return villager.village;
          } catch (Throwable var2) {
             ;
          }
@@ -48,7 +47,7 @@ public final class Villagers {
    public static int getVillagerCareer(@Nullable EntityVillager villager) {
       if (villager != null) {
          try {
-            return ((Integer)ReflectionHelper.getPrivateValue(EntityVillager.class, villager, new String[]{"careerId", "careerId"})).intValue();
+            return villager.careerId;
          } catch (Throwable var2) {
             ;
          }
@@ -60,7 +59,7 @@ public final class Villagers {
    public static int getVillagerCareerLevel(@Nullable EntityVillager villager) {
       if (villager != null) {
          try {
-            return ((Integer)ReflectionHelper.getPrivateValue(EntityVillager.class, villager, new String[]{"careerLevel", "careerLevel"})).intValue();
+            return villager.careerLevel;
          } catch (Throwable var2) {
             ;
          }

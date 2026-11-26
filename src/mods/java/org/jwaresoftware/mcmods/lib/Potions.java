@@ -286,7 +286,7 @@ public final class Potions {
 
    public static final void removeAllEffects(@Nullable EntityLivingBase entity) {
       if (entity != null && entity.isEntityAlive()) {
-         for(PotionEffect goodOrBad : new ArrayList(entity.getActivePotionEffects())) {
+         for(PotionEffect goodOrBad : new ArrayList<PotionEffect>(entity.getActivePotionEffects())) {
             entity.removePotionEffect(goodOrBad.getPotion());
          }
       }

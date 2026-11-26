@@ -31,7 +31,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -233,7 +232,7 @@ public final class Armory {
       String name = "";
       if (material != null) {
          try {
-            return (String)ReflectionHelper.getPrivateValue(ArmorMaterial.class, material, new String[]{"name", "name"});
+            return material.getName();
          } catch (Throwable var3) {
             ;
          }

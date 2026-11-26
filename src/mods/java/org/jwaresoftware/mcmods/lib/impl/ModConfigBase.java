@@ -1,6 +1,6 @@
 package org.jwaresoftware.mcmods.lib.impl;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,8 +31,8 @@ public abstract class ModConfigBase implements IModConfig {
    }
 
    protected ModConfigBase(@Nonnull IModInfo mod, FMLPreInitializationEvent event) {
-      File genericLoc = event.getSuggestedConfigurationFile();
-      File configFile = new File(genericLoc.getParentFile(), "wabbity_" + genericLoc.getName());
+      VFile2 genericLoc = event.getSuggestedConfigurationFile();
+      VFile2 configFile = new VFile2(genericLoc.getParent(), "wabbity_" + genericLoc.getName());
       this._forgeConfig = new Configuration(configFile, mod.config_version());
       this._forgeConfig.load();
       this.validateVersion(mod);
@@ -95,7 +95,7 @@ public abstract class ModConfigBase implements IModConfig {
    }
 
    public boolean isPresent(@Nonnull String feature) {
-      return true.equals(this._builderContext.get(feature + ".present"));
+      return Boolean.TRUE.equals(this._builderContext.get(feature + ".present"));
    }
 
    public void setPresent(@Nonnull String feature) {

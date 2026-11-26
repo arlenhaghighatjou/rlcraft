@@ -1,5 +1,7 @@
 package org.jwaresoftware.mcmods.lib;
 
+import net.minecraft.util.ResourceLocation;
+import java.util.function.Supplier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,8 +120,8 @@ public final class IniRegistries {
       return block;
    }
 
-   public static final void autoregisterBlockTile(Class<? extends TileEntity> teClass, String fq_oid) {
-      GameRegistry.registerTileEntity(teClass, fq_oid);
+   public static final <T extends TileEntity> void autoregisterBlockTile(Class<T> teClass, String fq_oid, Supplier<T> factory) {
+      GameRegistry.registerTileEntity(teClass, new ResourceLocation(fq_oid), factory);
    }
 
    @Nullable

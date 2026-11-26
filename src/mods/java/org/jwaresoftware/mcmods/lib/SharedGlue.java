@@ -1,8 +1,9 @@
 package org.jwaresoftware.mcmods.lib;
 
+import net.minecraftforge.fml.common.registry.ItemStackHolderInjector;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import java.lang.reflect.Method;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import javax.annotation.Nonnull;
@@ -39,7 +40,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemElytra;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item.ToolMaterial;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -57,15 +57,13 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameRegistry.ItemStackHolder;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jwaresoftware.mcmods.lib.integration.BaublesHelper;
 
 public final class SharedGlue extends OldNames {
-   @ItemStackHolder("minecraft:air")
-   public static final ItemStack ITEMSTACK_AIR = null;
+   public static ItemStack ITEMSTACK_AIR = null;
    public static final String MINECRAFT_DOMAIN = "minecraft";
    public static final BlockPos NOWHERE = new BlockPos(-1, -1, -1);
    public static final int DIMENSION_SURFACE = 0;
@@ -804,7 +802,7 @@ public final class SharedGlue extends OldNames {
    }
 
    public static final boolean isDeobfuscatedEnvironment() {
-      return ((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")).booleanValue();
+      return FMLLaunchHandler.isDeobfuscatedEnvironment();
    }
 
    public static final boolean isZeroishAbsolute(float f) {
@@ -866,23 +864,6 @@ public final class SharedGlue extends OldNames {
          if (ModIntegration.ELEMENTAL_CREEPERS.belongsTo(rid)) {
             return entity instanceof EntityTameable ? !((EntityTameable)entity).isTamed() : true;
          } else {
-            if (ModIntegration.ANCIENT_WARFARE.belongsTo(rid)) {
-               Class<?> klass = entity.getClass();
-               if (klass.getName().contains("ancientwarfare.npc.entity.")) {
-                  boolean is = false;
-                  if (wrt != null) {
-                     try {
-                        Method m = klass.getMethod("isHostileTowards", Entity.class);
-                        is = Boolean.TRUE.equals(m.invoke(entity, wrt));
-                     } catch (Exception var6) {
-                        ;
-                     }
-                  }
-
-                  return is;
-               }
-            }
-
             return entity instanceof EntityWolf && ((EntityWolf)entity).isAngry() || wrt != null && entity instanceof EntityIronGolem && ((EntityIronGolem)entity).getAttackTarget() == wrt || entity instanceof EntityRabbit && ((EntityRabbit)entity).getRabbitType() == EVIL_BUNNY_TYPE_META();
          }
       }
@@ -1296,5 +1277,9 @@ public final class SharedGlue extends OldNames {
       public boolean apply(ItemStack stack) {
          return stack != null && stack == this._match;
       }
+   }
+
+   public static void registerHolders() {
+      ItemStackHolderInjector.INSTANCE.register("minecraft:air", 0, null, v -> ITEMSTACK_AIR = v);
    }
 }

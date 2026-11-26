@@ -1,13 +1,15 @@
 package org.jwaresoftware.mcmods.lib.recipes;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.nio.charset.StandardCharsets;
+import java.io.Writer;
+import java.io.OutputStreamWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -55,44 +57,39 @@ public final class JR {
    public static final int C_ORE = 8;
    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().create();
    static final FastDateFormat STAMP_FORMAT = FastDateFormat.getInstance("yyyyMMdd'T'HHmmss.SSZ");
-   private static final ThreadLocal<JR.ModDef> _current_modDef = new ThreadLocal();
-   private static final File RECIPES_DIR = new File("C:/Temp/JR");
+   private static JR.ModDef _current_modDef;
+   private static final VFile2 RECIPES_DIR = new VFile2("C:/Temp/JR");
    private static final int _ANY_TYPE = 32767;
 
    public JR() {
    }
 
    public static final void setCurrentMod(@Nonnull String modid) {
-      _current_modDef.set(new JR.ModDef(modid));
+      _current_modDef = new JR.ModDef(modid);
    }
 
    public static final void setCurrentMod(@Nonnull String modid, @Nonnull Map<String, String> rmap) {
-      _current_modDef.set(new JR.ModDef(modid));
-      ((JR.ModDef)_current_modDef.get()).rconstants = rmap;
+      _current_modDef = new JR.ModDef(modid);
+      (_current_modDef).rconstants = rmap;
    }
 
    public static final void disableLegacyMode() {
-      ((JR.ModDef)_current_modDef.get()).legacymode = false;
+      (_current_modDef).legacymode = false;
    }
 
    public static final void clrCurrentMod() {
-      _current_modDef.set((Object)null);
+      _current_modDef = null;
    }
 
-   private static File getModDir(JR.ModDef mod) {
-      File modDir = new File(new File(RECIPES_DIR, mod.modid), mod.stamp);
-      if (!modDir.exists() && !modDir.mkdirs()) {
-         throw new RuntimeException("Cannot mkdir " + modDir);
-      } else {
-         return modDir;
-      }
+   private static VFile2 getModDir(JR.ModDef mod) {
+      return new VFile2(RECIPES_DIR, mod.modid, mod.stamp);
    }
 
    public static final IRecipe newShapedOreRecipe(@Nullable IForgeRegistry<IRecipe> recipes, @Nonnull ResourceLocation rid, int flags, @Nonnull ItemStack result, Object... recipe) {
       Validate.notNull(rid, "Non-null recipe id required", new Object[0]);
-      JR.ModDef mod = (JR.ModDef)_current_modDef.get();
+      JR.ModDef mod = _current_modDef;
       if (mod != null) {
-         File modDir = getModDir(mod);
+         VFile2 modDir = getModDir(mod);
          Map<String, Object> json = new LinkedHashMap();
          conditions(mod, flags, json);
          json.put("result", serialize(mod, result, 1));
@@ -117,10 +114,10 @@ public final class JR {
          }
 
          json.put("key", keymap);
-         File f = new File(modDir, rid.getResourcePath() + ".json");
+         VFile2 f = new VFile2(modDir, rid.getResourcePath() + ".json");
 
          try {
-            FileWriter w = new FileWriter(f);
+            Writer w = new OutputStreamWriter(f.getOutputStream(), StandardCharsets.UTF_8);
             Throwable var31 = null;
 
             try {
@@ -166,9 +163,9 @@ public final class JR {
 
    public static final IRecipe newShapelessOreRecipe(@Nullable IForgeRegistry<IRecipe> recipes, @Nonnull ResourceLocation rid, int flags, @Nonnull ItemStack result, Object... recipe) {
       Validate.notNull(rid, "Non-null recipe id required", new Object[0]);
-      JR.ModDef mod = (JR.ModDef)_current_modDef.get();
+      JR.ModDef mod = _current_modDef;
       if (mod != null) {
-         File modDir = getModDir(mod);
+         VFile2 modDir = getModDir(mod);
          Map<String, Object> json = new LinkedHashMap();
          conditions(mod, flags, json);
          json.put("result", serialize(mod, result, 1));
@@ -180,10 +177,10 @@ public final class JR {
          }
 
          json.put("ingredients", inglist);
-         File f = new File(modDir, rid.getResourcePath() + ".json");
+         VFile2 f = new VFile2(modDir, rid.getResourcePath() + ".json");
 
          try {
-            FileWriter w = new FileWriter(f);
+            Writer w = new OutputStreamWriter(f.getOutputStream(), StandardCharsets.UTF_8);
             Throwable var27 = null;
 
             try {

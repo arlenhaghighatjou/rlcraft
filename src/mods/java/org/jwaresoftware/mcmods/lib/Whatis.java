@@ -1,5 +1,7 @@
 package org.jwaresoftware.mcmods.lib;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.block.Block;
@@ -17,22 +19,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 @ParametersAreNonnullByDefault
 public final class Whatis {
-   @ObjectHolder("minecraft:wheat_seeds")
-   public static final Item wheat_seeds = null;
-   @ObjectHolder("minecraft:red_mushroom")
-   public static final Block red_mushroom = null;
-   @ObjectHolder("minecraft:brown_mushroom")
-   public static final Block brown_mushroom = null;
-   @ObjectHolder("minecraft:brown_mushroom_block")
-   public static final Block brown_mushroom_block = null;
-   @ObjectHolder("minecraft:red_mushroom_block")
-   public static final Block red_mushroom_block = null;
-   @ObjectHolder("minecraft:hopper")
-   public static final Block hopper = null;
+   public static Item wheat_seeds = null;
+   public static Block red_mushroom = null;
+   public static Block brown_mushroom = null;
+   public static Block brown_mushroom_block = null;
+   public static Block red_mushroom_block = null;
+   public static Block hopper = null;
 
    public static final boolean isCobblestone(IBlockState what) {
       return what.getBlock() == Blocks.COBBLESTONE || what.getBlock() == Blocks.MOSSY_COBBLESTONE;
@@ -104,5 +99,14 @@ public final class Whatis {
    }
 
    public static final void init() {
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("minecraft:wheat_seeds"), v -> wheat_seeds = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("minecraft:red_mushroom"), v -> red_mushroom = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("minecraft:brown_mushroom"), v -> brown_mushroom = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("minecraft:brown_mushroom_block"), v -> brown_mushroom_block = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("minecraft:red_mushroom_block"), v -> red_mushroom_block = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("minecraft:hopper"), v -> hopper = v);
    }
 }

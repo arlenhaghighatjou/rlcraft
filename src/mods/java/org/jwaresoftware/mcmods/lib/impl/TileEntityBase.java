@@ -1,7 +1,7 @@
 package org.jwaresoftware.mcmods.lib.impl;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -25,7 +25,7 @@ public abstract class TileEntityBase extends TileEntity {
       this.readFromNBT(tag);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       this.readFromNBT(pkt.getNbtCompound());
    }
 }

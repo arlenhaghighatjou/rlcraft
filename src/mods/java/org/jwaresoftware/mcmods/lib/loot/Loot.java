@@ -278,7 +278,7 @@ public final class Loot {
             for(String poolid : poolDefs.keySet()) {
                LootPool pool = event.getTable().getPool(poolid);
                if (pool != null) {
-                  for(LootEntry e : (List)poolDefs.get(poolid)) {
+                  for(LootEntry e : (List<LootEntry>)poolDefs.get(poolid)) {
                      pool.addEntry(e);
                   }
                } else {
@@ -286,7 +286,7 @@ public final class Loot {
                      pool = new LootPool(new LootEntry[0], _NOC, new RandomValueRange(1.0F), new RandomValueRange(0.0F, 0.0F), poolid);
                      event.getTable().addPool(pool);
 
-                     for(LootEntry e : (List)poolDefs.get(poolid)) {
+                     for(LootEntry e : (List<LootEntry>)poolDefs.get(poolid)) {
                         pool.addEntry(e);
                      }
                   }
@@ -357,7 +357,7 @@ public final class Loot {
          }
       }
 
-      Collections.shuffle(list, rand);
+      rand.shuffle(list);
       return list;
    }
 
@@ -394,7 +394,7 @@ public final class Loot {
       }
 
       if (rand != null) {
-         Collections.shuffle(empty_slots, rand);
+         rand.shuffle(empty_slots);
       }
 
       return empty_slots;

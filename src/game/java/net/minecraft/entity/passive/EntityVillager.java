@@ -100,7 +100,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
     private int randomTickDivider;
     private boolean isMating;
     private boolean isPlaying;
-    Village village;
+    public Village village;
     @Nullable
     private EntityPlayer buyingPlayer;
     @Nullable
@@ -110,8 +110,8 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
     private boolean isWillingToMate;
     private int wealth;
     private net.lax1dude.eaglercraft.v1_8.EaglercraftUUID lastBuyingPlayer;
-    private int careerId;
-    private int careerLevel;
+    public int careerId;
+    public int careerLevel;
     private boolean isLookingForHome;
     private boolean areAdditionalTasksSet;
     private final InventoryBasic villagerInventory;

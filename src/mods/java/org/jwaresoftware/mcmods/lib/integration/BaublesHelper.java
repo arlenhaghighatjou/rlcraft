@@ -72,9 +72,9 @@ public final class BaublesHelper {
 
       @Nullable
       public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (bauble) -> {
-            return (T)BaubleType.AMULET;
-         } : null);
+         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (IBauble)((bauble) -> {
+            return BaubleType.AMULET;
+         }) : null);
       }
    }
 
@@ -88,9 +88,9 @@ public final class BaublesHelper {
 
       @Nullable
       public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (bauble) -> {
-            return (T)BaubleType.CHARM;
-         } : null);
+         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (IBauble)((bauble) -> {
+            return BaubleType.CHARM;
+         }) : null);
       }
    }
 
@@ -104,9 +104,9 @@ public final class BaublesHelper {
 
       @Nullable
       public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (bauble) -> {
-            return (T)BaubleType.TRINKET;
-         } : null);
+         return (T)(capability == BaublesCapabilities.CAPABILITY_ITEM_BAUBLE ? (IBauble)((bauble) -> {
+            return BaubleType.TRINKET;
+         }) : null);
       }
    }
 
