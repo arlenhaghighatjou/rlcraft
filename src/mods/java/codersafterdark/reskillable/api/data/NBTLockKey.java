@@ -90,7 +90,7 @@ public abstract class NBTLockKey implements FuzzyLockKey {
          case 11:
             int[] fIntArray = ((NBTTagIntArray)full).getIntArray();
             int[] pIntArray = ((NBTTagIntArray)partial).getIntArray();
-            List<Integer> hits = new ArrayList();
+            hits = new ArrayList();
 
             for(int pInt : pIntArray) {
                boolean hasMatch = false;
@@ -112,7 +112,7 @@ public abstract class NBTLockKey implements FuzzyLockKey {
          case 12:
             long[] fLongArray = getLongArray((NBTTagLongArray)full);
             long[] pLongArray = getLongArray((NBTTagLongArray)partial);
-            List<Integer> hits = new ArrayList();
+            hits = new ArrayList();
 
             for(long pLong : pLongArray) {
                boolean hasMatch = false;

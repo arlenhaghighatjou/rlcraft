@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.api.requirement;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import codersafterdark.reskillable.api.data.PlayerData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextFormatting;
@@ -14,7 +15,7 @@ public abstract class Requirement {
 
    public String getToolTip(PlayerData data) {
       try {
-         return String.format(this.internalToolTip(), data != null && data.requirementAchieved(this) ? TextFormatting.GREEN : TextFormatting.RED);
+         return HString.format(this.internalToolTip(), data != null && data.requirementAchieved(this) ? TextFormatting.GREEN : TextFormatting.RED);
       } catch (IllegalArgumentException var3) {
          return this.internalToolTip();
       }

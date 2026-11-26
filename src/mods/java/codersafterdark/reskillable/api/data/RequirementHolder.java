@@ -17,7 +17,6 @@ import net.minecraft.advancements.AdvancementManager;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -119,7 +118,7 @@ public class RequirementHolder {
 
    public static AdvancementList getAdvancementList() {
       if (advList == null) {
-         advList = (AdvancementList)ReflectionHelper.getPrivateValue(AdvancementManager.class, (Object)null, LibObfuscation.ADVANCEMENT_LIST);
+         advList = AdvancementManager.ADVANCEMENT_LIST;
       }
 
       return advList;
@@ -154,7 +153,7 @@ public class RequirementHolder {
    public void addRequirementsIgnoreShift(PlayerData data, List<String> tooltip) {
       if (this.isRealLock()) {
          this.requirements.stream().map((requirement) -> {
-            return (void)requirement.getToolTip(data);
+            return requirement.getToolTip(data);
          }).forEach(tooltip::add);
       }
 

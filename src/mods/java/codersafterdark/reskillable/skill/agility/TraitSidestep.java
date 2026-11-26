@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.skill.agility;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import codersafterdark.reskillable.api.unlockable.Trait;
 import codersafterdark.reskillable.client.base.ClientTickHandler;
@@ -16,7 +17,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -32,12 +32,17 @@ public class TraitSidestep extends Trait {
    public TraitSidestep() {
       super(new ResourceLocation("reskillable", "sidestep"), 3, 1, new ResourceLocation("reskillable", "agility"), 10, "reskillable:agility|26", "reskillable:defense|20");
       if (FMLCommonHandler.instance().getSide().isClient()) {
-         MinecraftForge.EVENT_BUS.register(this);
+         this.register(MinecraftForge.EVENT_BUS);
       }
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::clientTick);
+      bus.register(KeyInputEvent.class, this::onKeyDown);
+      bus.register(Post.class, this::renderHUD);
+   }
+
    @SideOnly(Side.CLIENT)
    public void clientTick(ClientTickEvent event) {
       if (event.phase == Phase.END && this.cd > 0) {
@@ -46,7 +51,6 @@ public class TraitSidestep extends Trait {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public void onKeyDown(KeyInputEvent event) {
       if (this.cd <= 0) {
@@ -86,7 +90,6 @@ public class TraitSidestep extends Trait {
       }
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public void renderHUD(Post event) {
       if (event.getType() == ElementType.ALL) {

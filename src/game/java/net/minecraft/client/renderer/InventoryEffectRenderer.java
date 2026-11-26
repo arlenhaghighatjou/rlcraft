@@ -59,7 +59,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer
 
     private void drawActivePotionEffects()
     {
-        int i = this.guiLeft - 124;
+        int i = this.guiLeft - codersafterdark.reskillable.client.gui.handler.InventoryTabHandler.getPotionOffset();
         int j = this.guiTop;
         int k = 166;
         Collection<PotionEffect> collection = this.mc.player.getActivePotionEffects();

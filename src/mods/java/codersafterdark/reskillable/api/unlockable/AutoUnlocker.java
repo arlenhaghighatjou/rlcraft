@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.api.unlockable;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.ReskillableRegistries;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
@@ -15,7 +16,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class AutoUnlocker {
    private static Set<Unlockable> unlockables = new HashSet();
@@ -92,12 +92,15 @@ public class AutoUnlocker {
       }
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(CacheInvalidatedEvent.class, AutoUnlocker::onCacheInvalidated);
+      bus.register(LivingUpdateEvent.class, AutoUnlocker::onEntityLiving);
+   }
+
    public static void onCacheInvalidated(CacheInvalidatedEvent event) {
       recheck(event.getPlayer());
    }
 
-   @SubscribeEvent
    public static void onEntityLiving(LivingUpdateEvent event) {
       if (hasUncacheable) {
          EntityLivingBase entityLiving = event.getEntityLiving();

@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.base;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import codersafterdark.reskillable.api.data.RequirementHolder;
@@ -19,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,7 +42,14 @@ public class ToolTipHandler {
       toolTip = new ArrayList();
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, ToolTipHandler::onTooltip);
+      bus.register(GuiOpenEvent.class, ToolTipHandler::onGuiOpen);
+      bus.register(ClientConnectedToServerEvent.class, ToolTipHandler::connect);
+      bus.register(ClientDisconnectionFromServerEvent.class, ToolTipHandler::disconnect);
+      bus.register(CacheInvalidatedEvent.class, EventPriority.LOW, false, ToolTipHandler::onCacheInvalidated);
+   }
+
    @SideOnly(Side.CLIENT)
    public static void onTooltip(ItemTooltipEvent event) {
       if (enabled && !event.isCanceled()) {
@@ -81,7 +88,6 @@ public class ToolTipHandler {
       }
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void onGuiOpen(GuiOpenEvent event) {
       if (enabled && !event.isCanceled()) {
@@ -91,20 +97,15 @@ public class ToolTipHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void connect(ClientConnectedToServerEvent event) {
       enabled = true;
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void disconnect(ClientDisconnectionFromServerEvent event) {
       enabled = false;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void onCacheInvalidated(CacheInvalidatedEvent event) {
       if (event.anyModified()) {
          resetLast();

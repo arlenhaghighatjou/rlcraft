@@ -1,11 +1,11 @@
 package codersafterdark.reskillable.client.base;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
@@ -26,7 +26,11 @@ public class ClientTickHandler {
       delta = total - oldTotal;
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(RenderTickEvent.class, ClientTickHandler::renderTick);
+      bus.register(ClientTickEvent.class, ClientTickHandler::clientTickEnd);
+   }
+
    public static void renderTick(RenderTickEvent event) {
       if (event.phase == Phase.START) {
          partialTicks = event.renderTickTime;
@@ -34,7 +38,6 @@ public class ClientTickHandler {
 
    }
 
-   @SubscribeEvent
    public static void clientTickEnd(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          Minecraft mc = Minecraft.getMinecraft();

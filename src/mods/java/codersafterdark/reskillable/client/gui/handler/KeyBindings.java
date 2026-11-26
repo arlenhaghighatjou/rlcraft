@@ -1,12 +1,12 @@
 package codersafterdark.reskillable.client.gui.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.Reskillable;
 import codersafterdark.reskillable.client.gui.GuiSkills;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,7 +22,10 @@ public class KeyBindings {
       ClientRegistry.registerKeyBinding(openGUI);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, this::onKeyInput);
+   }
+
    public void onKeyInput(KeyInputEvent event) {
       this.keyTyped(openGUI);
    }

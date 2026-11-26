@@ -140,7 +140,7 @@ public class TransmutationRegistry {
 
    public static void removeEndStateFromReagentAgnostic(IBlockState state) {
       for(Item reagent : reagentStateMap.keySet()) {
-         for(Entry<IBlockState, IBlockState> stateEntry : ((Map)reagentStateMap.get(reagent)).entrySet()) {
+         for(Entry<IBlockState, IBlockState> stateEntry : ((Map<IBlockState, IBlockState>)reagentStateMap.get(reagent)).entrySet()) {
             if (stateEntry.getValue() == state) {
                ((Map)reagentStateMap.get(reagent)).remove(stateEntry.getKey());
             }
@@ -154,7 +154,7 @@ public class TransmutationRegistry {
    }
 
    public static void removeEndStateFromReagent(Item reagent, IBlockState state) {
-      for(Entry<IBlockState, IBlockState> stateEntry : ((Map)reagentStateMap.get(reagent)).entrySet()) {
+      for(Entry<IBlockState, IBlockState> stateEntry : ((Map<IBlockState, IBlockState>)reagentStateMap.get(reagent)).entrySet()) {
          if (stateEntry.getValue() == state) {
             ((Map)reagentStateMap.get(reagent)).remove(stateEntry.getKey());
          }

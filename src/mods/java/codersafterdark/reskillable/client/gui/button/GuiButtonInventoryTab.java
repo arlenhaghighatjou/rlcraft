@@ -73,7 +73,7 @@ public class GuiButtonInventoryTab extends GuiButton {
          this.renderPred = render;
          if (this.renderPred == null) {
             this.renderPred = (data) -> {
-               return (void)true;
+               return true;
             };
          }
 

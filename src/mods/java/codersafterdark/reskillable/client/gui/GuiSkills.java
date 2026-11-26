@@ -23,7 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import org.apache.commons.lang3.tuple.Pair;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.GL11;
 
 public class GuiSkills extends GuiScreen {
    public static final ResourceLocation SKILLS_RES = new ResourceLocation("reskillable", "textures/gui/skills.png");
@@ -139,7 +138,7 @@ public class GuiSkills extends GuiScreen {
          this.mc.fontRenderer.drawString(skillInfo.getLevel() + "/" + skill.getCap(), x + 26, y + 17, 8947848);
       }
 
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       drawScrollButtonsTop(this.left + 49, this.top + 14);
       drawScrollButtonsBottom(this.left + 49, this.lastY + 32);
       String skillsStr = (new TextComponentTranslation("reskillable.misc.skills", new Object[0])).getUnformattedComponentText();

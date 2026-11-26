@@ -1,5 +1,7 @@
 package codersafterdark.reskillable.base;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import java.util.function.Function;
 import codersafterdark.reskillable.api.ReskillableAPI;
 import codersafterdark.reskillable.api.data.FuzzyLockKey;
 import codersafterdark.reskillable.api.data.GenericLockKey;
@@ -12,7 +14,6 @@ import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import codersafterdark.reskillable.api.data.RequirementHolder;
 import codersafterdark.reskillable.network.MessageLockedItem;
 import codersafterdark.reskillable.network.PacketHandler;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,14 +49,13 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class LevelLockHandler {
    public static final String[] DEFAULT_SKILL_LOCKS = new String[]{"minecraft:iron_shovel:*=reskillable:gathering|5", "minecraft:iron_axe:*=reskillable:gathering|5", "minecraft:iron_sword:*=reskillable:attack|5", "minecraft:iron_pickaxe:*=reskillable:mining|5", "minecraft:iron_hoe:*=reskillable:farming|5", "minecraft:iron_helmet:*=reskillable:defense|5", "minecraft:iron_chestplate:*=reskillable:defense|5", "minecraft:iron_leggings:*=reskillable:defense|5", "minecraft:iron_boots:*=reskillable:defense|5", "minecraft:golden_shovel:*=reskillable:gathering|5,reskillable:magic|5", "minecraft:golden_axe:*=reskillable:gathering|5,reskillable:magic|5", "minecraft:golden_sword:*=reskillable:attack|5,reskillable:magic|5", "minecraft:golden_pickaxe:*=reskillable:mining|5,reskillable:magic|5", "minecraft:golden_hoe:*=reskillable:farming|5,reskillable:magic|5", "minecraft:golden_helmet:*=reskillable:defense|5,reskillable:magic|5", "minecraft:golden_chestplate:*=reskillable:defense|5,reskillable:magic|5", "minecraft:golden_leggings:*=reskillable:defense|5,reskillable:magic|5", "minecraft:golden_boots:*=reskillable:defense|5,reskillable:magic|5", "minecraft:diamond_shovel:*=reskillable:gathering|16", "minecraft:diamond_axe:*=reskillable:gathering|16", "minecraft:diamond_sword:*=reskillable:attack|16", "minecraft:diamond_pickaxe:*=reskillable:mining|16", "minecraft:diamond_hoe:*=reskillable:farming|16", "minecraft:diamond_helmet:*=reskillable:defense|16", "minecraft:diamond_chestplate:*=reskillable:defense|16", "minecraft:diamond_leggings:*=reskillable:defense|16", "minecraft:diamond_boots:*=reskillable:defense|16", "minecraft:shears:*=reskillable:farming|5,reskillable:gathering|5", "minecraft:fishing_rod:*=reskillable:gathering|8", "minecraft:shield:*=reskillable:defense|8", "minecraft:bow:*=reskillable:attack|8", "minecraft:ender_pearl=reskillable:magic|8", "minecraft:ender_eye=reskillable:magic|16,reskillable:building|8", "minecraft:elytra:*=reskillable:defense|16,reskillable:agility|24,reskillable:magic|16", "minecraft:lead=reskillable:farming|5", "minecraft:end_crystal=reskillable:building|24,reskillable:magic|32", "minecraft:iron_horse_armor:*=reskillable:defense|5,reskillable:agility|5", "minecraft:golden_horse_armor:*=reskillable:defense|5,reskillable:magic|5,reskillable:agility|5", "minecraft:diamond_horse_armor:*=reskillable:defense|16,reskillable:agility|16", "minecraft:fireworks=reskillable:agility|24", "minecraft:dye:15=reskillable:farming|12", "minecraft:saddle=reskillable:agility|12", "minecraft:redstone=reskillable:building|5", "minecraft:redstone_torch=reskillable:building|5", "minecraft:skull:1=reskillable:building|20,reskillable:attack|20,reskillable:defense|20"};
    private static final Map<LockKey, RequirementHolder> locks = new HashMap();
    public static RequirementHolder EMPTY_LOCK = new RequirementHolder();
-   private static Map<Class<?>, List<Class<? extends LockKey>>> lockTypesMap = new HashMap();
+   private static Map<Class<?>, List<Function<Object, ? extends LockKey>>> lockTypesMap = new HashMap();
    private static Map<LockKey, Set<FuzzyLockKey>> fuzzyLockInfo = new HashMap();
    private static String[] configLocks;
 
@@ -106,19 +106,15 @@ public class LevelLockHandler {
    }
 
    private static void registerDefaultLockKeys() {
-      registerLockKey(ItemStack.class, ItemInfo.class, ModLockKey.class, GenericNBTLockKey.class);
+      registerLockKey(ItemStack.class, ItemInfo::new, ModLockKey::new, GenericNBTLockKey::new);
    }
 
-   public static void registerLockKey(Class<?> lockTypeClass, Class<? extends LockKey>... keyClasses) {
-      for(Class<? extends LockKey> keyClass : keyClasses) {
-         try {
-            keyClass.getDeclaredConstructor(lockTypeClass);
-            ((List)lockTypesMap.computeIfAbsent(lockTypeClass, (k) -> {
-               return (void)(new ArrayList());
-            })).add(keyClass);
-         } catch (SecurityException | NoSuchMethodException var7) {
-            ReskillableAPI.getInstance().log(Level.ERROR, keyClass.getSimpleName() + " does not have a constructor with the parameter: " + lockTypeClass.getSimpleName());
-         }
+   @SafeVarargs
+   public static <T> void registerLockKey(Class<T> lockTypeClass, Function<T, ? extends LockKey>... keyFactories) {
+      for(Function<T, ? extends LockKey> keyFactory : keyFactories) {
+         ((List)lockTypesMap.computeIfAbsent(lockTypeClass, (k) -> {
+            return new ArrayList();
+         })).add(keyFactory);
       }
 
    }
@@ -222,18 +218,12 @@ public class LevelLockHandler {
    @SafeVarargs
    public static <T> RequirementHolder getLocks(Class<? extends T> classType, T... tToCheck) {
       if (tToCheck != null && tToCheck.length != 0 && lockTypesMap.containsKey(classType)) {
-         List<Class<? extends LockKey>> lockTypes = (List)lockTypesMap.get(classType);
+         List<Function<Object, ? extends LockKey>> lockTypes = (List)lockTypesMap.get(classType);
          List<RequirementHolder> requirements = new ArrayList();
 
          for(T toCheck : tToCheck) {
-            for(Class<? extends LockKey> keyClass : lockTypes) {
-               LockKey lock;
-               try {
-                  lock = (LockKey)keyClass.getDeclaredConstructor(classType).newInstance(toCheck);
-               } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException var12) {
-                  var12.printStackTrace();
-                  continue;
-               }
+            for(Function<Object, ? extends LockKey> keyFactory : lockTypes) {
+               LockKey lock = keyFactory.apply(toCheck);
 
                if (lock instanceof FuzzyLockKey) {
                   requirements.addAll(getFuzzyRequirements((FuzzyLockKey)lock));
@@ -275,9 +265,17 @@ public class LevelLockHandler {
       return lock.equals(EMPTY_LOCK) || PlayerDataHandler.get(player).matchStats(lock);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
+   public static void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.HIGH, false, LevelLockHandler::hurtEvent);
+      bus.register(LeftClickBlock.class, EventPriority.HIGH, false, LevelLockHandler::leftClick);
+      bus.register(RightClickItem.class, EventPriority.HIGH, false, LevelLockHandler::rightClickItem);
+      bus.register(RightClickBlock.class, EventPriority.HIGH, false, LevelLockHandler::rightClickBlock);
+      bus.register(BreakEvent.class, EventPriority.HIGH, false, LevelLockHandler::onBlockBreak);
+      bus.register(EntityInteract.class, EventPriority.HIGH, false, LevelLockHandler::entityInteract);
+      bus.register(LivingEquipmentChangeEvent.class, LevelLockHandler::onArmorEquip);
+      bus.register(LivingDropsEvent.class, EventPriority.HIGH, false, LevelLockHandler::onEntityDrops);
+   }
+
    public static void hurtEvent(LivingAttackEvent event) {
       if (!event.isCanceled() && event.getSource().getTrueSource() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.getSource().getTrueSource();
@@ -286,9 +284,6 @@ public class LevelLockHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void leftClick(LeftClickBlock event) {
       enforce(event);
       if (!event.isCanceled()) {
@@ -310,16 +305,10 @@ public class LevelLockHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void rightClickItem(RightClickItem event) {
       enforce(event);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void rightClickBlock(RightClickBlock event) {
       enforce(event);
       if (!event.isCanceled()) {
@@ -349,9 +338,6 @@ public class LevelLockHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void onBlockBreak(BreakEvent event) {
       if (!event.isCanceled()) {
          IBlockState state = event.getWorld().getBlockState(event.getPos());
@@ -367,14 +353,10 @@ public class LevelLockHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void entityInteract(EntityInteract event) {
       enforce(event);
    }
 
-   @SubscribeEvent
    public static void onArmorEquip(LivingEquipmentChangeEvent event) {
       if (event.getEntity() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.getEntity();
@@ -396,9 +378,6 @@ public class LevelLockHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void onEntityDrops(LivingDropsEvent event) {
       if (!event.isCanceled() && ConfigHandler.disableSheepWool && event.getEntity() instanceof EntitySheep) {
          event.getDrops().removeIf((e) -> {

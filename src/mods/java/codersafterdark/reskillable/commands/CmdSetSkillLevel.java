@@ -101,7 +101,7 @@ public class CmdSetSkillLevel extends CommandBase {
       } else if (args.length == 2) {
          String partial = args[1].replaceAll(":", ".");
          return (List)ReskillableRegistries.SKILLS.getValuesCollection().stream().map(Skill::getKey).filter((skillNamex) -> {
-            return skillName.startsWith(partial);
+            return skillNamex.startsWith(partial);
          }).collect(Collectors.toList());
       } else {
          if (args.length == 3) {

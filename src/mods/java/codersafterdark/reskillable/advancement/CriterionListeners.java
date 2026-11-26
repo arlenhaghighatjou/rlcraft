@@ -40,7 +40,7 @@ public class CriterionListeners<T extends ICriterionInstance> {
       }
 
       toGrant.forEach((listenerx) -> {
-         listener.grantCriterion(this.playerAdvancements);
+         listenerx.grantCriterion(this.playerAdvancements);
       });
    }
 }

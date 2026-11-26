@@ -1,5 +1,7 @@
 package codersafterdark.reskillable.client.base;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import codersafterdark.reskillable.api.data.RequirementHolder;
@@ -16,14 +18,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -42,7 +41,10 @@ public class HUDHandler {
       lockTime = 40;
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(RenderGameOverlayEvent.class, HUDHandler::renderHUD);
+   }
+
    public static void renderHUD(RenderGameOverlayEvent event) {
       if (lockTime > 0 && event.getType() == ElementType.ALL) {
          GlStateManager.pushMatrix();
@@ -122,7 +124,7 @@ public class HUDHandler {
                }
 
                GlStateManager.popMatrix();
-               GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+               GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
                GlStateManager.disableLighting();
                mc.fontRenderer.drawStringWithShadow(adv.getDisplayText().getUnformattedText(), (float)textLeft, (float)textY, color);
                xp += pad;

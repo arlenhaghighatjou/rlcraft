@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.api.requirement.logic.impl;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.requirement.Requirement;
 import codersafterdark.reskillable.api.requirement.RequirementComparision;
@@ -35,7 +36,7 @@ public class NOTRequirement extends Requirement implements OuterRequirement {
 
    public String getToolTip(PlayerData data) {
       try {
-         return String.format(this.internalToolTip(), data != null && data.requirementAchieved(this) ? TextFormatting.GREEN : TextFormatting.RED);
+         return HString.format(this.internalToolTip(), data != null && data.requirementAchieved(this) ? TextFormatting.GREEN : TextFormatting.RED);
       } catch (IllegalArgumentException var15) {
          String parentToolTip = this.requirement.getToolTip(data);
          if (parentToolTip == null) {

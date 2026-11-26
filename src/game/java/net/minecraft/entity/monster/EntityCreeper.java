@@ -43,7 +43,7 @@ public class EntityCreeper extends EntityMob
     private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>createKey(EntityCreeper.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> IGNITED = EntityDataManager.<Boolean>createKey(EntityCreeper.class, DataSerializers.BOOLEAN);
     private int lastActiveTime;
-    private int timeSinceIgnited;
+    public int timeSinceIgnited;
     private int fuseTime = 30;
     private int explosionRadius = 3;
     private int droppedSkulls;

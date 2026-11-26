@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class RenderHelper {
@@ -24,7 +23,7 @@ public class RenderHelper {
    }
 
    public static void renderTooltip(int x, int y, List<String> tooltipData, int color, int color2) {
-      boolean lighting = GL11.glGetBoolean(2896);
+      boolean lighting = GlStateManager.isLightingEnabled();
       if (lighting) {
          net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
       }

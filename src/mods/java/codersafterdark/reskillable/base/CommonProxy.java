@@ -23,9 +23,9 @@ public class CommonProxy {
    }
 
    public void preInit(FMLPreInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(PlayerDataHandler.EventHandler.class);
-      MinecraftForge.EVENT_BUS.register(LevelLockHandler.class);
-      MinecraftForge.EVENT_BUS.register(RequirementCache.class);
+      PlayerDataHandler.EventHandler.register(MinecraftForge.EVENT_BUS);
+      LevelLockHandler.register(MinecraftForge.EVENT_BUS);
+      RequirementCache.register(MinecraftForge.EVENT_BUS);
       ConfigHandler.init(event.getSuggestedConfigurationFile());
       PacketHandler.preInit();
       LootConditionManager.registerCondition(new LootConditionRequirement.Serializer());
@@ -47,7 +47,7 @@ public class CommonProxy {
    public void serverStarting(FMLServerStartingEvent event) {
       event.registerServerCommand(new ReskillableCmd());
       AutoUnlocker.setUnlockables();
-      MinecraftForge.EVENT_BUS.register(AutoUnlocker.class);
+      AutoUnlocker.register(MinecraftForge.EVENT_BUS);
    }
 
    public AdvancementProgress getPlayerAdvancementProgress(EntityPlayer entityPlayer, Advancement advancement) {

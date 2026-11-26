@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.api.requirement;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.event.CacheInvalidatedEvent;
 import codersafterdark.reskillable.api.event.LevelUpEvent;
 import codersafterdark.reskillable.api.event.LockUnlockableEvent;
@@ -33,11 +34,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedOutEvent;
 
 public class RequirementCache {
    private static Set<Class<? extends Requirement>> dirtyCacheTypes = new HashSet();
+   private static Map<String, Class<? extends Requirement>> requirementClassesByName = new HashMap();
    private static Map<RequirementCache.SidedUUID, RequirementCache> cacheMap = new HashMap();
    private Map<Class<? extends Requirement>, Map<Requirement, Boolean>> requirementCache;
    private Set<Class<? extends Requirement>> recentlyInvalidated;
@@ -84,12 +85,30 @@ public class RequirementCache {
       return cacheMap.containsKey(new RequirementCache.SidedUUID(uuid, isRemote));
    }
 
+   static {
+      registerRequirementClass(SkillRequirement.class, TraitRequirement.class, AdvancementRequirement.class);
+   }
+
    public static void registerDirtyTypes() {
       registerRequirementType(NOTRequirement.class, DoubleRequirement.class);
    }
 
    public static void registerRequirementType(Class<? extends Requirement>... requirementClasses) {
       dirtyCacheTypes.addAll(Arrays.asList(requirementClasses));
+      registerRequirementClass(requirementClasses);
+   }
+
+   @SafeVarargs
+   public static void registerRequirementClass(Class<? extends Requirement>... requirementClasses) {
+      for(Class<? extends Requirement> requirementClass : requirementClasses) {
+         requirementClassesByName.put(requirementClass.getName(), requirementClass);
+      }
+
+   }
+
+   @Nullable
+   public static Class<? extends Requirement> getRequirementClass(String name) {
+      return (Class)requirementClassesByName.get(name);
    }
 
    public static void invalidateCache(EntityPlayer player, Class<? extends Requirement>... cacheTypes) {
@@ -100,6 +119,7 @@ public class RequirementCache {
    }
 
    public static void invalidateCache(EaglercraftUUID uuid, Class<? extends Requirement>... cacheTypes) {
+      registerRequirementClass(cacheTypes);
       boolean hasServer = hasCache(uuid, false);
       boolean hasClient = hasCache(uuid, true);
       if (hasServer) {
@@ -149,27 +169,30 @@ public class RequirementCache {
       return getCache(uuid, isRemote).requirementAchieved(requirement);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(LevelUpEvent.Post.class, RequirementCache::onLevelChange);
+      bus.register(LockUnlockableEvent.Post.class, RequirementCache::onUnlockableLocked);
+      bus.register(UnlockUnlockableEvent.Post.class, RequirementCache::onUnlockableUnlocked);
+      bus.register(AdvancementEvent.class, RequirementCache::onAdvancement);
+      bus.register(PlayerLoggedOutEvent.class, RequirementCache::onDisconnect);
+   }
+
    public static void onLevelChange(LevelUpEvent.Post event) {
       invalidateCache(event.getEntityPlayer().getUniqueID(), SkillRequirement.class);
    }
 
-   @SubscribeEvent
    public static void onUnlockableLocked(LockUnlockableEvent.Post event) {
       invalidateCache(event.getEntityPlayer().getUniqueID(), TraitRequirement.class);
    }
 
-   @SubscribeEvent
    public static void onUnlockableUnlocked(UnlockUnlockableEvent.Post event) {
       invalidateCache(event.getEntityPlayer().getUniqueID(), TraitRequirement.class);
    }
 
-   @SubscribeEvent
    public static void onAdvancement(AdvancementEvent event) {
       invalidateCache(event.getEntityPlayer().getUniqueID(), AdvancementRequirement.class);
    }
 
-   @SubscribeEvent
    public static void onDisconnect(PlayerLoggedOutEvent event) {
       removeCache(event.player.getUniqueID(), true);
       removeCache(event.player.getUniqueID(), false);
@@ -302,7 +325,7 @@ public class RequirementCache {
             }
 
             toRemove.forEach((requirementx) -> {
-               Map var10000 = (Map)this.requirementCache.remove(requirement);
+               Map var10000 = (Map)this.requirementCache.remove(requirementx);
             });
             MinecraftForge.EVENT_BUS.post(new CacheInvalidatedEvent(player, !toRemove.isEmpty()));
          }

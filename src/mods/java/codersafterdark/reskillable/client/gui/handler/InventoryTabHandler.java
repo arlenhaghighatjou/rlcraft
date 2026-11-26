@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.client.gui.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.base.ConfigHandler;
 import codersafterdark.reskillable.client.base.RenderHelper;
 import codersafterdark.reskillable.client.gui.GuiAbilities;
@@ -17,7 +18,6 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,18 +41,24 @@ public class InventoryTabHandler {
          }
 
          buttonList.add(new GuiButtonInventoryTab(82931, x, y, GuiButtonInventoryTab.TabType.INVENTORY, (gui) -> {
-            return (void)(gui instanceof GuiInventory || gui instanceof GuiContainerCreative);
+            return (gui instanceof GuiInventory || gui instanceof GuiContainerCreative);
          }));
          buttonList.add(new GuiButtonInventoryTab(82932, x, y + 29, GuiButtonInventoryTab.TabType.SKILLS, (gui) -> {
-            return (void)(gui instanceof GuiSkills || gui instanceof GuiSkillInfo);
+            return (gui instanceof GuiSkills || gui instanceof GuiSkillInfo);
          }));
          buttonList.add(new GuiButtonInventoryTab(82933, x, y + 58, GuiButtonInventoryTab.TabType.ABILITIES, (gui) -> {
-            return (void)(gui instanceof GuiAbilities);
+            return (gui instanceof GuiAbilities);
          }));
       }
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Post.class, InventoryTabHandler::initGui);
+      bus.register(Pre.class, InventoryTabHandler::performAction);
+      bus.register(RenderTickEvent.class, InventoryTabHandler::finishRenderTick);
+      bus.register(PotionShiftEvent.class, InventoryTabHandler::onPotionShiftEvent);
+   }
+
    @SideOnly(Side.CLIENT)
    public static void initGui(Post event) {
       if (event.getGui() instanceof GuiInventory || event.getGui() instanceof GuiContainerCreative) {
@@ -61,7 +67,6 @@ public class InventoryTabHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void performAction(Pre event) {
       if (event.getButton() instanceof GuiButtonInventoryTab) {
@@ -81,7 +86,6 @@ public class InventoryTabHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void finishRenderTick(RenderTickEvent event) {
       if (event.phase == Phase.END && tooltip != null) {
@@ -91,7 +95,6 @@ public class InventoryTabHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void onPotionShiftEvent(PotionShiftEvent event) {
       if (ConfigHandler.enableTabs) {

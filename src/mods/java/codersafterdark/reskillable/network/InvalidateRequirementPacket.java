@@ -29,14 +29,7 @@ public class InvalidateRequirementPacket implements IMessage, IMessageHandler<In
       this.cacheTypes = new Class[buf.readInt()];
 
       for(int i = 0; i < this.cacheTypes.length; ++i) {
-         try {
-            Class<?> rClass = Class.forName(ByteBufUtils.readUTF8String(buf));
-            if (Requirement.class.isAssignableFrom(rClass)) {
-               this.cacheTypes[i] = rClass;
-            }
-         } catch (ClassNotFoundException var4) {
-            var4.printStackTrace();
-         }
+         this.cacheTypes[i] = RequirementCache.getRequirementClass(ByteBufUtils.readUTF8String(buf));
       }
 
    }

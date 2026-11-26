@@ -1,5 +1,6 @@
 package codersafterdark.reskillable;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.advancement.ReskillableAdvancements;
 import codersafterdark.reskillable.api.event.LevelUpEvent;
 import codersafterdark.reskillable.api.event.UnlockUnlockableEvent;
@@ -35,34 +36,33 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.NewRegistry;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.RegistryBuilder;
 
-@EventBusSubscriber(
-   modid = "reskillable"
-)
 public class ReskillableRegistryHandler {
    public ReskillableRegistryHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(NewRegistry.class, ReskillableRegistryHandler::buildRegistry);
+      bus.registerGeneric(Register.class, Skill.class, ReskillableRegistryHandler::registerSkills);
+      bus.registerGeneric(Register.class, Unlockable.class, ReskillableRegistryHandler::registerTraits);
+      bus.register(LevelUpEvent.Post.class, ReskillableRegistryHandler::skillAdvancementHandling);
+      bus.register(UnlockUnlockableEvent.Post.class, ReskillableRegistryHandler::unlockableAdvancementHandling);
+   }
+
    public static void buildRegistry(NewRegistry newRegistryEvent) {
       (new RegistryBuilder()).setName(new ResourceLocation("reskillable", "skill")).setType(Skill.class).create();
       (new RegistryBuilder()).setName(new ResourceLocation("reskillable", "unlockable")).setType(Unlockable.class).create();
    }
 
-   @SubscribeEvent
    public static void registerSkills(Register<Skill> skillRegister) {
       skillRegister.getRegistry().registerAll(new Skill[]{new SkillMining(), new SkillGathering(), new SkillAttack(), new SkillDefense(), new SkillBuilding(), new SkillFarming(), new SkillAgility(), new SkillMagic()});
    }
 
-   @SubscribeEvent
    public static void registerTraits(Register<Unlockable> unlockablesRegister) {
       unlockablesRegister.getRegistry().registerAll(new Unlockable[]{new TraitHillWalker(), new TraitRoadWalk(), new TraitSidestep(), new TraitBattleSpirit(), new TraitNeutralissse(), new TraitPerfectRecover(), new TraitTransmutation(), new TraitEffectTwist(), new TraitUndershirt(), new TraitGreenThumb(), new TraitHungryFarmer(), new TraitMoreWheat(), new TraitDropGuarantee(), new TraitLuckyFisherman(), new TraitGoldenOsmosis(), new TraitSafePort(), new TraitFossilDigger(), new TraitObsidianSmasher()});
    }
 
-   @SubscribeEvent
    public static void skillAdvancementHandling(LevelUpEvent.Post postEvent) {
       if (postEvent.getEntityPlayer() instanceof EntityPlayerMP) {
          ReskillableAdvancements.SKILL_LEVEL.trigger((EntityPlayerMP)postEvent.getEntityPlayer(), postEvent.getSkill(), postEvent.getLevel());
@@ -70,7 +70,6 @@ public class ReskillableRegistryHandler {
 
    }
 
-   @SubscribeEvent
    public static void unlockableAdvancementHandling(UnlockUnlockableEvent.Post event) {
       if (event.getEntityPlayer() instanceof EntityPlayerMP) {
          ReskillableAdvancements.UNLOCK_UNLOCKABLE.trigger((EntityPlayerMP)event.getEntityPlayer(), event.getUnlockable());

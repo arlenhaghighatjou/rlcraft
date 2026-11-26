@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import codersafterdark.reskillable.api.data.PlayerData;
 import codersafterdark.reskillable.api.data.PlayerDataHandler;
 import codersafterdark.reskillable.api.data.PlayerSkillInfo;
@@ -100,7 +101,7 @@ public class GuiSkillInfo extends GuiScreen {
 
       this.drawTexturedModalRect(left, top, 0, 0, this.guiWidth, this.guiHeight);
       GuiSkills.drawSkill(left + 4, top + 9, this.skill);
-      String levelStr = String.format("%d/%d [ %s ]", skillInfo.getLevel(), this.skill.getCap(), (new TextComponentTranslation("reskillable.rank." + skillInfo.getRank(), new Object[0])).getUnformattedComponentText());
+      String levelStr = HString.format("%d/%d [ %s ]", skillInfo.getLevel(), this.skill.getCap(), (new TextComponentTranslation("reskillable.rank." + skillInfo.getRank(), new Object[0])).getUnformattedComponentText());
       this.mc.fontRenderer.drawString(TextFormatting.BOLD + this.skill.getName(), left + 22, top + 8, 4210752);
       this.mc.fontRenderer.drawString(levelStr, left + 22, top + 18, 4210752);
       this.mc.fontRenderer.drawString((new TextComponentTranslation("reskillable.misc.skill_points", new Object[]{skillInfo.getSkillPoints()})).getUnformattedComponentText(), left + 15, top + 154, 4210752);

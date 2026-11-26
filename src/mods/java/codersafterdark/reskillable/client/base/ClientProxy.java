@@ -1,10 +1,11 @@
 package codersafterdark.reskillable.client.base;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.base.CommonProxy;
 import codersafterdark.reskillable.base.ToolTipHandler;
 import codersafterdark.reskillable.client.gui.handler.InventoryTabHandler;
 import codersafterdark.reskillable.client.gui.handler.KeyBindings;
-import java.io.File;
+import com.arlenh7.eaglercraft.forge.WorldTextFile;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -18,7 +19,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -28,21 +28,24 @@ public class ClientProxy extends CommonProxy {
    public void postInit(FMLPostInitializationEvent event) {
       super.postInit(event);
       KeyBindings.init();
-      MinecraftForge.EVENT_BUS.register(ClientTickHandler.class);
-      MinecraftForge.EVENT_BUS.register(InventoryTabHandler.class);
-      MinecraftForge.EVENT_BUS.register(HUDHandler.class);
-      MinecraftForge.EVENT_BUS.register(ToolTipHandler.class);
-      MinecraftForge.EVENT_BUS.register(this.getClass());
-      MinecraftForge.EVENT_BUS.register(new KeyBindings());
+      ClientTickHandler.register(MinecraftForge.EVENT_BUS);
+      InventoryTabHandler.register(MinecraftForge.EVENT_BUS);
+      HUDHandler.register(MinecraftForge.EVENT_BUS);
+      ToolTipHandler.register(MinecraftForge.EVENT_BUS);
+      ClientProxy.register(MinecraftForge.EVENT_BUS);
+      (new KeyBindings()).register(MinecraftForge.EVENT_BUS);
    }
 
    public EntityPlayer getClientPlayer() {
       return Minecraft.getMinecraft().player;
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ClientConnectedToServerEvent.class, ClientProxy::connect);
+   }
+
    public static void connect(ClientConnectedToServerEvent event) {
-      new AdvancementManager((File)null);
+      new AdvancementManager((WorldTextFile)null);
    }
 
    @Nullable

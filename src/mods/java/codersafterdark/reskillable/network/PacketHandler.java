@@ -11,14 +11,14 @@ public class PacketHandler {
    }
 
    public static void preInit() {
-      INSTANCE.registerMessage(MessageDataSync.class, MessageDataSync.class, ID++, Side.CLIENT);
-      INSTANCE.registerMessage(MessageDodge.class, MessageDodge.class, ID++, Side.SERVER);
-      INSTANCE.registerMessage(MessageLevelUp.class, MessageLevelUp.class, ID++, Side.SERVER);
-      INSTANCE.registerMessage(MessageLockedItem.class, MessageLockedItem.class, ID++, Side.CLIENT);
-      INSTANCE.registerMessage(MessageUnlockUnlockable.class, MessageUnlockUnlockable.class, ID++, Side.SERVER);
-      INSTANCE.registerMessage(InvalidateRequirementPacket.class, InvalidateRequirementPacket.class, ID++, Side.CLIENT);
-      INSTANCE.registerMessage(InvalidateRequirementPacket.class, InvalidateRequirementPacket.class, ID++, Side.SERVER);
-      INSTANCE.registerMessage(UnlockableToastPacket.class, UnlockableToastPacket.class, ID++, Side.CLIENT);
-      INSTANCE.registerMessage(SkillToastPacket.class, SkillToastPacket.class, ID++, Side.CLIENT);
+      INSTANCE.registerMessage(new MessageDataSync(), MessageDataSync.class, MessageDataSync::new, ID++, Side.CLIENT);
+      INSTANCE.registerMessage(new MessageDodge(), MessageDodge.class, MessageDodge::new, ID++, Side.SERVER);
+      INSTANCE.registerMessage(new MessageLevelUp(), MessageLevelUp.class, MessageLevelUp::new, ID++, Side.SERVER);
+      INSTANCE.registerMessage(new MessageLockedItem(), MessageLockedItem.class, MessageLockedItem::new, ID++, Side.CLIENT);
+      INSTANCE.registerMessage(new MessageUnlockUnlockable(), MessageUnlockUnlockable.class, MessageUnlockUnlockable::new, ID++, Side.SERVER);
+      INSTANCE.registerMessage(new InvalidateRequirementPacket(), InvalidateRequirementPacket.class, InvalidateRequirementPacket::new, ID++, Side.CLIENT);
+      INSTANCE.registerMessage(new InvalidateRequirementPacket(), InvalidateRequirementPacket.class, InvalidateRequirementPacket::new, ID++, Side.SERVER);
+      INSTANCE.registerMessage(new UnlockableToastPacket(), UnlockableToastPacket.class, UnlockableToastPacket::new, ID++, Side.CLIENT);
+      INSTANCE.registerMessage(new SkillToastPacket(), SkillToastPacket.class, SkillToastPacket::new, ID++, Side.CLIENT);
    }
 }

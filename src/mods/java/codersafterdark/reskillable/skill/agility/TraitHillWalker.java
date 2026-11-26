@@ -12,9 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 public class TraitHillWalker extends Trait {
    public TraitHillWalker() {
       super(new ResourceLocation("reskillable", "hillwalker"), 2, 2, new ResourceLocation("reskillable", "agility"), 8, "reskillable:agility|32");
-      if (FMLCommonHandler.instance().getSide().isClient()) {
-         MinecraftForge.EVENT_BUS.register(this);
-      }
 
    }
 

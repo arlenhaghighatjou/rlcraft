@@ -1,5 +1,6 @@
 package codersafterdark.reskillable.api.data;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import codersafterdark.reskillable.api.requirement.RequirementCache;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -88,7 +88,19 @@ public class PlayerDataHandler {
       public EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(ServerTickEvent.class, EventHandler::onServerTick);
+         bus.register(PlayerLoggedInEvent.class, EventHandler::onPlayerLogin);
+         bus.register(PlayerTickEvent.class, EventHandler::onPlayerTick);
+         bus.register(HarvestDropsEvent.class, EventHandler::onBlockDrops);
+         bus.register(BreakSpeed.class, EventHandler::onGetBreakSpeed);
+         bus.register(LivingDropsEvent.class, EventHandler::onMobDrops);
+         bus.register(LivingHurtEvent.class, EventHandler::onHurt);
+         bus.register(RightClickBlock.class, EventHandler::onRightClickBlock);
+         bus.register(EnderTeleportEvent.class, EventHandler::onEnderTeleport);
+         bus.register(LivingDeathEvent.class, EventHandler::onMobDeath);
+      }
+
       public static void onServerTick(ServerTickEvent event) {
          if (event.phase == Phase.END) {
             PlayerDataHandler.cleanup();
@@ -96,7 +108,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onPlayerLogin(PlayerLoggedInEvent event) {
          PlayerData data = PlayerDataHandler.get(event.player);
          if (data != null) {
@@ -106,7 +117,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onPlayerTick(PlayerTickEvent event) {
          if (event.phase == Phase.END) {
             PlayerData data = PlayerDataHandler.get(event.player);
@@ -117,7 +127,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onBlockDrops(HarvestDropsEvent event) {
          PlayerData data = PlayerDataHandler.get(event.getHarvester());
          if (data != null) {
@@ -126,7 +135,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onGetBreakSpeed(BreakSpeed event) {
          PlayerData data = PlayerDataHandler.get(event.getEntityPlayer());
          if (data != null) {
@@ -135,7 +143,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onMobDrops(LivingDropsEvent event) {
          if (event.getSource().getTrueSource() instanceof EntityPlayer) {
             PlayerData data = PlayerDataHandler.get((EntityPlayer)event.getSource().getTrueSource());
@@ -146,7 +153,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onHurt(LivingHurtEvent event) {
          if (event.getEntity() instanceof EntityPlayer) {
             PlayerData data = PlayerDataHandler.get((EntityPlayer)event.getEntity());
@@ -164,7 +170,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onRightClickBlock(RightClickBlock event) {
          PlayerData data = PlayerDataHandler.get(event.getEntityPlayer());
          if (data != null) {
@@ -173,7 +178,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onEnderTeleport(EnderTeleportEvent event) {
          if (event.getEntity() instanceof EntityPlayer) {
             PlayerData data = PlayerDataHandler.get((EntityPlayer)event.getEntity());
@@ -184,7 +188,6 @@ public class PlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public static void onMobDeath(LivingDeathEvent event) {
          if (event.getSource().getTrueSource() instanceof EntityPlayer) {
             PlayerData data = PlayerDataHandler.get((EntityPlayer)event.getSource().getTrueSource());
