@@ -94,6 +94,10 @@ public interface IForgeRegistryEntry<V>
                 Class<?> type = CUSTOM_TYPES.get(i);
                 if (type.isInstance(this)) return (Class<T>)type;
             }
+            for (Class<?> type = getClass(); type != null; type = type.getSuperclass())
+            {
+                if (type.getSuperclass() == Impl.class) return (Class<T>)type;
+            }
             throw new IllegalStateException("Unknown Forge registry entry type: " + getClass().getName());
         }
 
