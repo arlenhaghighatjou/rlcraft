@@ -1,5 +1,6 @@
 package c4.comforts.common.capability;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.concurrent.Callable;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
@@ -11,18 +12,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabilitySleepTime {
-   @CapabilityInject(CapabilitySleepTime.ISleepTime.class)
-   public static final Capability<CapabilitySleepTime.ISleepTime> SLEEP_TIME_CAP = null;
+   public static Capability<CapabilitySleepTime.ISleepTime> SLEEP_TIME_CAP = null;
    public static final EnumFacing DEFAULT_FACING = null;
    public static final ResourceLocation ID = new ResourceLocation("comforts", "sleepTime");
 
@@ -39,7 +37,7 @@ public class CapabilitySleepTime {
             instance.setSleepTime(((NBTTagLong)nbt).getLong());
          }
       }, CapabilitySleepTime.SleepTime::new);
-      MinecraftForge.EVENT_BUS.register(new CapabilitySleepTime.EventHandler());
+      (new CapabilitySleepTime.EventHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    @Nullable
@@ -55,7 +53,11 @@ public class CapabilitySleepTime {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilities);
+         bus.register(PlayerSleepInBedEvent.class, this::onPlayerSleep);
+      }
+
       public void attachCapabilities(AttachCapabilitiesEvent<Entity> evt) {
          if (evt.getObject() instanceof EntityPlayer) {
             evt.addCapability(CapabilitySleepTime.ID, CapabilitySleepTime.createProvider(new CapabilitySleepTime.SleepTime()));
@@ -63,7 +65,6 @@ public class CapabilitySleepTime {
 
       }
 
-      @SubscribeEvent
       public void onPlayerSleep(PlayerSleepInBedEvent evt) {
          EntityPlayer player = evt.getEntityPlayer();
          World world = player.getEntityWorld();
@@ -136,5 +137,9 @@ public class CapabilitySleepTime {
       public void setSleepTime(long time) {
          this.sleepTime = time;
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(CapabilitySleepTime.ISleepTime.class, capability -> SLEEP_TIME_CAP = capability);
    }
 }

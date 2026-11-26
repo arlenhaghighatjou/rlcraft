@@ -1,5 +1,6 @@
 package c4.comforts.common.capability;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import c4.comforts.common.ConfigHandler;
 import c4.comforts.common.blocks.BlockSleepingBag;
 import java.util.concurrent.Callable;
@@ -19,22 +20,19 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class CapabilitySleeping {
-   @CapabilityInject(CapabilitySleeping.ISleeping.class)
-   public static final Capability<CapabilitySleeping.ISleeping> SLEEP_CAP = null;
+   public static Capability<CapabilitySleeping.ISleeping> SLEEP_CAP = null;
    public static final EnumFacing DEFAULT_FACING = null;
    public static final ResourceLocation ID = new ResourceLocation("comforts", "sleeping");
    private static final String SLEEP_TAG = "Sleeping";
@@ -59,7 +57,7 @@ public class CapabilitySleeping {
          }
       }, CapabilitySleeping.Sleeping::new);
       if (ConfigHandler.autoUse) {
-         MinecraftForge.EVENT_BUS.register(new CapabilitySleeping.EventHandler());
+         (new CapabilitySleeping.EventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
    }
@@ -77,7 +75,12 @@ public class CapabilitySleeping {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilities);
+         bus.register(PlayerTickEvent.class, this::onPostPlayerTick);
+         bus.register(PlayerWakeUpEvent.class, this::onPlayerWakeUp);
+      }
+
       public void attachCapabilities(AttachCapabilitiesEvent<Entity> evt) {
          if (evt.getObject() instanceof EntityPlayer) {
             evt.addCapability(CapabilitySleeping.ID, CapabilitySleeping.createProvider(new CapabilitySleeping.Sleeping()));
@@ -85,7 +88,6 @@ public class CapabilitySleeping {
 
       }
 
-      @SubscribeEvent
       public void onPostPlayerTick(PlayerTickEvent evt) {
          if (evt.phase == Phase.END && evt.side == Side.SERVER) {
             EntityPlayer player = evt.player;
@@ -109,7 +111,6 @@ public class CapabilitySleeping {
 
       }
 
-      @SubscribeEvent
       public void onPlayerWakeUp(PlayerWakeUpEvent evt) {
          EntityPlayer player = evt.getEntityPlayer();
          World world = player.world;
@@ -207,5 +208,9 @@ public class CapabilitySleeping {
       public void setPos(BlockPos pos) {
          this.blockPos = pos;
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(CapabilitySleeping.ISleeping.class, capability -> SLEEP_CAP = capability);
    }
 }

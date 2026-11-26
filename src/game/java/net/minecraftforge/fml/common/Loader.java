@@ -232,6 +232,7 @@ public class Loader
         mods.add(new FMLModContainer<>("advanced-fishing", "Advanced-Fishing", "1.3.3", "", "[1.12.2]", "advanced-fishing", nightkosh.advanced_fishing.ModAdvancedFishing::new, nightkosh.advanced_fishing.ModAdvancedFishing::handleModStateEvent));
         mods.add(new FMLModContainer<>("callablehorses", "Callable Horses", "1.1.1", "required-after:forge@[13.20.1.2386,);", "[1.12.2,1.13)", "callablehorses", tschipp.callablehorses.CallableHorses::new, tschipp.callablehorses.CallableHorses::handleModStateEvent).guiFactory(tschipp.callablehorses.client.gui.GuiFactoryCallableHorses::new));
         mods.add(new FMLModContainer<>("levelup2", "Level Up! Reloaded", "${version}", "", "[1.12]", "levelup2", levelup2.LevelUp2::new, levelup2.LevelUp2::handleModStateEvent));
+        mods.add(new FMLModContainer<>("comforts", "Comforts", "1.4.1.3", "required-after:forge@[14.23.5.2776,);after:morpheus;after:toughasnails", "[1.12, 1.13)", "comforts", c4.comforts.Comforts::new, c4.comforts.Comforts::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

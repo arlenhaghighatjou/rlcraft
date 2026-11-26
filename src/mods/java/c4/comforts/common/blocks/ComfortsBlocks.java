@@ -1,14 +1,15 @@
 package c4.comforts.common.blocks;
 
+import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ComfortsBlocks {
    public static BlockSleepingBag[] SLEEPING_BAGS;
    public static BlockHammock[] HAMMOCKS;
-   @ObjectHolder("comforts:rope")
    public static BlockRope ROPE;
 
    public ComfortsBlocks() {
@@ -29,5 +30,9 @@ public class ComfortsBlocks {
    @SideOnly(Side.CLIENT)
    public static void initModels() {
       ROPE.initModel();
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("comforts:rope"), v -> ROPE = (BlockRope)v);
    }
 }

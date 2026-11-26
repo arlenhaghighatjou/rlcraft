@@ -1,18 +1,21 @@
 package c4.comforts.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import c4.comforts.common.blocks.BlockHammock;
 import c4.comforts.common.blocks.BlockSleepingBag;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderPlayerEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventHandlerClient {
    public EventHandlerClient() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Pre.class, this::onPlayerRender);
+   }
+
    public void onPlayerRender(Pre evt) {
       EntityPlayer player = evt.getEntityPlayer();
       if (player instanceof EntityOtherPlayerMP && player.isPlayerSleeping() && player.bedLocation != null) {

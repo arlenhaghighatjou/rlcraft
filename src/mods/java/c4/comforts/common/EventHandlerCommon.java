@@ -1,12 +1,11 @@
 package c4.comforts.common;
 
-import c4.comforts.Comforts;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import c4.comforts.common.blocks.BlockHammock;
 import c4.comforts.common.blocks.BlockSleepingBag;
 import c4.comforts.common.entities.EntityRest;
 import c4.comforts.common.tileentities.TileEntityHammock;
 import c4.comforts.common.util.ComfortsUtil;
-import java.lang.reflect.Method;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -24,20 +23,22 @@ import net.minecraftforge.event.entity.player.PlayerSetSpawnEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class EventHandlerCommon {
-   public static final Method WAKE_ALL_PLAYERS = ReflectionHelper.findMethod(WorldServer.class, "wakeAllPlayers", "wakeAllPlayers", new Class[0]);
-
    public EventHandlerCommon() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onPreWorldTick);
+      bus.register(SleepingTimeCheckEvent.class, this::allowDaytimeNapping);
+      bus.register(EntityMountEvent.class, this::stopResting);
+      bus.register(PlayerSetSpawnEvent.class, this::onPlayerSetSpawn);
+      bus.register(PlayerWakeUpEvent.class, EventPriority.HIGH, false, this::onPlayerWakeUp);
+   }
+
    public void onPreWorldTick(WorldTickEvent evt) {
       if (evt.phase == Phase.START && evt.world instanceof WorldServer) {
          WorldServer world = (WorldServer)evt.world;
@@ -59,18 +60,13 @@ public class EventHandlerCommon {
             }
 
             if (skipToNight) {
-               try {
-                  WAKE_ALL_PLAYERS.invoke(world);
-               } catch (Exception var11) {
-                  Comforts.logger.log(Level.ERROR, "Error trying to wake all players!" + var11.getMessage());
-               }
+               world.wakeAllPlayers();
             }
          }
       }
 
    }
 
-   @SubscribeEvent
    public void allowDaytimeNapping(SleepingTimeCheckEvent evt) {
       World world = evt.getEntityPlayer().getEntityWorld();
       long worldTime = world.getWorldTime() % 24000L;
@@ -86,7 +82,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public void stopResting(EntityMountEvent evt) {
       if (evt.isDismounting()) {
          Entity entity = evt.getEntityBeingMounted();
@@ -103,7 +98,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public void onPlayerSetSpawn(PlayerSetSpawnEvent evt) {
       World world = evt.getEntityPlayer().getEntityWorld();
       if (evt.getNewSpawn() != null) {
@@ -115,9 +109,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public void onPlayerWakeUp(PlayerWakeUpEvent evt) {
       EntityPlayer player = evt.getEntityPlayer();
       World world = player.world;

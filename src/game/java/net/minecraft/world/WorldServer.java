@@ -280,7 +280,7 @@ public class WorldServer extends World implements IThreadListener
         }
     }
 
-    protected void wakeAllPlayers()
+    public void wakeAllPlayers()
     {
         this.allPlayersSleeping = false;
 

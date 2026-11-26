@@ -1,5 +1,6 @@
 package c4.comforts.proxy;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import c4.comforts.client.EventHandlerClient;
 import c4.comforts.common.blocks.BlockHammock;
 import c4.comforts.common.blocks.BlockSleepingBag;
@@ -12,19 +13,16 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber({Side.CLIENT})
 public class ClientProxy extends CommonProxy {
    public ClientProxy() {
    }
 
    public void init(FMLInitializationEvent evt) {
       super.init(evt);
-      MinecraftForge.EVENT_BUS.register(new EventHandlerClient());
+      (new EventHandlerClient()).register(MinecraftForge.EVENT_BUS);
       ItemColors itemColors = Minecraft.getMinecraft().getItemColors();
       itemColors.registerItemColorHandler(ComfortsItems.SLEEPING_BAG.getColorFromItemstack(), new Item[]{ComfortsItems.SLEEPING_BAG});
       itemColors.registerItemColorHandler(ComfortsItems.HAMMOCK.getColorFromItemstack(), new Item[]{ComfortsItems.HAMMOCK});
@@ -40,7 +38,10 @@ public class ClientProxy extends CommonProxy {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, ClientProxy::registerModels);
+   }
+
    public static void registerModels(ModelRegistryEvent evt) {
       ComfortsBlocks.initModels();
       ComfortsItems.initModels();

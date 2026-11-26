@@ -1,5 +1,6 @@
 package c4.comforts.common.capability;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import c4.comforts.common.ConfigHandler;
 import java.util.concurrent.Callable;
 import javax.annotation.Nullable;
@@ -13,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -22,11 +22,9 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CapabilityWellRested {
-   @CapabilityInject(CapabilityWellRested.IWellRested.class)
-   public static final Capability<CapabilityWellRested.IWellRested> RESTED_CAP = null;
+   public static Capability<CapabilityWellRested.IWellRested> RESTED_CAP = null;
    public static final EnumFacing DEFAULT_FACING = null;
    public static final ResourceLocation ID = new ResourceLocation("comforts", "wellRested");
    private static final String WAKE_TAG = "wakeTime";
@@ -51,7 +49,7 @@ public class CapabilityWellRested {
          }
       }, CapabilityWellRested.WellRested::new);
       if (ConfigHandler.wellRested) {
-         MinecraftForge.EVENT_BUS.register(new CapabilityWellRested.EventHandler());
+         (new CapabilityWellRested.EventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
    }
@@ -69,7 +67,13 @@ public class CapabilityWellRested {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::attachCapabilities);
+         bus.register(Clone.class, this::onPlayerRespawn);
+         bus.register(PlayerSleepInBedEvent.class, this::onPlayerSleep);
+         bus.register(PlayerWakeUpEvent.class, this::onPlayerWakeUp);
+      }
+
       public void attachCapabilities(AttachCapabilitiesEvent<Entity> evt) {
          if (evt.getObject() instanceof EntityPlayer) {
             evt.addCapability(CapabilityWellRested.ID, CapabilityWellRested.createProvider(new CapabilityWellRested.WellRested()));
@@ -77,7 +81,6 @@ public class CapabilityWellRested {
 
       }
 
-      @SubscribeEvent
       public void onPlayerRespawn(Clone evt) {
          CapabilityWellRested.IWellRested newWellRested = CapabilityWellRested.getRested(evt.getEntityPlayer());
          CapabilityWellRested.IWellRested oldWellRested = CapabilityWellRested.getRested(evt.getOriginal());
@@ -88,7 +91,6 @@ public class CapabilityWellRested {
 
       }
 
-      @SubscribeEvent
       public void onPlayerSleep(PlayerSleepInBedEvent evt) {
          EntityPlayer player = evt.getEntityPlayer();
          if (!player.world.isRemote) {
@@ -109,7 +111,6 @@ public class CapabilityWellRested {
 
       }
 
-      @SubscribeEvent
       public void onPlayerWakeUp(PlayerWakeUpEvent evt) {
          EntityPlayer player = evt.getEntityPlayer();
          CapabilitySleepTime.ISleepTime sleepTime = CapabilitySleepTime.getSleepTime(player);
@@ -198,5 +199,9 @@ public class CapabilityWellRested {
       public void setTiredTime(long tiredTime) {
          this.tiredTime = tiredTime;
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(CapabilityWellRested.IWellRested.class, capability -> RESTED_CAP = capability);
    }
 }

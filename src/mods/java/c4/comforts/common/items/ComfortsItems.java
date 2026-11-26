@@ -1,13 +1,13 @@
 package c4.comforts.common.items;
 
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ComfortsItems {
-   @ObjectHolder("comforts:sleeping_bag")
    public static ItemSleepingBag SLEEPING_BAG;
-   @ObjectHolder("comforts:hammock")
    public static ItemHammock HAMMOCK;
 
    public ComfortsItems() {
@@ -17,5 +17,10 @@ public class ComfortsItems {
    public static void initModels() {
       SLEEPING_BAG.initModel();
       HAMMOCK.initModel();
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("comforts:sleeping_bag"), v -> SLEEPING_BAG = (ItemSleepingBag)v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("comforts:hammock"), v -> HAMMOCK = (ItemHammock)v);
    }
 }
