@@ -68,7 +68,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.BiMap;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
@@ -908,33 +907,8 @@ public class GameData
         return new ResourceLocation(prefix, name);
     }
 
-    private static Field regName;
     private static void forceRegistryName(IForgeRegistryEntry<?> entry, ResourceLocation name)
     {
-        if (regName == null)
-        {
-            try
-            {
-                regName = IForgeRegistryEntry.Impl.class.getDeclaredField("registryName");
-                regName.setAccessible(true);
-            }
-            catch (NoSuchFieldException | SecurityException e)
-            {
-                FMLLog.log.error("Could not get `registryName` field from IForgeRegistryEntry.Impl");
-                FMLLog.log.error("Registry snapshot error", e);
-                throw new RuntimeException(e);
-            }
-        }
-        try
-        {
-            regName.set(entry, name);
-        }
-        catch (IllegalArgumentException | IllegalAccessException e)
-        {
-            FMLLog.log.error("Could not set `registryName` field in IForgeRegistryEntry.Impl to `{}`", name.toString());
-            FMLLog.log.error("Registry snapshot error", e);
-            throw new RuntimeException(e);
-        }
-
+        ((IForgeRegistryEntry.Impl<?>)entry).registryName = name;
     }
 }

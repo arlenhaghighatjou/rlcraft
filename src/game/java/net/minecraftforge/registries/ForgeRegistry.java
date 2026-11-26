@@ -19,7 +19,6 @@
 
 package net.minecraftforge.registries;
 
-import java.lang.reflect.Method;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -427,17 +426,6 @@ public class ForgeRegistry<V extends IForgeRegistryEntry<V>> implements IForgeRe
 
     void validateContent(ResourceLocation registryName)
     {
-        try
-        {
-            Method method = BitSet.class.getDeclaredMethod("trimToSize");
-            method.setAccessible(true);
-            method.invoke(this.availabilityMap);
-        }
-        catch (Exception e)
-        {
-            //We don't care... Just a micro-optimization
-        }
-
         for (V obj : this)
         {
             int id = getID(obj);

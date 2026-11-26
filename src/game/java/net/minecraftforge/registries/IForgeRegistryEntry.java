@@ -61,7 +61,7 @@ public interface IForgeRegistryEntry<V>
     {
         private final Class<T> registryType = resolveRegistryType();
         public final IRegistryDelegate<T> delegate = new RegistryDelegate<T>((T)this, registryType);
-        private ResourceLocation registryName = null;
+        ResourceLocation registryName = null;
 
         private Class<T> resolveRegistryType()
         {
