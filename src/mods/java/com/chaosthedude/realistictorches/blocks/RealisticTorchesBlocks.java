@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -23,7 +24,7 @@ public class RealisticTorchesBlocks {
       torchLit = (BlockTorchLit)registerBlock(new BlockTorchLit(), "torch_lit");
       torchSmoldering = (BlockTorchSmoldering)registerBlock(new BlockTorchSmoldering(), "torch_smoldering");
       movingLightSource = (BlockMovingLightSource)registerBlock(new BlockMovingLightSource(), "moving_light_source");
-      GameRegistry.registerTileEntity(TEMovingLightSource.class, "te_moving_light_source");
+      GameRegistry.registerTileEntity(TEMovingLightSource.class, new ResourceLocation("te_moving_light_source"), TEMovingLightSource::new);
    }
 
    protected static <T extends Block> T registerBlock(T blockType, String name) {

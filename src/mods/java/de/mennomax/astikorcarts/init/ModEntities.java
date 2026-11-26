@@ -9,12 +9,14 @@ import de.mennomax.astikorcarts.entity.EntityMobCart;
 import de.mennomax.astikorcarts.entity.EntityPlowCart;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import java.util.function.Function;
 
 @ObjectHolder("astikorcarts")
 public class ModEntities {
@@ -38,12 +40,12 @@ public class ModEntities {
       }
 
       public static void registerEntities(Register<EntityEntry> event) {
-         event.getRegistry().registerAll(new EntityEntry[]{createEntry(EntityCargoCart.class, "cargocart", 80, 3, false), createEntry(EntityPlowCart.class, "plowcart", 80, 3, false), createEntry(EntityMobCart.class, "mobcart", 80, 3, false)});
+         event.getRegistry().registerAll(new EntityEntry[]{createEntry(EntityCargoCart.class, EntityCargoCart::new, "cargocart", 80, 3, false), createEntry(EntityPlowCart.class, EntityPlowCart::new, "plowcart", 80, 3, false), createEntry(EntityMobCart.class, EntityMobCart::new, "mobcart", 80, 3, false)});
       }
 
-      private static EntityEntry createEntry(Class<? extends Entity> entityClass, String name, int trackingRange, int updateFrequency, boolean sendVelocityUpdates) {
+      private static <T extends Entity> EntityEntry createEntry(Class<T> entityClass, Function<World, T> factory, String name, int trackingRange, int updateFrequency, boolean sendVelocityUpdates) {
          ResourceLocation resourceLocation = new ResourceLocation("astikorcarts", name);
-         return EntityEntryBuilder.create().entity(entityClass).id(resourceLocation, id++).name(resourceLocation.toString()).tracker(trackingRange, updateFrequency, sendVelocityUpdates).build();
+         return EntityEntryBuilder.<T>create().entity(entityClass).factory(factory).id(resourceLocation, id++).name(resourceLocation.toString()).tracker(trackingRange, updateFrequency, sendVelocityUpdates).build();
       }
    }
 }

@@ -30,8 +30,8 @@ public class CommonProxy {
    }
 
    public void preInit(FMLPreInitializationEvent ev) {
-      GameRegistry.registerTileEntity(TileEntityDisenchantmentTable.class, new ResourceLocation("disenchanter", "tiledisentchantmenttable"));
-      GameRegistry.registerTileEntity(TileEntityDisenchantmentTableAutomatic.class, new ResourceLocation("disenchanter", "tiledisentchantmenttableautomatic"));
+      GameRegistry.registerTileEntity(TileEntityDisenchantmentTable.class, new ResourceLocation("disenchanter", "tiledisentchantmenttable"), TileEntityDisenchantmentTable::new);
+      GameRegistry.registerTileEntity(TileEntityDisenchantmentTableAutomatic.class, new ResourceLocation("disenchanter", "tiledisentchantmenttableautomatic"), TileEntityDisenchantmentTableAutomatic::new);
    }
 
    public void load(FMLInitializationEvent ev) {
