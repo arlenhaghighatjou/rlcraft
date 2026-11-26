@@ -214,7 +214,7 @@ public class DimensionManager
         }
         else
         {
-            worlds.remove(id);
+            weakWorldMap.remove(worlds.remove(id));
             server.worldTickTimes.remove(id);
             FMLLog.log.info("Unloading dimension {}", id);
         }
