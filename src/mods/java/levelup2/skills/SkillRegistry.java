@@ -3,10 +3,7 @@ package levelup2.skills;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -123,7 +120,7 @@ public class SkillRegistry {
    public static void postLoadSkills() {
       for(IPlayerSkill skill : skillRegistry) {
          if (skill.hasSubscription()) {
-            MinecraftForge.EVENT_BUS.register(skill);
+            skill.register(MinecraftForge.EVENT_BUS);
          }
       }
 
@@ -404,15 +401,14 @@ public class SkillRegistry {
 
    private static SkillProperties loadFromJson(IPlayerSkill skill) {
       SkillProperties prop = null;
-      Path dir = LevelUpConfig.jsonDir.resolve("skills");
-      Path location = dir.resolve(skill.getJsonLocation() + ".json");
+      VFile2 dir = new VFile2(LevelUpConfig.jsonDir, "skills");
+      VFile2 location = new VFile2(dir, skill.getJsonLocation() + ".json");
       Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
-
-      try {
-         BufferedReader reader = Files.newBufferedReader(location);
-         prop = SkillProperties.fromJson(skill.getSkillName(), (JsonObject)JsonUtils.fromJson(gson, reader, JsonObject.class));
-      } catch (IOException var7) {
-         var7.printStackTrace();
+      String json = location.getAllChars();
+      if (json == null) {
+         System.err.println("[LEVELUP] ERROR: Cannot load skill json " + location.getPath());
+      } else {
+         prop = SkillProperties.fromJson(skill.getSkillName(), (JsonObject)JsonUtils.gsonDeserialize(gson, json, JsonObject.class));
       }
 
       return prop;

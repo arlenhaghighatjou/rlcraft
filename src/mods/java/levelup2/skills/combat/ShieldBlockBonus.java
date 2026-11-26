@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,7 +8,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ShieldBlockBonus extends BaseSkill {
    public ShieldBlockBonus() {
@@ -29,7 +29,10 @@ public class ShieldBlockBonus extends BaseSkill {
       return new ItemStack(Items.SHIELD);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, this::onDamageTaken);
+   }
+
    public void onDamageTaken(LivingHurtEvent evt) {
       if (this.isActive()) {
          if (evt.getEntityLiving() instanceof EntityPlayer) {

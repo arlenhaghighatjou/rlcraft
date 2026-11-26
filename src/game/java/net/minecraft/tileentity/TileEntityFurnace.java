@@ -243,7 +243,7 @@ public class TileEntityFurnace extends TileEntityLockable implements ITickable, 
         return 200;
     }
 
-    private boolean canSmelt()
+    public boolean canSmelt()
     {
         if (((ItemStack)this.furnaceItemStacks.get(0)).isEmpty())
         {

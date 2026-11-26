@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +9,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ArrowSpeedBonus extends BaseSkill {
    public ArrowSpeedBonus() {
@@ -30,9 +30,10 @@ public class ArrowSpeedBonus extends BaseSkill {
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.LOW, false, this::onArrowLoose);
+   }
+
    public void onArrowLoose(EntityJoinWorldEvent evt) {
       if (this.isActive()) {
          if (evt.getEntity() instanceof EntityArrow) {

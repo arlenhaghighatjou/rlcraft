@@ -2,6 +2,7 @@ package levelup2.skills;
 
 import levelup2.api.IPlayerSkill;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public abstract class BaseSkill implements IPlayerSkill {
    private int[] skillLevels = new int[0];
@@ -12,6 +13,9 @@ public abstract class BaseSkill implements IPlayerSkill {
    private boolean active = true;
 
    public BaseSkill() {
+   }
+
+   public void register(EventBus bus) {
    }
 
    public void setLevelCosts(int[] levelCosts) {

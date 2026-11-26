@@ -1,5 +1,6 @@
 package levelup2.capability;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import levelup2.api.IProcessor;
 import levelup2.player.IPlayerClass;
@@ -10,13 +11,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 
 public class PlayerCapability {
-   @CapabilityInject(IPlayerClass.class)
    public static Capability<IPlayerClass> PLAYER_CLASS = null;
-   @CapabilityInject(IProcessor.class)
    public static Capability<IProcessor> MACHINE_PROCESSING = null;
 
    public PlayerCapability() {
@@ -95,5 +93,10 @@ public class PlayerCapability {
 
       public void extraProcessing(EntityPlayer player) {
       }
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IPlayerClass.class, capability -> PLAYER_CLASS = capability);
+      CapabilityManager.INSTANCE.onRegistered(IProcessor.class, capability -> MACHINE_PROCESSING = capability);
    }
 }

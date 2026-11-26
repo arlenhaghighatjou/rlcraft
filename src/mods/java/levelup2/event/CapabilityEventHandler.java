@@ -1,5 +1,6 @@
 package levelup2.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.api.IPlayerSkill;
 import levelup2.capability.PlayerCapability;
 import levelup2.config.LevelUpConfig;
@@ -16,7 +17,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -25,7 +25,14 @@ public class CapabilityEventHandler {
    public CapabilityEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::onPlayerEntersWorld);
+      bus.register(Clone.class, this::onPlayerClone);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawn);
+      bus.register(PlayerChangedDimensionEvent.class, this::onPlayerChangedDimension);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+   }
+
    public void onPlayerEntersWorld(AttachCapabilitiesEvent<Entity> evt) {
       if (evt.getObject() instanceof EntityPlayer) {
          evt.addCapability(Library.SKILL_LOCATION, new ICapabilitySerializable<NBTTagCompound>() {
@@ -51,7 +58,6 @@ public class CapabilityEventHandler {
 
    }
 
-   @SubscribeEvent
    public void onPlayerClone(Clone evt) {
       if (!evt.isWasDeath() || !LevelUpConfig.resetClassOnDeath) {
          NBTTagCompound data = new NBTTagCompound();
@@ -61,17 +67,14 @@ public class CapabilityEventHandler {
 
    }
 
-   @SubscribeEvent
    public void onPlayerRespawn(PlayerRespawnEvent evt) {
       SkillRegistry.loadPlayer(evt.player);
    }
 
-   @SubscribeEvent
    public void onPlayerChangedDimension(PlayerChangedDimensionEvent evt) {
       SkillRegistry.loadPlayer(evt.player);
    }
 
-   @SubscribeEvent
    public void onPlayerLogin(PlayerLoggedInEvent evt) {
       if (evt.player instanceof EntityPlayerMP) {
          SkillRegistry.loadPlayer(evt.player);

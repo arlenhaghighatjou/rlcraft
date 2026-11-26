@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SwordCritBonus extends BaseSkill {
    public SwordCritBonus() {
@@ -30,7 +30,10 @@ public class SwordCritBonus extends BaseSkill {
       return new ItemStack(Items.IRON_SWORD);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, this::onHurting);
+   }
+
    public void onHurting(LivingHurtEvent evt) {
       if (this.isActive()) {
          DamageSource source = evt.getSource();

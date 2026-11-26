@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.monster.EntityMob;
@@ -7,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class XPBonusCombat extends BaseSkill {
    public XPBonusCombat() {
@@ -33,7 +33,10 @@ public class XPBonusCombat extends BaseSkill {
       return new String[0];
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingDeathEvent.class, this::getCombatBonus);
+   }
+
    public void getCombatBonus(LivingDeathEvent evt) {
       if (evt.getEntityLiving() instanceof EntityMob && evt.getSource().getTrueSource() instanceof EntityPlayer && SkillRegistry.getSkillLevel((EntityPlayer)evt.getSource().getTrueSource(), this.getSkillName()) > 0) {
          int deathXP = (int)evt.getEntityLiving().getMaxHealth();

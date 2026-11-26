@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import levelup2.util.Library;
@@ -21,7 +22,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class FishingLootBonus extends BaseSkill {
@@ -44,9 +44,10 @@ public class FishingLootBonus extends BaseSkill {
       return new ItemStack(Items.FISHING_ROD);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(RightClickItem.class, EventPriority.LOW, false, this::onFishInteract);
+   }
+
    public void onFishInteract(RightClickItem evt) {
       if (this.isActive()) {
          if (evt.getResult() != Result.DENY) {

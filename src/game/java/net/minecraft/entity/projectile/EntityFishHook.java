@@ -40,7 +40,7 @@ public class EntityFishHook extends Entity
     private int ticksInGround;
     public EntityPlayer angler;
     private int ticksInAir;
-    private int ticksCatchable;
+    public int ticksCatchable;
     private int ticksCaughtDelay;
     private int ticksCatchableDelay;
     private float fishApproachAngle;

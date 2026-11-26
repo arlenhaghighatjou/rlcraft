@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -14,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FoodHarvestBonus extends BaseSkill {
    public FoodHarvestBonus() {
@@ -36,9 +36,10 @@ public class FoodHarvestBonus extends BaseSkill {
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(BreakEvent.class, EventPriority.LOWEST, false, this::onBlockBroken);
+   }
+
    public void onBlockBroken(BreakEvent evt) {
       if (this.isActive()) {
          if (!evt.getWorld().isRemote && evt.getPlayer() != null) {

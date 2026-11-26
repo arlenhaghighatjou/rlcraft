@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Lists;
 import java.util.ConcurrentModificationException;
 import java.util.List;
@@ -27,7 +28,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,7 +52,12 @@ public class FurnaceEfficiencyBonus extends BaseSkill {
       return new ItemStack(Blocks.FURNACE);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, TileEntity.class, this::registerFurnaceCapability);
+      bus.register(RightClickBlock.class, this::onTileInteracted);
+      bus.register(WorldTickEvent.class, this::doFurnaceTicks);
+   }
+
    public void registerFurnaceCapability(AttachCapabilitiesEvent<TileEntity> evt) {
       if (evt.getObject() instanceof TileEntityFurnace) {
          final TileEntityFurnace furnace = (TileEntityFurnace)evt.getObject();
@@ -79,7 +84,6 @@ public class FurnaceEfficiencyBonus extends BaseSkill {
 
    }
 
-   @SubscribeEvent
    public void onTileInteracted(RightClickBlock evt) {
       if (!evt.getWorld().isRemote && evt.getEntityPlayer() != null) {
          EntityPlayer player = evt.getEntityPlayer();
@@ -108,7 +112,6 @@ public class FurnaceEfficiencyBonus extends BaseSkill {
 
    }
 
-   @SubscribeEvent
    public void doFurnaceTicks(WorldTickEvent evt) {
       if (!evt.world.isRemote && evt.phase != Phase.END && evt.side == Side.SERVER) {
          List<IProcessor> tiles = Lists.newArrayList();

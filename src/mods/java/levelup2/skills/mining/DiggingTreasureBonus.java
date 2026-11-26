@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.BaseSkill;
@@ -14,7 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext.Builder;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class DiggingTreasureBonus extends BaseSkill {
@@ -37,7 +37,10 @@ public class DiggingTreasureBonus extends BaseSkill {
       return new ItemStack(Items.GOLDEN_SHOVEL);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, this::dirtLooting);
+   }
+
    public void dirtLooting(HarvestDropsEvent evt) {
       if (this.isActive()) {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {

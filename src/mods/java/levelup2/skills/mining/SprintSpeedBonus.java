@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import levelup2.util.Library;
@@ -8,7 +9,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -32,7 +32,10 @@ public class SprintSpeedBonus extends BaseSkill {
       return new ItemStack(Items.RABBIT_FOOT);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::onPlayerSprint);
+   }
+
    public void onPlayerSprint(PlayerTickEvent evt) {
       if (this.isActive()) {
          if (evt.phase == Phase.START) {

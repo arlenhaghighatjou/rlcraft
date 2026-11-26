@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DrawSpeedBonus extends BaseSkill {
    public DrawSpeedBonus() {
@@ -31,9 +31,10 @@ public class DrawSpeedBonus extends BaseSkill {
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(ArrowNockEvent.class, EventPriority.LOW, false, this::onBowUse);
+   }
+
    public void onBowUse(ArrowNockEvent evt) {
       if (this.isActive()) {
          int archery = SkillRegistry.getSkillLevel(evt.getEntityPlayer(), this.getSkillName());

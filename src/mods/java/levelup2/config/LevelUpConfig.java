@@ -1,8 +1,7 @@
 package levelup2.config;
 
 import com.google.common.collect.Lists;
-import java.io.File;
-import java.nio.file.Path;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -60,17 +59,17 @@ public class LevelUpConfig {
    public static List<Ingredient> blacklistOutputs;
    private static String[] oreBlockList = new String[]{"geolosys:ore_vanilla", "geolosys:ore"};
    private static Property resetJson;
-   private static Path configDir;
-   public static Path jsonDir;
-   public static Path lootDir;
+   private static VFile2 configDir;
+   public static VFile2 jsonDir;
+   public static VFile2 lootDir;
 
    public LevelUpConfig() {
    }
 
-   public static void init(File file) {
-      configDir = file.getParentFile().toPath().resolve("levelup2");
-      jsonDir = configDir.resolve("json");
-      lootDir = jsonDir.resolve("loot_tables");
+   public static void init(VFile2 file) {
+      configDir = new VFile2(file.getParent(), "levelup2");
+      jsonDir = new VFile2(configDir, "json");
+      lootDir = new VFile2(jsonDir, "loot_tables");
       cfg = new Configuration(file);
       serverProperties = new Property[]{cfg.get("general", "Reset class on death", resetClassOnDeath, "Does the player lose all levels on death?"), cfg.get("general", "Furnace ejects bonus items", furnaceEjection, "Does the furnace eject doubled items?"), cfg.get("general", "Sword skill damage scaling", damageScaling, "Get additional attack power if a mob's max HP is over 20"), cfg.get("general", "Always drop ore chunks", alwaysDropChunks, "Always drop ore chunks on ore harvest"), cfg.get("general", "Break ores into chunks", useOreChunks, "Use ore chunks for ore doubling"), cfg.get("general", "Duplicate any ore", dupeAllOres, "All ores can be doubled, even if they don't have a chunk."), cfg.get("general", "Reclass level cost", reclassCost, "How many levels it will cost to change classes.", 0, 100), cfg.get("general", "Fortune ore doubling", fortuneOre, "Doubled ores are affected by the Fortune enchant.")};
       oreBlocks = Arrays.asList(cfg.getStringList("Special ore cases", "Whitelist", oreBlockList, "Blocks that don't have their own OreDict entry, but still drop registered ores."));
@@ -157,7 +156,7 @@ public class LevelUpConfig {
       files.add("digging/uncommon_dig");
       files.add("digging/rare_dig");
       JsonTransfer.findResources("json/loot_tables", files).stream().forEach((r) -> {
-         JsonTransfer.copyResource(r, configDir.resolve(r), resetJsonFiles);
+         JsonTransfer.copyResource(r, new VFile2(configDir, r), resetJsonFiles);
       });
       Library.registerLootTableLocations(files);
    }
@@ -172,7 +171,7 @@ public class LevelUpConfig {
       }
 
       JsonTransfer.findResources("json/skills", files).stream().forEach((r) -> {
-         JsonTransfer.copyResource(r, configDir.resolve(r), resetJsonFiles);
+         JsonTransfer.copyResource(r, new VFile2(configDir, r), resetJsonFiles);
       });
       SkillRegistry.registerSkillProperties();
    }

@@ -1,9 +1,12 @@
 package levelup2.api;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public interface IPlayerSkill {
    boolean hasSubscription();
+
+   void register(EventBus bus);
 
    String getSkillName();
 

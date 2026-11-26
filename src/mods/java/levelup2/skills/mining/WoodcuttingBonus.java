@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -9,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WoodcuttingBonus extends BaseSkill {
    public WoodcuttingBonus() {
@@ -31,7 +31,10 @@ public class WoodcuttingBonus extends BaseSkill {
       return new ItemStack(Blocks.LOG);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, this::onHarvest);
+   }
+
    public void onHarvest(HarvestDropsEvent evt) {
       if (this.isActive()) {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {

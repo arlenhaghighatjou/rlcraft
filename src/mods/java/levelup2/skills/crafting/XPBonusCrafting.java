@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -10,7 +11,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class XPBonusCrafting extends BaseSkill {
@@ -39,7 +39,10 @@ public class XPBonusCrafting extends BaseSkill {
       return new String[0];
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemCraftedEvent.class, this::onCrafting);
+   }
+
    public void onCrafting(ItemCraftedEvent evt) {
       if (SkillRegistry.getSkillLevel(evt.player, this.getSkillName()) > 0 && !this.isBlacklistedOutput(evt.crafting) && this.isNotOneItemCrafting(evt.craftMatrix)) {
          int craftingChances = this.getCraftingItems(evt.craftMatrix);

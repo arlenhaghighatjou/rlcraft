@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -7,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class WoodSpeedBonus extends MiningSpeedBonus {
    public WoodSpeedBonus() {
@@ -17,7 +17,10 @@ public class WoodSpeedBonus extends MiningSpeedBonus {
       return "levelup:woodcutting";
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(BreakSpeed.class, this::onBreak);
+   }
+
    public void onBreak(BreakSpeed evt) {
       if (this.isActive()) {
          EntityPlayer player = evt.getEntityPlayer();

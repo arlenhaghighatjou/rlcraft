@@ -1,13 +1,9 @@
 package levelup2.util;
 
-import java.io.InputStream;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.Set;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public class JsonTransfer {
    public JsonTransfer() {
@@ -24,20 +20,19 @@ public class JsonTransfer {
       return files;
    }
 
-   public static void copyResource(String from, Path to, boolean overwrite) {
-      try {
-         if (overwrite || !Files.exists(to, new LinkOption[0])) {
-            Files.createDirectories(to.getParent());
-            Files.copy(getResourcesAsStream(from), to, new CopyOption[]{StandardCopyOption.REPLACE_EXISTING});
+   public static void copyResource(String from, VFile2 to, boolean overwrite) {
+      if (overwrite || !to.exists()) {
+         byte[] data = getResourceBytes(from);
+         if (data == null) {
+            System.err.println("[LEVELUP] ERROR: Missing bundled resource " + from);
+         } else {
+            to.setAllBytes(data);
          }
-      } catch (Exception var4) {
-         var4.printStackTrace();
       }
 
    }
 
-   public static InputStream getResourcesAsStream(String location) {
-      InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("/" + location);
-      return in != null ? in : JsonTransfer.class.getResourceAsStream("/" + location);
+   public static byte[] getResourceBytes(String location) {
+      return EagRuntime.getResourceBytes("/levelup2/" + location);
    }
 }

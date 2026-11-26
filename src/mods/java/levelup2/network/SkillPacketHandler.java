@@ -1,5 +1,6 @@
 package levelup2.network;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import java.util.Map;
@@ -18,7 +19,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -42,21 +42,30 @@ public class SkillPacketHandler {
    public static void init() {
       SkillPacketHandler handler = new SkillPacketHandler();
       initChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[0]);
-      initChannel.register(handler);
+      handler.register(initChannel);
       classChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[1]);
-      classChannel.register(handler);
+      handler.register(classChannel);
       skillChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[2]);
-      skillChannel.register(handler);
+      handler.register(skillChannel);
       configChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[3]);
-      configChannel.register(handler);
+      handler.register(configChannel);
       propertyChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[4]);
-      propertyChannel.register(handler);
+      handler.register(propertyChannel);
       refreshChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel(CHANNELS[5]);
-      refreshChannel.register(handler);
-      MinecraftForge.EVENT_BUS.register(handler);
+      handler.register(refreshChannel);
+      handler.register(MinecraftForge.EVENT_BUS);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ServerCustomPacketEvent.class, this::onServerPacket);
+      bus.register(ClientCustomPacketEvent.class, this::onClientPacket);
+   }
+
+   public void register(FMLEventChannel channel) {
+      channel.register(ServerCustomPacketEvent.class, this::onServerPacket);
+      channel.register(ClientCustomPacketEvent.class, this::onClientPacket);
+   }
+
    public void onServerPacket(ServerCustomPacketEvent evt) {
       ByteBuf in = evt.getPacket().payload();
       EntityPlayerMP player = ((NetHandlerPlayServer)evt.getHandler()).player;
@@ -72,7 +81,6 @@ public class SkillPacketHandler {
 
    }
 
-   @SubscribeEvent
    public void onClientPacket(ClientCustomPacketEvent evt) {
       ByteBuf in = evt.getPacket().payload();
       if (evt.getPacket().channel().equals(CHANNELS[0])) {

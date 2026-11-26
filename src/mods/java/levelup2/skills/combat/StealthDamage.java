@@ -1,5 +1,6 @@
 package levelup2.skills.combat;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,7 +10,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class StealthDamage extends BaseSkill {
    public StealthDamage() {
@@ -31,7 +31,10 @@ public class StealthDamage extends BaseSkill {
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, this::onDamage);
+   }
+
    public void onDamage(LivingHurtEvent evt) {
       if (this.isActive()) {
          DamageSource src = evt.getSource();

@@ -1,5 +1,10 @@
 package levelup2;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import levelup2.api.IProcessor;
 import levelup2.capability.PlayerCapability;
@@ -20,14 +25,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -40,27 +40,36 @@ import net.minecraftforge.registries.IForgeRegistry;
 )
 public class LevelUp2 {
    public static final String ID = "levelup2";
-   @Instance("levelup2")
    public static LevelUp2 INSTANCE;
-   @SidedProxy(
-      clientSide = "levelup2.proxy.ClientProxy",
-      serverSide = "levelup2.proxy.CommonProxy"
-   )
    public static CommonProxy proxy;
 
    public LevelUp2() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         INSTANCE = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new levelup2.proxy.ClientProxy() : new levelup2.proxy.CommonProxy();
+         levelup2.capability.PlayerCapability.registerCapabilities();
+         levelup2.LevelUp2.RegistryEventHandler.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent evt) {
       LevelUpConfig.init(evt.getSuggestedConfigurationFile());
       CapabilityManager.INSTANCE.register(IPlayerClass.class, new PlayerCapability.CapabilityPlayerClass(), PlayerExtension.class);
       CapabilityManager.INSTANCE.register(IProcessor.class, new PlayerCapability.CapabilityProcessorClass(), PlayerCapability.CapabilityProcessorDefault.class);
-      MinecraftForge.EVENT_BUS.register(new CapabilityEventHandler());
+      (new CapabilityEventHandler()).register(MinecraftForge.EVENT_BUS);
       proxy.registerItemMeshes();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent evt) {
       proxy.registerGui();
       SkillPacketHandler.init();
@@ -68,7 +77,6 @@ public class LevelUp2 {
       proxy.registerColors();
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent evt) {
       LevelUpConfig.getBlacklistOutputs();
       SkillRegistry.postLoadSkills();
@@ -76,14 +84,15 @@ public class LevelUp2 {
       SkillRegistry.registerRecipes();
    }
 
-   @EventBusSubscriber(
-      modid = "levelup2"
-   )
    public static class RegistryEventHandler {
       public RegistryEventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Item.class, RegistryEventHandler::registerItems);
+         bus.registerGeneric(Register.class, IRecipe.class, RegistryEventHandler::registerRecipes);
+      }
+
       public static void registerItems(Register<Item> evt) {
          IForgeRegistry<Item> reg = evt.getRegistry();
          registerItem(reg, SkillRegistry.surfaceOreChunk);
@@ -92,7 +101,6 @@ public class LevelUp2 {
          registerItem(reg, SkillRegistry.respecBook);
       }
 
-      @SubscribeEvent
       public static void registerRecipes(Register<IRecipe> evt) {
          IForgeRegistry<IRecipe> reg = evt.getRegistry();
          reg.register((new ShapelessOreRecipe(new ResourceLocation("levelup2", "reclaim"), new ItemStack(Blocks.GRAVEL, 4), new Object[]{Items.FLINT, Items.FLINT, Items.FLINT, Items.FLINT})).setRegistryName(new ResourceLocation("levelup2", "gravel")));

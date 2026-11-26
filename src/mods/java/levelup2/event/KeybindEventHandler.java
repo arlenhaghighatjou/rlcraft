@@ -1,5 +1,6 @@
 package levelup2.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.LevelUp2;
 import levelup2.gui.GuiSkills;
 import levelup2.gui.GuiSpecialization;
@@ -8,7 +9,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class KeybindEventHandler {
@@ -19,7 +19,10 @@ public class KeybindEventHandler {
       ClientRegistry.registerKeyBinding(this.keybind);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, this::openGui);
+   }
+
    public void openGui(KeyInputEvent evt) {
       if (this.keybind.isKeyDown() && Minecraft.getMinecraft().currentScreen == null && Minecraft.getMinecraft().player != null) {
          if (!SkillRegistry.getPlayer(LevelUp2.proxy.getPlayer()).hasClass() && LevelUp2.proxy.getPlayer().experienceLevel > 4) {

@@ -231,6 +231,7 @@ public class Loader
         mods.add(new FMLModContainer<>("bloodmoon", "Bloodmoon", "1.5.3", "", "[1.12,1.13)", "bloodmoon", lumien.bloodmoon.Bloodmoon::new, lumien.bloodmoon.Bloodmoon::handleModStateEvent));
         mods.add(new FMLModContainer<>("advanced-fishing", "Advanced-Fishing", "1.3.3", "", "[1.12.2]", "advanced-fishing", nightkosh.advanced_fishing.ModAdvancedFishing::new, nightkosh.advanced_fishing.ModAdvancedFishing::handleModStateEvent));
         mods.add(new FMLModContainer<>("callablehorses", "Callable Horses", "1.1.1", "required-after:forge@[13.20.1.2386,);", "[1.12.2,1.13)", "callablehorses", tschipp.callablehorses.CallableHorses::new, tschipp.callablehorses.CallableHorses::handleModStateEvent).guiFactory(tschipp.callablehorses.client.gui.GuiFactoryCallableHorses::new));
+        mods.add(new FMLModContainer<>("levelup2", "Level Up! Reloaded", "${version}", "", "[1.12]", "levelup2", levelup2.LevelUp2::new, levelup2.LevelUp2::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

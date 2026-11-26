@@ -1,5 +1,6 @@
 package levelup2.proxy;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.config.LevelUpConfig;
 import levelup2.event.KeybindEventHandler;
 import levelup2.gui.GuiSpecialization;
@@ -16,14 +17,13 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy {
    public ClientProxy() {
    }
 
    public void registerGui() {
-      MinecraftForge.EVENT_BUS.register(KeybindEventHandler.INSTANCE);
+      KeybindEventHandler.INSTANCE.register(MinecraftForge.EVENT_BUS);
    }
 
    public EntityPlayer getPlayer() {
@@ -31,14 +31,17 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void registerItemMeshes() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public void openSpecializationGui() {
       Minecraft.getMinecraft().displayGuiScreen(GuiSpecialization.withRespec());
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerModels(ModelRegistryEvent evt) {
       this.setModelLocation(SkillRegistry.surfaceOreChunk, "inventory");
       this.setModelLocation(SkillRegistry.netherOreChunk, "inventory");

@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import levelup2.util.Library;
@@ -7,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class XPBonusMining extends BaseSkill {
@@ -34,7 +34,10 @@ public class XPBonusMining extends BaseSkill {
       return new String[0];
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, this::giveMiningXP);
+   }
+
    public void giveMiningXP(HarvestDropsEvent evt) {
       if (evt.getHarvester() != null && !evt.getWorld().isRemote && SkillRegistry.getSkillLevel(evt.getHarvester(), this.getSkillName()) > 0) {
          IBlockState state = evt.getState();

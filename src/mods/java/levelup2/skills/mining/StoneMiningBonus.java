@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import levelup2.config.LevelUpConfig;
 import levelup2.skills.BaseSkill;
@@ -16,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -41,7 +41,12 @@ public class StoneMiningBonus extends BaseSkill {
       return new ItemStack(Blocks.GOLD_ORE);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, this::onHarvest);
+      bus.register(RightClickBlock.class, this::stopPlacingDupes);
+      bus.register(ItemTooltipEvent.class, this::addTooltip);
+   }
+
    public void onHarvest(HarvestDropsEvent evt) {
       if (this.isActive()) {
          if (evt.getHarvester() != null && !evt.getWorld().isRemote) {
@@ -54,7 +59,6 @@ public class StoneMiningBonus extends BaseSkill {
       }
    }
 
-   @SubscribeEvent
    public void stopPlacingDupes(RightClickBlock evt) {
       ItemStack stack = evt.getItemStack();
       if (!stack.isEmpty() && stack.hasTagCompound() && stack.getTagCompound().hasKey("NoPlace") && Library.isOre(stack)) {
@@ -64,7 +68,6 @@ public class StoneMiningBonus extends BaseSkill {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void addTooltip(ItemTooltipEvent evt) {
       ItemStack stack = evt.getItemStack();
       if (stack.hasTagCompound() && stack.getTagCompound().hasKey("NoPlace")) {

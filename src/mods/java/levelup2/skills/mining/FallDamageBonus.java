@@ -1,5 +1,6 @@
 package levelup2.skills.mining;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,7 +8,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FallDamageBonus extends BaseSkill {
    public FallDamageBonus() {
@@ -29,7 +29,10 @@ public class FallDamageBonus extends BaseSkill {
       return new ItemStack(Items.FEATHER);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, this::reduceFallDamage);
+   }
+
    public void reduceFallDamage(LivingHurtEvent evt) {
       if (this.isActive()) {
          if (evt.getSource() == DamageSource.FALL && evt.getEntityLiving() instanceof EntityPlayer) {

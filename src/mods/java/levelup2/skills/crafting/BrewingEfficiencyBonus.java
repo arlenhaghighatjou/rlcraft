@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.api.IProcessor;
 import levelup2.capability.CapabilityBrewingStand;
 import levelup2.capability.PlayerCapability;
@@ -14,7 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BrewingEfficiencyBonus extends BaseSkill {
    public BrewingEfficiencyBonus() {
@@ -36,7 +36,10 @@ public class BrewingEfficiencyBonus extends BaseSkill {
       return new ItemStack(Items.BREWING_STAND);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, TileEntity.class, this::registerStandCapability);
+   }
+
    public void registerStandCapability(AttachCapabilitiesEvent<TileEntity> evt) {
       if (evt.getObject() instanceof TileEntityBrewingStand) {
          final TileEntityBrewingStand stand = (TileEntityBrewingStand)evt.getObject();
