@@ -1,9 +1,9 @@
 package hunternif.mc.atlas.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import org.apache.logging.log4j.util.Supplier;
 
 public class Log {
    private static final Logger LOGGER = LogManager.getLogger("antiqueatlas");
@@ -12,9 +12,11 @@ public class Log {
    }
 
    private static void log(Level level, Throwable ex, String msg, Object... data) {
-      LOGGER.log(level, () -> {
-         return data == null ? msg : String.format(msg, data);
-      }, ex);
+      LOGGER.log(level, data == null ? msg : HString.format(msg, data));
+      if (ex != null) {
+         LOGGER.log(level, ex);
+      }
+
    }
 
    public static void debug(String msg, Object... data) {

@@ -3,7 +3,7 @@ package hunternif.mc.atlas.ext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import hunternif.mc.atlas.util.AbstractJSONConfig;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 public class ExtTileConfig extends AbstractJSONConfig<ExtTileIdMap> {
    private static final int VERSION = 1;
 
-   public ExtTileConfig(File file) {
+   public ExtTileConfig(VFile2 file) {
       super(file);
    }
 

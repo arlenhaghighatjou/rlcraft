@@ -23,7 +23,7 @@ public class DimensionData implements ITileStorage {
    private int browsingY;
    private double browsingZoom = 0.5D;
    private final Map<IntVec2, TileGroup> tileGroups = new ConcurrentHashMap(2, 0.75F, 2);
-   private final Map<Thread, IntVec2> thread2KeyMap = new ConcurrentHashMap(2, 0.75F, 2);
+   private final IntVec2 key = new IntVec2(0.0D, 0.0D);
    private final Rect scope = new Rect();
 
    public DimensionData(AtlasData parent, int dimension) {
@@ -77,9 +77,7 @@ public class DimensionData implements ITileStorage {
    }
 
    private IntVec2 getKey() {
-      return (IntVec2)this.thread2KeyMap.computeIfAbsent(Thread.currentThread(), (k) -> {
-         return new IntVec2(0.0D, 0.0D);
-      });
+      return this.key;
    }
 
    public void setTile(int x, int y, Tile tile) {

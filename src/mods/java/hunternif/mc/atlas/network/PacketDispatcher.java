@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.network;
 
+import java.util.function.Supplier;
 import hunternif.mc.atlas.network.bidirectional.DeleteMarkerPacket;
 import hunternif.mc.atlas.network.bidirectional.PutBiomeTilePacket;
 import hunternif.mc.atlas.network.client.DeleteCustomGlobalTilePacket;
@@ -32,31 +33,32 @@ public class PacketDispatcher {
    }
 
    public static void registerPackets() {
-      registerMessage(DeleteMarkerPacket.class);
-      registerMessage(PutBiomeTilePacket.class);
-      registerMessage(MapDataPacket.class);
-      registerMessage(TileGroupsPacket.class);
-      registerMessage(ShortDimensionUpdatePacket.class);
-      registerMessage(TileNameIDPacket.class);
-      registerMessage(ShortTilesPacket.class);
-      registerMessage(MarkersPacket.class);
-      registerMessage(DeleteCustomGlobalTilePacket.class);
-      registerMessage(AddMarkerPacket.class);
-      registerMessage(RegisterTileIdPacket.class);
-      registerMessage(BrowsingPositionPacket.class);
-      registerMessage(IntTilesPacket.class);
-      registerMessage(IntDimensionUpdatePacket.class);
-      registerMessage(OptionalMarkerPacket.class);
+      registerMessage(DeleteMarkerPacket.class, DeleteMarkerPacket::new);
+      registerMessage(PutBiomeTilePacket.class, PutBiomeTilePacket::new);
+      registerMessage(MapDataPacket.class, MapDataPacket::new);
+      registerMessage(TileGroupsPacket.class, TileGroupsPacket::new);
+      registerMessage(ShortDimensionUpdatePacket.class, ShortDimensionUpdatePacket::new);
+      registerMessage(TileNameIDPacket.class, TileNameIDPacket::new);
+      registerMessage(ShortTilesPacket.class, ShortTilesPacket::new);
+      registerMessage(MarkersPacket.class, MarkersPacket::new);
+      registerMessage(DeleteCustomGlobalTilePacket.class, DeleteCustomGlobalTilePacket::new);
+      registerMessage(AddMarkerPacket.class, AddMarkerPacket::new);
+      registerMessage(RegisterTileIdPacket.class, RegisterTileIdPacket::new);
+      registerMessage(BrowsingPositionPacket.class, BrowsingPositionPacket::new);
+      registerMessage(IntTilesPacket.class, IntTilesPacket::new);
+      registerMessage(IntDimensionUpdatePacket.class, IntDimensionUpdatePacket::new);
+      registerMessage(OptionalMarkerPacket.class, OptionalMarkerPacket::new);
    }
 
-   private static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(Class<T> clazz) {
-      if (AbstractMessage.AbstractClientMessage.class.isAssignableFrom(clazz)) {
-         dispatcher.registerMessage(clazz, clazz, packetId++, Side.CLIENT);
-      } else if (AbstractMessage.AbstractServerMessage.class.isAssignableFrom(clazz)) {
-         dispatcher.registerMessage(clazz, clazz, packetId++, Side.SERVER);
+   private static <T extends AbstractMessage<T> & IMessageHandler<T, IMessage>> void registerMessage(Class<T> clazz, Supplier<T> factory) {
+      T handler = factory.get();
+      if (handler instanceof AbstractMessage.AbstractClientMessage) {
+         dispatcher.registerMessage(handler, clazz, factory, packetId++, Side.CLIENT);
+      } else if (handler instanceof AbstractMessage.AbstractServerMessage) {
+         dispatcher.registerMessage(handler, clazz, factory, packetId++, Side.SERVER);
       } else {
-         dispatcher.registerMessage(clazz, clazz, packetId, Side.CLIENT);
-         dispatcher.registerMessage(clazz, clazz, packetId++, Side.SERVER);
+         dispatcher.registerMessage(handler, clazz, factory, packetId, Side.CLIENT);
+         dispatcher.registerMessage(factory.get(), clazz, factory, packetId++, Side.SERVER);
       }
 
    }

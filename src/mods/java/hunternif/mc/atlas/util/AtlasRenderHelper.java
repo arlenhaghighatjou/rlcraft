@@ -1,5 +1,7 @@
 package hunternif.mc.atlas.util;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -60,5 +62,42 @@ public class AtlasRenderHelper {
       float g = (float)(color >> 8 & 255) / 256.0F;
       float b = (float)(color & 255) / 256.0F;
       GlStateManager.color(r, g, b, alpha);
+   }
+
+   public static void beginClip(int x, int y, int width, int height) {
+      ScaledResolution resolution = new ScaledResolution(Minecraft.getMinecraft());
+      int screenWidth = resolution.getScaledWidth();
+      int screenHeight = resolution.getScaledHeight();
+      GlStateManager.clear(RealOpenGLEnums.GL_DEPTH_BUFFER_BIT);
+      GlStateManager.enableDepth();
+      GlStateManager.depthMask(true);
+      GlStateManager.depthFunc(RealOpenGLEnums.GL_ALWAYS);
+      GlStateManager.colorMask(false, false, false, false);
+      GlStateManager.disableTexture2D();
+      Tessellator tessellator = Tessellator.getInstance();
+      WorldRenderer buffer = tessellator.getBuffer();
+      buffer.begin(RealOpenGLEnums.GL_QUADS, DefaultVertexFormats.POSITION);
+      clipQuad(buffer, 0, 0, screenWidth, y);
+      clipQuad(buffer, 0, y + height, screenWidth, screenHeight);
+      clipQuad(buffer, 0, y, x, y + height);
+      clipQuad(buffer, x + width, y, screenWidth, y + height);
+      tessellator.draw();
+      GlStateManager.enableTexture2D();
+      GlStateManager.colorMask(true, true, true, true);
+      GlStateManager.depthFunc(RealOpenGLEnums.GL_LEQUAL);
+      GlStateManager.depthMask(false);
+   }
+
+   public static void endClip() {
+      GlStateManager.depthMask(true);
+      GlStateManager.clear(RealOpenGLEnums.GL_DEPTH_BUFFER_BIT);
+      GlStateManager.disableDepth();
+   }
+
+   private static void clipQuad(WorldRenderer buffer, int left, int top, int right, int bottom) {
+      buffer.pos((double)left, (double)top, 100.0D).endVertex();
+      buffer.pos((double)left, (double)bottom, 100.0D).endVertex();
+      buffer.pos((double)right, (double)bottom, 100.0D).endVertex();
+      buffer.pos((double)right, (double)top, 100.0D).endVertex();
    }
 }

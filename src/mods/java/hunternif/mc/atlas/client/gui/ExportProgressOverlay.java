@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.util.ExportImageUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -9,7 +10,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,7 +19,10 @@ public enum ExportProgressOverlay {
    private ExportProgressOverlay() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::draw);
+   }
+
    @SideOnly(Side.CLIENT)
    public void draw(Post event) {
       int x = event.getResolution().getScaledWidth() - 40;

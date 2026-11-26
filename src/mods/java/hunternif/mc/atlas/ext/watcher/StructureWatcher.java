@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.ext.watcher;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Sets;
 import hunternif.mc.atlas.util.Log;
 import java.util.Set;
@@ -9,7 +10,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Post;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class StructureWatcher {
@@ -17,17 +17,18 @@ public class StructureWatcher {
    private final Set<IStructureWatcher> structureWatchers = Sets.newHashSet();
 
    public StructureWatcher() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(Load.class, EventPriority.LOWEST, false, this::onWorldLoad);
+      bus.register(Post.class, this::onPopulateChunk);
+   }
+
    public void onWorldLoad(Load event) {
       this.handlePotential(event.getWorld());
    }
 
-   @SubscribeEvent
    public void onPopulateChunk(Post event) {
       this.handlePotential(event.getWorld());
    }

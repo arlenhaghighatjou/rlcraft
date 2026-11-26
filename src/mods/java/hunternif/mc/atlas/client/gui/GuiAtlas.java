@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.SettingsConfig;
 import hunternif.mc.atlas.api.AtlasAPI;
@@ -29,7 +30,6 @@ import hunternif.mc.atlas.util.ExportImageUtil;
 import hunternif.mc.atlas.util.Log;
 import hunternif.mc.atlas.util.MathUtil;
 import hunternif.mc.atlas.util.Rect;
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -51,12 +51,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.util.text.event.ClickEvent.Action;
 import net.minecraftforge.common.MinecraftForge;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.GL11;
 
 public class GuiAtlas extends GuiComponent {
    public static final int WIDTH = 310;
@@ -160,7 +157,6 @@ public class GuiAtlas extends GuiComponent {
    private int zoomLevelOne = 8;
    private int zoomLevel;
    private String[] zoomNames;
-   private Thread exportThread;
 
    public GuiAtlas() {
       this.zoomLevel = this.zoomLevelOne;
@@ -204,10 +200,7 @@ public class GuiAtlas extends GuiComponent {
       this.addChild(this.btnExportPng).offsetGuiCoords(300, 75);
       this.btnExportPng.addListener((button) -> {
          if (this.stack != null || !SettingsConfig.gameplay.itemNeeded) {
-            this.exportThread = new Thread(() -> {
-               this.exportImage(this.getAtlasID());
-            }, "Atlas file export thread");
-            this.exportThread.start();
+            this.exportImage(this.getAtlasID());
          }
 
       });
@@ -332,42 +325,30 @@ public class GuiAtlas extends GuiComponent {
       boolean showMarkers = !this.state.is(this.HIDING_MARKERS);
       this.state.switchTo(this.EXPORTING_IMAGE);
       ExportImageUtil.isExporting = true;
-      File screenshot_folder = new File(Minecraft.getMinecraft().mcDataDir, "screenshots");
-      if (!screenshot_folder.isDirectory()) {
-         screenshot_folder.mkdir();
-      }
-
       String outputname = "atlas-" + DATE_FORMAT.format(new Date());
-      File file = new File(screenshot_folder, outputname + ".png");
+      String file = outputname + ".png";
+      try {
+         Log.info("Exporting image from Atlas #%d to file %s", atlasID, file);
+         ExportImageUtil.exportPngImage(this.biomeData, this.localMarkersData, file, showMarkers);
+         Log.info("Finished exporting image");
+         printSuccessToChat(file);
+      } catch (AtlasTooLargeException var13) {
+         Log.warn(var13, "Atlas is too large");
+         printLocalizedMessageToChat("gui.antiqueatlas.export.atlasTooLarge");
+         ExportImageUtil.isExporting = false;
+      } catch (OutOfMemoryError var14) {
+         Log.warn(var14, "Image is too large, trying to export in strips");
 
-      for(int i = 1; file.exists(); ++i) {
-         file = new File(screenshot_folder, outputname + "_" + i + ".png");
-      }
-
-      if (file != null) {
          try {
-            Log.info("Exporting image from Atlas #%d to file %s", atlasID, file.getAbsolutePath());
-            ExportImageUtil.exportPngImage(this.biomeData, this.localMarkersData, file, showMarkers);
-            Log.info("Finished exporting image");
-            printSuccessToChat(file);
-         } catch (AtlasTooLargeException var13) {
-            Log.warn(var13, "Atlas is too large");
-            printLocalizedMessageToChat("gui.antiqueatlas.export.atlasTooLarge");
+            ExportImageUtil.exportPngImageTooLarge(this.biomeData, this.localMarkersData, file, showMarkers);
+         } catch (OutOfMemoryError var12) {
+            int minX = (this.biomeData.getScope().minX - 1) * 16;
+            int minY = (this.biomeData.getScope().minY - 1) * 16;
+            int outWidth = (this.biomeData.getScope().maxX + 2) * 16 - minX;
+            int outHeight = (this.biomeData.getScope().maxY + 2) * 16 - minY;
+            Log.error(var12, "Image is STILL too large, how massive is this map?! Answer: (%dx%d)", outWidth, outHeight);
+            printLocalizedMessageToChat("gui.antiqueatlas.export.tooLarge");
             ExportImageUtil.isExporting = false;
-         } catch (OutOfMemoryError var14) {
-            Log.warn(var14, "Image is too large, trying to export in strips");
-
-            try {
-               ExportImageUtil.exportPngImageTooLarge(this.biomeData, this.localMarkersData, file, showMarkers);
-            } catch (OutOfMemoryError var12) {
-               int minX = (this.biomeData.getScope().minX - 1) * 16;
-               int minY = (this.biomeData.getScope().minY - 1) * 16;
-               int outWidth = (this.biomeData.getScope().maxX + 2) * 16 - minX;
-               int outHeight = (this.biomeData.getScope().maxY + 2) * 16 - minY;
-               Log.error(var12, "Image is STILL too large, how massive is this map?! Answer: (%dx%d)", outWidth, outHeight);
-               printLocalizedMessageToChat("gui.antiqueatlas.export.tooLarge");
-               ExportImageUtil.isExporting = false;
-            }
          }
       }
 
@@ -555,7 +536,7 @@ public class GuiAtlas extends GuiComponent {
                elapsed += (double)(this.renderTimes[i + 1] - this.renderTimes[i]);
             }
 
-            System.out.printf("GuiAtlas avg. render time: %.3f\n", elapsed / (double)this.renderTimes.length);
+            System.out.print(HString.format("GuiAtlas avg. render time: %.3f\n", elapsed / (double)this.renderTimes.length));
          }
       }
 
@@ -567,8 +548,7 @@ public class GuiAtlas extends GuiComponent {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 0.5F);
          }
 
-         GL11.glEnable(3089);
-         GL11.glScissor((this.getGuiX() + 17) * this.screenScale, this.mc.displayHeight - (this.getGuiY() + 11 + 194) * this.screenScale, 276 * this.screenScale, 194 * this.screenScale);
+         AtlasRenderHelper.beginClip(this.getGuiX() + 17, this.getGuiY() + 11, 276, 194);
          GlStateManager.enableBlend();
          GlStateManager.blendFunc(770, 771);
          int mapStartX = MathUtil.roundToBase((int)Math.floor(-(138.0D + (double)this.mapOffsetX + (double)(2 * this.tileHalfSize)) / this.mapScale / 16.0D), this.tile2ChunkScale);
@@ -607,7 +587,7 @@ public class GuiAtlas extends GuiComponent {
             }
          }
 
-         GL11.glDisable(3089);
+         AtlasRenderHelper.endClip();
          GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
          AtlasRenderHelper.drawFullTexture(Textures.BOOK_FRAME, (double)this.getGuiX(), (double)this.getGuiY(), 310, 218);
          this.renderScaleOverlay(deltaMillis);
@@ -806,17 +786,8 @@ public class GuiAtlas extends GuiComponent {
       return SettingsConfig.gameplay.itemNeeded ? this.stack.getItemDamage() : this.player.getUniqueID().hashCode();
    }
 
-   private static void printSuccessToChat(File file) {
-      ITextComponent text = new TextComponentString(file.getName());
-
-      String path;
-      try {
-         path = file.getCanonicalFile().getAbsolutePath();
-      } catch (IOException var4) {
-         path = file.getAbsolutePath();
-      }
-
-      text.getStyle().setClickEvent(new ClickEvent(Action.OPEN_FILE, path));
+   private static void printSuccessToChat(String file) {
+      ITextComponent text = new TextComponentString(file);
       text.getStyle().setUnderlined(Boolean.valueOf(true));
       TextComponentTranslation post = new TextComponentTranslation("gui.antiqueatlas.export.success", new Object[]{text});
       Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(post);

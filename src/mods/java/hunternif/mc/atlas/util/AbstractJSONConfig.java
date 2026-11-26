@@ -2,12 +2,12 @@ package hunternif.mc.atlas.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public abstract class AbstractJSONConfig<T extends SaveData> implements Config<T> {
-   private final File file;
+   private final VFile2 file;
 
-   protected AbstractJSONConfig(File file) {
+   protected AbstractJSONConfig(VFile2 file) {
       this.file = file;
    }
 

@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiComponent extends GuiScreen {
@@ -390,16 +389,7 @@ public class GuiComponent extends GuiScreen {
    }
 
    private void drawHoveringText2(List<String> lines, int x, int y, FontRenderer font) {
-      boolean stencilEnabled = GL11.glIsEnabled(2960);
-      if (stencilEnabled) {
-         GL11.glDisable(2960);
-      }
-
       GuiUtils.drawHoveringText(lines, x, y, this.width, this.height, -1, font);
-      if (stencilEnabled) {
-         GL11.glEnable(2960);
-      }
-
    }
 
    private GuiComponent getTopLevelParent() {

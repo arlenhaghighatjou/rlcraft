@@ -1,12 +1,12 @@
 package hunternif.mc.atlas.registry;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import hunternif.mc.atlas.util.BitMatrix;
 import hunternif.mc.atlas.util.Log;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 public class MarkerType extends IRegistryEntry.Impl {
    private ResourceLocation[] icons;
@@ -149,13 +149,13 @@ public class MarkerType extends IRegistryEntry.Impl {
 
          try {
             iresource = Minecraft.getMinecraft().getResourceManager().getResource(this.icons[i]);
-            BufferedImage bufferedimage = TextureUtil.readBufferedImage(iresource.getInputStream());
-            this.iconSizes[i] = Math.min(bufferedimage.getWidth(), bufferedimage.getHeight());
-            BitMatrix matrix = new BitMatrix(bufferedimage.getWidth(), bufferedimage.getHeight(), false);
+            ImageData bufferedimage = TextureUtil.readBufferedImage(iresource.getInputStream());
+            this.iconSizes[i] = Math.min(bufferedimage.width, bufferedimage.height);
+            BitMatrix matrix = new BitMatrix(bufferedimage.width, bufferedimage.height, false);
 
-            for(int x = 0; x < bufferedimage.getWidth(); ++x) {
-               for(int y = 0; y < bufferedimage.getHeight(); ++y) {
-                  int color = bufferedimage.getRGB(x, y);
+            for(int x = 0; x < bufferedimage.width; ++x) {
+               for(int y = 0; y < bufferedimage.height; ++y) {
+                  int color = bufferedimage.pixels[y * bufferedimage.width + x];
                   int alpha = color >> 24 & 255;
                   if (alpha >= ALPHA_THRESHOLD) {
                      matrix.set(x, y, true);

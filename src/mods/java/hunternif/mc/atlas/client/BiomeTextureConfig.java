@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.util.AbstractJSONConfig;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,7 +25,7 @@ public class BiomeTextureConfig extends AbstractJSONConfig<BiomeTextureMap> {
    private static final int VERSION = 2;
    private final TextureSetMap textureSetMap;
 
-   public BiomeTextureConfig(File file, TextureSetMap textureSetMap) {
+   public BiomeTextureConfig(VFile2 file, TextureSetMap textureSetMap) {
       super(file);
       this.textureSetMap = textureSetMap;
    }

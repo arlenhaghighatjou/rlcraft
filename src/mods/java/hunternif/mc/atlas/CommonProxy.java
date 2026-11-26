@@ -1,10 +1,12 @@
 package hunternif.mc.atlas;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.core.BiomeDetectorBase;
 import hunternif.mc.atlas.ext.ExtTileConfig;
 import hunternif.mc.atlas.ext.ExtTileIdMap;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -15,12 +17,10 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-import net.minecraftforge.fml.server.FMLServerHandler;
 
 public class CommonProxy {
-   File configDir;
+   VFile2 configDir;
    private ExtTileIdMap extTileIdMap;
    private ExtTileConfig extTileConfig;
 
@@ -28,26 +28,24 @@ public class CommonProxy {
    }
 
    public MinecraftServer getServer() {
-      return FMLServerHandler.instance().getServer();
+      return FMLCommonHandler.instance().getMinecraftServerInstance();
    }
 
    public void preInit(FMLPreInitializationEvent event) {
-      this.configDir = new File(event.getModConfigurationDirectory(), "antiqueatlas");
-      this.configDir.mkdir();
+      this.configDir = new VFile2(event.getModConfigurationDirectory(), "antiqueatlas");
       this.extTileIdMap = ExtTileIdMap.instance();
-      this.extTileConfig = new ExtTileConfig(new File(this.configDir, "tileids.json"));
+      this.extTileConfig = new ExtTileConfig(new VFile2(this.configDir, "tileids.json"));
       this.extTileConfig.load(this.extTileIdMap);
       this.registerVanillaCustomTiles();
       this.checkSaveConfig();
    }
 
    public void init(FMLInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit(FMLPostInitializationEvent event) {
       AntiqueAtlasMod.instance.jeidPresent = Loader.isModLoaded("jeid");
-      BiomeDetectorBase.setBiomeArrayMethod(AntiqueAtlasMod.instance.jeidPresent);
       BiomeDetectorBase.scanBiomeTypes();
    }
 
@@ -88,7 +86,7 @@ public class CommonProxy {
    public void openAtlasGUI() {
    }
 
-   public File getConfigDir() {
+   public VFile2 getConfigDir() {
       return this.configDir;
    }
 
@@ -100,7 +98,10 @@ public class CommonProxy {
       return ctx.getServerHandler().player.getServer();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Save.class, this::onWorldSave);
+   }
+
    public void onWorldSave(Save event) {
       this.checkSaveConfig();
    }

@@ -56,7 +56,7 @@ public class ItemAtlas extends Item {
 
          ArrayList<TileInfo> newTiles = data.updateMapAroundPlayer(player);
          if (!world.isRemote && newTiles.size() > 0) {
-            boolean useInt = newTiles.stream().anyMatch((tx) -> {
+            boolean useInt = newTiles.stream().anyMatch((t) -> {
                return MathUtil.exceedsShort(t.x, t.z);
             });
             TilesPacket packet = (TilesPacket)(useInt ? new IntDimensionUpdatePacket(stack.getItemDamage(), player.dimension) : new ShortDimensionUpdatePacket(stack.getItemDamage(), player.dimension));

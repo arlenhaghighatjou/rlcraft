@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.marker;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,7 +8,7 @@ import hunternif.mc.atlas.registry.MarkerRegistry;
 import hunternif.mc.atlas.registry.MarkerType;
 import hunternif.mc.atlas.util.AbstractJSONConfig;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Comparator;
@@ -18,7 +19,7 @@ import java.util.function.Function;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 @SideOnly(Side.CLIENT)
 public class MarkerTextureConfig extends AbstractJSONConfig<MarkerRegistry> {
@@ -27,9 +28,9 @@ public class MarkerTextureConfig extends AbstractJSONConfig<MarkerRegistry> {
    private static final String EXAMPLE_LOC = "antiqueatlas:Example";
    private final JsonElement EXAMPLE_JSON;
 
-   public MarkerTextureConfig(File file) {
+   public MarkerTextureConfig(VFile2 file) {
       super(file);
-      InputStream is = this.getClass().getResourceAsStream("/markerExample.json");
+      InputStream is = EagRuntime.getResourceStream("/antiqueatlas/markerExample.json");
       InputStreamReader reader = new InputStreamReader(is);
       this.EXAMPLE_JSON = parser.parse(reader);
       IOUtils.closeQuietly(is);

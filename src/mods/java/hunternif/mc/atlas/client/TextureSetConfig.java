@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import hunternif.mc.atlas.util.AbstractJSONConfig;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class TextureSetConfig extends AbstractJSONConfig<TextureSetMap> {
    private static final int VERSION = 1;
 
-   public TextureSetConfig(File file) {
+   public TextureSetConfig(VFile2 file) {
       super(file);
    }
 

@@ -1,4 +1,5 @@
 package hunternif.mc.atlas.util;
+import net.lax1dude.eaglercraft.v1_8.HString;
 
 public class Rect {
    public int minX;
@@ -80,6 +81,6 @@ public class Rect {
    }
 
    public String toString() {
-      return String.format("Rect{%d, %d, %d, %d}", this.minX, this.minY, this.maxX, this.maxY);
+      return HString.format("Rect{%d, %d, %d, %d}", this.minX, this.minY, this.maxX, this.maxY);
    }
 }

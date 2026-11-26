@@ -1,5 +1,7 @@
 package hunternif.mc.atlas.api;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import hunternif.mc.atlas.SettingsConfig;
 import hunternif.mc.atlas.api.impl.MarkerApiImpl;
 import hunternif.mc.atlas.api.impl.TileApiImpl;
@@ -9,14 +11,12 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 
 public class AtlasAPI {
    private static final int VERSION = 4;
    public static final TileAPI tiles = new TileApiImpl();
    public static final MarkerAPI markers = new MarkerApiImpl();
-   @ObjectHolder("antiqueatlas:antique_atlas")
-   public static final Item ATLAS_ITEM = new Item();
+   public static Item ATLAS_ITEM = new Item();
 
    public AtlasAPI() {
    }
@@ -47,5 +47,9 @@ public class AtlasAPI {
 
          return list;
       }
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("antiqueatlas:antique_atlas"), v -> ATLAS_ITEM = v);
    }
 }

@@ -2,8 +2,6 @@ package hunternif.mc.atlas.core;
 
 import hunternif.mc.atlas.ext.ExtTileIdMap;
 import hunternif.mc.atlas.util.ByteUtil;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,7 +18,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class BiomeDetectorBase implements IBiomeDetector {
    private boolean doScanPonds = true;
@@ -33,7 +30,6 @@ public class BiomeDetectorBase implements IBiomeDetector {
    private static final Set<Biome> waterBiomes = new HashSet();
    private static final Set<Biome> beachBiomes = new HashSet();
    private static final Set<Biome> swampBiomes = new HashSet();
-   protected static Method biomeArrayMethod;
 
    public BiomeDetectorBase() {
    }
@@ -42,19 +38,6 @@ public class BiomeDetectorBase implements IBiomeDetector {
       waterBiomes.addAll(BiomeDictionary.getBiomes(Type.WATER));
       beachBiomes.addAll(BiomeDictionary.getBiomes(Type.BEACH));
       swampBiomes.addAll(BiomeDictionary.getBiomes(Type.SWAMP));
-   }
-
-   public static void setBiomeArrayMethod(boolean jeidPresent) {
-      try {
-         if (jeidPresent) {
-            biomeArrayMethod = Chunk.class.getMethod("getIntBiomeArray");
-         } else {
-            biomeArrayMethod = ReflectionHelper.findMethod(Chunk.class, "getBiomeArray", "getBiomeArray", new Class[0]);
-         }
-
-      } catch (NoSuchMethodException var2) {
-         throw new RuntimeException(var2);
-      }
    }
 
    public void setScanPonds(boolean value) {
@@ -77,11 +60,7 @@ public class BiomeDetectorBase implements IBiomeDetector {
       int biomeCount = Biome.REGISTRY.getKeys().size();
 
       int[] chunkBiomes;
-      try {
-         chunkBiomes = ByteUtil.unsignedByteToIntArray(biomeArrayMethod.invoke(chunk));
-      } catch (InvocationTargetException | IllegalAccessException var15) {
-         throw new RuntimeException(var15);
-      }
+      chunkBiomes = ByteUtil.unsignedByteToIntArray(chunk.getBiomeArray());
 
       Map<Integer, Integer> biomeOccurrences = new HashMap(biomeCount);
       int lavaOccurrences = 0;

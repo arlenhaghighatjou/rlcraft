@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.ext.watcher.impl;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Sets;
 import com.google.common.collect.ImmutableMap.Builder;
 import hunternif.mc.atlas.AntiqueAtlasMod;
@@ -26,7 +27,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.MapGenStructureData;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class StructureWatcherVillage implements IStructureWatcher {
@@ -61,7 +61,10 @@ public class StructureWatcherVillage implements IStructureWatcher {
       return type.getId() == 0;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OptionalMarkerEvent.class, this::onOptionalMarker);
+   }
+
    public void onOptionalMarker(OptionalMarkerEvent event) {
       if (event.type == MarkerTypes.VILLAGE && !SettingsConfig.gameplay.autoVillageMarkers) {
          event.setCanceled(true);
@@ -198,18 +201,18 @@ public class StructureWatcherVillage implements IStructureWatcher {
       builder.put("ViSmH", "npcVillageHut");
       builder.put("ViST", "npcVillageChurch");
       partToTileMap = builder.build();
-      builder = new Builder();
-      builder.put("npcVillageLibrary", Integer.valueOf(5));
-      builder.put("npcVillageSmithy", Integer.valueOf(6));
-      builder.put("npcVillageLHouse", Integer.valueOf(5));
-      builder.put("npcVillageFarmlandLarge", Integer.valueOf(3));
-      builder.put("npcVillageFarmlandSmall", Integer.valueOf(3));
-      builder.put("npcVillageTorch", Integer.valueOf(1));
-      builder.put("npcVillageWell", Integer.valueOf(7));
-      builder.put("npcVillageButchersShop", Integer.valueOf(4));
-      builder.put("npcVillageSmallHouse", Integer.valueOf(4));
-      builder.put("npcVillageHut", Integer.valueOf(3));
-      builder.put("npcVillageChurch", Integer.valueOf(6));
-      tilePriority = builder.build();
+      Builder<String, Integer> priorityBuilder = new Builder();
+      priorityBuilder.put("npcVillageLibrary", Integer.valueOf(5));
+      priorityBuilder.put("npcVillageSmithy", Integer.valueOf(6));
+      priorityBuilder.put("npcVillageLHouse", Integer.valueOf(5));
+      priorityBuilder.put("npcVillageFarmlandLarge", Integer.valueOf(3));
+      priorityBuilder.put("npcVillageFarmlandSmall", Integer.valueOf(3));
+      priorityBuilder.put("npcVillageTorch", Integer.valueOf(1));
+      priorityBuilder.put("npcVillageWell", Integer.valueOf(7));
+      priorityBuilder.put("npcVillageButchersShop", Integer.valueOf(4));
+      priorityBuilder.put("npcVillageSmallHouse", Integer.valueOf(4));
+      priorityBuilder.put("npcVillageHut", Integer.valueOf(3));
+      priorityBuilder.put("npcVillageChurch", Integer.valueOf(6));
+      tilePriority = priorityBuilder.build();
    }
 }

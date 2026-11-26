@@ -1,8 +1,8 @@
 package hunternif.mc.atlas.ext;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 
 public class ExtBiomeDataHandler {
@@ -12,9 +12,11 @@ public class ExtBiomeDataHandler {
    public ExtBiomeDataHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(Load.class, EventPriority.HIGHEST, false, this::onWorldLoad);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+   }
+
    public void onWorldLoad(Load event) {
       if (!event.getWorld().isRemote) {
          this.data = (ExtBiomeData)event.getWorld().loadData(ExtBiomeData.class, "aAtlasExtTiles");
@@ -35,7 +37,6 @@ public class ExtBiomeDataHandler {
       return this.data;
    }
 
-   @SubscribeEvent
    public void onPlayerLogin(PlayerLoggedInEvent event) {
       ExtTileIdMap.instance().syncOnPlayer(event.player);
       this.data.syncOnPlayer(event.player);

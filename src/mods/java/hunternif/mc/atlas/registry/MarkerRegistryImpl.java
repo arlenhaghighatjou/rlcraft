@@ -68,7 +68,7 @@ class MarkerRegistryImpl<V extends IRegistryEntry> implements IRegistry<Resource
 
    public List<V> getValues() {
       if (this.values == null) {
-         Collection<?> collection = this.registryObjects.values();
+         Collection<V> collection = this.registryObjects.values();
          if (collection.isEmpty()) {
             this.values = ImmutableList.of();
          } else {

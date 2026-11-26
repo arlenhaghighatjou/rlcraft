@@ -1,5 +1,7 @@
 package hunternif.mc.atlas.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.client.gui.GuiAtlas;
 import java.util.ArrayList;
@@ -9,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 
 public class KeyHandler {
@@ -24,9 +25,10 @@ public class KeyHandler {
       bindings.forEach(ClientRegistry::registerKeyBinding);
    }
 
-   @SubscribeEvent(
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, EventPriority.NORMAL, true, this::onKeyEvent);
+   }
+
    public void onKeyEvent(KeyInputEvent event) {
       if (((KeyBinding)bindings.get(0)).isPressed()) {
          GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;

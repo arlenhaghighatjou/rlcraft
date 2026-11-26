@@ -1,12 +1,12 @@
 package hunternif.mc.atlas.core;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.RegistrarAntiqueAtlas;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 
 public class AtlasDataHandler {
@@ -50,7 +50,10 @@ public class AtlasDataHandler {
       return "aAtlas_" + atlasID;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientConnectedToServerEvent.class, this::onClientConnectedToServer);
+   }
+
    public void onClientConnectedToServer(ClientConnectedToServerEvent event) {
       this.atlasDataClientCache.clear();
    }

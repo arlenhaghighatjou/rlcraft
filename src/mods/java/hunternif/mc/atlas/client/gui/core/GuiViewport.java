@@ -1,8 +1,8 @@
 package hunternif.mc.atlas.client.gui.core;
 
+import hunternif.mc.atlas.util.AtlasRenderHelper;
 import java.io.IOException;
 import net.minecraft.client.gui.ScaledResolution;
-import org.lwjgl.opengl.GL11;
 
 public class GuiViewport extends GuiComponent {
    final GuiComponent content = new GuiComponent();
@@ -30,10 +30,9 @@ public class GuiViewport extends GuiComponent {
    }
 
    public void drawScreen(int mouseX, int mouseY, float par3) {
-      GL11.glEnable(3089);
-      GL11.glScissor(this.getGuiX() * this.screenScale, this.mc.displayHeight - (this.getGuiY() + this.properHeight) * this.screenScale, this.properWidth * this.screenScale, this.properHeight * this.screenScale);
+      AtlasRenderHelper.beginClip(this.getGuiX(), this.getGuiY(), this.properWidth, this.properHeight);
       super.drawScreen(mouseX, mouseY, par3);
-      GL11.glDisable(3089);
+      AtlasRenderHelper.endClip();
    }
 
    public void handleMouseInput() throws IOException {

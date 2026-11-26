@@ -1,5 +1,7 @@
 package hunternif.mc.atlas;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.client.BiomeTextureConfig;
 import hunternif.mc.atlas.client.BiomeTextureMap;
 import hunternif.mc.atlas.client.KeyHandler;
@@ -14,7 +16,6 @@ import hunternif.mc.atlas.marker.MarkerTextureConfig;
 import hunternif.mc.atlas.registry.MarkerRegistry;
 import hunternif.mc.atlas.registry.MarkerType;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
@@ -30,7 +31,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
@@ -53,20 +53,20 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
    public void preInit(FMLPreInitializationEvent event) {
       super.preInit(event);
-      MinecraftForge.EVENT_BUS.register(ExportProgressOverlay.INSTANCE);
+      ExportProgressOverlay.INSTANCE.register(MinecraftForge.EVENT_BUS);
       this.textureSetMap = TextureSetMap.instance();
-      this.textureSetConfig = new TextureSetConfig(new File(this.configDir, "texture_sets.json"));
+      this.textureSetConfig = new TextureSetConfig(new VFile2(this.configDir, "texture_sets.json"));
       this.registerDefaultTextureSets(this.textureSetMap);
       this.textureSetConfig.load(this.textureSetMap);
       this.textureSetMap.setDirty(false);
       this.textureSetMap.register(TextureSet.TEST);
-      File biomeTextureConfigFile = new File(this.configDir, "textures.json");
+      VFile2 biomeTextureConfigFile = new VFile2(this.configDir, "textures.json");
       if (biomeTextureConfigFile.exists()) {
-         biomeTextureConfigFile.renameTo(new File(this.configDir, "biome_textures.json"));
+         biomeTextureConfigFile.renameTo(new VFile2(this.configDir, "biome_textures.json"));
       }
 
       this.tileTextureMap = ExtTileTextureMap.instance();
-      this.tileTextureConfig = new ExtTileTextureConfig(new File(this.configDir, "tile_textures.json"), this.textureSetMap);
+      this.tileTextureConfig = new ExtTileTextureConfig(new VFile2(this.configDir, "tile_textures.json"), this.textureSetMap);
       this.tileTextureConfig.load(this.tileTextureMap);
       this.tileTextureMap.setDirty(false);
       this.registerVanillaCustomTileTextures();
@@ -79,11 +79,11 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
    public void init(FMLInitializationEvent event) {
       super.init(event);
       this.biomeTextureMap = BiomeTextureMap.instance();
-      this.biomeTextureConfig = new BiomeTextureConfig(new File(this.configDir, "biome_textures.json"), this.textureSetMap);
+      this.biomeTextureConfig = new BiomeTextureConfig(new VFile2(this.configDir, "biome_textures.json"), this.textureSetMap);
       this.biomeTextureConfig.load(this.biomeTextureMap);
       this.biomeTextureMap.setDirty(false);
       this.assignVanillaBiomeTextures();
-      this.markerTextureConfig = new MarkerTextureConfig(new File(this.configDir, "markers.json"));
+      this.markerTextureConfig = new MarkerTextureConfig(new VFile2(this.configDir, "markers.json"));
       this.markerTextureConfig.load(MarkerRegistry.INSTANCE);
       MarkerRegistry.INSTANCE.setDirty(true);
       this.guiAtlas = new GuiAtlas();
@@ -94,10 +94,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
       if (!SettingsConfig.gameplay.itemNeeded) {
          KeyHandler.registerBindings();
-         MinecraftForge.EVENT_BUS.register(new KeyHandler());
+         (new KeyHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit(FMLPostInitializationEvent event) {
@@ -331,11 +331,14 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
       return (IThreadListener)(ctx.side.isClient() ? Minecraft.getMinecraft() : super.getThreadFromContext(ctx));
    }
 
-   public File getConfigDir() {
+   public VFile2 getConfigDir() {
       return this.configDir;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::onClientTick);
+   }
+
    public void onClientTick(ClientTickEvent event) {
       if (this.textureSetMap.isDirty()) {
          Log.debug("Saving texture set config");

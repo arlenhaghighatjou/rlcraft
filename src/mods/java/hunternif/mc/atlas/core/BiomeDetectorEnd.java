@@ -2,7 +2,6 @@ package hunternif.mc.atlas.core;
 
 import hunternif.mc.atlas.ext.ExtTileIdMap;
 import hunternif.mc.atlas.util.ByteUtil;
-import java.lang.reflect.InvocationTargetException;
 import net.minecraft.block.Block;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -17,11 +16,7 @@ public class BiomeDetectorEnd extends BiomeDetectorBase implements IBiomeDetecto
       int biomesCount = Biome.REGISTRY.getKeys().size();
 
       int[] chunkBiomes;
-      try {
-         chunkBiomes = ByteUtil.unsignedByteToIntArray(biomeArrayMethod.invoke(chunk));
-      } catch (InvocationTargetException | IllegalAccessException var15) {
-         throw new RuntimeException(var15);
-      }
+      chunkBiomes = ByteUtil.unsignedByteToIntArray(chunk.getBiomeArray());
 
       int[] biomeOccurrences = new int[biomesCount];
       int islandOccurences = 0;

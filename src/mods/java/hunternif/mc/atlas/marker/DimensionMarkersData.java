@@ -17,12 +17,10 @@ public class DimensionMarkersData {
    private int size = 0;
    private final Map<IntVec2, List<Marker>> chunkMap = new ConcurrentHashMap(2, 0.75F, 2);
    private final DimensionMarkersData.Values values = new DimensionMarkersData.Values();
-   private final Map<Thread, IntVec2> thread2KeyMap = new ConcurrentHashMap(2, 0.75F, 2);
+   private final IntVec2 key = new IntVec2(0.0D, 0.0D);
 
    private IntVec2 getKey() {
-      return (IntVec2)this.thread2KeyMap.computeIfAbsent(Thread.currentThread(), (k) -> {
-         return new IntVec2(0.0D, 0.0D);
-      });
+      return this.key;
    }
 
    public DimensionMarkersData(MarkersData parent, int dimension) {

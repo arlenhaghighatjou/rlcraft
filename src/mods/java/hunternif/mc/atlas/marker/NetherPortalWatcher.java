@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.marker;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.RegistrarAntiqueAtlas;
 import hunternif.mc.atlas.SettingsConfig;
@@ -19,17 +20,19 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class NetherPortalWatcher extends DummyWorldAccess {
-   private static final String[] inPortalFieldNames = new String[]{"inPortal", "inPortal", "bX"};
    private final Map<Integer, Integer> teleportingPlayersOrigin = new ConcurrentHashMap();
 
    public NetherPortalWatcher() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OptionalMarkerEvent.class, this::onOptionalMarker);
+      bus.register(Load.class, this::onWorldLoad);
+      bus.register(Unload.class, this::onWorldUnload);
+   }
+
    public void onOptionalMarker(OptionalMarkerEvent event) {
       if (event.type == MarkerTypes.NETHER_PORTAL && !SettingsConfig.gameplay.autoNetherPortalMarkers) {
          event.setCanceled(true);
@@ -37,7 +40,6 @@ public class NetherPortalWatcher extends DummyWorldAccess {
 
    }
 
-   @SubscribeEvent
    public void onWorldLoad(Load event) {
       if (!event.getWorld().isRemote) {
          event.getWorld().addEventListener(this);
@@ -45,7 +47,6 @@ public class NetherPortalWatcher extends DummyWorldAccess {
 
    }
 
-   @SubscribeEvent
    public void onWorldUnload(Unload event) {
       if (!event.getWorld().isRemote) {
          event.getWorld().removeEventListener(this);
@@ -114,6 +115,6 @@ public class NetherPortalWatcher extends DummyWorldAccess {
    }
 
    private static boolean isEntityInPortal(Entity entity) {
-      return ((Boolean)ObfuscationReflectionHelper.getPrivateValue(Entity.class, entity, inPortalFieldNames)).booleanValue();
+      return entity.inPortal;
    }
 }

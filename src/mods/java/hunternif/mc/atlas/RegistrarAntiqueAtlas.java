@@ -1,5 +1,7 @@
 package hunternif.mc.atlas;
 
+import net.minecraftforge.registries.ObjectHolderRegistry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.UnmodifiableIterator;
 import hunternif.mc.atlas.item.ItemAtlas;
 import hunternif.mc.atlas.item.ItemEmptyAtlas;
@@ -17,25 +19,22 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-@EventBusSubscriber(
-   modid = "antiqueatlas"
-)
-@ObjectHolder("antiqueatlas")
 public class RegistrarAntiqueAtlas {
-   @ObjectHolder("empty_antique_atlas")
-   public static final ItemEmptyAtlas EMPTY_ATLAS = new ItemEmptyAtlas();
-   @ObjectHolder("antique_atlas")
-   public static final ItemAtlas ATLAS = new ItemAtlas();
+   public static ItemEmptyAtlas EMPTY_ATLAS = new ItemEmptyAtlas();
+   public static ItemAtlas ATLAS = new ItemAtlas();
 
    public RegistrarAntiqueAtlas() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, RegistrarAntiqueAtlas::registerItems);
+      bus.registerGeneric(Register.class, IRecipe.class, RegistrarAntiqueAtlas::registerRecipes);
+      bus.register(ModelRegistryEvent.class, RegistrarAntiqueAtlas::registerModels);
+      bus.registerGeneric(MissingMappings.class, Item.class, RegistrarAntiqueAtlas::handleMissingMapping);
+   }
+
    public static void registerItems(Register<Item> event) {
       if (SettingsConfig.gameplay.itemNeeded) {
          event.getRegistry().register((Item)(new ItemEmptyAtlas()).setRegistryName("empty_antique_atlas"));
@@ -44,7 +43,6 @@ public class RegistrarAntiqueAtlas {
 
    }
 
-   @SubscribeEvent
    public static void registerRecipes(Register<IRecipe> event) {
       if (SettingsConfig.gameplay.itemNeeded) {
          event.getRegistry().register((IRecipe)(new ShapelessOreRecipe(new ResourceLocation("antiqueatlas", "atlas"), new ItemStack(EMPTY_ATLAS), new Object[]{Items.BOOK, Items.COMPASS})).setRegistryName("atlas_blank"));
@@ -54,7 +52,6 @@ public class RegistrarAntiqueAtlas {
 
    }
 
-   @SubscribeEvent
    public static void registerModels(ModelRegistryEvent event) {
       if (SettingsConfig.gameplay.itemNeeded) {
          ModelLoader.setCustomModelResourceLocation(EMPTY_ATLAS, 0, new ModelResourceLocation(EMPTY_ATLAS.getRegistryName(), "inventory"));
@@ -65,7 +62,6 @@ public class RegistrarAntiqueAtlas {
 
    }
 
-   @SubscribeEvent
    public static void handleMissingMapping(MissingMappings<Item> event) {
       UnmodifiableIterator var1 = event.getMappings().iterator();
 
@@ -78,5 +74,10 @@ public class RegistrarAntiqueAtlas {
          }
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("antiqueatlas:empty_antique_atlas"), v -> EMPTY_ATLAS = (ItemEmptyAtlas)v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("antiqueatlas:antique_atlas"), v -> ATLAS = (ItemAtlas)v);
    }
 }

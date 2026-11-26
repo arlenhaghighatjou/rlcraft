@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.item;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.RegistrarAntiqueAtlas;
 import hunternif.mc.atlas.core.AtlasData;
@@ -13,12 +14,11 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 
 public class RecipeAtlasCombining extends RecipeBase {
    public RecipeAtlasCombining() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public boolean matches(InventoryCrafting inv, World world) {
@@ -64,7 +64,10 @@ public class RecipeAtlasCombining extends RecipeBase {
       return ItemStack.EMPTY;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemCraftedEvent.class, this::onCrafted);
+   }
+
    public void onCrafted(ItemCraftedEvent event) {
       if (event.crafting.getItem() == RegistrarAntiqueAtlas.ATLAS && this.matches(event.craftMatrix)) {
          World world = event.player.getEntityWorld();

@@ -6,7 +6,7 @@ import hunternif.mc.atlas.client.TextureSet;
 import hunternif.mc.atlas.client.TextureSetMap;
 import hunternif.mc.atlas.util.AbstractJSONConfig;
 import hunternif.mc.atlas.util.Log;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Map.Entry;
@@ -18,7 +18,7 @@ public class ExtTileTextureConfig extends AbstractJSONConfig<ExtTileTextureMap> 
    private static final int VERSION = 1;
    private final TextureSetMap textureSetMap;
 
-   public ExtTileTextureConfig(File file, TextureSetMap textureSetMap) {
+   public ExtTileTextureConfig(VFile2 file, TextureSetMap textureSetMap) {
       super(file);
       this.textureSetMap = textureSetMap;
    }

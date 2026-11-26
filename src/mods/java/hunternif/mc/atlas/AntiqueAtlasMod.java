@@ -1,5 +1,9 @@
 package hunternif.mc.atlas;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import hunternif.mc.atlas.core.AtlasDataHandler;
 import hunternif.mc.atlas.core.PlayerEventHandler;
 import hunternif.mc.atlas.ext.ExtBiomeDataHandler;
@@ -15,9 +19,6 @@ import hunternif.mc.atlas.registry.MarkerTypes;
 import net.minecraft.world.DimensionType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -34,13 +35,8 @@ public class AntiqueAtlasMod {
    public static final String NAME = "Antique Atlas";
    public static final String CHANNEL = "antiqueatlas";
    public static final String VERSION = "4.6.3";
-   @Instance("antiqueatlas")
    public static AntiqueAtlasMod instance;
    public boolean jeidPresent = false;
-   @SidedProxy(
-      clientSide = "hunternif.mc.atlas.ClientProxy",
-      serverSide = "hunternif.mc.atlas.CommonProxy"
-   )
    public static CommonProxy proxy;
    public static final AtlasDataHandler atlasData = new AtlasDataHandler();
    public static final MarkersDataHandler markersData = new MarkersDataHandler();
@@ -50,31 +46,47 @@ public class AntiqueAtlasMod {
    public AntiqueAtlasMod() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new hunternif.mc.atlas.ClientProxy() : new hunternif.mc.atlas.CommonProxy();
+         hunternif.mc.atlas.SettingsConfig.register();
+         hunternif.mc.atlas.RegistrarAntiqueAtlas.registerHolders();
+         hunternif.mc.atlas.api.AtlasAPI.registerHolders();
+         hunternif.mc.atlas.RegistrarAntiqueAtlas.register(MinecraftForge.EVENT_BUS);
+         hunternif.mc.atlas.SettingsConfig.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit(event);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       PacketDispatcher.registerPackets();
       proxy.init(event);
       if (!SettingsConfig.gameplay.itemNeeded) {
-         MinecraftForge.EVENT_BUS.register(new PlayerEventHandler());
+         (new PlayerEventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
-      MinecraftForge.EVENT_BUS.register(atlasData);
-      MinecraftForge.EVENT_BUS.register(markersData);
-      MinecraftForge.EVENT_BUS.register(extBiomeData);
-      MinecraftForge.EVENT_BUS.register(globalMarkersData);
-      MinecraftForge.EVENT_BUS.register(new DeathWatcher());
-      MinecraftForge.EVENT_BUS.register(new NetherPortalWatcher());
-      MinecraftForge.EVENT_BUS.register(new StructureWatcherVillage());
+      atlasData.register(MinecraftForge.EVENT_BUS);
+      markersData.register(MinecraftForge.EVENT_BUS);
+      extBiomeData.register(MinecraftForge.EVENT_BUS);
+      globalMarkersData.register(MinecraftForge.EVENT_BUS);
+      (new DeathWatcher()).register(MinecraftForge.EVENT_BUS);
+      (new NetherPortalWatcher()).register(MinecraftForge.EVENT_BUS);
+      (new StructureWatcherVillage()).register(MinecraftForge.EVENT_BUS);
       new StructureWatcherFortress();
       (new StructureWatcherGeneric("EndCity", DimensionType.THE_END, MarkerTypes.END_CITY_FAR, "gui.antiqueatlas.marker.endcity")).setTileMarker(MarkerTypes.END_CITY, "gui.antiqueatlas.marker.endcity");
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit(event);
    }

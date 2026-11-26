@@ -254,6 +254,7 @@ public class Loader
         mods.add(new FMLModContainer<>("particleculling", "Particle Culling", "v1.4.1", "", "[1.12.2]", "particleculling", bl4ckscor3.mod.particleculling.ParticleCulling::new, bl4ckscor3.mod.particleculling.ParticleCulling::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("locks", "Locks", "3.0.0", "", "1.12.2", "locks", melonslise.locks.Locks::new, melonslise.locks.Locks::handleModStateEvent));
         mods.add(new FMLModContainer<>("variedcommodities", "VariedCommodities", "1.12.2", "", "1.12, 1.12.1, 1.12.2", "variedcommodities", noppes.vc.VariedCommodities::new, noppes.vc.VariedCommodities::handleModStateEvent));
+        mods.add(new FMLModContainer<>("antiqueatlas", "Antique Atlas", "4.6.3", "after:forge@[14.23.2.2611,);", "[1.12.2]", "antiqueatlas", hunternif.mc.atlas.AntiqueAtlasMod::new, hunternif.mc.atlas.AntiqueAtlasMod::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

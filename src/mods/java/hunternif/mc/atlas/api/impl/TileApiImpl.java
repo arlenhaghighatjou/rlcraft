@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.api.impl;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.api.TileAPI;
 import hunternif.mc.atlas.client.BiomeTextureMap;
@@ -30,13 +31,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TileApiImpl implements TileAPI {
    private final Map<String, TileApiImpl.TileData> pendingTiles = new HashMap();
 
    public TileApiImpl() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public TextureSet registerTextureSet(String name, ResourceLocation... textures) {
@@ -149,7 +149,10 @@ public class TileApiImpl implements TileAPI {
       }
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(TileIdRegisteredEvent.class, this::onTileIdRegistered);
+   }
+
    public void onTileIdRegistered(TileIdRegisteredEvent event) {
       for(Entry<String, Integer> entry : event.nameToIdMap.entrySet()) {
          TileApiImpl.TileData tile = (TileApiImpl.TileData)this.pendingTiles.remove(entry.getKey());
