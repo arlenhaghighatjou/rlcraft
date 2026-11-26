@@ -1,8 +1,10 @@
 package lumien.custommainmenu.configuration;
 
+import com.arlenh7.eaglercraft.forge.ModAssets;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import lumien.custommainmenu.CustomMainMenu;
 import lumien.custommainmenu.gui.GuiCustom;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
@@ -20,10 +22,9 @@ public class ConfigurationLoader {
       VFile2 main = new VFile2(folder, "mainmenu.json");
       String menu = main.getAllChars();
       if (menu == null) {
-         menu = EagRuntime.getResourceString("/pack-defaults/config/CustomMainMenu/mainmenu.json");
-      }
-      if (menu == null) {
-         return;
+         byte[] defaults = EagRuntime.getRequiredResourceBytes("/" + ModAssets.find("custommainmenu/mainmenu_default.json"));
+         main.setAllBytes(defaults);
+         menu = new String(defaults, StandardCharsets.UTF_8);
       }
 
       loadGui("mainmenu", menu);
