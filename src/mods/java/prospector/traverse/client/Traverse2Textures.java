@@ -1,5 +1,7 @@
 package prospector.traverse.client;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.google.common.collect.ImmutableSet;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +24,7 @@ public class Traverse2Textures extends AbstractResourcePack {
    private static final Map<String, String> overrides = new HashMap();
 
    public Traverse2Textures() {
-      super(Loader.instance().activeModContainer().getSource());
+      super(Loader.instance().activeModContainer().getModId());
       overrides.put("pack.mcmeta", "/proxypack.mcmeta");
    }
 
@@ -31,13 +33,13 @@ public class Traverse2Textures extends AbstractResourcePack {
    }
 
    public void addResourceOverride(String space, String dir, String file, String ext) {
-      String bare = String.format("assets/%s/%s/%s/%s.%s", "traverse", space, dir, file, ext);
-      String override = String.format("/assets/%s/%s/%s/overrides/%s.%s", "traverse", space, dir, file, ext);
+      String bare = HString.format("assets/%s/%s/%s/%s.%s", "traverse", space, dir, file, ext);
+      String override = HString.format("/assets/%s/%s/%s/overrides/%s.%s", "traverse", space, dir, file, ext);
       overrides.put(bare, override);
    }
 
    protected InputStream getInputStreamByName(String name) throws IOException {
-      return TraverseMod.class.getResourceAsStream((String)overrides.get(name));
+      return EagRuntime.getResourceStream("/traverse" + (String)overrides.get(name));
    }
 
    protected boolean hasResourceName(String name) {

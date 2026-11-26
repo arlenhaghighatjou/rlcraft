@@ -1,13 +1,13 @@
 package prospector.traverse.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class TraverseConfig {
    public static final String CATEGORY_BIOMES = "Biomes";
-   public static File configDir;
-   public static File mainConfig;
+   public static VFile2 configDir;
+   public static VFile2 mainConfig;
    public static Configuration config;
    public static TraverseConfig traverseConfiguration;
    public static boolean useVanillaWood = false;
@@ -100,12 +100,8 @@ public class TraverseConfig {
    }
 
    public static void initialize(FMLPreInitializationEvent event) {
-      configDir = new File(event.getModConfigurationDirectory(), "traverse");
-      if (!configDir.exists()) {
-         configDir.mkdir();
-      }
-
-      mainConfig = new File(configDir, "traverse.cfg");
+      configDir = new VFile2(event.getModConfigurationDirectory(), "traverse");
+      mainConfig = new VFile2(configDir, "traverse.cfg");
       traverseConfiguration = initialize();
    }
 }

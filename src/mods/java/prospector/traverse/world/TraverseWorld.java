@@ -1,5 +1,6 @@
 package prospector.traverse.world;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,6 @@ import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.terraingen.BiomeEvent.GetVillageBlockID;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import prospector.traverse.config.TraverseConfig;
 import prospector.traverse.shadow.shootingstar.version.Version;
@@ -45,7 +44,6 @@ import prospector.traverse.world.biomes.BiomeRockyPlateau;
 import prospector.traverse.world.biomes.BiomeThicket;
 import prospector.traverse.world.biomes.BiomeWoodlands;
 
-@EventBusSubscriber
 public class TraverseWorld {
    public static final Version V0 = new Version(1, 0, 0);
    public static final Version V1 = new Version(1, 1, 0);
@@ -123,7 +121,11 @@ public class TraverseWorld {
    public TraverseWorld() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Biome.class, TraverseWorld::registerBiomes);
+      bus.register(GetVillageBlockID.class, TraverseWorld::replaceVillageBlocks);
+   }
+
    public static void registerBiomes(Register<Biome> event) {
       register(V0, autumnalWoodsBiome, BiomeType.COOL, "autumnal_woods", 8, TraverseConfig.disableAutumnalWoods, true, event, net.minecraftforge.common.BiomeDictionary.Type.FOREST);
       register(V0, woodlandsBiome, BiomeType.WARM, "woodlands", 9, TraverseConfig.disableWoodlands, true, NO_REPLACEMENTS, event, net.minecraftforge.common.BiomeDictionary.Type.PLAINS);
@@ -172,7 +174,6 @@ public class TraverseWorld {
       register(versionAdded, biome, type, name, weight, disabled, canSpawn, NO_VILLAGES, event, biomeDictTypes);
    }
 
-   @SubscribeEvent
    public static void replaceVillageBlocks(GetVillageBlockID event) {
       if (villageReplacementBiomes.keySet().contains(event.getBiome())) {
          event.setReplacement(((TraverseWorld.VillageReplacements)villageReplacementBiomes.get(event.getBiome())).getBiomeSpecificState(event.getOriginal()));

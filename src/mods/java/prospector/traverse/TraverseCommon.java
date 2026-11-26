@@ -1,6 +1,9 @@
 package prospector.traverse;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveFormat;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -10,15 +13,12 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import prospector.traverse.commands.CommandFindBiome;
@@ -30,7 +30,6 @@ import prospector.traverse.util.TUtils;
 import prospector.traverse.world.TraverseWorld;
 import prospector.traverse.world.TraverseWorldVersion;
 
-@EventBusSubscriber
 public class TraverseCommon {
    public static TraverseWorldVersion traverse_world_data = null;
 
@@ -41,17 +40,20 @@ public class TraverseCommon {
       GameRegistry.addSmelting(input, output, experience);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, TraverseCommon::registerModels);
+      bus.registerGeneric(Register.class, Block.class, TraverseCommon::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, TraverseCommon::registerItems);
+   }
+
    public static void registerModels(ModelRegistryEvent event) {
       ShootingStar.registerModels("traverse");
    }
 
-   @SubscribeEvent
    public static void registerBlocks(Register<Block> event) {
       ShootingStar.registerBlocks("traverse", event);
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       ShootingStar.registerItems("traverse", event);
    }
@@ -59,7 +61,7 @@ public class TraverseCommon {
    public void preInit(FMLPreInitializationEvent event) {
       TraverseBlocks.test();
       TraverseConfig.initialize(event);
-      MinecraftForge.TERRAIN_GEN_BUS.register(TraverseWorld.class);
+      TraverseWorld.register(MinecraftForge.TERRAIN_GEN_BUS);
    }
 
    public void init(FMLInitializationEvent event) {
@@ -94,15 +96,7 @@ public class TraverseCommon {
 
    public void serverAboutToStart(FMLServerAboutToStartEvent event) {
       traverse_world_data = null;
-      File rootDir = FMLCommonHandler.instance().getSavesDirectory();
-      if (!rootDir.exists()) {
-         rootDir.mkdir();
-      }
-
-      File worldDir = new File(rootDir, event.getServer().getFolderName());
-      if (!worldDir.exists()) {
-         worldDir.mkdir();
-      }
+      VFile2 worldDir = WorldsDB.newVFile(EaglerSaveFormat.worldsFolder, event.getServer().getFolderName());
 
       traverse_world_data = new TraverseWorldVersion(worldDir);
 

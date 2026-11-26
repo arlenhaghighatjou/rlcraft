@@ -317,7 +317,7 @@ public class Minecraft implements IThreadListener
     private long debugCrashKeyPressTime = -1L;
     private IReloadableResourceManager mcResourceManager;
     private final MetadataSerializer metadataSerializer_ = new MetadataSerializer();
-    private final List<IResourcePack> defaultResourcePacks = Lists.<IResourcePack>newArrayList();
+    public final List<IResourcePack> defaultResourcePacks = Lists.<IResourcePack>newArrayList();
     public final DefaultResourcePack mcDefaultResourcePack;
     private ResourcePackRepository mcResourcePackRepository;
     private LanguageManager mcLanguageManager;

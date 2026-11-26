@@ -111,8 +111,8 @@ public class CommandFindBiome extends CommandBase {
             sender.sendMessage(new TextComponentString(TextFormatting.RED + "Error! Biome '" + args[0] + "' cannot be found!"));
          } else {
             long start = System.currentTimeMillis();
-            (new Thread(() -> {
-               BlockPos pos = spiralOutwardsLookingForBiome(sender, sender.getEntityWorld(), finalBiome, (double)sender.getPosition().getX(), (double)sender.getPosition().getZ(), TraverseConfig.findBiomeCommandTimeout);
+            Biome finalBiome = biome;
+            BlockPos pos = spiralOutwardsLookingForBiome(sender, sender.getEntityWorld(), finalBiome, (double)sender.getPosition().getX(), (double)sender.getPosition().getZ(), TraverseConfig.findBiomeCommandTimeout);
                if (pos == null) {
                   server.addScheduledTask(() -> {
                      sender.sendMessage(new TextComponentString(TextFormatting.RED + "Error! Biome '" + args[0] + "' could not be found after " + TextFormatting.GRAY + TraverseConfig.findBiomeCommandTimeout + "ms" + TextFormatting.RED + "."));
@@ -128,7 +128,6 @@ public class CommandFindBiome extends CommandBase {
                      sender.sendMessage(new TextComponentString(TextFormatting.RED + "Error! An unknown error occurred."));
                   });
                }
-            }, "Biome Finder - Traverse")).start();
          }
       }
    }

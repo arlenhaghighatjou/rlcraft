@@ -6,7 +6,6 @@ import net.minecraft.client.resources.IResourcePack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import prospector.traverse.client.Traverse2Textures;
 
 public class TraverseClient extends TraverseCommon {
@@ -28,7 +27,7 @@ public class TraverseClient extends TraverseCommon {
    }
 
    static {
-      List<IResourcePack> packs = (List)ReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), new String[]{"aD", "defaultResourcePacks", "defaultResourcePacks"});
+      List<IResourcePack> packs = Minecraft.getMinecraft().defaultResourcePacks;
       packs.add(traverse2textures);
       traverse2textures.addTextureOverride("block/planks", "fir_planks");
       traverse2textures.addTextureOverride("block/red_rock", "brick");
