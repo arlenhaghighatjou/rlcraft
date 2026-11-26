@@ -100,7 +100,7 @@ public class BiomeTranslator {
       LostCities.setup.getLogger().info("Dumping biome mapping");
 
       for(Entry<String, Biome> entry : this.translationMap.entrySet()) {
-         ResourceLocation biomeKey = ForgeRegistries.BIOMES.getKey((IForgeRegistryEntry)entry.getValue());
+         ResourceLocation biomeKey = ForgeRegistries.BIOMES.getKey(entry.getValue());
          LostCities.setup.getLogger().info("biome: " + (String)entry.getKey() + " -> " + ((Biome)entry.getValue()).biomeName + " (" + biomeKey.toString() + ")");
       }
 

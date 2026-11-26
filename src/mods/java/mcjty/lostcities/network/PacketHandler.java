@@ -26,7 +26,7 @@ public class PacketHandler {
    }
 
    public static void registerMessages() {
-      INSTANCE.registerMessage(PacketRequestProfile.Handler.class, PacketRequestProfile.class, nextID(), Side.SERVER);
-      INSTANCE.registerMessage(PacketReturnProfileToClient.Handler.class, PacketReturnProfileToClient.class, nextID(), Side.CLIENT);
+      INSTANCE.registerMessage(new PacketRequestProfile.Handler(), PacketRequestProfile.class, PacketRequestProfile::new, nextID(), Side.SERVER);
+      INSTANCE.registerMessage(new PacketReturnProfileToClient.Handler(), PacketReturnProfileToClient.class, PacketReturnProfileToClient::new, nextID(), Side.CLIENT);
    }
 }

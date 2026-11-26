@@ -1,5 +1,6 @@
 package mcjty.lostcities;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Predicate;
 import javax.annotation.Nonnull;
@@ -26,7 +27,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.WorldEvent.CreateSpawnPosition;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -34,7 +34,11 @@ public class ForgeEventHandlers {
    public ForgeEventHandlers() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(CreateSpawnPosition.class, this::onCreateSpawnPoint);
+      bus.register(PlayerSleepInBedEvent.class, this::onPlayerSleepInBedEvent);
+   }
+
    public void onCreateSpawnPoint(CreateSpawnPosition event) {
       World world = event.getWorld();
       if (!world.isRemote) {
@@ -282,7 +286,6 @@ public class ForgeEventHandlers {
       return bestSpot;
    }
 
-   @SubscribeEvent
    public void onPlayerSleepInBedEvent(PlayerSleepInBedEvent event) {
       if (LostCityConfiguration.DIMENSION_ID != -1) {
          World world = event.getEntityPlayer().getEntityWorld();

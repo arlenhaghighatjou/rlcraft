@@ -1,10 +1,11 @@
 package mcjty.lostcities.commands;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.nio.charset.StandardCharsets;
+import java.io.OutputStreamWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -111,7 +112,7 @@ public class CommandExportPart implements ICommand {
          array.add(palette.writeToJSon());
          array.add(paletteNew.writeToJSon());
          Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
-         PrintWriter writer = new PrintWriter(new File(args[0]));
+         PrintWriter writer = new PrintWriter(new OutputStreamWriter((new VFile2(args[0])).getOutputStream(), StandardCharsets.UTF_8));
          Throwable var47 = null;
 
          try {
@@ -134,8 +135,6 @@ public class CommandExportPart implements ICommand {
             }
 
          }
-      } catch (FileNotFoundException var37) {
-         sender.sendMessage(new TextComponentString("Error writing to file '" + args[0] + "'!"));
       } catch (Exception var38) {
          var38.printStackTrace();
       }

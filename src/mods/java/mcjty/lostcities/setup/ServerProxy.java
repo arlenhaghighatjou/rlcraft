@@ -1,6 +1,6 @@
 package mcjty.lostcities.setup;
 
-import com.google.common.util.concurrent.ListenableFuture;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
 import java.util.concurrent.Callable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

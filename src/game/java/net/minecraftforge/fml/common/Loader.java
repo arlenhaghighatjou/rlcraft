@@ -246,6 +246,7 @@ public class Loader
         mods.add(new FMLModContainer<>("silentlib", "Silent Lib", "3.0.13", "required-after:forge@[14.23.3.2669,);", "[1.12.2]", "silentlib", net.silentchaos512.lib.SilentLib::new, net.silentchaos512.lib.SilentLib::handleModStateEvent));
         mods.add(new FMLModContainer<>("scalinghealth", "Scaling Health", "1.3.37", "required-after:forge@[14.23.5.2779,);required-after:silentlib@[3.0.13,);after:morpheus", "[1.12.2]", "scalinghealth", net.silentchaos512.scalinghealth.ScalingHealth::new, net.silentchaos512.scalinghealth.ScalingHealth::handleModStateEvent).guiFactory(net.silentchaos512.scalinghealth.gui.GuiFactoryScalingHealth::new));
         mods.add(new FMLModContainer<>("switchbow", "switchbow", "1.6.8", "", "[1.12.2]", "switchbow", de.Whitedraco.switchbow.Initial::new, de.Whitedraco.switchbow.Initial::handleModStateEvent));
+        mods.add(new FMLModContainer<>("lostcities", "The Lost Cities", "2.0.22", "after:forge@[13.19.0.2176,)", "[1.12,1.13)", "lostcities", mcjty.lostcities.LostCities::new, mcjty.lostcities.LostCities::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

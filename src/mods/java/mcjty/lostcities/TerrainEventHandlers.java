@@ -1,5 +1,6 @@
 package mcjty.lostcities;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.LostCityChunkGenerator;
 import mcjty.lostcities.dimensions.world.WorldTypeTools;
@@ -12,14 +13,16 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class TerrainEventHandlers {
    public TerrainEventHandlers() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Decorate.class, this::onCreateDecorate);
+   }
+
    public void onCreateDecorate(Decorate event) {
       World world = event.getWorld();
       if (!world.isRemote) {

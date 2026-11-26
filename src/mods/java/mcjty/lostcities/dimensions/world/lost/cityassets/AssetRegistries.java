@@ -1,12 +1,11 @@
 package mcjty.lostcities.dimensions.world.lost.cityassets;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,36 +51,11 @@ public class AssetRegistries {
       PREDEFINED_SPHERES.reset();
    }
 
-   public static void load(File file) {
-      try {
-         FileInputStream in = new FileInputStream(file);
-         Throwable var2 = null;
-
-         try {
-            load(in, file.getName());
-         } catch (Throwable var13) {
-            var2 = var13;
-            throw var13;
-         } finally {
-            if (in != null) {
-               if (var2 != null) {
-                  try {
-                     in.close();
-                  } catch (Throwable var12) {
-                     var2.addSuppressed(var12);
-                  }
-               } else {
-                  in.close();
-               }
-            }
-
-         }
-      } catch (FileNotFoundException var15) {
-         ;
-      } catch (IOException var16) {
-         throw new UncheckedIOException(var16);
+   public static void load(VFile2 file) {
+      byte[] data = file.getAllBytes();
+      if (data != null) {
+         load(new EaglerInputStream(data), file.getName());
       }
-
    }
 
    private static void add(Map<Character, Set<String>> map, Character character, String partName) {
@@ -145,7 +119,7 @@ public class AssetRegistries {
    private static void printChars(String prefix, Counter<Character> counter) {
       List<Character> chars = new ArrayList(counter.getMap().keySet());
       chars.sort((o1, o2) -> {
-         return (void)o1.compareTo(o2);
+         return o1.compareTo(o2);
       });
       String s = "";
 

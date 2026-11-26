@@ -1,6 +1,5 @@
 package mcjty.lostcities.dimensions.world.lost.cityassets;
 
-import com.google.common.base.Predicates;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -45,7 +44,7 @@ public class WorldStyle implements ILostCityAsset {
          JsonObject o = element.getAsJsonObject();
          float factor = o.get("factor").getAsFloat();
          String building = o.get("citystyle").getAsString();
-         Predicate<WorldStyle.Info> predicate = Predicates.alwaysTrue();
+         Predicate<WorldStyle.Info> predicate = (x) -> true;
          if (o.has("biomes")) {
             JsonArray ar = o.get("biomes").getAsJsonArray();
             Set<String> biomes = new HashSet();

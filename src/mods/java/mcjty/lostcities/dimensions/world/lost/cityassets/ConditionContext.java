@@ -1,6 +1,5 @@
 package mcjty.lostcities.dimensions.world.lost.cityassets;
 
-import com.google.common.base.Predicates;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.function.Predicate;
@@ -151,7 +150,7 @@ public abstract class ConditionContext {
       }
 
       if (test == null) {
-         test = Predicates.alwaysTrue();
+         test = (x) -> true;
       }
 
       return test;

@@ -7,7 +7,7 @@ import net.minecraft.init.Blocks;
 public class ChunkPrimer
 {
     private static final IBlockState DEFAULT_STATE = Blocks.AIR.getDefaultState();
-    private final char[] data = new char[65536];
+    public char[] data = new char[65536];
 
     public IBlockState getBlockState(int x, int y, int z)
     {

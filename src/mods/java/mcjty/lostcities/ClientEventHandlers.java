@@ -1,16 +1,20 @@
 package mcjty.lostcities;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import mcjty.lostcities.config.LostCityProfile;
 import mcjty.lostcities.dimensions.world.WorldTypeTools;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogDensity;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientEventHandlers {
    public ClientEventHandlers() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(FogColors.class, this::onFogEvent);
+      bus.register(FogDensity.class, this::onFogDensity);
+   }
+
    public void onFogEvent(FogColors event) {
       if (WorldTypeTools.isLostCities(event.getEntity().world)) {
          LostCityProfile profile = WorldTypeTools.getProfile(event.getEntity().world);
@@ -29,7 +33,6 @@ public class ClientEventHandlers {
 
    }
 
-   @SubscribeEvent
    public void onFogDensity(FogDensity event) {
       if (WorldTypeTools.isLostCities(event.getEntity().world)) {
          LostCityProfile profile = WorldTypeTools.getProfile(event.getEntity().world);

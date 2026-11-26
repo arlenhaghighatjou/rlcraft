@@ -1,6 +1,6 @@
 package mcjty.lostcities.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,7 +19,7 @@ public class ConfigSetup {
    }
 
    public static void init() {
-      mainConfig = new Configuration(new File(ModSetup.modConfigDir.getPath() + File.separator + "lostcities", "general.cfg"));
+      mainConfig = new Configuration(new VFile2(ModSetup.modConfigDir, "lostcities", "general.cfg"));
       Configuration cfg = mainConfig;
       boolean var8 = false;
 
@@ -86,7 +86,7 @@ public class ConfigSetup {
    private static void initProfiles(String[] profileList, boolean isPublic) {
       for(String name : profileList) {
          LostCityProfile profile = new LostCityProfile(name, (LostCityProfile)LostCityConfiguration.standardProfiles.get(name), isPublic);
-         Configuration profileCfg = new Configuration(new File(ModSetup.modConfigDir.getPath() + File.separator + "lostcities", "profile_" + name + ".cfg"));
+         Configuration profileCfg = new Configuration(new VFile2(ModSetup.modConfigDir, "lostcities", "profile_" + name + ".cfg"));
          profileCfg.load();
          profile.init(profileCfg);
          LostCityConfiguration.profiles.put(name, profile);

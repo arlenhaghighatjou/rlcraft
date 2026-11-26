@@ -20,7 +20,7 @@ public class AbstractAssetRegistry<T extends ILostCityAsset> implements ILostCit
    }
 
    public <S extends ILostCityAsset> ILostCityAssetRegistry<S> cast() {
-      return this;
+      return (ILostCityAssetRegistry<S>)(ILostCityAssetRegistry)this;
    }
 
    public T get(String name) {

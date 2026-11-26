@@ -37,7 +37,7 @@ public class ModDimensions {
       }
 
       if (LostCityConfiguration.DIMENSION_ID != -1) {
-         lostDimensionType = DimensionType.register("lostcities", "_lost", LostCityConfiguration.DIMENSION_ID, LostWorldProvider.class, false);
+         lostDimensionType = DimensionType.register("lostcities", "_lost", LostCityConfiguration.DIMENSION_ID, LostWorldProvider.class, LostWorldProvider::new, false);
          DimensionManager.registerDimension(LostCityConfiguration.DIMENSION_ID, lostDimensionType);
          dimensionProfileMap.put(Integer.valueOf(LostCityConfiguration.DIMENSION_ID), LostCityConfiguration.DIMENSION_PROFILE);
       }
@@ -47,7 +47,7 @@ public class ModDimensions {
          int id = Integer.parseInt(split[0]);
          String profile = split[1];
          if (lostDimensionType == null) {
-            lostDimensionType = DimensionType.register("lostcities", "_lost", id, LostWorldProvider.class, false);
+            lostDimensionType = DimensionType.register("lostcities", "_lost", id, LostWorldProvider.class, LostWorldProvider::new, false);
          }
 
          DimensionManager.registerDimension(id, lostDimensionType);

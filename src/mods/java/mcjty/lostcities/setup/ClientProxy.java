@@ -1,6 +1,6 @@
 package mcjty.lostcities.setup;
 
-import com.google.common.util.concurrent.ListenableFuture;
+import net.lax1dude.eaglercraft.v1_8.futures.ListenableFuture;
 import java.util.concurrent.Callable;
 import mcjty.lostcities.ClientEventHandlers;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ public class ClientProxy implements IProxy {
    }
 
    public void init(FMLInitializationEvent e) {
-      MinecraftForge.EVENT_BUS.register(new ClientEventHandlers());
+      (new ClientEventHandlers()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit(FMLPostInitializationEvent e) {

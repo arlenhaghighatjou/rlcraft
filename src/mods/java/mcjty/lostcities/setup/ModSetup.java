@@ -1,6 +1,7 @@
 package mcjty.lostcities.setup;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -28,7 +29,7 @@ public class ModSetup {
    public static boolean neid = false;
    public static boolean jeid = false;
    private Logger logger;
-   public static File modConfigDir;
+   public static VFile2 modConfigDir;
 
    public ModSetup() {
    }
@@ -56,8 +57,8 @@ public class ModSetup {
    }
 
    public void init(FMLInitializationEvent e) {
-      MinecraftForge.EVENT_BUS.register(new ForgeEventHandlers());
-      MinecraftForge.TERRAIN_GEN_BUS.register(new TerrainEventHandlers());
+      (new ForgeEventHandlers()).register(MinecraftForge.EVENT_BUS);
+      (new TerrainEventHandlers()).register(MinecraftForge.TERRAIN_GEN_BUS);
    }
 
    public void postInit(FMLPostInitializationEvent e) {
@@ -68,7 +69,7 @@ public class ModSetup {
       for(String path : LostCityConfiguration.ASSETS) {
          if (path.startsWith("/")) {
             try {
-               InputStream inputstream = LostCities.class.getResourceAsStream(path);
+               InputStream inputstream = EagRuntime.getResourceStream("/lostcities" + path);
                Throwable var7 = null;
 
                try {
@@ -98,7 +99,7 @@ public class ModSetup {
                throw new RuntimeException("Invalid path for lostcity resource in 'assets' config!");
             }
 
-            File file = new File(modConfigDir.getPath() + File.separator + path.substring(1));
+            VFile2 file = new VFile2(modConfigDir, path.substring(1));
             AssetRegistries.load(file);
          }
       }

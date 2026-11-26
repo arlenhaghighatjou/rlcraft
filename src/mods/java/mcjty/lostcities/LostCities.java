@@ -1,5 +1,9 @@
 package mcjty.lostcities;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.google.common.collect.UnmodifiableIterator;
 import java.util.Optional;
 import java.util.function.Function;
@@ -18,9 +22,6 @@ import mcjty.lostcities.dimensions.world.lost.Railway;
 import mcjty.lostcities.setup.IProxy;
 import mcjty.lostcities.setup.ModSetup;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -41,38 +42,49 @@ public class LostCities {
    public static final String MODID = "lostcities";
    public static final String VERSION = "2.0.22";
    public static final String MIN_FORGE11_VER = "13.19.0.2176";
-   @SidedProxy(
-      clientSide = "mcjty.lostcities.setup.ClientProxy",
-      serverSide = "mcjty.lostcities.setup.ServerProxy"
-   )
    public static IProxy proxy;
    public static ModSetup setup = new ModSetup();
-   @Instance("lostcities")
    public static LostCities instance;
    public static LostCitiesImp lostCitiesImp = new LostCitiesImp();
 
    public LostCities() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new mcjty.lostcities.setup.ClientProxy() : new mcjty.lostcities.setup.ServerProxy();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.serverLoad((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStoppedEvent) {
+         this.serverStopped((FMLServerStoppedEvent)event);
+      } else if (event instanceof IMCEvent) {
+         this.imcCallback((IMCEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent e) {
       setup.preInit(e);
       proxy.preInit(e);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent e) {
       setup.init(e);
       proxy.init(e);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent e) {
       setup.postInit(e);
       proxy.postInit(e);
    }
 
-   @EventHandler
    public void serverLoad(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandDebug());
       event.registerServerCommand(new CommandExportBuilding());
@@ -81,7 +93,6 @@ public class LostCities {
       this.cleanCaches();
    }
 
-   @EventHandler
    public void serverStopped(FMLServerStoppedEvent event) {
       this.cleanCaches();
       WorldTypeTools.cleanChunkGeneratorMap();
@@ -97,7 +108,6 @@ public class LostCities {
       WorldTypeTools.cleanCache();
    }
 
-   @EventHandler
    public void imcCallback(IMCEvent event) {
       UnmodifiableIterator var2 = event.getMessages().iterator();
 

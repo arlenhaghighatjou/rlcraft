@@ -69,7 +69,7 @@ public abstract class Biome extends net.minecraftforge.registries.IForgeRegistry
     protected static final WorldGenBigTree BIG_TREE_FEATURE = new WorldGenBigTree(false);
     protected static final WorldGenSwamp SWAMP_FEATURE = new WorldGenSwamp();
     public static final RegistryNamespaced<ResourceLocation, Biome> REGISTRY = net.minecraftforge.registries.GameData.getWrapper(Biome.class);
-    private final String biomeName;
+    public String biomeName;
     private final float baseHeight;
     private final float heightVariation;
     private final float temperature;
