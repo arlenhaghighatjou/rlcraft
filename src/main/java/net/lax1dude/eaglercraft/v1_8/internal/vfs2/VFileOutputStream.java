@@ -51,7 +51,7 @@ class VFileOutputStream extends OutputStream {
 		if(buffer.remaining() < len) {
 			buffer.flip();
 			int oldLen = buffer.limit();
-			int newLen = oldLen;
+			int newLen = buffer.capacity();
 			do {
 				newLen <<= 1;
 			}while(newLen < oldLen + len);
