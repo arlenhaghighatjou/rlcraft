@@ -68,10 +68,10 @@ public class CaveCarver implements ICarver {
                   for(int y = topY; y >= this.bottomY && (y > this.settings.getLiquidAltitude() || liquidBlock != null); --y) {
                      List<Double> noiseBlock = noises.get(y).getNoiseValues();
                      boolean digBlock = true;
-                     Iterator blockPos = noiseBlock.iterator();
+                     Iterator iter = noiseBlock.iterator();
 
-                     while(blockPos.hasNext()) {
-                        double noise = ((Double)blockPos.next()).doubleValue();
+                     while(iter.hasNext()) {
+                        double noise = ((Double)iter.next()).doubleValue();
                         if (noise < (double)((Float)thresholds.get(Integer.valueOf(y))).floatValue()) {
                            digBlock = false;
                            break;
@@ -98,10 +98,10 @@ public class CaveCarver implements ICarver {
          NoiseTuple noiseBlock = noises.get(realY);
          float threshold = ((Float)thresholds.get(Integer.valueOf(realY))).floatValue();
          boolean valid = true;
-         Iterator f1 = noiseBlock.getNoiseValues().iterator();
+         Iterator iter = noiseBlock.getNoiseValues().iterator();
 
-         while(f1.hasNext()) {
-            double noise = ((Double)f1.next()).doubleValue();
+         while(iter.hasNext()) {
+            double noise = ((Double)iter.next()).doubleValue();
             if (noise < (double)threshold) {
                valid = false;
                break;

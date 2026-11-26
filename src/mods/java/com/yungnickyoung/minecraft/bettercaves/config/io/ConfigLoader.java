@@ -1,21 +1,20 @@
 package com.yungnickyoung.minecraft.bettercaves.config.io;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.yungnickyoung.minecraft.bettercaves.BetterCaves;
 import com.yungnickyoung.minecraft.bettercaves.config.util.ConfigHolder;
 import com.yungnickyoung.minecraft.bettercaves.enums.RegionSize;
 import com.yungnickyoung.minecraft.bettercaves.noise.FastNoise;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.StringReader;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Property;
-import net.minecraftforge.common.config.Configuration.UnicodeInputStreamReader;
 import net.minecraftforge.common.config.Property.Type;
-import org.apache.commons.io.IOUtils;
 
 public class ConfigLoader {
    private static final String ALLOWED_CHARS = "._-";
@@ -26,31 +25,24 @@ public class ConfigLoader {
 
    public static ConfigHolder loadConfigFromFileForDimension(int dimensionID) {
       String fileName = "DIM" + dimensionID + "_config.cfg";
-      File configFile = new File(BetterCaves.customConfigDir, fileName);
-      if (configFile.exists() && !configFile.isDirectory()) {
-         if (!configFile.canRead()) {
-            BetterCaves.LOGGER.warn(String.format("Better Caves config file for dimension %d not readable. Using global config...", dimensionID));
-            return new ConfigHolder();
-         } else {
-            BetterCaves.LOGGER.info(String.format("Reading Better Caves config from file for dimension %d...", dimensionID));
-            return parseConfigFromFile(configFile);
-         }
+      VFile2 configFile = new VFile2(BetterCaves.customConfigDir, fileName);
+      String text = configFile.getAllChars();
+      if (text != null) {
+         BetterCaves.LOGGER.info(HString.format("Reading Better Caves config from file for dimension %d...", dimensionID));
+         return parseConfigFromFile(fileName, text);
       } else {
-         BetterCaves.LOGGER.info(String.format("Better Caves config file for dimension %d not found. Using global config...", dimensionID));
+         BetterCaves.LOGGER.info(HString.format("Better Caves config file for dimension %d not found. Using global config...", dimensionID));
          return new ConfigHolder();
       }
    }
 
-   private static ConfigHolder parseConfigFromFile(File file) {
+   private static ConfigHolder parseConfigFromFile(String fileName, String text) {
       ConfigHolder config = new ConfigHolder();
       BufferedReader buffer = null;
-      UnicodeInputStreamReader input = null;
-      String fileName = file.getName();
 
       try {
          Map<String, ConfigCategory> categories = new TreeMap();
-         input = new UnicodeInputStreamReader(new FileInputStream(file), "UTF-8");
-         buffer = new BufferedReader(input);
+         buffer = new BufferedReader(new StringReader(text.startsWith("﻿") ? text.substring(1) : text));
          ConfigCategory currCategory = null;
          Type type = null;
          ArrayList<String> tmpList = null;
@@ -103,13 +95,13 @@ public class ConfigLoader {
                         break;
                      case '<':
                         if (tmpList != null && i + 1 == line.length() || tmpList == null && i + 1 != line.length()) {
-                           throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", fileName, lineNum));
+                           throw new RuntimeException(HString.format("Malformed list property \"%s:%d\"", fileName, lineNum));
                         }
 
                         if (i + 1 == line.length()) {
                            name = line.substring(nameStart, nameEnd + 1);
                            if (currCategory == null) {
-                              throw new RuntimeException(String.format("'%s' has no scope (missing category?) in '%s:%d'", name, fileName, lineNum));
+                              throw new RuntimeException(HString.format("'%s' has no scope (missing category?) in '%s:%d'", name, fileName, lineNum));
                            }
 
                            tmpList = new ArrayList();
@@ -120,18 +112,18 @@ public class ConfigLoader {
                         if (tmpList == null) {
                            name = line.substring(nameStart, nameEnd + 1);
                            if (currCategory == null) {
-                              throw new RuntimeException(String.format("'%s' has no scope (missing category?) in '%s:%d'", name, fileName, lineNum));
+                              throw new RuntimeException(HString.format("'%s' has no scope (missing category?) in '%s:%d'", name, fileName, lineNum));
                            }
 
                            if (!isTypeSpecified) {
-                              BetterCaves.LOGGER.warn(String.format("Error in Better Caves config for %s (line %d): missing variable type specifier. Inferring String...", fileName, lineNum));
+                              BetterCaves.LOGGER.warn(HString.format("Error in Better Caves config for %s (line %d): missing variable type specifier. Inferring String...", fileName, lineNum));
                            }
 
                            Property prop = new Property(name, line.substring(i + 1), type, true);
                            String fullName = currCategory.getQualifiedName() + "." + name;
                            ConfigHolder.ConfigOption target = (ConfigHolder.ConfigOption)config.properties.get(fullName);
                            if (target == null) {
-                              BetterCaves.LOGGER.error(String.format("ERROR: INVALID PROPERTY %s in config %s. Skipping...", fullName, fileName));
+                              BetterCaves.LOGGER.error(HString.format("ERROR: INVALID PROPERTY %s in config %s. Skipping...", fullName, fileName));
                               i = line.length();
                               continue;
                            }
@@ -139,7 +131,7 @@ public class ConfigLoader {
                            switch(type) {
                            case INTEGER:
                               if (!target.type.equals(Integer.TYPE) && !target.type.equals(Integer.class)) {
-                                 BetterCaves.LOGGER.error(String.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
+                                 BetterCaves.LOGGER.error(HString.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
                                  i = line.length();
                                  continue;
                               }
@@ -148,7 +140,7 @@ public class ConfigLoader {
                               break;
                            case DOUBLE:
                               if (!target.type.equals(Double.TYPE) && !target.type.equals(Double.class) && !target.type.equals(Float.TYPE) && !target.type.equals(Float.class)) {
-                                 BetterCaves.LOGGER.error(String.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
+                                 BetterCaves.LOGGER.error(HString.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
                                  i = line.length();
                                  continue;
                               }
@@ -161,20 +153,20 @@ public class ConfigLoader {
                               break;
                            case BOOLEAN:
                               if (!target.type.equals(Boolean.TYPE) && !target.type.equals(Boolean.class)) {
-                                 BetterCaves.LOGGER.error(String.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
+                                 BetterCaves.LOGGER.error(HString.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
                                  i = line.length();
                                  continue;
                               }
 
                               if (!line.substring(i + 1).toLowerCase().equals("true") && !line.substring(i + 1).toLowerCase().equals("false")) {
-                                 throw new RuntimeException(String.format("Invalid Boolean value for property '%s:%d'", fullName, lineNum));
+                                 throw new RuntimeException(HString.format("Invalid Boolean value for property '%s:%d'", fullName, lineNum));
                               }
 
                               target.set(Boolean.valueOf(prop.getBoolean()));
                               break;
                            default:
                               if (!target.type.equals(String.class) && !target.type.equals(RegionSize.class) && !target.type.equals(FastNoise.NoiseType.class)) {
-                                 BetterCaves.LOGGER.error(String.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
+                                 BetterCaves.LOGGER.error(HString.format("ERROR: WRONG TYPE for %s in config %s. Skipping...", fullName, fileName));
                                  i = line.length();
                                  continue;
                               }
@@ -189,13 +181,13 @@ public class ConfigLoader {
                            }
 
                            currCategory.put(name, prop);
-                           BetterCaves.LOGGER.debug(String.format("%s: overriding config option: %s", fileName, fullName));
+                           BetterCaves.LOGGER.debug(HString.format("%s: overriding config option: %s", fileName, fullName));
                            i = line.length();
                         }
                         break;
                      case '>':
                         if (tmpList == null) {
-                           throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", fileName, lineNum));
+                           throw new RuntimeException(HString.format("Malformed list property \"%s:%d\"", fileName, lineNum));
                         }
 
                         if (isFirstNonWhitespaceCharOnLine) {
@@ -224,7 +216,7 @@ public class ConfigLoader {
                      case '}':
                         if (tmpList == null) {
                            if (currCategory == null) {
-                              throw new RuntimeException(String.format("Invalid config file: attempted to close too many categories '%s:%d'", fileName, lineNum));
+                              throw new RuntimeException(HString.format("Invalid config file: attempted to close too many categories '%s:%d'", fileName, lineNum));
                            }
 
                            currCategory = currCategory.parent;
@@ -237,7 +229,7 @@ public class ConfigLoader {
                         break;
                      default:
                         if (tmpList == null) {
-                           throw new RuntimeException(String.format("Unknown character '%s' in '%s:%d'", line.charAt(i), fileName, lineNum));
+                           throw new RuntimeException(HString.format("Unknown character '%s' in '%s:%d'", line.charAt(i), fileName, lineNum));
                         }
                      }
 
@@ -254,7 +246,7 @@ public class ConfigLoader {
             }
 
             if (quoted) {
-               throw new RuntimeException(String.format("Unmatched quote in '%s:%d'", fileName, lineNum));
+               throw new RuntimeException(HString.format("Unmatched quote in '%s:%d'", fileName, lineNum));
             }
 
             if (tmpList != null && !skip) {
@@ -262,13 +254,10 @@ public class ConfigLoader {
             }
          }
       } catch (Exception var28) {
-         BetterCaves.LOGGER.error(String.format("ERROR LOADING BETTER CAVES CONFIG %s: %s.", fileName, var28.toString()));
+         BetterCaves.LOGGER.error(HString.format("ERROR LOADING BETTER CAVES CONFIG %s: %s.", fileName, var28.toString()));
          BetterCaves.LOGGER.info("USING GLOBAL CONFIG FILE INSTEAD...");
          ConfigHolder line = new ConfigHolder();
          return line;
-      } finally {
-         IOUtils.closeQuietly(buffer);
-         IOUtils.closeQuietly(input);
       }
    }
 }

@@ -1,14 +1,15 @@
 package com.yungnickyoung.minecraft.bettercaves;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.yungnickyoung.minecraft.bettercaves.event.EventBetterCaveGen;
 import com.yungnickyoung.minecraft.bettercaves.proxy.IProxy;
-import java.io.File;
-import java.io.IOException;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
@@ -24,34 +25,31 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 )
 public class BetterCaves {
    public static final Logger LOGGER = LogManager.getLogger("bettercaves");
-   public static File customConfigDir;
-   @SidedProxy(
-      clientSide = "com.yungnickyoung.minecraft.bettercaves.proxy.ClientProxy",
-      serverSide = "com.yungnickyoung.minecraft.bettercaves.proxy.ServerProxy"
-   )
+   public static VFile2 customConfigDir;
    public static IProxy proxy;
 
    public BetterCaves() {
    }
 
-   @EventHandler
-   public void preInit(FMLPreInitializationEvent event) {
-      proxy.preInit();
-      customConfigDir = new File(Loader.instance().getConfigDir(), "bettercaves-1_12_2");
-
-      try {
-         String filePath = customConfigDir.getCanonicalPath();
-         if (customConfigDir.mkdir()) {
-            LOGGER.info("Creating directory for dimension-specific Better Caves configs at " + filePath);
-         }
-      } catch (IOException var3) {
-         LOGGER.warn("ERROR creating Better Caves config directory.");
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.yungnickyoung.minecraft.bettercaves.proxy.ClientProxy() : new com.yungnickyoung.minecraft.bettercaves.proxy.ServerProxy();
+         com.yungnickyoung.minecraft.bettercaves.config.Configuration.register();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
       }
 
    }
 
-   @EventHandler
+   public void preInit(FMLPreInitializationEvent event) {
+      proxy.preInit();
+      customConfigDir = new VFile2(Loader.instance().getConfigDir(), "bettercaves-1_12_2");
+
+   }
+
    public void init(FMLInitializationEvent event) {
-      MinecraftForge.TERRAIN_GEN_BUS.register(new EventBetterCaveGen());
+      (new EventBetterCaveGen()).register(MinecraftForge.TERRAIN_GEN_BUS);
    }
 }

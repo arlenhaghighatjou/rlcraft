@@ -55,7 +55,7 @@ public class CaveCarverController {
       carvers.add((new CaveCarverBuilder(worldIn)).ofTypeFromConfig(CaveType.SIMPLEX, config).debugVisualizerBlock(Blocks.COBBLESTONE.getDefaultState()).build());
       carvers.add((new VanillaCaveCarverBuilder()).bottomY(((Integer)config.vanillaCaveBottom.get()).intValue()).topY(((Integer)config.vanillaCaveTop.get()).intValue()).density(((Integer)config.vanillaCaveDensity.get()).intValue()).priority(((Integer)config.vanillaCavePriority.get()).intValue()).liquidAltitude(((Integer)config.liquidAltitude.get()).intValue()).replaceGravel(((Boolean)config.replaceFloatingGravel.get()).booleanValue()).floodedUnderground(((Boolean)config.enableFloodedUnderground.get()).booleanValue()).debugVisualizerEnabled(((Boolean)config.debugVisualizer.get()).booleanValue()).debugVisualizerBlock(Blocks.BRICK_BLOCK.getDefaultState()).build());
       carvers.removeIf((carverx) -> {
-         return carver.getPriority() == 0;
+         return carverx.getPriority() == 0;
       });
       float maxPossibleNoiseThreshold = ((Float)config.caveSpawnChance.get()).floatValue() * 0.01F * 2.0F - 1.0F;
       int totalPriority = ((Integer)carvers.stream().map(ICarver::getPriority).reduce(Integer.valueOf(0), Integer::sum)).intValue();
@@ -92,7 +92,7 @@ public class CaveCarverController {
                BlockPos startPos = new BlockPos(chunkX * 16 + startX, 1, chunkZ * 16 + startZ);
                BlockPos endPos = new BlockPos(chunkX * 16 + endX, 1, chunkZ * 16 + endZ);
                this.noiseRanges.forEach((rangex) -> {
-                  range.setNoiseCube((NoiseCube)null);
+                  rangex.setNoiseCube((NoiseCube)null);
                });
                int maxHeight = 0;
                if (!this.isOverrideSurfaceDetectionEnabled) {

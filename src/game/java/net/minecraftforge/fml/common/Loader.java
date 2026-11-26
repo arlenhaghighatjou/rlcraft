@@ -238,6 +238,7 @@ public class Loader
         mods.add(new FMLModContainer<>("betterbiomeblend", "betterbiomeblend", "1.0", "", "[1.12.2]", "betterbiomeblend", fionathemortal.betterbiomeblend.BetterBiomeBlend::new, fionathemortal.betterbiomeblend.BetterBiomeBlend::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("potioncore", "Potion Core", "1.9_for_1.12.2", "required-after:forge@[14.23.0.2524,);", "[1.12.2]", "potioncore", com.tmtravlr.potioncore.PotionCore::new, com.tmtravlr.potioncore.PotionCore::handleModStateEvent));
         mods.add(new FMLModContainer<>("qualitytools", "Quality Tools", "1.0.7_for_1.12.2", "required-after:potioncore;after:baubles", "[1.12.2]", "qualitytools", com.tmtravlr.qualitytools.QualityToolsMod::new, com.tmtravlr.qualitytools.QualityToolsMod::handleModStateEvent));
+        mods.add(new FMLModContainer<>("bettercaves", "YUNG's Better Caves", "1.12.2", "", "[1.12.2]", "bettercaves", com.yungnickyoung.minecraft.bettercaves.BetterCaves::new, com.yungnickyoung.minecraft.bettercaves.BetterCaves::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

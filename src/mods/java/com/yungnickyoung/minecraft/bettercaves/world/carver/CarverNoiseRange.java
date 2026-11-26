@@ -1,5 +1,6 @@
 package com.yungnickyoung.minecraft.bettercaves.world.carver;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.yungnickyoung.minecraft.bettercaves.noise.NoiseCube;
 import com.yungnickyoung.minecraft.bettercaves.noise.NoiseUtils;
 
@@ -51,6 +52,6 @@ public class CarverNoiseRange {
    }
 
    public String toString() {
-      return String.format("[%2.2f, %2.2f] (%2.4f%%) -- smooth cutoffs: [%2.2f, %2.2f]", this.bottom, this.top, this.getPercentLength(), this.smoothBottomCutoff, this.smoothTopCutoff);
+      return HString.format("[%2.2f, %2.2f] (%2.4f%%) -- smooth cutoffs: [%2.2f, %2.2f]", this.bottom, this.top, this.getPercentLength(), this.smoothBottomCutoff, this.smoothTopCutoff);
    }
 }

@@ -8,6 +8,6 @@ public class ClientProxy implements IProxy {
    }
 
    public void preInit() {
-      MinecraftForge.EVENT_BUS.register(new EventConfigReload());
+      (new EventConfigReload()).register(MinecraftForge.EVENT_BUS);
    }
 }

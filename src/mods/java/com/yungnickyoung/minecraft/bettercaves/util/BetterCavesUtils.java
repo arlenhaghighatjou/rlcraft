@@ -1,5 +1,6 @@
 package com.yungnickyoung.minecraft.bettercaves.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.yungnickyoung.minecraft.bettercaves.config.Configuration;
 import java.util.function.Predicate;
 import net.minecraft.block.material.Material;
@@ -37,7 +38,7 @@ public class BetterCavesUtils {
    }
 
    public static String dimensionAsString(int dimensionID, String dimensionName) {
-      return String.format("%d (%s)", dimensionID, dimensionName);
+      return HString.format("%d (%s)", dimensionID, dimensionName);
    }
 
    public static int getLocal(int coordinate) {

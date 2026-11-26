@@ -1475,56 +1475,60 @@ public class FastNoise implements INoiseLibrary {
       label103:
       switch(this.m_cellularDistanceFunction) {
       case Euclidean:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label103;
-            }
+            while(true) {
+               if (xi > xr + 1) {
+                  break label103;
+               }
 
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               for(int zi = zr - 1; zi <= zr + 1; ++zi) {
-                  FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
-                  float vecX = (float)xi - x + vec.x;
-                  float vecY = (float)yi - y + vec.y;
-                  float vecZ = (float)zi - z + vec.z;
-                  float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
-                  if (newDistance < distance) {
-                     distance = newDistance;
-                     xc = xi;
-                     yc = yi;
-                     zc = zi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  for(int zi = zr - 1; zi <= zr + 1; ++zi) {
+                     FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
+                     float vecX = (float)xi - x + vec.x;
+                     float vecY = (float)yi - y + vec.y;
+                     float vecZ = (float)zi - z + vec.z;
+                     float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
+                     if (newDistance < distance) {
+                        distance = newDistance;
+                        xc = xi;
+                        yc = yi;
+                        zc = zi;
+                     }
                   }
                }
-            }
 
-            ++xi;
+               ++xi;
+         }
          }
       case Manhattan:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label103;
-            }
+            while(true) {
+               if (xi > xr + 1) {
+                  break label103;
+               }
 
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               for(int zi = zr - 1; zi <= zr + 1; ++zi) {
-                  FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
-                  float vecX = (float)xi - x + vec.x;
-                  float vecY = (float)yi - y + vec.y;
-                  float vecZ = (float)zi - z + vec.z;
-                  float newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
-                  if (newDistance < distance) {
-                     distance = newDistance;
-                     xc = xi;
-                     yc = yi;
-                     zc = zi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  for(int zi = zr - 1; zi <= zr + 1; ++zi) {
+                     FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
+                     float vecX = (float)xi - x + vec.x;
+                     float vecY = (float)yi - y + vec.y;
+                     float vecZ = (float)zi - z + vec.z;
+                     float newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
+                     if (newDistance < distance) {
+                        distance = newDistance;
+                        xc = xi;
+                        yc = yi;
+                        zc = zi;
+                     }
                   }
                }
-            }
 
-            ++xi;
+               ++xi;
+         }
          }
       case Natural:
          for(int xi = xr - 1; xi <= xr + 1; ++xi) {
@@ -1570,48 +1574,52 @@ public class FastNoise implements INoiseLibrary {
       label94:
       switch(this.m_cellularDistanceFunction) {
       case Euclidean:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label94;
-            }
-
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               for(int zi = zr - 1; zi <= zr + 1; ++zi) {
-                  FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
-                  float vecX = (float)xi - x + vec.x;
-                  float vecY = (float)yi - y + vec.y;
-                  float vecZ = (float)zi - z + vec.z;
-                  float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
-                  distance2 = Math.max(Math.min(distance2, newDistance), distance);
-                  distance = Math.min(distance, newDistance);
+            while(true) {
+               if (xi > xr + 1) {
+                  break label94;
                }
-            }
 
-            ++xi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  for(int zi = zr - 1; zi <= zr + 1; ++zi) {
+                     FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
+                     float vecX = (float)xi - x + vec.x;
+                     float vecY = (float)yi - y + vec.y;
+                     float vecZ = (float)zi - z + vec.z;
+                     float newDistance = vecX * vecX + vecY * vecY + vecZ * vecZ;
+                     distance2 = Math.max(Math.min(distance2, newDistance), distance);
+                     distance = Math.min(distance, newDistance);
+                  }
+               }
+
+               ++xi;
+         }
          }
       case Manhattan:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label94;
-            }
-
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               for(int zi = zr - 1; zi <= zr + 1; ++zi) {
-                  FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
-                  float vecX = (float)xi - x + vec.x;
-                  float vecY = (float)yi - y + vec.y;
-                  float vecZ = (float)zi - z + vec.z;
-                  float newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
-                  distance2 = Math.max(Math.min(distance2, newDistance), distance);
-                  distance = Math.min(distance, newDistance);
+            while(true) {
+               if (xi > xr + 1) {
+                  break label94;
                }
-            }
 
-            ++xi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  for(int zi = zr - 1; zi <= zr + 1; ++zi) {
+                     FastNoise.Float3 vec = CELL_3D[Hash3D(this.m_seed, xi, yi, zi) & 255];
+                     float vecX = (float)xi - x + vec.x;
+                     float vecY = (float)yi - y + vec.y;
+                     float vecZ = (float)zi - z + vec.z;
+                     float newDistance = Math.abs(vecX) + Math.abs(vecY) + Math.abs(vecZ);
+                     distance2 = Math.max(Math.min(distance2, newDistance), distance);
+                     distance = Math.min(distance, newDistance);
+                  }
+               }
+
+               ++xi;
+         }
          }
       case Natural:
          for(int xi = xr - 1; xi <= xr + 1; ++xi) {
@@ -1671,48 +1679,52 @@ public class FastNoise implements INoiseLibrary {
       switch(this.m_cellularDistanceFunction) {
       case Euclidean:
       default:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label76;
-            }
-
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
-               float vecX = (float)xi - x + vec.x;
-               float vecY = (float)yi - y + vec.y;
-               float newDistance = vecX * vecX + vecY * vecY;
-               if (newDistance < distance) {
-                  distance = newDistance;
-                  xc = xi;
-                  yc = yi;
+            while(true) {
+               if (xi > xr + 1) {
+                  break label76;
                }
-            }
 
-            ++xi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
+                  float vecX = (float)xi - x + vec.x;
+                  float vecY = (float)yi - y + vec.y;
+                  float newDistance = vecX * vecX + vecY * vecY;
+                  if (newDistance < distance) {
+                     distance = newDistance;
+                     xc = xi;
+                     yc = yi;
+                  }
+               }
+
+               ++xi;
+         }
          }
       case Manhattan:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label76;
-            }
-
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
-               float vecX = (float)xi - x + vec.x;
-               float vecY = (float)yi - y + vec.y;
-               float newDistance = Math.abs(vecX) + Math.abs(vecY);
-               if (newDistance < distance) {
-                  distance = newDistance;
-                  xc = xi;
-                  yc = yi;
+            while(true) {
+               if (xi > xr + 1) {
+                  break label76;
                }
-            }
 
-            ++xi;
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
+                  float vecX = (float)xi - x + vec.x;
+                  float vecY = (float)yi - y + vec.y;
+                  float newDistance = Math.abs(vecX) + Math.abs(vecY);
+                  if (newDistance < distance) {
+                     distance = newDistance;
+                     xc = xi;
+                     yc = yi;
+                  }
+               }
+
+               ++xi;
+         }
          }
       case Natural:
          for(int xi = xr - 1; xi <= xr + 1; ++xi) {
@@ -1754,42 +1766,46 @@ public class FastNoise implements INoiseLibrary {
       switch(this.m_cellularDistanceFunction) {
       case Euclidean:
       default:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label66;
-            }
+            while(true) {
+               if (xi > xr + 1) {
+                  break label66;
+               }
 
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
-               float vecX = (float)xi - x + vec.x;
-               float vecY = (float)yi - y + vec.y;
-               float newDistance = vecX * vecX + vecY * vecY;
-               distance2 = Math.max(Math.min(distance2, newDistance), distance);
-               distance = Math.min(distance, newDistance);
-            }
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
+                  float vecX = (float)xi - x + vec.x;
+                  float vecY = (float)yi - y + vec.y;
+                  float newDistance = vecX * vecX + vecY * vecY;
+                  distance2 = Math.max(Math.min(distance2, newDistance), distance);
+                  distance = Math.min(distance, newDistance);
+               }
 
-            ++xi;
+               ++xi;
+         }
          }
       case Manhattan:
-         int xi = xr - 1;
+         {
+            int xi = xr - 1;
 
-         while(true) {
-            if (xi > xr + 1) {
-               break label66;
-            }
+            while(true) {
+               if (xi > xr + 1) {
+                  break label66;
+               }
 
-            for(int yi = yr - 1; yi <= yr + 1; ++yi) {
-               FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
-               float vecX = (float)xi - x + vec.x;
-               float vecY = (float)yi - y + vec.y;
-               float newDistance = Math.abs(vecX) + Math.abs(vecY);
-               distance2 = Math.max(Math.min(distance2, newDistance), distance);
-               distance = Math.min(distance, newDistance);
-            }
+               for(int yi = yr - 1; yi <= yr + 1; ++yi) {
+                  FastNoise.Float2 vec = CELL_2D[Hash2D(this.m_seed, xi, yi) & 255];
+                  float vecX = (float)xi - x + vec.x;
+                  float vecY = (float)yi - y + vec.y;
+                  float newDistance = Math.abs(vecX) + Math.abs(vecY);
+                  distance2 = Math.max(Math.min(distance2, newDistance), distance);
+                  distance = Math.min(distance, newDistance);
+               }
 
-            ++xi;
+               ++xi;
+         }
          }
       case Natural:
          for(int xi = xr - 1; xi <= xr + 1; ++xi) {

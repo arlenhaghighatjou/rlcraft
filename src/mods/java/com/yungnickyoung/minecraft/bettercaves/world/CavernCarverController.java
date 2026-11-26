@@ -59,7 +59,7 @@ public class CavernCarverController {
       BetterCaves.LOGGER.debug("--> SPAWN CHANCE SET TO: " + spawnChance);
       BetterCaves.LOGGER.debug("--> TOTAL PRIORITY: " + totalPriority);
       carvers.removeIf((carverx) -> {
-         return carver.getPriority() == 0;
+         return carverx.getPriority() == 0;
       });
       float totalDeadzonePercent = 1.0F - spawnChance;
       float deadzonePercent = carvers.size() > 1 ? totalDeadzonePercent / (float)(carvers.size() - 1) : totalDeadzonePercent;
@@ -93,7 +93,7 @@ public class CavernCarverController {
                BlockPos startPos = new BlockPos(chunkX * 16 + startX, 1, chunkZ * 16 + startZ);
                BlockPos endPos = new BlockPos(chunkX * 16 + endX, 1, chunkZ * 16 + endZ);
                this.noiseRanges.forEach((rangex) -> {
-                  range.setNoiseCube((NoiseCube)null);
+                  rangex.setNoiseCube((NoiseCube)null);
                });
                int maxHeight = 0;
                if (!this.isOverrideSurfaceDetectionEnabled) {
