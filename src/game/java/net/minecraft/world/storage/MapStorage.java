@@ -61,8 +61,7 @@ public class MapStorage
                     {
                         try
                         {
-                            Function<String, ? extends WorldSavedData> provider = storageProviders.get(clazz);
-                            worldsaveddata = provider != null ? provider.apply(dataIdentifier) : clazz.getConstructor(String.class).newInstance(dataIdentifier);
+                            worldsaveddata = storageProviders.get(clazz).apply(dataIdentifier);
                         }
                         catch (Exception exception)
                         {
