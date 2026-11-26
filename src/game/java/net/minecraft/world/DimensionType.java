@@ -1,15 +1,21 @@
 package net.minecraft.world;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
-public enum DimensionType
+public final class DimensionType
 {
-    OVERWORLD(0, "overworld", "", WorldProviderSurface.class, WorldProviderSurface::new),
-    NETHER(-1, "the_nether", "_nether", WorldProviderHell.class, WorldProviderHell::new),
-    THE_END(1, "the_end", "_end", WorldProviderEnd.class, WorldProviderEnd::new);
+    private static final List<DimensionType> VALUES = new ArrayList<>();
+    private static final Map<String, DimensionType> BY_NAME = new HashMap<>();
+    public static final DimensionType OVERWORLD = new DimensionType("OVERWORLD", 0, "overworld", "", WorldProviderSurface.class, WorldProviderSurface::new);
+    public static final DimensionType NETHER = new DimensionType("NETHER", -1, "the_nether", "_nether", WorldProviderHell.class, WorldProviderHell::new);
+    public static final DimensionType THE_END = new DimensionType("THE_END", 1, "the_end", "_end", WorldProviderEnd.class, WorldProviderEnd::new);
 
+    private final String constantName;
+    private final int ordinal;
     private final int id;
     private final String name;
     private final String suffix;
@@ -17,19 +23,17 @@ public enum DimensionType
 	private final Supplier<? extends WorldProvider> factory;
     private boolean shouldLoadSpawn = false;
 
-    private DimensionType(int idIn, String nameIn, String suffixIn, Class <? extends WorldProvider > clazzIn)
-	{
-		this(idIn, nameIn, suffixIn, clazzIn, null);
-	}
-
-	private DimensionType(int idIn, String nameIn, String suffixIn, Class<? extends WorldProvider> clazzIn,
-			Supplier<? extends WorldProvider> factory)
+    private DimensionType(String constantName, int idIn, String nameIn, String suffixIn, Class<? extends WorldProvider> clazzIn, Supplier<? extends WorldProvider> factory)
     {
+        this.constantName = constantName;
+        this.ordinal = VALUES.size();
+        VALUES.add(this);
+        BY_NAME.put(constantName, this);
         this.id = idIn;
         this.name = nameIn;
         this.suffix = suffixIn;
         this.clazz = clazzIn;
-		this.factory = factory;
+        this.factory = factory;
         this.shouldLoadSpawn = idIn == 0;
     }
 
@@ -50,34 +54,15 @@ public enum DimensionType
 
     public WorldProvider createDimension()
     {
-		if (this.factory != null) return this.factory.get();
-        try
-        {
-            Constructor <? extends WorldProvider > constructor = this.clazz.getConstructor();
-            return constructor.newInstance();
-        }
-        catch (NoSuchMethodException nosuchmethodexception)
-        {
-            throw new Error("Could not create new dimension", nosuchmethodexception);
-        }
-        catch (InvocationTargetException invocationtargetexception)
-        {
-            throw new Error("Could not create new dimension", invocationtargetexception);
-        }
-        catch (InstantiationException instantiationexception)
-        {
-            throw new Error("Could not create new dimension", instantiationexception);
-        }
-        catch (IllegalAccessException illegalaccessexception)
-        {
-            throw new Error("Could not create new dimension", illegalaccessexception);
-        }
+        return this.factory.get();
     }
 
     public static DimensionType getById(int id)
     {
-        for (DimensionType dimensiontype : values())
+        for (int i = 0, l = VALUES.size(); i < l; ++i)
         {
+            DimensionType dimensiontype = VALUES.get(i);
+
             if (dimensiontype.getId() == id)
             {
                 return dimensiontype;
@@ -90,20 +75,51 @@ public enum DimensionType
     public boolean shouldLoadSpawn(){ return this.shouldLoadSpawn; }
     public DimensionType setLoadSpawn(boolean value) { this.shouldLoadSpawn = value; return this; }
 
-    private static Class<?>[] ENUM_ARGS = {int.class, String.class, String.class, Class.class};
-    public static DimensionType register(String name, String suffix, int id, Class<? extends WorldProvider> provider, boolean keepLoaded)
+    public static DimensionType register(String name, String suffix, int id, Class<? extends WorldProvider> provider, Supplier<? extends WorldProvider> factory, boolean keepLoaded)
     {
         String enum_name = name.replace(" ", "_").toLowerCase();
-        DimensionType ret = net.minecraftforge.common.util.EnumHelper.addEnum(DimensionType.class, enum_name, ENUM_ARGS,
-                id, name, suffix, provider);
+        DimensionType ret = new DimensionType(enum_name, id, name, suffix, provider, factory);
         return ret.setLoadSpawn(keepLoaded);
+    }
+
+    public static DimensionType valueOf(String name)
+    {
+        DimensionType type = BY_NAME.get(java.util.Objects.requireNonNull(name, "name"));
+        if (type == null)
+        {
+            throw new IllegalArgumentException("No enum constant net.minecraft.world.DimensionType." + name);
+        }
+        return type;
+    }
+
+    public static DimensionType[] values()
+    {
+        return VALUES.toArray(new DimensionType[VALUES.size()]);
+    }
+
+    public String name()
+    {
+        return this.constantName;
+    }
+
+    public int ordinal()
+    {
+        return this.ordinal;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.constantName;
     }
     //TODO: Unregister? There is no way to really delete a enum value...
 
     public static DimensionType byName(String p_193417_0_)
     {
-        for (DimensionType dimensiontype : values())
+        for (int i = 0, l = VALUES.size(); i < l; ++i)
         {
+            DimensionType dimensiontype = VALUES.get(i);
+
             if (dimensiontype.getName().equals(p_193417_0_))
             {
                 return dimensiontype;
