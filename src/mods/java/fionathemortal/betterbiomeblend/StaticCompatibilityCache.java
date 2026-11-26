@@ -1,64 +1,36 @@
 package fionathemortal.betterbiomeblend;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
-
 public final class StaticCompatibilityCache {
-   private static final ThreadLocal<ColorChunk> threadLocalGrassChunk = ThreadLocal.withInitial(() -> {
-      ColorChunk chunk = new ColorChunk();
-      chunk.acquire();
-      return chunk;
-   });
-   private static final ThreadLocal<ColorChunk> threadLocalWaterChunk = ThreadLocal.withInitial(() -> {
-      ColorChunk chunk = new ColorChunk();
-      chunk.acquire();
-      return chunk;
-   });
-   private static final ThreadLocal<ColorChunk> threadLocalFoliageChunk = ThreadLocal.withInitial(() -> {
-      ColorChunk chunk = new ColorChunk();
-      chunk.acquire();
-      return chunk;
-   });
-   private static final ThreadLocal<ColorChunk> threadLocalGenericChunk = ThreadLocal.withInitial(() -> {
-      ColorChunk chunk = new ColorChunk();
-      chunk.acquire();
-      return chunk;
-   });
-   private static AtomicBoolean isGenerated = new AtomicBoolean(false);
-   private static volatile ColorChunkCache colorChunkCache = null;
+   private static final LocalColorChunk threadLocalGrassChunk = new LocalColorChunk();
+   private static final LocalColorChunk threadLocalWaterChunk = new LocalColorChunk();
+   private static final LocalColorChunk threadLocalFoliageChunk = new LocalColorChunk();
+   private static final LocalColorChunk threadLocalGenericChunk = new LocalColorChunk();
+   private static ColorChunkCache colorChunkCache = null;
 
    public StaticCompatibilityCache() {
    }
 
    public static ColorChunkCache getColorChunkCache() {
-      if (!isGenerated.get()) {
-         if (isGenerated.compareAndSet(false, true)) {
-            colorChunkCache = new ColorChunkCache(2048);
-         } else {
-            while(true) {
-               if (colorChunkCache == null) {
-                  continue;
-               }
-            }
-         }
+      if (colorChunkCache == null) {
+         colorChunkCache = new ColorChunkCache(2048);
       }
 
       return colorChunkCache;
    }
 
-   public static ThreadLocal<ColorChunk> getThreadLocalGrassChunkWrapper() {
+   public static LocalColorChunk getThreadLocalGrassChunkWrapper() {
       return threadLocalGrassChunk;
    }
 
-   public static ThreadLocal<ColorChunk> getThreadLocalWaterChunkWrapper() {
+   public static LocalColorChunk getThreadLocalWaterChunkWrapper() {
       return threadLocalWaterChunk;
    }
 
-   public static ThreadLocal<ColorChunk> getThreadLocalFoliageChunkWrapper() {
+   public static LocalColorChunk getThreadLocalFoliageChunkWrapper() {
       return threadLocalFoliageChunk;
    }
 
-   public static ThreadLocal<ColorChunk> getThreadLocalGenericChunkWrapper() {
+   public static LocalColorChunk getThreadLocalGenericChunkWrapper() {
       return threadLocalGenericChunk;
    }
 }

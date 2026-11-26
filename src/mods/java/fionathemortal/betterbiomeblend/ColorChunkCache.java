@@ -4,11 +4,8 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.Arrays;
 import java.util.Stack;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public final class ColorChunkCache {
-   public final Lock lock = new ReentrantLock();
    public final Long2ObjectLinkedOpenHashMap<ColorChunk> hash;
    public final Stack<ColorChunk> freeStack;
    public int invalidationCounter;
@@ -39,15 +36,12 @@ public final class ColorChunkCache {
    public void releaseChunk(ColorChunk chunk) {
       int refCount = chunk.release();
       if (refCount == 0) {
-         this.lock.lock();
          this.freeStack.push(chunk);
-         this.lock.unlock();
       }
 
    }
 
    public void invalidateNeighbourhood(int chunkX, int chunkZ) {
-      this.lock.lock();
       ++this.invalidationCounter;
 
       for(int x = -1; x <= 1; ++x) {
@@ -63,11 +57,9 @@ public final class ColorChunkCache {
          }
       }
 
-      this.lock.unlock();
    }
 
    public void invalidateAll() {
-      this.lock.lock();
       ++this.invalidationCounter;
       ObjectIterator var1 = this.hash.values().iterator();
 
@@ -78,24 +70,20 @@ public final class ColorChunkCache {
       }
 
       this.hash.clear();
-      this.lock.unlock();
    }
 
    public ColorChunk getChunk(int chunkX, int chunkZ, int colorType) {
       long key = getChunkKey(chunkX, chunkZ, colorType);
-      this.lock.lock();
       ColorChunk result = (ColorChunk)this.hash.getAndMoveToFirst(key);
       if (result != null) {
          result.acquire();
       }
 
-      this.lock.unlock();
       return result;
    }
 
    public void putChunk(ColorChunk chunk) {
       chunk.acquire();
-      this.lock.lock();
       ColorChunk prev = (ColorChunk)this.hash.getAndMoveToFirst(chunk.key);
       if (prev != null) {
          ColorChunk olderChunk;
@@ -112,13 +100,11 @@ public final class ColorChunkCache {
          this.hash.putAndMoveToFirst(chunk.key, chunk);
       }
 
-      this.lock.unlock();
    }
 
    public ColorChunk newChunk(int chunkX, int chunkZ, int colorType) {
       ColorChunk result = null;
       long key = getChunkKey(chunkX, chunkZ, colorType);
-      this.lock.lock();
       if (!this.freeStack.empty()) {
          result = (ColorChunk)this.freeStack.pop();
       } else {
@@ -135,7 +121,6 @@ public final class ColorChunkCache {
       }
 
       result.invalidationCounter = this.invalidationCounter;
-      this.lock.unlock();
       result.key = key;
       result.acquire();
       return result;
@@ -143,7 +128,6 @@ public final class ColorChunkCache {
 
    public ColorChunk getOrDefaultInitializeChunk(int chunkX, int chunkZ, int colorType) {
       long key = getChunkKey(chunkX, chunkZ, colorType);
-      this.lock.lock();
       ColorChunk result = (ColorChunk)this.hash.getAndMoveToFirst(key);
       if (result == null) {
          if (!this.freeStack.empty()) {
@@ -173,7 +157,6 @@ public final class ColorChunkCache {
       }
 
       result.acquire();
-      this.lock.unlock();
       return result;
    }
 }

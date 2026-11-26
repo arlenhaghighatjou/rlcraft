@@ -18,7 +18,7 @@ public class ChunkCache implements IBlockAccess
     protected int chunkZ;
     protected Chunk[][] chunkArray;
     protected boolean empty;
-    protected World world;
+    public World world;
 
     public ChunkCache(World worldIn, BlockPos posFromIn, BlockPos posToIn, int subIn)
     {

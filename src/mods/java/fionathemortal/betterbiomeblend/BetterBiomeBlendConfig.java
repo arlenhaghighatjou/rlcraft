@@ -1,5 +1,7 @@
 package fionathemortal.betterbiomeblend;
 
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.ConfigEntry;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RangeInt;
@@ -18,5 +20,10 @@ public class BetterBiomeBlendConfig {
    public static int blendRadius = 14;
 
    public BetterBiomeBlendConfig() {
+   }
+
+   public static void register() {
+      ConfigManager.register("betterbiomeblend", "", "general", null,
+         ConfigEntry.value("Blend Radius", int.class, () -> BetterBiomeBlendConfig.blendRadius, v -> BetterBiomeBlendConfig.blendRadius = (Integer)v).langKey("betterbiomeblend.general.blendradius").range(0, 14).requiresWorldRestart());
    }
 }

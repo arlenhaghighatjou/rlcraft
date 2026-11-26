@@ -235,6 +235,7 @@ public class Loader
         mods.add(new FMLModContainer<>("comforts", "Comforts", "1.4.1.3", "required-after:forge@[14.23.5.2776,);after:morpheus;after:toughasnails", "[1.12, 1.13)", "comforts", c4.comforts.Comforts::new, c4.comforts.Comforts::handleModStateEvent));
         mods.add(new FMLModContainer<>("aquaculture", "Aquaculture", "1.6.8", "", "[1.12.2]", "aquaculture", com.teammetallurgy.aquaculture.Aquaculture::new, com.teammetallurgy.aquaculture.Aquaculture::handleModStateEvent).guiFactory(com.teammetallurgy.aquaculture.client.GuiFactory::new));
         mods.add(new FMLModContainer<>("grapplemod", "grapplemod", "1.12.2-v12.3", "", "", "grapplemod", com.yyon.grapplinghook.grapplemod::new, com.yyon.grapplinghook.grapplemod::handleModStateEvent));
+        mods.add(new FMLModContainer<>("betterbiomeblend", "betterbiomeblend", "1.0", "", "[1.12.2]", "betterbiomeblend", fionathemortal.betterbiomeblend.BetterBiomeBlend::new, fionathemortal.betterbiomeblend.BetterBiomeBlend::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

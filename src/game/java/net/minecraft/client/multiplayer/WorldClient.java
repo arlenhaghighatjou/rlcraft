@@ -47,7 +47,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class WorldClient extends World
+public class WorldClient extends World implements fionathemortal.betterbiomeblend.ColorChunkCacheProvider
 {
     private final NetHandlerPlayClient connection;
     private ChunkProviderClient clientChunkProvider;
@@ -57,6 +57,11 @@ public class WorldClient extends World
     private final Set<ChunkPos> previousActiveChunkSet = Sets.<ChunkPos>newHashSet();
     private int ambienceTicks;
     protected Set<ChunkPos> visibleChunks;
+    public final fionathemortal.betterbiomeblend.LocalColorChunk betterBiomeBlend$threadLocalGrassChunk = new fionathemortal.betterbiomeblend.LocalColorChunk();
+    public final fionathemortal.betterbiomeblend.LocalColorChunk betterBiomeBlend$threadLocalWaterChunk = new fionathemortal.betterbiomeblend.LocalColorChunk();
+    public final fionathemortal.betterbiomeblend.LocalColorChunk betterBiomeBlend$threadLocalFoliageChunk = new fionathemortal.betterbiomeblend.LocalColorChunk();
+    public final fionathemortal.betterbiomeblend.LocalColorChunk betterBiomeBlend$threadLocalGenericChunk = new fionathemortal.betterbiomeblend.LocalColorChunk();
+    public final fionathemortal.betterbiomeblend.ColorChunkCache betterBiomeBlend$colorChunkCache = new fionathemortal.betterbiomeblend.ColorChunkCache(2048);
 
     public WorldClient(NetHandlerPlayClient netHandler, WorldSettings settings, int dimension, EnumDifficulty difficulty, Profiler profilerIn)
     {
@@ -511,5 +516,30 @@ public class WorldClient extends World
     public ChunkProviderClient getChunkProvider()
     {
         return (ChunkProviderClient)super.getChunkProvider();
+    }
+
+    public fionathemortal.betterbiomeblend.ColorChunkCache getColorChunkCache()
+    {
+        return this.betterBiomeBlend$colorChunkCache;
+    }
+
+    public fionathemortal.betterbiomeblend.LocalColorChunk getTreadLocalGrassChunk()
+    {
+        return this.betterBiomeBlend$threadLocalGrassChunk;
+    }
+
+    public fionathemortal.betterbiomeblend.LocalColorChunk getTreadLocalWaterChunk()
+    {
+        return this.betterBiomeBlend$threadLocalWaterChunk;
+    }
+
+    public fionathemortal.betterbiomeblend.LocalColorChunk getTreadLocalFoliageChunk()
+    {
+        return this.betterBiomeBlend$threadLocalFoliageChunk;
+    }
+
+    public fionathemortal.betterbiomeblend.LocalColorChunk getTreadLocalGenericChunk()
+    {
+        return this.betterBiomeBlend$threadLocalGenericChunk;
     }
 }

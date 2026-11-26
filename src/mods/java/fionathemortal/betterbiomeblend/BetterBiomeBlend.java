@@ -1,10 +1,11 @@
 package fionathemortal.betterbiomeblend;
 
-import fionathemortal.betterbiomeblend.core.CoreMod;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
@@ -21,11 +22,14 @@ public class BetterBiomeBlend {
    public BetterBiomeBlend() {
    }
 
-   @EventHandler
-   public void onPreInit(FMLPreInitializationEvent event) {
-      if (!CoreMod.foundMixinFramework) {
-         MinecraftForge.EVENT_BUS.register(new MissingMixinFrameworkHandler());
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         fionathemortal.betterbiomeblend.BetterBiomeBlendConfig.register();
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            fionathemortal.betterbiomeblend.BetterBiomeBlendClient.register(MinecraftForge.EVENT_BUS);
+         }
       }
 
    }
+
 }
