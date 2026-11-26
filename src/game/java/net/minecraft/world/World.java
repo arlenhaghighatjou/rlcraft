@@ -2704,7 +2704,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
 
     public boolean canBlockFreeze(BlockPos pos, boolean noWaterAdj)
     {
-        return sereneseasons.season.SeasonASMHelper.canBlockFreezeInSeason(this, pos, noWaterAdj, sereneseasons.api.season.SeasonHelper.getSeasonState(this));
+        return sereneseasons.season.SeasonASMHelper.canBlockFreezeInSeason(this, pos, noWaterAdj, null);
     }
 
     public boolean canBlockFreezeBody(BlockPos pos, boolean noWaterAdj)
@@ -2750,7 +2750,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
 
     public boolean canSnowAt(BlockPos pos, boolean checkLight)
     {
-        return sereneseasons.season.SeasonASMHelper.canSnowAtInSeason(this, pos, checkLight, sereneseasons.api.season.SeasonHelper.getSeasonState(this));
+        return sereneseasons.season.SeasonASMHelper.canSnowAtInSeason(this, pos, checkLight, null);
     }
 
     public boolean canSnowAtBody(BlockPos pos, boolean checkLight)

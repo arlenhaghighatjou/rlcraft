@@ -111,7 +111,7 @@ public class SeasonASMHelper {
    }
 
    public static float getFloatTemperature(World world, Biome biome, BlockPos pos) {
-      return !SeasonsConfig.isDimensionWhitelisted(world.provider.getDimension()) ? biome.getTemperature(pos) : getFloatTemperature((new SeasonTime(SeasonHelper.getSeasonState(world).getSeasonCycleTicks())).getSubSeason(), biome, pos);
+      return !SeasonsConfig.isDimensionWhitelisted(world.provider.getDimension()) ? biome.getTemperature(pos) : getFloatTemperature(SeasonHelper.getSeasonState(world).getSubSeason(), biome, pos);
    }
 
    public static float getFloatTemperature(Season.SubSeason subSeason, Biome biome, BlockPos pos) {

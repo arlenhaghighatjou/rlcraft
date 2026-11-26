@@ -50,18 +50,18 @@ public class BiomeConfig {
    }
 
    public static boolean enablesSeasonalEffects(Biome biome) {
-      ResourceLocation name = biome.getRegistryName();
-      return biomeDataMap.containsKey(name) ? ((BiomeData)biomeDataMap.get(name)).enableSeasonalEffects : true;
+      BiomeData data = (BiomeData)biomeDataMap.get(biome.getRegistryName());
+      return data != null ? data.enableSeasonalEffects : true;
    }
 
    public static boolean usesTropicalSeasons(Biome biome) {
-      ResourceLocation name = biome.getRegistryName();
-      return biomeDataMap.containsKey(name) ? ((BiomeData)biomeDataMap.get(name)).useTropicalSeasons : false;
+      BiomeData data = (BiomeData)biomeDataMap.get(biome.getRegistryName());
+      return data != null ? data.useTropicalSeasons : false;
    }
 
    public static boolean disablesCrops(Biome biome) {
-      ResourceLocation name = biome.getRegistryName();
-      return biomeDataMap.containsKey(name) ? ((BiomeData)biomeDataMap.get(name)).disableCrops : false;
+      BiomeData data = (BiomeData)biomeDataMap.get(biome.getRegistryName());
+      return data != null ? data.disableCrops : false;
    }
 
    private static void addBlacklistedBiomes(Map<String, BiomeData> map) {

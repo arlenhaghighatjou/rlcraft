@@ -18,7 +18,13 @@ public class SyncedConfig {
    }
 
    public static int getIntValue(ISyncedOption option) {
-      return Integer.valueOf(getValue(option)).intValue();
+      SyncedConfig.SyncedConfigEntry entry = (SyncedConfig.SyncedConfigEntry)optionsToSync.get(option.getOptionName());
+      if (entry.parsedValue != entry.value) {
+         entry.parsedInt = Integer.parseInt(entry.value);
+         entry.parsedValue = entry.value;
+      }
+
+      return entry.parsedInt;
    }
 
    public static String getValue(ISyncedOption option) {
@@ -35,6 +41,8 @@ public class SyncedConfig {
    public static class SyncedConfigEntry {
       public String value;
       public final String defaultValue;
+      private String parsedValue;
+      private int parsedInt;
 
       public SyncedConfigEntry(String defaultValue) {
          this.defaultValue = defaultValue;

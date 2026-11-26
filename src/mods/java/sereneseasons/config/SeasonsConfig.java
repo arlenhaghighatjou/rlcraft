@@ -16,6 +16,7 @@ public class SeasonsConfig extends ConfigHandler {
    public boolean changeFoliageColour;
    public boolean changeBirchColour;
    public String[] whitelistedDimensions;
+   public int[] whitelistedDimensionIds = new int[0];
 
    public SeasonsConfig(VFile2 configFile) {
       super(configFile, "Seasons Settings");
@@ -33,6 +34,12 @@ public class SeasonsConfig extends ConfigHandler {
          this.changeFoliageColour = this.config.getBoolean("Change Foliage Colour Seasonally", "Aesthetic Settings", true, "Change the foliage colour based on the current season");
          this.changeBirchColour = this.config.getBoolean("Change Birch Colour Seasonally", "Aesthetic Settings", true, "Change the birch colour based on the current season");
          this.whitelistedDimensions = this.config.getStringList("Whitelisted Dimensions", "Dimension Settings", new String[]{"0"}, "Seasons will only apply to dimensons listed here");
+         int[] ids = new int[this.whitelistedDimensions.length];
+         for(int i = 0; i < ids.length; ++i) {
+            ids[i] = Integer.parseInt(this.whitelistedDimensions[i]);
+         }
+
+         this.whitelistedDimensionIds = ids;
       } catch (Exception var5) {
          SereneSeasons.logger.error("Serene Seasons has encountered a problem loading seasons.cfg", var5);
       } finally {
@@ -45,8 +52,9 @@ public class SeasonsConfig extends ConfigHandler {
    }
 
    public static boolean isDimensionWhitelisted(int dimension) {
-      for(String dimensions : ModConfig.seasons.whitelistedDimensions) {
-         if (dimension == Integer.valueOf(dimensions).intValue()) {
+      int[] dimensions = ModConfig.seasons.whitelistedDimensionIds;
+      for(int i = 0; i < dimensions.length; ++i) {
+         if (dimension == dimensions[i]) {
             return true;
          }
       }
