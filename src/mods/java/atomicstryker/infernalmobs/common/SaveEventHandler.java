@@ -1,15 +1,19 @@
 package atomicstryker.infernalmobs.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SaveEventHandler
 {
 
-	@SubscribeEvent
+	public void register(EventBus bus) {
+	   bus.register(ChunkEvent.Unload.class, this::onChunkUnload);
+	   bus.register(ChunkEvent.Load.class, this::onChunkLoad);
+	}
+
     public void onChunkUnload(ChunkEvent.Unload event)
     {
         Chunk chunk = event.getChunk();
@@ -34,7 +38,6 @@ public class SaveEventHandler
         }
     }
 
-	@SubscribeEvent
     public void onChunkLoad(ChunkEvent.Load event)
     {
         Chunk chunk = event.getChunk();

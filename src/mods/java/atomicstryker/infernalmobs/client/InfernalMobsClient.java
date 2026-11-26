@@ -1,11 +1,12 @@
 package atomicstryker.infernalmobs.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -36,7 +37,6 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class InfernalMobsClient implements ISidedProxy
@@ -55,7 +55,7 @@ public class InfernalMobsClient implements ISidedProxy
     @Override
     public void preInit()
     {
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
         mc = FMLClientHandler.instance().getClient();
     }
 
@@ -65,14 +65,21 @@ public class InfernalMobsClient implements ISidedProxy
         nextPacketTime = 0;
         rareMobsClient = new ConcurrentHashMap<>();
 
-        MinecraftForge.EVENT_BUS.register(new RendererBossGlow());
-        MinecraftForge.EVENT_BUS.register(this);
+        (new RendererBossGlow()).register(MinecraftForge.EVENT_BUS);
+        this.register(MinecraftForge.EVENT_BUS);
 
         healthBarRetainTime = 0;
         retainedTarget = null;
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(EntityJoinWorldEvent.class, this::onEntityJoinedWorld);
+        bus.register(RenderGameOverlayEvent.Pre.class, this::onPreRenderGameOverlay);
+        bus.register(TickEvent.RenderTickEvent.class, this::onTick);
+        bus.register(RenderGameOverlayEvent.Pre.class, this::onTick);
+    }
+
     public void onEntityJoinedWorld(EntityJoinWorldEvent event)
     {
         if (event.getWorld().isRemote && mc.player != null && (event.getEntity() instanceof EntityMob || (event.getEntity() instanceof EntityLivingBase && event.getEntity() instanceof IMob)))
@@ -90,7 +97,6 @@ public class InfernalMobsClient implements ISidedProxy
         }
     }
 
-    @SubscribeEvent
     public void onPreRenderGameOverlay(RenderGameOverlayEvent.Pre event)
     {
         if (InfernalMobsCore.instance().getIsHealthBarDisabled() || event.getType() != RenderGameOverlayEvent.ElementType.BOSSHEALTH || mc.ingameGUI.getBossOverlay().shouldPlayEndBossMusic())
@@ -114,9 +120,9 @@ public class InfernalMobsClient implements ISidedProxy
             {
                 askServerHealth(ent);
 
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.mc.getTextureManager().bindTexture(Gui.ICONS);
-                GL11.glDisable(GL11.GL_BLEND);
+                GlStateManager.disableBlend();
 
                 EntityLivingBase target = (EntityLivingBase) ent;
                 String buffer = mod.getEntityDisplayName(target);
@@ -151,7 +157,7 @@ public class InfernalMobsClient implements ISidedProxy
                     i++;
                 }
 
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 this.mc.getTextureManager().bindTexture(Gui.ICONS);
 
                 if (!retained)
@@ -239,7 +245,6 @@ public class InfernalMobsClient implements ISidedProxy
         return returnedEntity;
     }
 
-    @SubscribeEvent
     public void onTick(TickEvent.RenderTickEvent tick)
     {
         if (mc.world == null || (mc.currentScreen != null && mc.currentScreen.doesGuiPauseGame()))
@@ -305,7 +310,6 @@ public class InfernalMobsClient implements ISidedProxy
         airDisplayTimeout = System.currentTimeMillis() + 3000L;
     }
 
-    @SubscribeEvent
     public void onTick(RenderGameOverlayEvent.Pre event)
     {
         if (System.currentTimeMillis() > airDisplayTimeout) {
@@ -317,7 +321,7 @@ public class InfernalMobsClient implements ISidedProxy
             if (!mc.player.isInsideOfMaterial(Material.WATER) && airOverrideValue != -999)
             {
                 final ScaledResolution res = new ScaledResolution(mc);
-                GL11.glEnable(GL11.GL_BLEND);
+                GlStateManager.enableBlend();
 
                 int right_height = 39;
 
@@ -330,7 +334,7 @@ public class InfernalMobsClient implements ISidedProxy
                 {
                     mc.ingameGUI.drawTexturedModalRect(left - i * 8 - 9, top, (i < full ? 16 : 25), 18, 9, 9);
                 }
-                GL11.glDisable(GL11.GL_BLEND);
+                GlStateManager.disableBlend();
             }
         }
     }

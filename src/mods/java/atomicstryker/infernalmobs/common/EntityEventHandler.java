@@ -1,5 +1,6 @@
 package atomicstryker.infernalmobs.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -20,7 +21,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityEventHandler
 {
@@ -52,7 +52,19 @@ public class EntityEventHandler
         nextMapEvaluation = System.currentTimeMillis();
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(EntityJoinWorldEvent.class, this::onEntityJoinedWorld);
+        bus.register(LivingDeathEvent.class, this::onEntityLivingDeath);
+        bus.register(LivingSetAttackTargetEvent.class, this::onEntityLivingSetAttackTarget);
+        bus.register(LivingAttackEvent.class, this::onEntityLivingAttacked);
+        bus.register(LivingHurtEvent.class, this::onEntityLivingHurt);
+        bus.register(LivingFallEvent.class, this::onEntityLivingFall);
+        bus.register(LivingEvent.LivingJumpEvent.class, this::onEntityLivingJump);
+        bus.register(LivingEvent.LivingUpdateEvent.class, this::onEntityLivingUpdate);
+        bus.register(LivingDropsEvent.class, this::onEntityLivingDrops);
+    }
+
     public void onEntityJoinedWorld(EntityJoinWorldEvent event)
     {
         if (event.getEntity() instanceof EntityLivingBase)
@@ -69,7 +81,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingDeath(LivingDeathEvent event)
     {
         if (!event.getEntity().world.isRemote)
@@ -85,7 +96,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingSetAttackTarget(LivingSetAttackTargetEvent event)
     {
         if (!event.getEntity().world.isRemote)
@@ -98,7 +108,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingAttacked(LivingAttackEvent event)
     {
         /* fires both client and server before hurt, but we dont need this */
@@ -107,7 +116,6 @@ public class EntityEventHandler
     /**
      * Hook into EntityLivingHurt. Is always serverside, assured by mc itself
      */
-    @SubscribeEvent
     public void onEntityLivingHurt(LivingHurtEvent event)
     {
         // dont allow masochism
@@ -167,7 +175,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingFall(LivingFallEvent event)
     {
         if (!event.getEntity().world.isRemote)
@@ -180,7 +187,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingJump(LivingEvent.LivingJumpEvent event)
     {
         if (!event.getEntity().world.isRemote)
@@ -193,7 +199,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingUpdate(LivingEvent.LivingUpdateEvent event)
     {
         if (!event.getEntityLiving().world.isRemote)
@@ -250,7 +255,6 @@ public class EntityEventHandler
         }
     }
 
-    @SubscribeEvent
     public void onEntityLivingDrops(LivingDropsEvent event)
     {
         if (!event.getEntity().world.isRemote)

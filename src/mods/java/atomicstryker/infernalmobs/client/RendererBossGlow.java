@@ -1,5 +1,6 @@
 package atomicstryker.infernalmobs.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Map;
 
 import atomicstryker.infernalmobs.common.InfernalMobsCore;
@@ -11,13 +12,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RendererBossGlow
 {
     private static long lastRender = 0L;
     
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(RenderWorldLastEvent.class, this::onRenderWorldLast);
+    }
+
     public void onRenderWorldLast(RenderWorldLastEvent event)
     {
         if (System.currentTimeMillis() > lastRender+10L)

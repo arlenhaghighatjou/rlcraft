@@ -1,10 +1,18 @@
 package atomicstryker.infernalmobs.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
@@ -71,20 +79,41 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 @Mod(modid = "infernalmobs", name = "Infernal Mobs", version = "1.7.6")
 public class InfernalMobsCore
 {
+    public void handleModStateEvent(FMLEvent event)
+    {
+        if (event instanceof FMLConstructionEvent)
+        {
+            instance = this;
+            proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new atomicstryker.infernalmobs.client.InfernalMobsClient() : new atomicstryker.infernalmobs.common.InfernalMobsServer();
+        }
+        else if (event instanceof FMLPreInitializationEvent)
+        {
+            this.preInit((FMLPreInitializationEvent)event);
+        }
+        else if (event instanceof FMLInitializationEvent)
+        {
+            this.load((FMLInitializationEvent)event);
+        }
+        else if (event instanceof FMLPostInitializationEvent)
+        {
+            this.postInit((FMLPostInitializationEvent)event);
+        }
+        else if (event instanceof FMLServerStartingEvent)
+        {
+            this.serverStarted((FMLServerStartingEvent)event);
+        }
+    }
+
     private final long existCheckDelay = 5000L;
 
     private long nextExistCheckTime;
@@ -108,7 +137,6 @@ public class InfernalMobsCore
 
     private ArrayList<Integer> dimensionBlackList;
 
-    @Instance("infernalmobs")
     private static InfernalMobsCore instance;
 
     public static InfernalMobsCore instance()
@@ -123,14 +151,13 @@ public class InfernalMobsCore
         return "InfernalMobsMod";
     }
 
-    private ArrayList<Class<? extends MobModifier>> mobMods;
+    private ArrayList<ModifierFactory> mobMods;
 
     private int eliteRarity;
     private int ultraRarity;
     private int infernoRarity;
     public Configuration config;
 
-    @SidedProxy(clientSide = "atomicstryker.infernalmobs.client.InfernalMobsClient", serverSide = "atomicstryker.infernalmobs.common.InfernalMobsServer")
     public static ISidedProxy proxy;
 
     public NetworkHelper networkHelper;
@@ -144,7 +171,6 @@ public class InfernalMobsCore
      */
     private HashMap<String, Long> modifiedPlayerTimes;
 
-    @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
         dropIdListElite = new ArrayList<>();
@@ -161,32 +187,29 @@ public class InfernalMobsCore
         loadMods();
 
         proxy.preInit();
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
 
-        networkHelper = new NetworkHelper("AS_IF", MobModsPacket.class, HealthPacket.class, VelocityPacket.class, KnockBackPacket.class, AirPacket.class);
+        networkHelper = new NetworkHelper("AS_IF", MobModsPacket::new, HealthPacket::new, VelocityPacket::new, KnockBackPacket::new, AirPacket::new);
 
         LOGGER = evt.getModLog();
     }
 
-    @EventHandler
     public void load(FMLInitializationEvent evt)
     {
-        MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
-        MinecraftForge.EVENT_BUS.register(new SaveEventHandler());
+        (new EntityEventHandler()).register(MinecraftForge.EVENT_BUS);
+        (new SaveEventHandler()).register(MinecraftForge.EVENT_BUS);
 
         proxy.load();
 
-        LOGGER.info("InfernalMobsCore load() completed! Modifiers ready: " + mobMods.size() + ", config file at: " + config.getConfigFile().getAbsolutePath());
+        LOGGER.info("InfernalMobsCore load() completed! Modifiers ready: " + mobMods.size() + ", config file at: " + config.getConfigFile().getPath());
     }
 
-    @EventHandler
     public void postInit(FMLPostInitializationEvent evt)
     {
         // lets use postInit so mod Blocks and Items are present
         loadConfig();
     }
 
-    @EventHandler
     public void serverStarted(FMLServerStartingEvent evt)
     {
         evt.registerServerCommand(new InfernalCommandFindEntityClass());
@@ -200,40 +223,40 @@ public class InfernalMobsCore
     {
         mobMods = new ArrayList<>();
 
-        mobMods.add(MM_1UP.class);
-        mobMods.add(MM_Alchemist.class);
-        mobMods.add(MM_Berserk.class);
-        mobMods.add(MM_Blastoff.class);
-        mobMods.add(MM_Bulwark.class);
-        mobMods.add(MM_Choke.class);
-        mobMods.add(MM_Cloaking.class);
-        mobMods.add(MM_Darkness.class);
-        mobMods.add(MM_Ender.class);
-        mobMods.add(MM_Exhaust.class);
-        mobMods.add(MM_Fiery.class);
-        mobMods.add(MM_Ghastly.class);
-        mobMods.add(MM_Gravity.class);
-        mobMods.add(MM_Lifesteal.class);
-        mobMods.add(MM_Ninja.class);
-        mobMods.add(MM_Poisonous.class);
-        mobMods.add(MM_Quicksand.class);
-        mobMods.add(MM_Regen.class);
-        mobMods.add(MM_Rust.class);
-        mobMods.add(MM_Sapper.class);
-        mobMods.add(MM_Sprint.class);
-        mobMods.add(MM_Sticky.class);
-        mobMods.add(MM_Storm.class);
-        mobMods.add(MM_Vengeance.class);
-        mobMods.add(MM_Weakness.class);
-        mobMods.add(MM_Webber.class);
-        mobMods.add(MM_Wither.class);
+        mobMods.add(new ModifierFactory("MM_1UP", MM_1UP::new, MM_1UP::new));
+        mobMods.add(new ModifierFactory("MM_Alchemist", MM_Alchemist::new, MM_Alchemist::new));
+        mobMods.add(new ModifierFactory("MM_Berserk", MM_Berserk::new, MM_Berserk::new));
+        mobMods.add(new ModifierFactory("MM_Blastoff", MM_Blastoff::new, MM_Blastoff::new));
+        mobMods.add(new ModifierFactory("MM_Bulwark", MM_Bulwark::new, MM_Bulwark::new));
+        mobMods.add(new ModifierFactory("MM_Choke", MM_Choke::new, MM_Choke::new));
+        mobMods.add(new ModifierFactory("MM_Cloaking", MM_Cloaking::new, MM_Cloaking::new));
+        mobMods.add(new ModifierFactory("MM_Darkness", MM_Darkness::new, MM_Darkness::new));
+        mobMods.add(new ModifierFactory("MM_Ender", MM_Ender::new, MM_Ender::new));
+        mobMods.add(new ModifierFactory("MM_Exhaust", MM_Exhaust::new, MM_Exhaust::new));
+        mobMods.add(new ModifierFactory("MM_Fiery", MM_Fiery::new, MM_Fiery::new));
+        mobMods.add(new ModifierFactory("MM_Ghastly", MM_Ghastly::new, MM_Ghastly::new));
+        mobMods.add(new ModifierFactory("MM_Gravity", MM_Gravity::new, MM_Gravity::new));
+        mobMods.add(new ModifierFactory("MM_Lifesteal", MM_Lifesteal::new, MM_Lifesteal::new));
+        mobMods.add(new ModifierFactory("MM_Ninja", MM_Ninja::new, MM_Ninja::new));
+        mobMods.add(new ModifierFactory("MM_Poisonous", MM_Poisonous::new, MM_Poisonous::new));
+        mobMods.add(new ModifierFactory("MM_Quicksand", MM_Quicksand::new, MM_Quicksand::new));
+        mobMods.add(new ModifierFactory("MM_Regen", MM_Regen::new, MM_Regen::new));
+        mobMods.add(new ModifierFactory("MM_Rust", MM_Rust::new, MM_Rust::new));
+        mobMods.add(new ModifierFactory("MM_Sapper", MM_Sapper::new, MM_Sapper::new));
+        mobMods.add(new ModifierFactory("MM_Sprint", MM_Sprint::new, MM_Sprint::new));
+        mobMods.add(new ModifierFactory("MM_Sticky", MM_Sticky::new, MM_Sticky::new));
+        mobMods.add(new ModifierFactory("MM_Storm", MM_Storm::new, MM_Storm::new));
+        mobMods.add(new ModifierFactory("MM_Vengeance", MM_Vengeance::new, MM_Vengeance::new));
+        mobMods.add(new ModifierFactory("MM_Weakness", MM_Weakness::new, MM_Weakness::new));
+        mobMods.add(new ModifierFactory("MM_Webber", MM_Webber::new, MM_Webber::new));
+        mobMods.add(new ModifierFactory("MM_Wither", MM_Wither::new, MM_Wither::new));
 
         config.load();
-        Iterator<Class<? extends MobModifier>> iter = mobMods.iterator();
+        Iterator<ModifierFactory> iter = mobMods.iterator();
         while (iter.hasNext())
         {
-            Class<?> c = iter.next();
-            if (!config.get(Configuration.CATEGORY_GENERAL, c.getSimpleName() + " enabled", true).getBoolean(true))
+            ModifierFactory c = iter.next();
+            if (!config.get(Configuration.CATEGORY_GENERAL, c.name + " enabled", true).getBoolean(true))
             {
                 iter.remove();
             }
@@ -291,11 +314,11 @@ public class InfernalMobsCore
             {
                 Integer tDimID = Integer.parseInt(trimmedDimIDString);
                 list.add(tDimID);
-                LOGGER.log(Level.INFO, String.format("DimensionID %d is now Blacklisted for InfernalMobs spawn", tDimID));
+                LOGGER.log(Level.INFO, HString.format("DimensionID %d is now Blacklisted for InfernalMobs spawn", tDimID));
             }
             catch (Exception e)
             {
-                LOGGER.log(Level.ERROR, String.format("Configured DimensionID %s is not an integer! All values must be numeric. Ignoring entry", trimmedDimIDString));
+                LOGGER.log(Level.ERROR, HString.format("Configured DimensionID %s is not an integer! All values must be numeric. Ignoring entry", trimmedDimIDString));
             }
         }
     }
@@ -501,7 +524,7 @@ public class InfernalMobsCore
         /* 2-5 modifications standard */
         int number = 2 + entity.world.rand.nextInt(3);
         /* lets just be lazy and scratch mods off a list copy */
-        ArrayList<Class<? extends MobModifier>> possibleMods = Lists.newArrayList(mobMods);
+        ArrayList<ModifierFactory> possibleMods = Lists.newArrayList(mobMods);
 
         if (entity.world.rand.nextInt(ultraRarity) == 0) // ultra mobs
         {
@@ -520,27 +543,12 @@ public class InfernalMobsCore
         {
             /* random index of mod list */
             int index = entity.world.rand.nextInt(possibleMods.size());
-            MobModifier nextMod = null;
 
             /*
              * instanciate using one of the two constructors, chainlinking
              * modifiers as we go
              */
-            try
-            {
-                if (lastMod == null)
-                {
-                    nextMod = possibleMods.get(index).getConstructor(new Class[] {}).newInstance();
-                }
-                else
-                {
-                    nextMod = possibleMods.get(index).getConstructor(new Class[] { MobModifier.class }).newInstance(lastMod);
-                }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+            MobModifier nextMod = possibleMods.get(index).create(lastMod);
 
             boolean allowed = true;
             if (nextMod != null && nextMod.getBlackListMobClasses() != null)
@@ -618,30 +626,15 @@ public class InfernalMobsCore
         {
             String modName = tokens[j];
 
-            MobModifier nextMod = null;
-            for (Class<? extends MobModifier> c : mobMods)
+            for (int i = 0, l = mobMods.size(); i < l; ++i)
             {
                 /*
                  * instanciate using one of the two constructors, chainlinking
                  * modifiers as we go
                  */
-                try
-                {
-                    if (lastMod == null)
-                    {
-                        nextMod = c.getConstructor(new Class[] {}).newInstance();
-                    }
-                    else
-                    {
-                        nextMod = c.getConstructor(new Class[] { MobModifier.class }).newInstance(lastMod);
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                MobModifier nextMod = mobMods.get(i).create(lastMod);
 
-                if (nextMod != null && nextMod.getModName().equals(modName))
+                if (nextMod.getModName().equals(modName))
                 {
                     /*
                      * Only actually keep the new linked instance if it's what
@@ -842,7 +835,11 @@ public class InfernalMobsCore
         }
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(TickEvent.WorldTickEvent.class, this::onTick);
+    }
+
     public void onTick(TickEvent.WorldTickEvent tick)
     {
         if (System.currentTimeMillis() > nextExistCheckTime)
@@ -876,17 +873,9 @@ public class InfernalMobsCore
                 {
                     if (player.getName().equals(username))
                     {
-                        for (Class<? extends MobModifier> c : mobMods)
+                        for (int i = 0, l = mobMods.size(); i < l; ++i)
                         {
-                            try
-                            {
-                                MobModifier mod = c.getConstructor(new Class[] {}).newInstance();
-                                mod.resetModifiedVictim(player);
-                            }
-                            catch (Exception e)
-                            {
-                                e.printStackTrace();
-                            }
+                            mobMods.get(i).create(null).resetModifiedVictim(player);
                         }
                     }
                 }
@@ -943,4 +932,22 @@ public class InfernalMobsCore
         return modifiedPlayerTimes;
     }
 
+    private static final class ModifierFactory
+    {
+        private final String name;
+        private final Supplier<MobModifier> first;
+        private final Function<MobModifier, MobModifier> linked;
+
+        private ModifierFactory(String name, Supplier<MobModifier> first, Function<MobModifier, MobModifier> linked)
+        {
+            this.name = name;
+            this.first = first;
+            this.linked = linked;
+        }
+
+        private MobModifier create(MobModifier next)
+        {
+            return next == null ? first.get() : linked.apply(next);
+        }
+    }
 }

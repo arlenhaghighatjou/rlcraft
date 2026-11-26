@@ -11,7 +11,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
 public class InfernalCommandSpawnInfernal extends CommandBase
 {
@@ -49,18 +48,18 @@ public class InfernalCommandSpawnInfernal extends CommandBase
                     modifier = modifier + " " + args[i];
                 }
 
-                Class<?> entClass = null;
+                ResourceLocation entName = null;
                 for (ResourceLocation rsl : EntityList.getEntityNameList())
                 {
                     if (rsl.getResourcePath().contains(args[3]))
                     {
-                        entClass = EntityList.getClass(rsl);
+                        entName = rsl;
                         break;
                     }
                 }
-                if (entClass != null)
+                if (entName != null)
                 {
-                    Object instance = entClass.getConstructor(World.class).newInstance(sender.getEntityWorld());
+                    Object instance = EntityList.createEntityByIDFromName(entName, sender.getEntityWorld());
                     if (!(instance instanceof EntityLiving))
                     {
                         throw new WrongUsageException("Invalid SpawnInfernal command, resulting entity not EntityLiving but type " + instance.getClass().getSimpleName());
