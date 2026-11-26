@@ -12,7 +12,6 @@ import noppes.vc.client.TextBlockClient;
 import noppes.vc.client.models.ModelTombstone1;
 import noppes.vc.client.models.ModelTombstone2;
 import noppes.vc.client.models.ModelTombstone3;
-import org.lwjgl.opengl.GL11;
 
 public class BlockTombstoneRenderer extends BlockRendererBasic {
    private final ModelTombstone1 model = new ModelTombstone1();

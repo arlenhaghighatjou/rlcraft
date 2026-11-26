@@ -1,6 +1,7 @@
 package noppes.vc.client;
 
-import java.awt.Color;
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
+import com.arlenh7.eaglercraft.awt.Color;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,7 +24,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import noppes.vc.CommonProxy;
 import noppes.vc.EntityHolyHandGrenade;
 import noppes.vc.EntityProjectile;
@@ -55,7 +55,7 @@ public class ClientProxy extends CommonProxy {
    public void preinit() {
       super.preinit();
       Font = new FontContainer("Default", 18);
-      VariedCommodities.Channel.register(new PacketHandlerClient());
+      VariedCommodities.Channel.register(ClientCustomPacketEvent.class, new PacketHandlerClient()::onPacketData);
    }
 
    public void init() {
@@ -114,9 +114,9 @@ public class ClientProxy extends CommonProxy {
          Particle fx = mc.effectRenderer.spawnEffectParticle(particle.getParticleID(), x, y, z, motionX, motionY, motionZ, new int[0]);
          if (fx != null) {
             if (particle == EnumParticleTypes.FLAME) {
-               ObfuscationReflectionHelper.setPrivateValue(ParticleFlame.class, (ParticleFlame)fx, Float.valueOf(scale), 0);
+               ((ParticleFlame)fx).flameScale = scale;
             } else if (particle == EnumParticleTypes.SMOKE_NORMAL) {
-               ObfuscationReflectionHelper.setPrivateValue(ParticleSmokeNormal.class, (ParticleSmokeNormal)fx, Float.valueOf(scale), 0);
+               ((ParticleSmokeNormal)fx).smokeParticleScale = scale;
             }
 
          }

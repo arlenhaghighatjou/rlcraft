@@ -1,5 +1,6 @@
 package noppes.vc.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -64,7 +65,7 @@ public class BlockBigSignRenderer extends BlockRendererBasic {
          float f3 = 0.0133F * f1;
          GlStateManager.translate(0.0F, 0.5F, 0.065F);
          GlStateManager.scale(f3, -f3, f3);
-         GlStateManager.glNormal3f(0.0F, 0.0F, -1.0F * f3);
+         EaglercraftGPU.glNormal3f(0.0F, 0.0F, -1.0F * f3);
          GlStateManager.depthMask(false);
          FontRenderer fontrenderer = this.getFontRenderer();
          float lineOffset = 0.0F;

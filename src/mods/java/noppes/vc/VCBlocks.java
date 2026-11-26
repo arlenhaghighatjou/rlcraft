@@ -1,5 +1,7 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import com.google.common.collect.Maps;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,9 +22,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import noppes.vc.blocks.BlockBanner;
@@ -107,98 +107,74 @@ import noppes.vc.items.ItemBlockLight;
 import noppes.vc.items.ItemBlockNamed;
 import noppes.vc.items.ItemPlaceholder;
 
-@ObjectHolder("variedcommodities")
 public class VCBlocks {
-   @ObjectHolder("trading_block")
    public static Block trading;
-   @ObjectHolder("carpentry_bench")
    public static Block carpentry_bench;
-   @ObjectHolder("blood_block")
    public static Block blood;
-   @ObjectHolder("banner")
    public static Block banner;
-   @ObjectHolder("wall_banner")
    public static Block wall_banner;
-   @ObjectHolder("sign")
    public static Block sign;
-   @ObjectHolder("tall_lamp")
    public static Block tall_lamp;
-   @ObjectHolder("campfire")
    public static Block campfire;
-   @ObjectHolder("campfire_unlit")
    public static Block campfire_unlit;
-   @ObjectHolder("candle")
    public static Block candle;
-   @ObjectHolder("candle_unlit")
    public static Block candle_unlit;
-   @ObjectHolder("lamp")
    public static Block lamp;
-   @ObjectHolder("lamp_unlit")
    public static Block lamp_unlit;
-   @ObjectHolder("chair")
    public static Block chair;
-   @ObjectHolder("couch_wool")
    public static Block couch_wool;
-   @ObjectHolder("couch_wood")
    public static Block couch_wood;
-   @ObjectHolder("crate")
    public static Block crate;
-   @ObjectHolder("barrel")
    public static Block barrel;
-   @ObjectHolder("weapon_rack")
    public static Block weapon_rack;
-   @ObjectHolder("pedestal")
    public static Block pedestal;
-   @ObjectHolder("crystal_block")
    public static Block crystal;
-   @ObjectHolder("placeholder")
    public static Block placeholder;
-   @ObjectHolder("stool")
    public static Block stool;
-   @ObjectHolder("table")
    public static Block table;
-   @ObjectHolder("shelf")
    public static Block shelf;
-   @ObjectHolder("beam")
    public static Block beam;
-   @ObjectHolder("big_sign")
    public static Block big_sign;
-   @ObjectHolder("tombstone")
    public static Block tombstone;
-   @ObjectHolder("book")
    public static Block book;
    private List<VCBlocks.RegisterContainer> blocks = new ArrayList();
 
    public VCBlocks() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, Item.class, EventPriority.LOW, false, this::registerClientItems);
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerBlocks(Register<Block> event) {
       this.blocks.clear();
-      GameRegistry.registerTileEntity(TileTrading.class, "variedcommodities:trading_block");
-      GameRegistry.registerTileEntity(TileCarpentryBench.class, "variedcommodities:carpentry_bench");
-      GameRegistry.registerTileEntity(TileBlood.class, "variedcommodities:blood_block");
-      GameRegistry.registerTileEntity(TileBanner.class, "variedcommodities:banner");
-      GameRegistry.registerTileEntity(TileWallBanner.class, "variedcommodities:wall_banner");
-      GameRegistry.registerTileEntity(TileTallLamp.class, "variedcommodities:tall_lamp");
-      GameRegistry.registerTileEntity(TileChair.class, "variedcommodities:chair");
-      GameRegistry.registerTileEntity(TileCouchWool.class, "variedcommodities:couch_wool");
-      GameRegistry.registerTileEntity(TileCouchWood.class, "variedcommodities:couch_wood");
-      GameRegistry.registerTileEntity(TileLamp.class, "variedcommodities:lamp");
-      GameRegistry.registerTileEntity(TileCandle.class, "variedcommodities:candle");
-      GameRegistry.registerTileEntity(TileCampfire.class, "variedcommodities:campfire");
-      GameRegistry.registerTileEntity(TileBarrel.class, "variedcommodities:barrel");
-      GameRegistry.registerTileEntity(TileCrate.class, "variedcommodities:crate");
-      GameRegistry.registerTileEntity(TileWeaponRack.class, "variedcommodities:weapon_rack");
-      GameRegistry.registerTileEntity(TilePedestal.class, "variedcommodities:pedestal");
-      GameRegistry.registerTileEntity(TileSign.class, "variedcommodities:sign");
-      GameRegistry.registerTileEntity(TileShelf.class, "variedcommodities:shelf");
-      GameRegistry.registerTileEntity(TileBeam.class, "variedcommodities:beam");
-      GameRegistry.registerTileEntity(TileStool.class, "variedcommodities:stool");
-      GameRegistry.registerTileEntity(TileTable.class, "variedcommodities:table");
-      GameRegistry.registerTileEntity(TileBook.class, "variedcommodities:book");
-      GameRegistry.registerTileEntity(TileTombstone.class, "variedcommodities:tombstone");
-      GameRegistry.registerTileEntity(TileBigSign.class, "variedcommodities:big_sign");
+      GameRegistry.registerTileEntity(TileTrading.class, new ResourceLocation("variedcommodities:trading_block"), TileTrading::new);
+      GameRegistry.registerTileEntity(TileCarpentryBench.class, new ResourceLocation("variedcommodities:carpentry_bench"), TileCarpentryBench::new);
+      GameRegistry.registerTileEntity(TileBlood.class, new ResourceLocation("variedcommodities:blood_block"), TileBlood::new);
+      GameRegistry.registerTileEntity(TileBanner.class, new ResourceLocation("variedcommodities:banner"), TileBanner::new);
+      GameRegistry.registerTileEntity(TileWallBanner.class, new ResourceLocation("variedcommodities:wall_banner"), TileWallBanner::new);
+      GameRegistry.registerTileEntity(TileTallLamp.class, new ResourceLocation("variedcommodities:tall_lamp"), TileTallLamp::new);
+      GameRegistry.registerTileEntity(TileChair.class, new ResourceLocation("variedcommodities:chair"), TileChair::new);
+      GameRegistry.registerTileEntity(TileCouchWool.class, new ResourceLocation("variedcommodities:couch_wool"), TileCouchWool::new);
+      GameRegistry.registerTileEntity(TileCouchWood.class, new ResourceLocation("variedcommodities:couch_wood"), TileCouchWood::new);
+      GameRegistry.registerTileEntity(TileLamp.class, new ResourceLocation("variedcommodities:lamp"), TileLamp::new);
+      GameRegistry.registerTileEntity(TileCandle.class, new ResourceLocation("variedcommodities:candle"), TileCandle::new);
+      GameRegistry.registerTileEntity(TileCampfire.class, new ResourceLocation("variedcommodities:campfire"), TileCampfire::new);
+      GameRegistry.registerTileEntity(TileBarrel.class, new ResourceLocation("variedcommodities:barrel"), TileBarrel::new);
+      GameRegistry.registerTileEntity(TileCrate.class, new ResourceLocation("variedcommodities:crate"), TileCrate::new);
+      GameRegistry.registerTileEntity(TileWeaponRack.class, new ResourceLocation("variedcommodities:weapon_rack"), TileWeaponRack::new);
+      GameRegistry.registerTileEntity(TilePedestal.class, new ResourceLocation("variedcommodities:pedestal"), TilePedestal::new);
+      GameRegistry.registerTileEntity(TileSign.class, new ResourceLocation("variedcommodities:sign"), TileSign::new);
+      GameRegistry.registerTileEntity(TileShelf.class, new ResourceLocation("variedcommodities:shelf"), TileShelf::new);
+      GameRegistry.registerTileEntity(TileBeam.class, new ResourceLocation("variedcommodities:beam"), TileBeam::new);
+      GameRegistry.registerTileEntity(TileStool.class, new ResourceLocation("variedcommodities:stool"), TileStool::new);
+      GameRegistry.registerTileEntity(TileTable.class, new ResourceLocation("variedcommodities:table"), TileTable::new);
+      GameRegistry.registerTileEntity(TileBook.class, new ResourceLocation("variedcommodities:book"), TileBook::new);
+      GameRegistry.registerTileEntity(TileTombstone.class, new ResourceLocation("variedcommodities:tombstone"), TileTombstone::new);
+      GameRegistry.registerTileEntity(TileBigSign.class, new ResourceLocation("variedcommodities:big_sign"), TileBigSign::new);
       this.register((new BlockTrading()).register("trading_block"), 0, ItemBlock.class);
       this.register((new BlockCarpentryBench()).register("carpentry_bench"), 1, ItemBlockNamed.class);
       this.registerSeperated((new BlockBlood()).register("blood_block"), 2, ItemBlock.class);
@@ -257,7 +233,6 @@ public class VCBlocks {
 
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       for(VCBlocks.RegisterContainer reg : this.blocks) {
          reg.item.setHasSubtypes(reg.meta > 0);
@@ -268,9 +243,6 @@ public class VCBlocks {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public void registerClientItems(Register<Item> event) {
       for(VCBlocks.RegisterContainer reg : this.blocks) {
          if (reg.seperated) {
@@ -283,7 +255,6 @@ public class VCBlocks {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void registerModels(ModelRegistryEvent event) {
       ModelLoader.setCustomStateMapper(carpentry_bench, (new Builder()).ignore(new IProperty[]{BlockCarpentryBench.ROTATION, BlockCarpentryBench.TYPE}).build());
       ModelLoader.setCustomStateMapper(banner, (new Builder()).ignore(new IProperty[]{BlockBanner.DAMAGE, BlockBanner.TOP}).build());
@@ -555,5 +526,37 @@ public class VCBlocks {
          this.meta = meta;
          this.seperated = bo;
       }
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:trading_block"), v -> trading = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:carpentry_bench"), v -> carpentry_bench = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:blood_block"), v -> blood = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:banner"), v -> banner = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:wall_banner"), v -> wall_banner = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:sign"), v -> sign = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:tall_lamp"), v -> tall_lamp = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:campfire"), v -> campfire = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:campfire_unlit"), v -> campfire_unlit = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:candle"), v -> candle = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:candle_unlit"), v -> candle_unlit = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:lamp"), v -> lamp = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:lamp_unlit"), v -> lamp_unlit = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:chair"), v -> chair = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:couch_wool"), v -> couch_wool = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:couch_wood"), v -> couch_wood = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:crate"), v -> crate = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:barrel"), v -> barrel = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:weapon_rack"), v -> weapon_rack = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:pedestal"), v -> pedestal = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:crystal_block"), v -> crystal = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:placeholder"), v -> placeholder = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:stool"), v -> stool = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:table"), v -> table = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:shelf"), v -> shelf = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:beam"), v -> beam = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:big_sign"), v -> big_sign = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:tombstone"), v -> tombstone = v);
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("variedcommodities:book"), v -> book = v);
    }
 }

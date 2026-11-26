@@ -1,11 +1,6 @@
 package noppes.vc.shared.util;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
+import net.minecraft.client.gui.GuiScreen;
 import java.util.Arrays;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.translation.I18n;
@@ -44,28 +39,11 @@ public class NoppesStringUtils {
    }
 
    public static void setClipboardContents(String aString) {
-      StringSelection stringSelection = new StringSelection(aString);
-      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-      clipboard.setContents(stringSelection, new ClipboardOwner() {
-         public void lostOwnership(Clipboard arg0, Transferable arg1) {
-         }
-      });
+      GuiScreen.setClipboardString(aString);
    }
 
    public static String getClipboardContents() {
-      String result = "";
-      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-      Transferable contents = clipboard.getContents((Object)null);
-      boolean hasTransferableText = contents != null && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
-      if (hasTransferableText) {
-         try {
-            result = (String)contents.getTransferData(DataFlavor.stringFlavor);
-         } catch (Exception var5) {
-            VariedCommodities.Log.error(var5);
-         }
-      }
-
-      return result;
+      return GuiScreen.getClipboardString();
    }
 
    public static String translate(Object... arr) {

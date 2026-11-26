@@ -74,7 +74,7 @@ public abstract class GuiContainerBasic extends GuiContainer {
    }
 
    public void updateScreen() {
-      for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+      for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
          if (tf.enabled) {
             tf.updateCursorCounter();
          }
@@ -87,14 +87,14 @@ public abstract class GuiContainerBasic extends GuiContainer {
       if (this.subgui != null) {
          this.subgui.mouseClicked(i, j, k);
       } else {
-         for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+         for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
             if (tf.enabled) {
                tf.mouseClicked(i, j, k);
             }
          }
 
          if (k == 0) {
-            for(GuiScroll scroll : new ArrayList(this.scrolls.values())) {
+            for(GuiScroll scroll : new ArrayList<GuiScroll>(this.scrolls.values())) {
                scroll.mouseClicked(i, j, k);
             }
          }
@@ -112,7 +112,7 @@ public abstract class GuiContainerBasic extends GuiContainer {
       if (this.subgui != null) {
          this.subgui.keyTyped(c, i);
       } else {
-         for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+         for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
             tf.textboxKeyTyped(c, i);
          }
 
@@ -190,15 +190,15 @@ public abstract class GuiContainerBasic extends GuiContainer {
    }
 
    protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-      for(GuiLabel label : new ArrayList(this.labels.values())) {
+      for(GuiLabel label : new ArrayList<GuiLabel>(this.labels.values())) {
          label.drawLabel(this, this.fontRenderer);
       }
 
-      for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+      for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
          tf.drawTextBox(i, j);
       }
 
-      for(GuiScroll scroll : new ArrayList(this.scrolls.values())) {
+      for(GuiScroll scroll : new ArrayList<GuiScroll>(this.scrolls.values())) {
          scroll.drawScreen(i, j, f, this.hasSubGui() ? 0 : Mouse.getDWheel());
       }
 

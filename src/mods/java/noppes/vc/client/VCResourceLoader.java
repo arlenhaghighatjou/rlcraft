@@ -1,10 +1,7 @@
 package noppes.vc.client;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.client.renderer.texture.SimpleTexture;
@@ -56,7 +53,7 @@ public class VCResourceLoader implements IResourceManagerReloadListener {
    }
 
    class TextureCache extends SimpleTexture {
-      private BufferedImage bufferedImage;
+      private ImageData bufferedImage;
       private boolean textureUploaded;
 
       public TextureCache(ResourceLocation location) {
@@ -84,22 +81,44 @@ public class VCResourceLoader implements IResourceManagerReloadListener {
       public void setImage(ResourceLocation location) {
          try {
             IResourceManager manager = Minecraft.getMinecraft().getResourceManager();
-            BufferedImage bufferedimage = ImageIO.read(manager.getResource(location).getInputStream());
-            int i = bufferedimage.getWidth();
-            int j = bufferedimage.getHeight();
-            this.bufferedImage = new BufferedImage(i * 4, j * 2, 1);
-            Graphics g = this.bufferedImage.getGraphics();
-            g.drawImage(bufferedimage, 0, 0, (ImageObserver)null);
-            g.drawImage(bufferedimage, i, 0, (ImageObserver)null);
-            g.drawImage(bufferedimage, i * 2, 0, (ImageObserver)null);
-            g.drawImage(bufferedimage, i * 3, 0, (ImageObserver)null);
-            g.drawImage(bufferedimage, 0, i, (ImageObserver)null);
-            g.drawImage(bufferedimage, i, j, (ImageObserver)null);
-            g.drawImage(bufferedimage, i * 2, j, (ImageObserver)null);
-            g.drawImage(bufferedimage, i * 3, j, (ImageObserver)null);
+            ImageData bufferedimage = TextureUtil.readBufferedImage(manager.getResource(location).getInputStream());
+            int i = bufferedimage.width;
+            int j = bufferedimage.height;
+            this.bufferedImage = new ImageData(i * 4, j * 2, false);
+            this.drawImage(bufferedimage, 0, 0);
+            this.drawImage(bufferedimage, i, 0);
+            this.drawImage(bufferedimage, i * 2, 0);
+            this.drawImage(bufferedimage, i * 3, 0);
+            this.drawImage(bufferedimage, 0, i);
+            this.drawImage(bufferedimage, i, j);
+            this.drawImage(bufferedimage, i * 2, j);
+            this.drawImage(bufferedimage, i * 3, j);
             this.textureUploaded = false;
          } catch (Exception var7) {
             VariedCommodities.Log.error("Failed caching texture: " + location, var7);
+         }
+
+      }
+
+      private void drawImage(ImageData image, int x, int y) {
+         ImageData target = this.bufferedImage;
+
+         for(int sy = 0; sy < image.height; ++sy) {
+            int ty = y + sy;
+            if (ty >= 0 && ty < target.height) {
+               for(int sx = 0; sx < image.width; ++sx) {
+                  int tx = x + sx;
+                  if (tx >= 0 && tx < target.width) {
+                     int src = image.pixels[sy * image.width + sx];
+                     int dst = target.pixels[ty * target.width + tx];
+                     int a = src >>> 24;
+                     int r = (((src >>> 16) & 255) * a + ((dst >>> 16) & 255) * (255 - a)) / 255;
+                     int g = (((src >>> 8) & 255) * a + ((dst >>> 8) & 255) * (255 - a)) / 255;
+                     int b = ((src & 255) * a + (dst & 255) * (255 - a)) / 255;
+                     target.pixels[ty * target.width + tx] = -16777216 | r << 16 | g << 8 | b;
+                  }
+               }
+            }
          }
 
       }

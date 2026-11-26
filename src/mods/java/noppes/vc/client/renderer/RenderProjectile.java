@@ -1,5 +1,6 @@
 package noppes.vc.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
@@ -68,14 +69,14 @@ public class RenderProjectile extends Render {
             GlStateManager.enableOutlineMode(this.getTeamColor(par1EntityProjectile));
          }
 
-         GlStateManager.glNormal3f(f8, 0.0F, 0.0F);
+         EaglercraftGPU.glNormal3f(f8, 0.0F, 0.0F);
          vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
          vertexbuffer.pos(-7.0D, -2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
          vertexbuffer.pos(-7.0D, -2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
          vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f7).endVertex();
          vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f7).endVertex();
          tessellator.draw();
-         GlStateManager.glNormal3f(-f8, 0.0F, 0.0F);
+         EaglercraftGPU.glNormal3f(-f8, 0.0F, 0.0F);
          vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
          vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex((double)f4, (double)f6).endVertex();
          vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex((double)f5, (double)f6).endVertex();
@@ -85,7 +86,7 @@ public class RenderProjectile extends Render {
 
          for(int j = 0; j < 4; ++j) {
             GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.glNormal3f(0.0F, 0.0F, f8);
+            EaglercraftGPU.glNormal3f(0.0F, 0.0F, f8);
             vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
             vertexbuffer.pos(-8.0D, -2.0D, 0.0D).tex((double)f, (double)f2).endVertex();
             vertexbuffer.pos(8.0D, -2.0D, 0.0D).tex((double)f1, (double)f2).endVertex();

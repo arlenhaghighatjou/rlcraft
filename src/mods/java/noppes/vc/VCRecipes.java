@@ -1,5 +1,6 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -23,7 +24,6 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.crafting.CraftingHelper.ShapedPrimer;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
@@ -129,7 +129,10 @@ public class VCRecipes {
       c.furnace(item, output);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, IRecipe.class, this::registerRecipes);
+   }
+
    public void registerRecipes(Register<IRecipe> event) {
       List.clear();
       registry = event.getRegistry();

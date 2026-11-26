@@ -1,59 +1,47 @@
 package noppes.vc.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.util.function.Supplier;
+import java.util.function.Consumer;
+import java.io.StringReader;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class ConfigLoader {
    private boolean updateFile = false;
-   private File dir;
+   private VFile2 dir;
    private String fileName;
-   private Class<?> configClass;
-   private LinkedList<Field> configFields;
+   private LinkedList<ConfigLoader.Prop> configFields;
 
-   public ConfigLoader(Class<?> clss, File dir, String fileName) {
-      if (!dir.exists()) {
-         dir.mkdir();
-      }
-
+   public ConfigLoader(VFile2 dir, String fileName, ConfigLoader.Prop... props) {
       this.dir = dir;
-      this.configClass = clss;
       this.configFields = new LinkedList();
       this.fileName = fileName + ".cfg";
-      Field[] fields = this.configClass.getDeclaredFields();
 
-      for(Field field : fields) {
-         if (field.isAnnotationPresent(ConfigProp.class)) {
-            this.configFields.add(field);
-         }
+      for(ConfigLoader.Prop field : props) {
+         this.configFields.add(field);
       }
 
    }
 
    public void loadConfig() {
       try {
-         File configFile = new File(this.dir, this.fileName);
-         HashMap<String, Field> types = new HashMap();
+         VFile2 configFile = new VFile2(this.dir, this.fileName);
+         HashMap<String, ConfigLoader.Prop> types = new HashMap();
 
-         for(Field field : this.configFields) {
-            ConfigProp prop = (ConfigProp)field.getAnnotation(ConfigProp.class);
-            types.put(!prop.name().isEmpty() ? prop.name() : field.getName(), field);
+         for(ConfigLoader.Prop field : this.configFields) {
+            types.put(field.name, field);
          }
 
          if (configFile.exists()) {
             HashMap<String, Object> properties = this.parseConfig(configFile, types);
 
             for(String prop : properties.keySet()) {
-               Field field = (Field)types.get(prop);
+               ConfigLoader.Prop field = (ConfigLoader.Prop)types.get(prop);
                Object obj = properties.get(prop);
-               if (!obj.equals(field.get((Object)null))) {
-                  field.set((Object)null, obj);
+               if (!obj.equals(field.getter.get())) {
+                  field.setter.accept(obj);
                }
             }
 
@@ -76,9 +64,9 @@ public class ConfigLoader {
       this.updateFile = false;
    }
 
-   private HashMap<String, Object> parseConfig(File file, HashMap<String, Field> types) throws Exception {
+   private HashMap<String, Object> parseConfig(VFile2 file, HashMap<String, ConfigLoader.Prop> types) throws Exception {
       HashMap<String, Object> config = new HashMap();
-      BufferedReader reader = new BufferedReader(new FileReader(file));
+      BufferedReader reader = new BufferedReader(new StringReader(file.getAllChars()));
 
       String strLine;
       while((strLine = reader.readLine()) != null) {
@@ -91,20 +79,20 @@ public class ConfigLoader {
                   this.updateFile = true;
                } else {
                   Object obj = null;
-                  Class<?> class2 = ((Field)types.get(name)).getType();
-                  if (class2.isAssignableFrom(String.class)) {
+                  Class<?> class2 = ((ConfigLoader.Prop)types.get(name)).type;
+                  if (class2 == String.class) {
                      obj = prop;
-                  } else if (class2.isAssignableFrom(Integer.TYPE)) {
+                  } else if (class2 == Integer.TYPE) {
                      obj = Integer.parseInt(prop);
-                  } else if (class2.isAssignableFrom(Short.TYPE)) {
+                  } else if (class2 == Short.TYPE) {
                      obj = Short.parseShort(prop);
-                  } else if (class2.isAssignableFrom(Byte.TYPE)) {
+                  } else if (class2 == Byte.TYPE) {
                      obj = Byte.parseByte(prop);
-                  } else if (class2.isAssignableFrom(Boolean.TYPE)) {
+                  } else if (class2 == Boolean.TYPE) {
                      obj = Boolean.parseBoolean(prop);
-                  } else if (class2.isAssignableFrom(Float.TYPE)) {
+                  } else if (class2 == Float.TYPE) {
                      obj = Float.parseFloat(prop);
-                  } else if (class2.isAssignableFrom(Double.TYPE)) {
+                  } else if (class2 == Double.TYPE) {
                      obj = Double.parseDouble(prop);
                   }
 
@@ -123,37 +111,34 @@ public class ConfigLoader {
    }
 
    public void updateConfig() {
-      File file = new File(this.dir, this.fileName);
+      VFile2 file = new VFile2(this.dir, this.fileName);
+      StringBuilder out = new StringBuilder();
 
-      try {
-         if (!file.exists()) {
-            file.createNewFile();
+      for(ConfigLoader.Prop field : this.configFields) {
+         if (field.info.length() != 0) {
+            out.append("#" + field.info + System.getProperty("line.separator"));
          }
 
-         BufferedWriter out = new BufferedWriter(new FileWriter(file));
-
-         for(Field field : this.configFields) {
-            ConfigProp prop = (ConfigProp)field.getAnnotation(ConfigProp.class);
-            if (prop.info().length() != 0) {
-               out.write("#" + prop.info() + System.getProperty("line.separator"));
-            }
-
-            String name = !prop.name().isEmpty() ? prop.name() : field.getName();
-
-            try {
-               out.write(name + "=" + field.get((Object)null).toString() + System.getProperty("line.separator"));
-               out.write(System.getProperty("line.separator"));
-            } catch (IllegalArgumentException var8) {
-               var8.printStackTrace();
-            } catch (IllegalAccessException var9) {
-               var9.printStackTrace();
-            }
-         }
-
-         out.close();
-      } catch (IOException var10) {
-         var10.printStackTrace();
+         out.append(field.name + "=" + field.getter.get().toString() + System.getProperty("line.separator"));
+         out.append(System.getProperty("line.separator"));
       }
 
+      file.setAllChars(out.toString());
+   }
+
+   public static class Prop {
+      public final String name;
+      public final String info;
+      public final Class<?> type;
+      public final Supplier<Object> getter;
+      public final Consumer<Object> setter;
+
+      public Prop(String name, String info, Class<?> type, Supplier<Object> getter, Consumer<Object> setter) {
+         this.name = name;
+         this.info = info;
+         this.type = type;
+         this.getter = getter;
+         this.setter = setter;
+      }
    }
 }

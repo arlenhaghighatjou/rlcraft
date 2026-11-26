@@ -1,5 +1,12 @@
 package noppes.vc;
 
+import net.minecraft.world.World;
+import java.util.function.Function;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.google.common.collect.UnmodifiableIterator;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,12 +20,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -37,10 +41,6 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 public class VariedCommodities {
    public static final String MODID = "variedcommodities";
    public static final String VERSION = "1.12.2";
-   @SidedProxy(
-      clientSide = "noppes.vc.client.ClientProxy",
-      serverSide = "noppes.vc.CommonProxy"
-   )
    public static CommonProxy proxy;
    @ConfigProp(
       info = "Disables all Varied Commodities recipes"
@@ -75,46 +75,70 @@ public class VariedCommodities {
    public VariedCommodities() {
    }
 
-   @EventHandler
-   public void init(FMLPreInitializationEvent event) {
-      Instance = this;
-      Config = new ConfigLoader(this.getClass(), event.getModConfigurationDirectory(), "VariedCommodities");
-      Config.loadConfig();
-      Channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("variedcommodities");
-      MinecraftForge.EVENT_BUS.register(new VCItems());
-      MinecraftForge.EVENT_BUS.register(new VCWeapons());
-      MinecraftForge.EVENT_BUS.register(new VCBlocks());
-      MinecraftForge.EVENT_BUS.register(new VCArmors());
-      if (!DisableRecipes) {
-         MinecraftForge.EVENT_BUS.register(new VCRecipes());
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new noppes.vc.client.ClientProxy() : new noppes.vc.CommonProxy();
+         noppes.vc.VCArmors.registerHolders();
+         noppes.vc.VCBlocks.registerHolders();
+         noppes.vc.VCItems.registerHolders();
+         noppes.vc.VCWeapons.registerHolders();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.init((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.init((FMLPostInitializationEvent)event);
       }
 
-      MinecraftForge.EVENT_BUS.register(new VCSounds());
-      MinecraftForge.EVENT_BUS.register(this);
+   }
+
+   public void init(FMLPreInitializationEvent event) {
+      Instance = this;
+      Config = new ConfigLoader(event.getModConfigurationDirectory(), "VariedCommodities",
+         new ConfigLoader.Prop("DisableRecipes", "Disables all Varied Commodities recipes", boolean.class, () -> DisableRecipes, v -> DisableRecipes = (Boolean)v),
+         new ConfigLoader.Prop("DisableEnchantments", "Disables all Varied Commodities enchantments", boolean.class, () -> DisableEnchantments, v -> DisableEnchantments = (Boolean)v),
+         new ConfigLoader.Prop("MachineGunDamage", "Damage from Machine Gun", int.class, () -> MachineGunDamage, v -> MachineGunDamage = (Integer)v),
+         new ConfigLoader.Prop("MusketDamage", "Damage from Musket", int.class, () -> MusketDamage, v -> MusketDamage = (Integer)v),
+         new ConfigLoader.Prop("MusketKnockback", "Bonus knockback from Musket", int.class, () -> MusketKnockback, v -> MusketKnockback = (Integer)v),
+         new ConfigLoader.Prop("HolyHandGrenadeStrength", "Holy Hand Grenade Explosion Strength", float.class, () -> HolyHandGrenadeStrength, v -> HolyHandGrenadeStrength = (Float)v));
+      Config.loadConfig();
+      Channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("variedcommodities");
+      (new VCItems()).register(MinecraftForge.EVENT_BUS);
+      (new VCWeapons()).register(MinecraftForge.EVENT_BUS);
+      (new VCBlocks()).register(MinecraftForge.EVENT_BUS);
+      (new VCArmors()).register(MinecraftForge.EVENT_BUS);
+      if (!DisableRecipes) {
+         (new VCRecipes()).register(MinecraftForge.EVENT_BUS);
+      }
+
+      (new VCSounds()).register(MinecraftForge.EVENT_BUS);
+      this.register(MinecraftForge.EVENT_BUS);
       proxy.preinit();
-      MinecraftForge.EVENT_BUS.register(new ServerEventsHandler());
+      (new ServerEventsHandler()).register(MinecraftForge.EVENT_BUS);
       NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init();
-      this.registerNewEntity(EntityChairMount.class, "VCChairMount", 64, 10, false);
-      this.registerNewEntity(EntityProjectile.class, "VCProjectile", 64, 3, true);
-      this.registerNewEntity(EntityMagicProjectile.class, "VCMagicProjectile", 64, 3, true);
-      this.registerNewEntity(EntityHolyHandGrenade.class, "VCHolyHandGrenade", 64, 1, true);
+      this.registerNewEntity(EntityChairMount.class, "VCChairMount", 64, 10, false, EntityChairMount::new);
+      this.registerNewEntity(EntityProjectile.class, "VCProjectile", 64, 3, true, EntityProjectile::new);
+      this.registerNewEntity(EntityMagicProjectile.class, "VCMagicProjectile", 64, 3, true, EntityMagicProjectile::new);
+      this.registerNewEntity(EntityHolyHandGrenade.class, "VCHolyHandGrenade", 64, 1, true, EntityHolyHandGrenade::new);
    }
 
-   private void registerNewEntity(Class<? extends Entity> cl, String name, int range, int update, boolean velocity) {
-      EntityRegistry.registerModEntity(new ResourceLocation("variedcommodities", name), cl, name, NewEntityStartId++, this, range, update, velocity);
+   private <T extends Entity> void registerNewEntity(Class<T> cl, String name, int range, int update, boolean velocity, Function<World, T> factory) {
+      EntityRegistry.registerModEntity(new ResourceLocation("variedcommodities", name), cl, name, NewEntityStartId++, this, range, update, velocity, factory);
    }
 
-   @EventHandler
    public void init(FMLPostInitializationEvent event) {
       proxy.postinit();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(MissingMappings.class, Item.class, this::onMissingMapping);
+      bus.registerGeneric(MissingMappings.class, Block.class, this::onMissingBlockMapping);
+   }
+
    public void onMissingMapping(MissingMappings<Item> event) {
       HashMap<String, ResourceLocation> maps = new HashMap();
       this.dealMissingMapping(maps);
@@ -135,7 +159,6 @@ public class VariedCommodities {
 
    }
 
-   @SubscribeEvent
    public void onMissingBlockMapping(MissingMappings<Block> event) {
       HashMap<String, ResourceLocation> maps = new HashMap();
       this.dealMissingMapping(maps);

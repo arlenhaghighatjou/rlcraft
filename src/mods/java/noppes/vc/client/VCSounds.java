@@ -1,9 +1,9 @@
 package noppes.vc.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class VCSounds {
    public static final SoundEvent GUN_PISTAL_SHOT = new VCSoundEvent(new ResourceLocation("variedcommodities", "gun.pistol.shot"));
@@ -18,7 +18,10 @@ public class VCSounds {
    public VCSounds() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, SoundEvent.class, this::registerItems);
+   }
+
    public void registerItems(Register<SoundEvent> event) {
       event.getRegistry().register(GUN_PISTAL_SHOT);
       event.getRegistry().register(GUN_PISTAL_TRIGGER);

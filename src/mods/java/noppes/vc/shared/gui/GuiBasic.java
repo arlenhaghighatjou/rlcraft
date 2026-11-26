@@ -1,9 +1,7 @@
 package noppes.vc.shared.gui;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.google.common.collect.Lists;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,10 +17,8 @@ import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post;
 import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre;
 import net.minecraftforge.common.MinecraftForge;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.Display;
 
 public abstract class GuiBasic extends GuiScreen {
-   public static Window AWTWindow;
    public EntityPlayerSP player;
    public boolean drawDefaultBackground = true;
    private Map<Integer, GuiButtonNop> buttons = new ConcurrentHashMap();
@@ -95,7 +91,7 @@ public abstract class GuiBasic extends GuiScreen {
       if (this.subgui != null) {
          this.subgui.updateScreen();
       } else {
-         for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+         for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
             if (tf.enabled) {
                tf.updateCursorCounter();
             }
@@ -112,40 +108,37 @@ public abstract class GuiBasic extends GuiScreen {
    }
 
    public void mouseClicked(int i, int j, int k) {
-      if (AWTWindow == null) {
-         if (this.subgui != null) {
-            this.subgui.mouseClicked(i, j, k);
-         } else {
-            for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
-               if (tf.enabled) {
-                  tf.mouseClicked(i, j, k);
-               }
-            }
-
-            this.mouseEvent(i, j, k);
-            if (k == 0) {
-               for(GuiScroll scroll : new ArrayList(this.scrolls.values())) {
-                  scroll.mouseClicked(i, j, k);
-               }
-
-               for(GuiButton guibutton : this.buttonList) {
-                  if (guibutton.mousePressed(this.mc, this.mouseX, this.mouseY)) {
-                     Pre event = new Pre(this, guibutton, this.buttonList);
-                     if (!MinecraftForge.EVENT_BUS.post(event)) {
-                        guibutton = event.getButton();
-                        this.selectedButton = guibutton;
-                        guibutton.playPressSound(this.mc.getSoundHandler());
-                        this.actionPerformed(guibutton);
-                        if (this.equals(this.mc.currentScreen)) {
-                           MinecraftForge.EVENT_BUS.post(new Post(this, event.getButton(), this.buttonList));
-                        }
-                     }
-                     break;
-                  }
-               }
+      if (this.subgui != null) {
+         this.subgui.mouseClicked(i, j, k);
+      } else {
+         for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
+            if (tf.enabled) {
+               tf.mouseClicked(i, j, k);
             }
          }
 
+         this.mouseEvent(i, j, k);
+         if (k == 0) {
+            for(GuiScroll scroll : new ArrayList<GuiScroll>(this.scrolls.values())) {
+               scroll.mouseClicked(i, j, k);
+            }
+
+            for(GuiButton guibutton : this.buttonList) {
+               if (guibutton.mousePressed(this.mc, this.mouseX, this.mouseY)) {
+                  Pre event = new Pre(this, guibutton, this.buttonList);
+                  if (!MinecraftForge.EVENT_BUS.post(event)) {
+                     guibutton = event.getButton();
+                     this.selectedButton = guibutton;
+                     guibutton.playPressSound(this.mc.getSoundHandler());
+                     this.actionPerformed(guibutton);
+                     if (this.equals(this.mc.currentScreen)) {
+                        MinecraftForge.EVENT_BUS.post(new Post(this, event.getButton(), this.buttonList));
+                     }
+                  }
+                  break;
+               }
+            }
+         }
       }
    }
 
@@ -173,19 +166,16 @@ public abstract class GuiBasic extends GuiScreen {
    }
 
    public void keyTyped(char c, int i) {
-      if (AWTWindow == null) {
-         if (this.subgui != null) {
-            this.subgui.keyTyped(c, i);
-         }
+      if (this.subgui != null) {
+         this.subgui.keyTyped(c, i);
+      }
 
-         for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
-            tf.textboxKeyTyped(c, i);
-         }
+      for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
+         tf.textboxKeyTyped(c, i);
+      }
 
-         if (this.closeOnEsc && (i == 1 || !GuiTextFieldNop.isActive() && this.isInventoryKey(i))) {
-            this.close();
-         }
-
+      if (this.closeOnEsc && (i == 1 || !GuiTextFieldNop.isActive() && this.isInventoryKey(i))) {
+         this.close();
       }
    }
 
@@ -257,16 +247,6 @@ public abstract class GuiBasic extends GuiScreen {
    public abstract void save();
 
    public void drawScreen(int i, int j, float f) {
-      if (AWTWindow != null) {
-         if (!AWTWindow.isVisible()) {
-            AWTWindow.dispose();
-            AWTWindow = null;
-         } else if (Display.isActive()) {
-            Toolkit.getDefaultToolkit().beep();
-            AWTWindow.setVisible(true);
-         }
-      }
-
       this.mouseX = i;
       this.mouseY = j;
       if (this.drawDefaultBackground && this.subgui == null) {
@@ -291,19 +271,19 @@ public abstract class GuiBasic extends GuiScreen {
 
       this.drawCenteredString(this.fontRenderer, this.title, this.width / 2, 8, 16777215);
 
-      for(GuiLabel label : new ArrayList(this.labels.values())) {
+      for(GuiLabel label : new ArrayList<GuiLabel>(this.labels.values())) {
          label.drawLabel(this, this.fontRenderer);
       }
 
-      for(GuiTextFieldNop tf : new ArrayList(this.textfields.values())) {
+      for(GuiTextFieldNop tf : new ArrayList<GuiTextFieldNop>(this.textfields.values())) {
          tf.drawTextBox(i, j);
       }
 
-      for(GuiScroll scroll : new ArrayList(this.scrolls.values())) {
+      for(GuiScroll scroll : new ArrayList<GuiScroll>(this.scrolls.values())) {
          scroll.drawScreen(i, j, f, !this.hasSubGui() && scroll.isMouseOver(i, j) ? Mouse.getDWheel() : 0);
       }
 
-      for(GuiScreen gui : new ArrayList(this.extra.values())) {
+      for(GuiScreen gui : new ArrayList<GuiScreen>(this.extra.values())) {
          gui.drawScreen(i, j, f);
       }
 
@@ -373,14 +353,7 @@ public abstract class GuiBasic extends GuiScreen {
    }
 
    public void openLink(String link) {
-      try {
-         Class oclass = Class.forName("java.awt.Desktop");
-         Object object = oclass.getMethod("getDesktop").invoke((Object)null);
-         oclass.getMethod("browse", URI.class).invoke(object, new URI(link));
-      } catch (Throwable var4) {
-         ;
-      }
-
+      EagRuntime.openLink(link);
    }
 
    public interface IGuiData {

@@ -1,5 +1,8 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -12,8 +15,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import noppes.vc.items.ItemBasic;
@@ -32,404 +33,212 @@ import noppes.vc.items.ItemThrowingWeapon;
 import noppes.vc.items.ItemWeaponBasic;
 import noppes.vc.items.VCToolMaterial;
 
-@ObjectHolder("variedcommodities")
 public class VCWeapons {
-   @ObjectHolder("bullet")
    public static Item bullet;
-   @ObjectHolder("wooden_gun")
    public static Item wooden_gun;
-   @ObjectHolder("stone_gun")
    public static Item stone_gun;
-   @ObjectHolder("iron_gun")
    public static Item iron_gun;
-   @ObjectHolder("golden_gun")
    public static Item golden_gun;
-   @ObjectHolder("diamond_gun")
    public static Item diamond_gun;
-   @ObjectHolder("bronze_gun")
    public static Item bronze_gun;
-   @ObjectHolder("emerald_gun")
    public static Item emerald_gun;
-   @ObjectHolder("machine_gun")
    public static Item machine_gun;
-   @ObjectHolder("mana")
    public static Item mana;
-   @ObjectHolder("wooden_staff")
    public static Item wooden_staff;
-   @ObjectHolder("stone_staff")
    public static Item stone_staff;
-   @ObjectHolder("iron_staff")
    public static Item iron_staff;
-   @ObjectHolder("golden_staff")
    public static Item golden_staff;
-   @ObjectHolder("diamond_staff")
    public static Item diamond_staff;
-   @ObjectHolder("bronze_staff")
    public static Item bronze_staff;
-   @ObjectHolder("emerald_staff")
    public static Item emerald_staff;
-   @ObjectHolder("demonic_staff")
    public static Item demonic_staff;
-   @ObjectHolder("frost_staff")
    public static Item frost_staff;
-   @ObjectHolder("mithril_staff")
    public static Item mithril_staff;
-   @ObjectHolder("elemental_staff")
    public static Item elemental_staff;
-   @ObjectHolder("wooden_trident")
    public static Item wooden_trident;
-   @ObjectHolder("stone_trident")
    public static Item stone_trident;
-   @ObjectHolder("iron_trident")
    public static Item iron_trident;
-   @ObjectHolder("golden_trident")
    public static Item golden_trident;
-   @ObjectHolder("diamond_trident")
    public static Item diamond_trident;
-   @ObjectHolder("bronze_trident")
    public static Item bronze_trident;
-   @ObjectHolder("emerald_trident")
    public static Item emerald_trident;
-   @ObjectHolder("cursed_trident")
    public static Item cursed_trident;
-   @ObjectHolder("demonic_trident")
    public static Item demonic_trident;
-   @ObjectHolder("frost_trident")
    public static Item frost_trident;
-   @ObjectHolder("mithril_trident")
    public static Item mithril_trident;
-   @ObjectHolder("kunai")
    public static Item kunai;
-   @ObjectHolder("kunai_reversed")
    public static Item kunai_reversed;
-   @ObjectHolder("shuriken")
    public static Item shuriken;
-   @ObjectHolder("shuriken_giant")
    public static Item shuriken_giant;
-   @ObjectHolder("katana")
    public static Item katana;
-   @ObjectHolder("kukri")
    public static Item kukri;
-   @ObjectHolder("ninja_claw")
    public static Item ninja_claw;
-   @ObjectHolder("steel_claw")
    public static Item steel_claw;
-   @ObjectHolder("bear_claw")
    public static Item bear_claw;
-   @ObjectHolder("katar")
    public static Item katar;
-   @ObjectHolder("bronze_sword")
    public static Item bronze_sword;
-   @ObjectHolder("emerald_sword")
    public static Item emerald_sword;
-   @ObjectHolder("demonic_sword")
    public static Item demonic_sword;
-   @ObjectHolder("frost_sword")
    public static Item frost_sword;
-   @ObjectHolder("mithril_sword")
    public static Item mithril_sword;
-   @ObjectHolder("leaf_sword")
    public static Item leaf_sword;
-   @ObjectHolder("golf_club")
    public static Item golf_club;
-   @ObjectHolder("hammer")
    public static Item hammer;
-   @ObjectHolder("baseball_bat")
    public static Item baseball_bat;
-   @ObjectHolder("lead_pipe")
    public static Item lead_pipe;
-   @ObjectHolder("cleaver")
    public static Item cleaver;
-   @ObjectHolder("saber")
    public static Item saber;
-   @ObjectHolder("hockey_stick")
    public static Item hockey_stick;
-   @ObjectHolder("sledge_hammer")
    public static Item sledge_hammer;
-   @ObjectHolder("broken_bottle")
    public static Item broken_bottle;
-   @ObjectHolder("combat_knive")
    public static Item combat_knive;
-   @ObjectHolder("macuahuitl")
    public static Item macuahuitl;
-   @ObjectHolder("bo_staff")
    public static Item bo_staff;
-   @ObjectHolder("sai")
    public static Item sai;
-   @ObjectHolder("slingshot")
    public static Item slingshot;
-   @ObjectHolder("musket")
    public static Item musket;
-   @ObjectHolder("crossbow")
    public static Item crossbow;
-   @ObjectHolder("crossbow_bolt")
    public static Item crossbow_bolt;
-   @ObjectHolder("batton")
    public static Item batton;
-   @ObjectHolder("chainsaw_gun")
    public static Item chainsaw_gun;
-   @ObjectHolder("rapier")
    public static Item rapier;
-   @ObjectHolder("pipe_wrench")
    public static Item pipe_wrench;
-   @ObjectHolder("crowbar")
    public static Item crowbar;
-   @ObjectHolder("swiss_army_knife")
    public static Item swiss_army_knife;
-   @ObjectHolder("wrench")
    public static Item wrench;
-   @ObjectHolder("excalibur")
    public static Item excalibur;
-   @ObjectHolder("wooden_shield_round")
    public static Item wooden_shield_round;
-   @ObjectHolder("stone_shield_round")
    public static Item stone_shield_round;
-   @ObjectHolder("iron_shield_round")
    public static Item iron_shield_round;
-   @ObjectHolder("golden_shield_round")
    public static Item golden_shield_round;
-   @ObjectHolder("diamond_shield_round")
    public static Item diamond_shield_round;
-   @ObjectHolder("bronze_shield_round")
    public static Item bronze_shield_round;
-   @ObjectHolder("emerald_shield_round")
    public static Item emerald_shield_round;
-   @ObjectHolder("demonic_shield_round")
    public static Item demonic_shield_round;
-   @ObjectHolder("mithril_shield_round")
    public static Item mithril_shield_round;
-   @ObjectHolder("wooden_shield")
    public static Item wooden_shield;
-   @ObjectHolder("stone_shield")
    public static Item stone_shield;
-   @ObjectHolder("iron_shield")
    public static Item iron_shield;
-   @ObjectHolder("golden_shield")
    public static Item golden_shield;
-   @ObjectHolder("diamond_shield")
    public static Item diamond_shield;
-   @ObjectHolder("bronze_shield")
    public static Item bronze_shield;
-   @ObjectHolder("emerald_shield")
    public static Item emerald_shield;
-   @ObjectHolder("frost_shield")
    public static Item frost_shield;
-   @ObjectHolder("heater_shield")
    public static Item heater_shield;
-   @ObjectHolder("crescent_shield")
    public static Item crescent_shield;
-   @ObjectHolder("scutum_shield")
    public static Item scutum_shield;
-   @ObjectHolder("tower_shield")
    public static Item tower_shield;
-   @ObjectHolder("wooden_spear")
    public static Item wooden_spear;
-   @ObjectHolder("stone_spear")
    public static Item stone_spear;
-   @ObjectHolder("iron_spear")
    public static Item iron_spear;
-   @ObjectHolder("golden_spear")
    public static Item golden_spear;
-   @ObjectHolder("diamond_spear")
    public static Item diamond_spear;
-   @ObjectHolder("bronze_spear")
    public static Item bronze_spear;
-   @ObjectHolder("emerald_spear")
    public static Item emerald_spear;
-   @ObjectHolder("demonic_spear")
    public static Item demonic_spear;
-   @ObjectHolder("frost_spear")
    public static Item frost_spear;
-   @ObjectHolder("mithril_spear")
    public static Item mithril_spear;
-   @ObjectHolder("wooden_halberd")
    public static Item wooden_halberd;
-   @ObjectHolder("stone_halberd")
    public static Item stone_halberd;
-   @ObjectHolder("iron_halberd")
    public static Item iron_halberd;
-   @ObjectHolder("golden_halberd")
    public static Item golden_halberd;
-   @ObjectHolder("diamond_halberd")
    public static Item diamond_halberd;
-   @ObjectHolder("bronze_halberd")
    public static Item bronze_halberd;
-   @ObjectHolder("emerald_halberd")
    public static Item emerald_halberd;
-   @ObjectHolder("demonic_halberd")
    public static Item demonic_halberd;
-   @ObjectHolder("frost_halberd")
    public static Item frost_halberd;
-   @ObjectHolder("mithril_halberd")
    public static Item mithril_halberd;
-   @ObjectHolder("wooden_battleaxe")
    public static Item wooden_battleaxe;
-   @ObjectHolder("stone_battleaxe")
    public static Item stone_battleaxe;
-   @ObjectHolder("iron_battleaxe")
    public static Item iron_battleaxe;
-   @ObjectHolder("golden_battleaxe")
    public static Item golden_battleaxe;
-   @ObjectHolder("diamond_battleaxe")
    public static Item diamond_battleaxe;
-   @ObjectHolder("bronze_battleaxe")
    public static Item bronze_battleaxe;
-   @ObjectHolder("emerald_battleaxe")
    public static Item emerald_battleaxe;
-   @ObjectHolder("demonic_battleaxe")
    public static Item demonic_battleaxe;
-   @ObjectHolder("frost_battleaxe")
    public static Item frost_battleaxe;
-   @ObjectHolder("mithril_battleaxe")
    public static Item mithril_battleaxe;
-   @ObjectHolder("wooden_warhammer")
    public static Item wooden_warhammer;
-   @ObjectHolder("stone_warhammer")
    public static Item stone_warhammer;
-   @ObjectHolder("iron_warhammer")
    public static Item iron_warhammer;
-   @ObjectHolder("golden_warhammer")
    public static Item golden_warhammer;
-   @ObjectHolder("diamond_warhammer")
    public static Item diamond_warhammer;
-   @ObjectHolder("bronze_warhammer")
    public static Item bronze_warhammer;
-   @ObjectHolder("emerald_warhammer")
    public static Item emerald_warhammer;
-   @ObjectHolder("demonic_warhammer")
    public static Item demonic_warhammer;
-   @ObjectHolder("frost_warhammer")
    public static Item frost_warhammer;
-   @ObjectHolder("mithril_warhammer")
    public static Item mithril_warhammer;
-   @ObjectHolder("wooden_mace")
    public static Item wooden_mace;
-   @ObjectHolder("stone_mace")
    public static Item stone_mace;
-   @ObjectHolder("iron_mace")
    public static Item iron_mace;
-   @ObjectHolder("golden_mace")
    public static Item golden_mace;
-   @ObjectHolder("diamond_mace")
    public static Item diamond_mace;
-   @ObjectHolder("bronze_mace")
    public static Item bronze_mace;
-   @ObjectHolder("emerald_mace")
    public static Item emerald_mace;
-   @ObjectHolder("demonic_mace")
    public static Item demonic_mace;
-   @ObjectHolder("frost_mace")
    public static Item frost_mace;
-   @ObjectHolder("mithril_mace")
    public static Item mithril_mace;
-   @ObjectHolder("wooden_dagger")
    public static Item wooden_dagger;
-   @ObjectHolder("wooden_dagger_reversed")
    public static Item wooden_dagger_reversed;
-   @ObjectHolder("stone_dagger")
    public static Item stone_dagger;
-   @ObjectHolder("stone_dagger_reversed")
    public static Item stone_dagger_reversed;
-   @ObjectHolder("iron_dagger")
    public static Item iron_dagger;
-   @ObjectHolder("iron_dagger_reversed")
    public static Item iron_dagger_reversed;
-   @ObjectHolder("golden_dagger")
    public static Item golden_dagger;
-   @ObjectHolder("golden_dagger_reversed")
    public static Item golden_dagger_reversed;
-   @ObjectHolder("diamond_dagger")
    public static Item diamond_dagger;
-   @ObjectHolder("diamond_dagger_reversed")
    public static Item diamond_dagger_reversed;
-   @ObjectHolder("bronze_dagger")
    public static Item bronze_dagger;
-   @ObjectHolder("bronze_dagger_reversed")
    public static Item bronze_dagger_reversed;
-   @ObjectHolder("emerald_dagger")
    public static Item emerald_dagger;
-   @ObjectHolder("emerald_dagger_reversed")
    public static Item emerald_dagger_reversed;
-   @ObjectHolder("demonic_dagger")
    public static Item demonic_dagger;
-   @ObjectHolder("demonic_dagger_reversed")
    public static Item demonic_dagger_reversed;
-   @ObjectHolder("frost_dagger")
    public static Item frost_dagger;
-   @ObjectHolder("frost_dagger_reversed")
    public static Item frost_dagger_reversed;
-   @ObjectHolder("mithril_dagger")
    public static Item mithril_dagger;
-   @ObjectHolder("mithril_dagger_reversed")
    public static Item mithril_dagger_reversed;
-   @ObjectHolder("wooden_scythe")
    public static Item wooden_scythe;
-   @ObjectHolder("stone_scythe")
    public static Item stone_scythe;
-   @ObjectHolder("iron_scythe")
    public static Item iron_scythe;
-   @ObjectHolder("golden_scythe")
    public static Item golden_scythe;
-   @ObjectHolder("diamond_scythe")
    public static Item diamond_scythe;
-   @ObjectHolder("bronze_scythe")
    public static Item bronze_scythe;
-   @ObjectHolder("emerald_scythe")
    public static Item emerald_scythe;
-   @ObjectHolder("demonic_scythe")
    public static Item demonic_scythe;
-   @ObjectHolder("frost_scythe")
    public static Item frost_scythe;
-   @ObjectHolder("mithril_scythe")
    public static Item mithril_scythe;
-   @ObjectHolder("wooden_glaive")
    public static Item wooden_glaive;
-   @ObjectHolder("stone_glaive")
    public static Item stone_glaive;
-   @ObjectHolder("iron_glaive")
    public static Item iron_glaive;
-   @ObjectHolder("golden_glaive")
    public static Item golden_glaive;
-   @ObjectHolder("diamond_glaive")
    public static Item diamond_glaive;
-   @ObjectHolder("bronze_glaive")
    public static Item bronze_glaive;
-   @ObjectHolder("emerald_glaive")
    public static Item emerald_glaive;
-   @ObjectHolder("demonic_glaive")
    public static Item demonic_glaive;
-   @ObjectHolder("frost_glaive")
    public static Item frost_glaive;
-   @ObjectHolder("mithril_glaive")
    public static Item mithril_glaive;
-   @ObjectHolder("wooden_broadsword")
    public static Item wooden_broadsword;
-   @ObjectHolder("stone_broadsword")
    public static Item stone_broadsword;
-   @ObjectHolder("iron_broadsword")
    public static Item iron_broadsword;
-   @ObjectHolder("golden_broadsword")
    public static Item golden_broadsword;
-   @ObjectHolder("diamond_broadsword")
    public static Item diamond_broadsword;
-   @ObjectHolder("bronze_broadsword")
    public static Item bronze_broadsword;
-   @ObjectHolder("emerald_broadsword")
    public static Item emerald_broadsword;
-   @ObjectHolder("demonic_broadsword")
    public static Item demonic_broadsword;
-   @ObjectHolder("frost_broadsword")
    public static Item frost_broadsword;
-   @ObjectHolder("mithril_broadsword")
    public static Item mithril_broadsword;
-   @ObjectHolder("holyhandgrenade")
    public static Item holy_hand_grenade;
    private List<Item> list = new ArrayList();
 
    public VCWeapons() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerItems(Register<Item> event) {
       this.list.clear();
       ToolMaterial bronze = EnumHelper.addToolMaterial("BRONZE", 2, 170, 5.0F, 2.0F, 15);
@@ -645,7 +454,6 @@ public class VCWeapons {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void registerModels(ModelRegistryEvent event) {
       for(Item item : this.list) {
          ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
@@ -655,5 +463,203 @@ public class VCWeapons {
          ModelLoader.setCustomModelResourceLocation(elemental_staff, i, new ModelResourceLocation(elemental_staff.getRegistryName(), "inventory"));
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bullet"), v -> bullet = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_gun"), v -> wooden_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_gun"), v -> stone_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_gun"), v -> iron_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_gun"), v -> golden_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_gun"), v -> diamond_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_gun"), v -> bronze_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_gun"), v -> emerald_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:machine_gun"), v -> machine_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mana"), v -> mana = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_staff"), v -> wooden_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_staff"), v -> stone_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_staff"), v -> iron_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_staff"), v -> golden_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_staff"), v -> diamond_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_staff"), v -> bronze_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_staff"), v -> emerald_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_staff"), v -> demonic_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_staff"), v -> frost_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_staff"), v -> mithril_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:elemental_staff"), v -> elemental_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_trident"), v -> wooden_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_trident"), v -> stone_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_trident"), v -> iron_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_trident"), v -> golden_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_trident"), v -> diamond_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_trident"), v -> bronze_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_trident"), v -> emerald_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cursed_trident"), v -> cursed_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_trident"), v -> demonic_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_trident"), v -> frost_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_trident"), v -> mithril_trident = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:kunai"), v -> kunai = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:kunai_reversed"), v -> kunai_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:shuriken"), v -> shuriken = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:shuriken_giant"), v -> shuriken_giant = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:katana"), v -> katana = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:kukri"), v -> kukri = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ninja_claw"), v -> ninja_claw = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:steel_claw"), v -> steel_claw = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bear_claw"), v -> bear_claw = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:katar"), v -> katar = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_sword"), v -> bronze_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_sword"), v -> emerald_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_sword"), v -> demonic_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_sword"), v -> frost_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_sword"), v -> mithril_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:leaf_sword"), v -> leaf_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golf_club"), v -> golf_club = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:hammer"), v -> hammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:baseball_bat"), v -> baseball_bat = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:lead_pipe"), v -> lead_pipe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cleaver"), v -> cleaver = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:saber"), v -> saber = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:hockey_stick"), v -> hockey_stick = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:sledge_hammer"), v -> sledge_hammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:broken_bottle"), v -> broken_bottle = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:combat_knive"), v -> combat_knive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:macuahuitl"), v -> macuahuitl = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bo_staff"), v -> bo_staff = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:sai"), v -> sai = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:slingshot"), v -> slingshot = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:musket"), v -> musket = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crossbow"), v -> crossbow = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crossbow_bolt"), v -> crossbow_bolt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:batton"), v -> batton = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:chainsaw_gun"), v -> chainsaw_gun = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:rapier"), v -> rapier = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:pipe_wrench"), v -> pipe_wrench = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crowbar"), v -> crowbar = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:swiss_army_knife"), v -> swiss_army_knife = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wrench"), v -> wrench = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:excalibur"), v -> excalibur = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_shield_round"), v -> wooden_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_shield_round"), v -> stone_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_shield_round"), v -> iron_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_shield_round"), v -> golden_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_shield_round"), v -> diamond_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_shield_round"), v -> bronze_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_shield_round"), v -> emerald_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_shield_round"), v -> demonic_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_shield_round"), v -> mithril_shield_round = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_shield"), v -> wooden_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_shield"), v -> stone_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_shield"), v -> iron_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_shield"), v -> golden_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_shield"), v -> diamond_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_shield"), v -> bronze_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_shield"), v -> emerald_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_shield"), v -> frost_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:heater_shield"), v -> heater_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crescent_shield"), v -> crescent_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:scutum_shield"), v -> scutum_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tower_shield"), v -> tower_shield = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_spear"), v -> wooden_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_spear"), v -> stone_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_spear"), v -> iron_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_spear"), v -> golden_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_spear"), v -> diamond_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_spear"), v -> bronze_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_spear"), v -> emerald_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_spear"), v -> demonic_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_spear"), v -> frost_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_spear"), v -> mithril_spear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_halberd"), v -> wooden_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_halberd"), v -> stone_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_halberd"), v -> iron_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_halberd"), v -> golden_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_halberd"), v -> diamond_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_halberd"), v -> bronze_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_halberd"), v -> emerald_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_halberd"), v -> demonic_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_halberd"), v -> frost_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_halberd"), v -> mithril_halberd = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_battleaxe"), v -> wooden_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_battleaxe"), v -> stone_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_battleaxe"), v -> iron_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_battleaxe"), v -> golden_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_battleaxe"), v -> diamond_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_battleaxe"), v -> bronze_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_battleaxe"), v -> emerald_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_battleaxe"), v -> demonic_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_battleaxe"), v -> frost_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_battleaxe"), v -> mithril_battleaxe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_warhammer"), v -> wooden_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_warhammer"), v -> stone_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_warhammer"), v -> iron_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_warhammer"), v -> golden_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_warhammer"), v -> diamond_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_warhammer"), v -> bronze_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_warhammer"), v -> emerald_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_warhammer"), v -> demonic_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_warhammer"), v -> frost_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_warhammer"), v -> mithril_warhammer = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_mace"), v -> wooden_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_mace"), v -> stone_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_mace"), v -> iron_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_mace"), v -> golden_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_mace"), v -> diamond_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_mace"), v -> bronze_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_mace"), v -> emerald_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_mace"), v -> demonic_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_mace"), v -> frost_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_mace"), v -> mithril_mace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_dagger"), v -> wooden_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_dagger_reversed"), v -> wooden_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_dagger"), v -> stone_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_dagger_reversed"), v -> stone_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_dagger"), v -> iron_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_dagger_reversed"), v -> iron_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_dagger"), v -> golden_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_dagger_reversed"), v -> golden_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_dagger"), v -> diamond_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_dagger_reversed"), v -> diamond_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_dagger"), v -> bronze_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_dagger_reversed"), v -> bronze_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_dagger"), v -> emerald_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_dagger_reversed"), v -> emerald_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_dagger"), v -> demonic_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_dagger_reversed"), v -> demonic_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_dagger"), v -> frost_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_dagger_reversed"), v -> frost_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_dagger"), v -> mithril_dagger = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_dagger_reversed"), v -> mithril_dagger_reversed = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_scythe"), v -> wooden_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_scythe"), v -> stone_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_scythe"), v -> iron_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_scythe"), v -> golden_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_scythe"), v -> diamond_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_scythe"), v -> bronze_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_scythe"), v -> emerald_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_scythe"), v -> demonic_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_scythe"), v -> frost_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_scythe"), v -> mithril_scythe = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_glaive"), v -> wooden_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_glaive"), v -> stone_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_glaive"), v -> iron_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_glaive"), v -> golden_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_glaive"), v -> diamond_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_glaive"), v -> bronze_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_glaive"), v -> emerald_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_glaive"), v -> demonic_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_glaive"), v -> frost_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_glaive"), v -> mithril_glaive = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wooden_broadsword"), v -> wooden_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:stone_broadsword"), v -> stone_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_broadsword"), v -> iron_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_broadsword"), v -> golden_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_broadsword"), v -> diamond_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_broadsword"), v -> bronze_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_broadsword"), v -> emerald_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_broadsword"), v -> demonic_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:frost_broadsword"), v -> frost_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_broadsword"), v -> mithril_broadsword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:holyhandgrenade"), v -> holy_hand_grenade = v);
    }
 }

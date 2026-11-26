@@ -55,7 +55,7 @@ public class BlockCarpentryBench extends BlockBasicContainer {
    }
 
    public IBlockState getStateFromMeta(int meta) {
-      return this.getDefaultState().withProperty(TYPE, Integer.valueOf(meta.intValue() >> 2)).withProperty(ROTATION, Integer.valueOf(meta % 4));
+      return this.getDefaultState().withProperty(TYPE, Integer.valueOf(meta >> 2)).withProperty(ROTATION, Integer.valueOf(meta % 4));
    }
 
    protected BlockStateContainer createBlockState() {

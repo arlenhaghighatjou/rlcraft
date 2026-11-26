@@ -1,5 +1,8 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -8,184 +11,107 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import noppes.vc.items.ItemArmorBasic;
 import noppes.vc.items.ItemArmorSkirt;
 
-@ObjectHolder("variedcommodities")
 public class VCArmors {
-   @ObjectHolder("cow_leather_head")
    public static Item cow_leather_head;
-   @ObjectHolder("cow_leather_chest")
    public static Item cow_leather_chest;
-   @ObjectHolder("cow_leather_legs")
    public static Item cow_leather_legs;
-   @ObjectHolder("cow_leather_boots")
    public static Item cow_leather_boots;
-   @ObjectHolder("nanorum_head")
    public static Item nanorum_head;
-   @ObjectHolder("nanorum_chest")
    public static Item nanorum_chest;
-   @ObjectHolder("nanorum_legs")
    public static Item nanorum_legs;
-   @ObjectHolder("nanorum_boots")
    public static Item nanorum_boots;
-   @ObjectHolder("tactical_head")
    public static Item tactical_head;
-   @ObjectHolder("tactical_chest")
    public static Item tactical_chest;
-   @ObjectHolder("full_leather_head")
    public static Item full_leather_head;
-   @ObjectHolder("full_leather_chest")
    public static Item full_leather_chest;
-   @ObjectHolder("full_iron_head")
    public static Item full_iron_head;
-   @ObjectHolder("full_iron_chest")
    public static Item full_iron_chest;
-   @ObjectHolder("full_golden_head")
    public static Item full_golden_head;
-   @ObjectHolder("full_golden_chest")
    public static Item full_golden_chest;
-   @ObjectHolder("full_diamond_head")
    public static Item full_diamond_head;
-   @ObjectHolder("full_diamond_chest")
    public static Item full_diamond_chest;
-   @ObjectHolder("full_bronze_head")
    public static Item full_bronze_head;
-   @ObjectHolder("full_bronze_chest")
    public static Item full_bronze_chest;
-   @ObjectHolder("full_bronze_legs")
    public static Item full_bronze_legs;
-   @ObjectHolder("full_bronze_boots")
    public static Item full_bronze_boots;
-   @ObjectHolder("full_emerald_head")
    public static Item full_emerald_head;
-   @ObjectHolder("full_emerald_chest")
    public static Item full_emerald_chest;
-   @ObjectHolder("full_emerald_legs")
    public static Item full_emerald_legs;
-   @ObjectHolder("full_emerald_boots")
    public static Item full_emerald_boots;
-   @ObjectHolder("full_wooden_head")
    public static Item full_wooden_head;
-   @ObjectHolder("full_wooden_chest")
    public static Item full_wooden_chest;
-   @ObjectHolder("full_wooden_legs")
    public static Item full_wooden_legs;
-   @ObjectHolder("full_wooden_boots")
    public static Item full_wooden_boots;
-   @ObjectHolder("tuxedo_chest")
    public static Item tuxedo_chest;
-   @ObjectHolder("tuxedo_pants")
    public static Item tuxedo_pants;
-   @ObjectHolder("tuxedo_bottom")
    public static Item tuxedo_bottom;
-   @ObjectHolder("wizard_head")
    public static Item wizard_head;
-   @ObjectHolder("wizard_chest")
    public static Item wizard_chest;
-   @ObjectHolder("wizard_pants")
    public static Item wizard_pants;
-   @ObjectHolder("assassin_head")
    public static Item assassin_head;
-   @ObjectHolder("assassin_chest")
    public static Item assassin_chest;
-   @ObjectHolder("assassin_legs")
    public static Item assassin_legs;
-   @ObjectHolder("assassin_boots")
    public static Item assassin_boots;
-   @ObjectHolder("soldier_head")
    public static Item soldier_head;
-   @ObjectHolder("soldier_chest")
    public static Item soldier_chest;
-   @ObjectHolder("soldier_legs")
    public static Item soldier_legs;
-   @ObjectHolder("soldier_bottom")
    public static Item soldier_bottom;
-   @ObjectHolder("x407_head")
    public static Item x407_head;
-   @ObjectHolder("x407_chest")
    public static Item x407_chest;
-   @ObjectHolder("x407_legs")
    public static Item x407_legs;
-   @ObjectHolder("x407_boots")
    public static Item x407_boots;
-   @ObjectHolder("mithril_head")
    public static Item mithril_head;
-   @ObjectHolder("mithril_chest")
    public static Item mithril_chest;
-   @ObjectHolder("mithril_legs")
    public static Item mithril_legs;
-   @ObjectHolder("mithril_boots")
    public static Item mithril_boots;
-   @ObjectHolder("demonic_head")
    public static Item demonic_head;
-   @ObjectHolder("demonic_chest")
    public static Item demonic_chest;
-   @ObjectHolder("demonic_legs")
    public static Item demonic_legs;
-   @ObjectHolder("demonic_boots")
    public static Item demonic_boots;
-   @ObjectHolder("commissar_head")
    public static Item commissar_head;
-   @ObjectHolder("commissar_chest")
    public static Item commissar_chest;
-   @ObjectHolder("commissar_legs")
    public static Item commissar_legs;
-   @ObjectHolder("commissar_bottom")
    public static Item commissar_bottom;
-   @ObjectHolder("infantry_helmet")
    public static Item infantry_helmet;
-   @ObjectHolder("officer_chest")
    public static Item officer_chest;
-   @ObjectHolder("crown")
    public static Item crown;
-   @ObjectHolder("crown2")
    public static Item crown2;
-   @ObjectHolder("ninja_head")
    public static Item ninja_head;
-   @ObjectHolder("ninja_chest")
    public static Item ninja_chest;
-   @ObjectHolder("ninja_legs")
    public static Item ninja_legs;
-   @ObjectHolder("chain_skirt")
    public static Item chain_skirt;
-   @ObjectHolder("leather_skirt")
    public static Item leather_skirt;
-   @ObjectHolder("golden_skirt")
    public static Item golden_skirt;
-   @ObjectHolder("iron_skirt")
    public static Item iron_skirt;
-   @ObjectHolder("diamond_skirt")
    public static Item diamond_skirt;
-   @ObjectHolder("emerald_skirt")
    public static Item emerald_skirt;
-   @ObjectHolder("bronze_skirt")
    public static Item bronze_skirt;
-   @ObjectHolder("demonic_skirt")
    public static Item demonic_skirt;
-   @ObjectHolder("mithril_skirt")
    public static Item mithril_skirt;
    private List<Item> list = new ArrayList();
 
    public VCArmors() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerItems(Register<Item> event) {
       this.list.clear();
-      Class<?>[] types = new Class[]{String.class, Integer.TYPE, int[].class, Integer.TYPE, SoundEvent.class, Float.TYPE};
-      ArmorMaterial armorMithril = (ArmorMaterial)EnumHelper.addEnum(ArmorMaterial.class, "MITHRIL", types, new Object[]{"", Integer.valueOf(40), new int[]{3, 6, 8, 3}, Integer.valueOf(20), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F});
-      ArmorMaterial armorBronze = (ArmorMaterial)EnumHelper.addEnum(ArmorMaterial.class, "BRONZE", types, new Object[]{"", Integer.valueOf(7), new int[]{2, 5, 6, 2}, Integer.valueOf(20), SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F});
-      ArmorMaterial armorEmerald = (ArmorMaterial)EnumHelper.addEnum(ArmorMaterial.class, "EMERALD", types, new Object[]{"", Integer.valueOf(35), new int[]{3, 6, 8, 3}, Integer.valueOf(5), SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F});
+      ArmorMaterial armorMithril = EnumHelper.addArmorMaterial("MITHRIL", "", 40, new int[]{3, 6, 8, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.0F);
+      ArmorMaterial armorBronze = EnumHelper.addArmorMaterial("BRONZE", "", 7, new int[]{2, 5, 6, 2}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
+      ArmorMaterial armorEmerald = EnumHelper.addArmorMaterial("EMERALD", "", 35, new int[]{3, 6, 8, 3}, 5, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
       armorMithril.setRepairItem(new ItemStack(VCItems.ingot_mithril));
       this.register(event, (new ItemArmorBasic(ArmorMaterial.LEATHER, EntityEquipmentSlot.HEAD, "cow_leather")).register("cow_leather_head"));
       this.register(event, (new ItemArmorBasic(ArmorMaterial.LEATHER, EntityEquipmentSlot.CHEST, "cow_leather")).register("cow_leather_chest"));
@@ -271,11 +197,89 @@ public class VCArmors {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void registerModels(ModelRegistryEvent event) {
       for(Item item : this.list) {
          ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cow_leather_head"), v -> cow_leather_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cow_leather_chest"), v -> cow_leather_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cow_leather_legs"), v -> cow_leather_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:cow_leather_boots"), v -> cow_leather_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:nanorum_head"), v -> nanorum_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:nanorum_chest"), v -> nanorum_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:nanorum_legs"), v -> nanorum_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:nanorum_boots"), v -> nanorum_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tactical_head"), v -> tactical_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tactical_chest"), v -> tactical_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_leather_head"), v -> full_leather_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_leather_chest"), v -> full_leather_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_iron_head"), v -> full_iron_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_iron_chest"), v -> full_iron_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_golden_head"), v -> full_golden_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_golden_chest"), v -> full_golden_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_diamond_head"), v -> full_diamond_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_diamond_chest"), v -> full_diamond_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_bronze_head"), v -> full_bronze_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_bronze_chest"), v -> full_bronze_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_bronze_legs"), v -> full_bronze_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_bronze_boots"), v -> full_bronze_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_emerald_head"), v -> full_emerald_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_emerald_chest"), v -> full_emerald_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_emerald_legs"), v -> full_emerald_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_emerald_boots"), v -> full_emerald_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_wooden_head"), v -> full_wooden_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_wooden_chest"), v -> full_wooden_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_wooden_legs"), v -> full_wooden_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:full_wooden_boots"), v -> full_wooden_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tuxedo_chest"), v -> tuxedo_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tuxedo_pants"), v -> tuxedo_pants = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tuxedo_bottom"), v -> tuxedo_bottom = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wizard_head"), v -> wizard_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wizard_chest"), v -> wizard_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:wizard_pants"), v -> wizard_pants = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:assassin_head"), v -> assassin_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:assassin_chest"), v -> assassin_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:assassin_legs"), v -> assassin_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:assassin_boots"), v -> assassin_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:soldier_head"), v -> soldier_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:soldier_chest"), v -> soldier_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:soldier_legs"), v -> soldier_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:soldier_bottom"), v -> soldier_bottom = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:x407_head"), v -> x407_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:x407_chest"), v -> x407_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:x407_legs"), v -> x407_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:x407_boots"), v -> x407_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_head"), v -> mithril_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_chest"), v -> mithril_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_legs"), v -> mithril_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_boots"), v -> mithril_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_head"), v -> demonic_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_chest"), v -> demonic_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_legs"), v -> demonic_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_boots"), v -> demonic_boots = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:commissar_head"), v -> commissar_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:commissar_chest"), v -> commissar_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:commissar_legs"), v -> commissar_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:commissar_bottom"), v -> commissar_bottom = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:infantry_helmet"), v -> infantry_helmet = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:officer_chest"), v -> officer_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crown"), v -> crown = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crown2"), v -> crown2 = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ninja_head"), v -> ninja_head = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ninja_chest"), v -> ninja_chest = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ninja_legs"), v -> ninja_legs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:chain_skirt"), v -> chain_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:leather_skirt"), v -> leather_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:golden_skirt"), v -> golden_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:iron_skirt"), v -> iron_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:diamond_skirt"), v -> diamond_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:emerald_skirt"), v -> emerald_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bronze_skirt"), v -> bronze_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:demonic_skirt"), v -> demonic_skirt = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:mithril_skirt"), v -> mithril_skirt = v);
    }
 }

@@ -1,5 +1,6 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ public class CommonProxy implements IGuiHandler {
    }
 
    public void preinit() {
-      VariedCommodities.Channel.register(new PacketHandlerServer());
+      VariedCommodities.Channel.register(ServerCustomPacketEvent.class, new PacketHandlerServer()::onServerPacket);
    }
 
    public void init() {

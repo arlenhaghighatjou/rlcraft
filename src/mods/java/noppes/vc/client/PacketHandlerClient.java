@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientCustomPacketEvent;
 import noppes.vc.Server;
 import noppes.vc.VariedCommodities;
@@ -19,7 +18,6 @@ public class PacketHandlerClient {
    public PacketHandlerClient() {
    }
 
-   @SubscribeEvent
    public void onPacketData(ClientCustomPacketEvent event) {
       final EntityPlayer player = Minecraft.getMinecraft().player;
       final ByteBuf buffer = event.getPacket().payload();

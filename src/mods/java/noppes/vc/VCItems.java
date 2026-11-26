@@ -1,5 +1,8 @@
 package noppes.vc;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import com.google.common.base.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +16,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -34,150 +35,86 @@ import noppes.vc.items.ItemOrb;
 import noppes.vc.items.ItemVCRecipesBook;
 import noppes.vc.items.ItemWand;
 
-@ObjectHolder("variedcommodities")
 public class VCItems {
-   @ObjectHolder("gem_sapphire")
    public static Item gem_sapphire;
-   @ObjectHolder("gem_ruby")
    public static Item gem_ruby;
-   @ObjectHolder("gem_amethyst")
    public static Item gem_amethyst;
-   @ObjectHolder("ingot_bronze")
    public static Item ingot_bronze;
-   @ObjectHolder("ingot_steel")
    public static Item ingot_steel;
-   @ObjectHolder("ingot_demonic")
    public static Item ingot_demonic;
-   @ObjectHolder("ingot_mithril")
    public static Item ingot_mithril;
-   @ObjectHolder("banjo")
    public static Item banjo;
-   @ObjectHolder("violin")
    public static Item violin;
-   @ObjectHolder("violin_bow")
    public static Item violin_bow;
-   @ObjectHolder("harp")
    public static Item harp;
-   @ObjectHolder("guitar")
    public static Item guitar;
-   @ObjectHolder("french_horn")
    public static Item french_horn;
-   @ObjectHolder("clarinet")
    public static Item clarinet;
-   @ObjectHolder("ocarina")
    public static Item ocarina;
-   @ObjectHolder("coin_wood")
    public static Item coin_wood;
-   @ObjectHolder("coin_stone")
    public static Item coin_stone;
-   @ObjectHolder("coin_iron")
    public static Item coin_iron;
-   @ObjectHolder("coin_gold")
    public static Item coin_gold;
-   @ObjectHolder("coin_diamond")
    public static Item coin_diamond;
-   @ObjectHolder("coin_bronze")
    public static Item coin_bronze;
-   @ObjectHolder("coin_emerald")
    public static Item coin_emerald;
-   @ObjectHolder("element_earth")
    public static Item element_earth;
-   @ObjectHolder("element_water")
    public static Item element_water;
-   @ObjectHolder("element_fire")
    public static Item element_fire;
-   @ObjectHolder("element_air")
    public static Item element_air;
-   @ObjectHolder("ancient_scroll")
    public static Item ancient_scroll;
-   @ObjectHolder("ancient_coin")
    public static Item ancient_coin;
-   @ObjectHolder("artifact")
    public static Item artifact;
-   @ObjectHolder("locket")
    public static Item locket;
-   @ObjectHolder("silk")
    public static Item silk;
-   @ObjectHolder("statuette")
    public static Item statuette;
-   @ObjectHolder("tablet")
    public static Item tablet;
-   @ObjectHolder("heart")
    public static Item heart;
-   @ObjectHolder("money")
    public static Item money;
-   @ObjectHolder("necklace")
    public static Item necklace;
-   @ObjectHolder("usb_stick")
    public static Item usb_stick;
-   @ObjectHolder("letter")
    public static Item letter;
-   @ObjectHolder("plans")
    public static Item plans;
-   @ObjectHolder("satchel")
    public static Item satchel;
-   @ObjectHolder("bag")
    public static Item bag;
-   @ObjectHolder("crystal")
    public static Item crystal;
-   @ObjectHolder("severed_ear")
    public static Item severed_ear;
-   @ObjectHolder("phone")
    public static Item phone;
-   @ObjectHolder("bandit_mask")
    public static Item bandit_mask;
-   @ObjectHolder("paper_crown")
    public static Item paper_crown;
-   @ObjectHolder("broken_arrow")
    public static Item broken_arrow;
-   @ObjectHolder("car_key")
    public static Item car_key;
-   @ObjectHolder("key")
    public static Item key;
-   @ObjectHolder("key2")
    public static Item key2;
-   @ObjectHolder("pendant")
    public static Item pendant;
-   @ObjectHolder("blueprint")
    public static Item blueprint;
-   @ObjectHolder("ring")
    public static Item ring;
-   @ObjectHolder("skull")
    public static Item skull;
-   @ObjectHolder("spell_nature")
    public static Item spell_nature;
-   @ObjectHolder("spell_arcane")
    public static Item spell_arcane;
-   @ObjectHolder("spell_lightning")
    public static Item spell_lightning;
-   @ObjectHolder("spell_ice")
    public static Item spell_ice;
-   @ObjectHolder("spell_fire")
    public static Item spell_fire;
-   @ObjectHolder("spell_dark")
    public static Item spell_dark;
-   @ObjectHolder("spell_holy")
    public static Item spell_holy;
-   @ObjectHolder("orb")
    public static Item orb;
-   @ObjectHolder("orb_broken")
    public static Item orb_broken;
-   @ObjectHolder("lighter")
    public static Item lighter;
-   @ObjectHolder("chicken_sword")
    public static Item chicken_sword;
-   @ObjectHolder("handcuffs")
    public static Item handcuffs;
-   @ObjectHolder("magic_wand")
    public static Item magic_wand;
-   @ObjectHolder("vcrecipes_book")
    public static Item vcrecipes_book;
    private List<Item> list = new ArrayList();
 
    public VCItems() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, Enchantment.class, this::registerEnchants);
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+   }
+
    public void registerItems(Register<Item> event) {
       this.list.clear();
       this.register(event, (new ItemVCRecipesBook()).register("vcrecipes_book"));
@@ -264,7 +201,6 @@ public class VCItems {
       this.register(event, (new ItemWand()).register("magic_wand").setFull3D().setMaxStackSize(1));
    }
 
-   @SubscribeEvent
    public void registerEnchants(Register<Enchantment> event) {
       if (!VariedCommodities.DisableEnchantments) {
          VCEnchant.CustomNpcsType = EnumHelper.addEnchantmentType("vc_enchants", (Predicate)null);
@@ -279,7 +215,6 @@ public class VCItems {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void registerModels(ModelRegistryEvent event) {
       for(Item item : this.list) {
          ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
@@ -290,5 +225,76 @@ public class VCItems {
          ModelLoader.setCustomModelResourceLocation(orb_broken, i, new ModelResourceLocation(orb_broken.getRegistryName(), "inventory"));
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:gem_sapphire"), v -> gem_sapphire = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:gem_ruby"), v -> gem_ruby = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:gem_amethyst"), v -> gem_amethyst = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ingot_bronze"), v -> ingot_bronze = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ingot_steel"), v -> ingot_steel = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ingot_demonic"), v -> ingot_demonic = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ingot_mithril"), v -> ingot_mithril = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:banjo"), v -> banjo = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:violin"), v -> violin = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:violin_bow"), v -> violin_bow = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:harp"), v -> harp = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:guitar"), v -> guitar = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:french_horn"), v -> french_horn = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:clarinet"), v -> clarinet = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ocarina"), v -> ocarina = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_wood"), v -> coin_wood = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_stone"), v -> coin_stone = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_iron"), v -> coin_iron = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_gold"), v -> coin_gold = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_diamond"), v -> coin_diamond = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_bronze"), v -> coin_bronze = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:coin_emerald"), v -> coin_emerald = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:element_earth"), v -> element_earth = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:element_water"), v -> element_water = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:element_fire"), v -> element_fire = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:element_air"), v -> element_air = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ancient_scroll"), v -> ancient_scroll = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ancient_coin"), v -> ancient_coin = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:artifact"), v -> artifact = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:locket"), v -> locket = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:silk"), v -> silk = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:statuette"), v -> statuette = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:tablet"), v -> tablet = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:heart"), v -> heart = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:money"), v -> money = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:necklace"), v -> necklace = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:usb_stick"), v -> usb_stick = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:letter"), v -> letter = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:plans"), v -> plans = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:satchel"), v -> satchel = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bag"), v -> bag = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:crystal"), v -> crystal = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:severed_ear"), v -> severed_ear = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:phone"), v -> phone = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:bandit_mask"), v -> bandit_mask = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:paper_crown"), v -> paper_crown = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:broken_arrow"), v -> broken_arrow = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:car_key"), v -> car_key = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:key"), v -> key = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:key2"), v -> key2 = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:pendant"), v -> pendant = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:blueprint"), v -> blueprint = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:ring"), v -> ring = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:skull"), v -> skull = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_nature"), v -> spell_nature = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_arcane"), v -> spell_arcane = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_lightning"), v -> spell_lightning = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_ice"), v -> spell_ice = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_fire"), v -> spell_fire = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_dark"), v -> spell_dark = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:spell_holy"), v -> spell_holy = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:orb"), v -> orb = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:orb_broken"), v -> orb_broken = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:lighter"), v -> lighter = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:chicken_sword"), v -> chicken_sword = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:handcuffs"), v -> handcuffs = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:magic_wand"), v -> magic_wand = v);
+      ObjectHolderRegistry.INSTANCE.register(Item.class, new ResourceLocation("variedcommodities:vcrecipes_book"), v -> vcrecipes_book = v);
    }
 }

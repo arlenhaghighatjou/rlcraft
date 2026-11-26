@@ -12,7 +12,6 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 import noppes.vc.blocks.tiles.TileBigSign;
 import noppes.vc.blocks.tiles.TileBook;
@@ -23,7 +22,6 @@ public class PacketHandlerServer {
    public PacketHandlerServer() {
    }
 
-   @SubscribeEvent
    public void onServerPacket(ServerCustomPacketEvent event) {
       final EntityPlayerMP player = ((NetHandlerPlayServer)event.getHandler()).player;
       final ByteBuf buffer = event.getPacket().payload();

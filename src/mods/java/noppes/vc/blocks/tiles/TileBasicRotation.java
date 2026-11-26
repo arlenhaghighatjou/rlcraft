@@ -1,7 +1,7 @@
 package noppes.vc.blocks.tiles;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -29,7 +29,7 @@ public class TileBasicRotation extends TileEntity {
       return false;
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       NBTTagCompound compound = pkt.getNbtCompound();
       this.readFromNBT(compound);
    }
