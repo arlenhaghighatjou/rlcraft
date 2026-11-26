@@ -1,8 +1,10 @@
 package atomicstryker.ruins.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.io.StringReader;
+import java.io.FileNotFoundException;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,7 +61,7 @@ public class RuinTemplate
         float spawnchance;
     }
 
-    public RuinTemplate(PrintWriter out, String filename, String simpleName, boolean debug) throws Exception
+    public RuinTemplate(PrintWriter out, VFile2 file, String simpleName, boolean debug) throws Exception
     {
         // load in the given file as a template
         name = simpleName;
@@ -72,7 +74,12 @@ public class RuinTemplate
         bonemealMarkers = new ArrayList<>();
         adjoiningTemplates = new ArrayList<>();
 
-        BufferedReader br = new BufferedReader(new FileReader(filename));
+        final String chars = file.getAllChars();
+        if (chars == null)
+        {
+            throw new FileNotFoundException(file.getPath());
+        }
+        BufferedReader br = new BufferedReader(new StringReader(chars));
         String read = br.readLine();
         while (read != null)
         {
@@ -83,9 +90,9 @@ public class RuinTemplate
         br.close();
     }
 
-    public RuinTemplate(PrintWriter out, String filename, String simpleName) throws Exception
+    public RuinTemplate(PrintWriter out, VFile2 file, String simpleName) throws Exception
     {
-        this(out, filename, simpleName, false);
+        this(out, file, simpleName, false);
     }
 
     @Override
@@ -331,7 +338,7 @@ public class RuinTemplate
         }
         catch (Exception e)
         {
-            debugPrinter.printf("An Exception was thrown while building Ruin: %s\n", getName());
+            debugPrinter.print(HString.format("An Exception was thrown while building Ruin: %s\n", getName()));
             System.err.println("Faulty Template name: " + getName());
             e.printStackTrace();
             return -1;
@@ -370,7 +377,7 @@ public class RuinTemplate
         // post pre-build event after y position and rotation are resolved
         if (MinecraftForge.EVENT_BUS.post(new EventRuinTemplateSpawn(world, this, xBase, yReturn, zBase, rotate, is_player, true)))
         {
-            debugPrinter.printf("Forge Event came back negative, no spawn\n");
+            debugPrinter.print(HString.format("Forge Event came back negative, no spawn\n"));
             return -1;
         }
 
@@ -480,7 +487,7 @@ public class RuinTemplate
             int zi = bonemealMarkers.get(b + 2);
             IBlockState state = world.getBlockState(new BlockPos(xi, yi, zi));
             Block growable = state.getBlock();
-            debugPrinter.printf("Now considering bonemeal flag at [%d|%d|%d], block: %s\n", xi, yi, zi, growable);
+            debugPrinter.print(HString.format("Now considering bonemeal flag at [%d|%d|%d], block: %s\n", xi, yi, zi, growable));
             // verbatim rip of ItemDye.applyBonemeal method
             if (growable instanceof IGrowable)
             {
@@ -489,11 +496,11 @@ public class RuinTemplate
                 if (igrowable.canGrow(world, pos, state, world.isRemote))
                 {
                     igrowable.grow(world, world.rand, pos, state);
-                    debugPrinter.printf("Applied bonemeal at [%d|%d|%d], block: %s\n", xi, yi, zi, growable);
+                    debugPrinter.print(HString.format("Applied bonemeal at [%d|%d|%d], block: %s\n", xi, yi, zi, growable));
                 }
                 else
                 {
-                    debugPrinter.printf("... but first, CAN_STILL_GROW, Bonemeal boolean was negative\n");
+                    debugPrinter.print(HString.format("... but first, CAN_STILL_GROW, Bonemeal boolean was negative\n"));
                 }
             }
         }
@@ -501,7 +508,7 @@ public class RuinTemplate
 
         for (AdjoiningTemplateData ad : adjoiningTemplates)
         {
-            debugPrinter.printf("Considering to spawn adjoining %s of Ruin %s...\n", ad.adjoiningTemplate.getName(), getName());
+            debugPrinter.print(HString.format("Considering to spawn adjoining %s of Ruin %s...\n", ad.adjoiningTemplate.getName(), getName()));
             float randres = (world.rand.nextFloat() * 100);
             if (randres < ad.spawnchance)
             {
@@ -511,17 +518,17 @@ public class RuinTemplate
                 int targetY = ad.adjoiningTemplate.checkArea(world, targetX, yReturn, targetZ, newrot, ad.acceptableY);
                 if (targetY >= 0 && Math.abs(yReturn - targetY) <= ad.acceptableY)
                 {
-                    debugPrinter.printf("Creating adjoining %s of Ruin %s at [%d|%d|%d], rot:%d\n", ad.adjoiningTemplate.getName(), getName(), targetX, targetY, targetZ, newrot);
+                    debugPrinter.print(HString.format("Creating adjoining %s of Ruin %s at [%d|%d|%d], rot:%d\n", ad.adjoiningTemplate.getName(), getName(), targetX, targetY, targetZ, newrot));
                     ad.adjoiningTemplate.doBuild(world, random, targetX, targetY, targetZ, newrot, false, ignore_ceiling);
                 }
                 else
                 {
-                    debugPrinter.printf("Adjoining area around [%d|%d|%d] was rejected, targetY:%d, diff:%d\n", targetX, yReturn, targetZ, targetY, Math.abs(yReturn - targetY));
+                    debugPrinter.print(HString.format("Adjoining area around [%d|%d|%d] was rejected, targetY:%d, diff:%d\n", targetX, yReturn, targetZ, targetY, Math.abs(yReturn - targetY)));
                 }
             }
             else
             {
-                debugPrinter.printf("Spawnchance [%.2f] too low. EaglercraftRandom got [%.2f], no spawn\n", ad.spawnchance, randres);
+                debugPrinter.print(HString.format("Spawnchance [%.2f] too low. EaglercraftRandom got [%.2f], no spawn\n", ad.spawnchance, randres));
             }
         }
 
@@ -646,7 +653,7 @@ public class RuinTemplate
                         ruleIndex += (repeatCountPrevious - 1)*(ruleIndex - groupIndex + 1);
                         if (debugging)
                         {
-                            debugPrinter.printf("template [%s] line [%d]: duplicating group from rules #%d-#%d (%d times) to create rules #%d-#%d\n", name, lineIndex, groupIndex, ruleIndexPrevious, repeatCountPrevious, ruleIndexPrevious + 1, ruleIndex);
+                            debugPrinter.print(HString.format("template [%s] line [%d]: duplicating group from rules #%d-#%d (%d times) to create rules #%d-#%d\n", name, lineIndex, groupIndex, ruleIndexPrevious, repeatCountPrevious, ruleIndexPrevious + 1, ruleIndex));
                         }
                         repeatCountPrevious = 0;
                     }
@@ -684,12 +691,12 @@ public class RuinTemplate
                     {
                         if (isFirstRule)
                         {
-                            debugPrinter.printf("template [%s] line [%d]: first rule must start a new variant group (i.e., use = instead of ^)\n", name, lineIndex);
+                            debugPrinter.print(HString.format("template [%s] line [%d]: first rule must start a new variant group (i.e., use = instead of ^)\n", name, lineIndex));
                             throw new Exception("Template file problem: First rule cannot join nonexistent variant group!");
                         }
                         if (hasRepeatCount)
                         {
-                            debugPrinter.printf("template [%s] line [%d]: only first rule variant in a group can have repeat count\n", name, lineIndex);
+                            debugPrinter.print(HString.format("template [%s] line [%d]: only first rule variant in a group can have repeat count\n", name, lineIndex));
                             throw new Exception("Template file problem: Unexpected repeat count before variant rule group member!");
                         }
 
@@ -699,7 +706,7 @@ public class RuinTemplate
                             variantIndex = 1;
                             if (debugging)
                             {
-                                debugPrinter.printf("template [%s] line [%d]: adding new rule #%d to variant group with rule #%d\n", name, lineIndex, ruleIndex, groupIndex);
+                                debugPrinter.print(HString.format("template [%s] line [%d]: adding new rule #%d to variant group with rule #%d\n", name, lineIndex, ruleIndex, groupIndex));
                             }
                             variantRuleset.addVariantRule(weight, rule);
                         }
@@ -711,12 +718,12 @@ public class RuinTemplate
                             }
                             else if (variantIndex == groupSize && debugging)
                             {
-                                debugPrinter.printf("template [%s] line [%d]: rule #%d has more variants than first rule in group (rule #%d with %d variants); excess will be ignored\n", name, lineIndex, ruleIndex, groupIndex, groupSize);
+                                debugPrinter.print(HString.format("template [%s] line [%d]: rule #%d has more variants than first rule in group (rule #%d with %d variants); excess will be ignored\n", name, lineIndex, ruleIndex, groupIndex, groupSize));
                             }
                             ++variantIndex;
                             if (debugging)
                             {
-                                debugPrinter.printf("template [%s] line [%d]: adding variant #%d to rule #%d\n", name, lineIndex, variantIndex, ruleIndex);
+                                debugPrinter.print(HString.format("template [%s] line [%d]: adding variant #%d to rule #%d\n", name, lineIndex, variantIndex, ruleIndex));
                             }
                             variantRuleset.addVariant(weight, rule);
                         }
@@ -729,7 +736,7 @@ public class RuinTemplate
                             ruleIndex += (repeatCountPrevious - 1)*(ruleIndex - groupIndex + 1);
                             if (debugging)
                             {
-                                debugPrinter.printf("template [%s] line [%d]: duplicating variant group from rules #%d-#%d (%d times) to create rules #%d-#%d\n", name, lineIndex, groupIndex, ruleIndexPrevious, repeatCountPrevious, ruleIndexPrevious + 1, ruleIndex);
+                                debugPrinter.print(HString.format("template [%s] line [%d]: duplicating variant group from rules #%d-#%d (%d times) to create rules #%d-#%d\n", name, lineIndex, groupIndex, ruleIndexPrevious, repeatCountPrevious, ruleIndexPrevious + 1, ruleIndex));
                             }
                         }
                         groupIndex = ++ruleIndex;
@@ -742,20 +749,20 @@ public class RuinTemplate
                             {
                                 if (hasRepeatCount)
                                 {
-                                    debugPrinter.printf("template [%s] line [%d]: unnamed rule (alternate rule0) cannot have repeat count\n", name, lineIndex);
+                                    debugPrinter.print(HString.format("template [%s] line [%d]: unnamed rule (alternate rule0) cannot have repeat count\n", name, lineIndex));
                                     throw new Exception("Template file problem: Unexpected repeat count before unnamed rule!");
                                 }
                                 groupIndex = ruleIndex = 0;
                                 if (debugging)
                                 {
-                                    debugPrinter.printf("template [%s] line [%d]: alternate rule #0 specified\n", name, lineIndex);
+                                    debugPrinter.print(HString.format("template [%s] line [%d]: alternate rule #0 specified\n", name, lineIndex));
                                 }
                             }
                             else
                             {
                                 if (debugging)
                                 {
-                                    debugPrinter.printf("template [%s] line [%d]: creating default (preserving air) rule #0\n", name, lineIndex);
+                                    debugPrinter.print(HString.format("template [%s] line [%d]: creating default (preserving air) rule #0\n", name, lineIndex));
                                 }
                                 variantRuleset.addVariantGroup(1, 1, new RuinTemplateRule(debugPrinter, this, "0,100,?air"));
                             }
@@ -764,20 +771,20 @@ public class RuinTemplate
                         {
                             if (!hasName)
                             {
-                                debugPrinter.printf("template [%s] line [%d]: unnamed rule (alternate rule0) must appear before all other rules\n", name, lineIndex);
+                                debugPrinter.print(HString.format("template [%s] line [%d]: unnamed rule (alternate rule0) must appear before all other rules\n", name, lineIndex));
                                 throw new Exception("Template file problem: Rule name missing!");
                             }
                         }
                         if (debugging)
                         {
-                            debugPrinter.printf("template [%s] line [%d]: creating new rule #%d\n", name, lineIndex, ruleIndex);
+                            debugPrinter.print(HString.format("template [%s] line [%d]: creating new rule #%d\n", name, lineIndex, ruleIndex));
                         }
                         variantRuleset.addVariantGroup(repeatCount, weight, rule);
                     }
                 }
                 else if (patternRuleRaw.matcher(line).lookingAt())
                 {
-                    debugPrinter.printf("template [%s] line [%d]: invalid rule syntax\n", name, lineIndex);
+                    debugPrinter.print(HString.format("template [%s] line [%d]: invalid rule syntax\n", name, lineIndex));
                     throw new Exception("Template file problem: Cannot parse rule!");
                 }
             }
@@ -895,7 +902,7 @@ public class RuinTemplate
                     {
                         if (debugging)
                         {
-                            debugPrinter.printf("adding biomeTypesToSpawnIn criterion for template \"%s\": specs=\"%s\"\n", name, check[1]);
+                            debugPrinter.print(HString.format("adding biomeTypesToSpawnIn criterion for template \"%s\": specs=\"%s\"\n", name, check[1]));
                         }
                         RuinVennCriterion criterion = null;
                         try
@@ -904,7 +911,7 @@ public class RuinTemplate
                         }
                         catch (RuntimeException exception)
                         {
-                            System.err.printf("template [%s]: invalid biomeTypesToSpawnIn expression [%s]\n", name, check[1]);
+                            System.err.print(HString.format("template [%s]: invalid biomeTypesToSpawnIn expression [%s]\n", name, check[1]));
                             System.err.println(exception);
                         }
                         if (criterion != null && !criterion.isEmpty())
@@ -995,7 +1002,7 @@ public class RuinTemplate
                     {
                         if (debugging)
                         {
-                            debugPrinter.printf("checking requiredMods criterion for template \"%s\": specs=\"%s\"\n", name, check[1]);
+                            debugPrinter.print(HString.format("checking requiredMods criterion for template \"%s\": specs=\"%s\"\n", name, check[1]));
                         }
                         RuinVennCriterion criterion = null;
                         try
@@ -1004,7 +1011,7 @@ public class RuinTemplate
                         }
                         catch (RuntimeException exception)
                         {
-                            System.err.printf("template [%s]: invalid requiredMods expression [%s]\n", name, check[1]);
+                            System.err.print(HString.format("template [%s]: invalid requiredMods expression [%s]\n", name, check[1]));
                             System.err.println(exception);
                         }
                         if (criterion != null && !criterion.isEmpty() && !criterion.isSatisfiedBy(installed_mods_))
@@ -1021,13 +1028,13 @@ public class RuinTemplate
                         // syntax: adjoining_template=<template>;<relativeX>;<allowedYdifference>;<relativeZ>[;<spawnchance>]
                         String[] vals = check[1].split(";");
 
-                        File file = new File(RuinsMod.getMinecraftBaseDir(), RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + vals[0] + ".tml");
-                        if (file.exists() && file.canRead())
+                        VFile2 file = new VFile2(RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + vals[0] + ".tml");
+                        if (file.exists())
                         {
                             RuinTemplate adjTempl = null;
                             try
                             {
-                                adjTempl = new RuinTemplate(debugPrinter, file.getCanonicalPath(), file.getName(), false);
+                                adjTempl = new RuinTemplate(debugPrinter, file, file.getName(), false);
                             }
                             catch (IncompatibleModException e)
                             {
@@ -1086,9 +1093,9 @@ public class RuinTemplate
         }
         if (debugging)
         {
-            debugPrinter.printf("final biomesToSpawnIn list for template \"%s\":", name);
-            biomes.forEach(biome_name -> debugPrinter.printf(" %s", biome_name));
-            debugPrinter.printf("\n");
+            debugPrinter.print(HString.format("final biomesToSpawnIn list for template \"%s\":", name));
+            biomes.forEach(biome_name -> debugPrinter.print(HString.format(" %s", biome_name)));
+            debugPrinter.print(HString.format("\n"));
         }
 
         if (acceptedSurfaces == null)
@@ -1131,7 +1138,7 @@ public class RuinTemplate
     // these 2 methods are only here so mockito can intercept calls
     protected Block tryFindingBlockOfName(String blockName)
     {
-        // debugPrinter.printf("%s mapped to %s\n", blockName, cachedBlock);
+        // debugPrinter.print(HString.format("%s mapped to %s\n", blockName, cachedBlock));
         return Block.REGISTRY.getObject(new ResourceLocation(blockName));
     }
 
@@ -1309,7 +1316,7 @@ public class RuinTemplate
                     final int selector = random.nextInt(weightsTotal);
                     if (debugging && weightsTotal > 1)
                     {
-                        debugPrinter.printf("template [%s] rule [%d]: group selector drawn (from 1-%d) = %d\n", name, ruleIndex, weightsTotal, selector + 1);
+                        debugPrinter.print(HString.format("template [%s] rule [%d]: group selector drawn (from 1-%d) = %d\n", name, ruleIndex, weightsTotal, selector + 1));
                     }
                     return selector;
                 }
@@ -1327,11 +1334,11 @@ public class RuinTemplate
                     {
                         if (selectorInitial < weightsTotal)
                         {
-                            debugPrinter.printf("template [%s] rule [%d]: variant #%d with weight %d chosen by selector = %d\n", name, ruleIndex, index + 1, weights.get(index), selectorInitial + 1);
+                            debugPrinter.print(HString.format("template [%s] rule [%d]: variant #%d with weight %d chosen by selector = %d\n", name, ruleIndex, index + 1, weights.get(index), selectorInitial + 1));
                         }
                         else
                         {
-                            debugPrinter.printf("template [%s] rule [%d]: last variant #%d chosen by selector = %d\n", name, ruleIndex, index + 1, selectorInitial + 1);
+                            debugPrinter.print(HString.format("template [%s] rule [%d]: last variant #%d chosen by selector = %d\n", name, ruleIndex, index + 1, selectorInitial + 1));
                         }
                     }
                     return variants.get(index);

@@ -1,6 +1,6 @@
 package atomicstryker.ruins.common;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.io.PrintWriter;
 
 import net.minecraft.block.Block;
@@ -97,12 +97,12 @@ class CommandTestTemplate extends CommandBase
             target = "templateparser/" + target;
         }
 
-        File file = new File(RuinsMod.getMinecraftBaseDir(), RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + target + ".tml");
-        if (file.exists() && file.canWrite())
+        VFile2 file = new VFile2(RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + target + ".tml");
+        if (file.exists())
         {
             try
             {
-                parsedRuin = new RuinTemplate(new PrintWriter(System.out, true), file.getCanonicalPath(), file.getName(), is_player);
+                parsedRuin = new RuinTemplate(new PrintWriter(System.out, true), file, file.getName(), is_player);
                 int rotation = (args.length > 4) ? Integer.parseInt(args[4]) : RuinsMod.DIR_NORTH;
                 final boolean ignore_ceiling = args.length > 5 && Boolean.parseBoolean(args[5]);
                 final World world = sender.getEntityWorld();

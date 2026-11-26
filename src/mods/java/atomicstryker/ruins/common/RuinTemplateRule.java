@@ -1,5 +1,6 @@
 package atomicstryker.ruins.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Iterator;
@@ -42,7 +43,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class RuinTemplateRule
 {
@@ -312,7 +312,7 @@ public class RuinTemplateRule
 
                 if (excessiveDebugging)
                 {
-                    debugPrinter.printf("rule alternative: %d, blockIDs[%s], blockMDs[%s], blockStrings[%s], specialflags:[%s], blockWeights:[%f], preservePolicies:[%s]\n", i + 1, blockIDs[i], blockMDs[i], blockStrings[i], specialFlags[i], blockWeights[i], preservePolicies[i]);
+                    debugPrinter.print(HString.format("rule alternative: %d, blockIDs[%s], blockMDs[%s], blockStrings[%s], specialflags:[%s], blockWeights:[%f], preservePolicies:[%s]\n", i + 1, blockIDs[i], blockMDs[i], blockStrings[i], specialFlags[i], blockWeights[i], preservePolicies[i]));
                 }
             }
         }
@@ -684,8 +684,8 @@ public class RuinTemplateRule
             if (tes != null)
             {
                 String[] splits = dataString.split(":");
-                ReflectionHelper.setPrivateValue(TileEntitySkull.class, tes, Integer.valueOf(splits[1]), 0);
-                ReflectionHelper.setPrivateValue(TileEntitySkull.class, tes, Integer.valueOf(splits[2].split("-")[0]), 1);
+                tes.skullType = Integer.parseInt(splits[1]);
+                tes.skullRotation = Integer.parseInt(splits[2].split("-")[0]);
 
                 // is a player head saved?
                 // looks like
@@ -697,7 +697,7 @@ public class RuinTemplateRule
                     String[] moresplits = splits[3].split("-");
                     EaglercraftUUID id = EaglercraftUUID.fromString(moresplits[0] + "-" + moresplits[1] + "-" + moresplits[2] + "-" + moresplits[3] + "-" + moresplits[4]);
                     GameProfile playerprofile = new GameProfile(id, moresplits[5]);
-                    ReflectionHelper.setPrivateValue(TileEntitySkull.class, tes, playerprofile, 2);
+                    tes.playerProfile = playerprofile;
                 }
                 rotateTileEntity(tes, rotate);
             }
@@ -995,7 +995,7 @@ public class RuinTemplateRule
             }
         }
 
-        Collections.shuffle(list, rand);
+        rand.shuffle(list);
         return list;
     }
 
@@ -1049,7 +1049,7 @@ public class RuinTemplateRule
         }
 
         stacks.addAll(list);
-        Collections.shuffle(stacks, rand);
+        rand.shuffle(stacks);
     }
 
     private void addIInventoryBlock(World world, EaglercraftRandom random, int x, int y, int z, Block block, String itemDataWithoutNBT, RuinTextLumper lumper, int blocknum, int direction)
@@ -1263,17 +1263,17 @@ public class RuinTemplateRule
                 if (rotate == RuinsMod.DIR_EAST)
                 {
                     // z multiplied with -1 becomes x, x becomes z
-                    coordinateMatcher.appendReplacement(stringBuffer, String.format("~%s %s ~%s", (tryToInvert(coordinateMatcher.group(3))), coordinateMatcher.group(2), coordinateMatcher.group(1)));
+                    coordinateMatcher.appendReplacement(stringBuffer, HString.format("~%s %s ~%s", (tryToInvert(coordinateMatcher.group(3))), coordinateMatcher.group(2), coordinateMatcher.group(1)));
                 }
                 else if (rotate == RuinsMod.DIR_WEST)
                 {
                     // x multiplied with -1 becomes z, z becomes x
-                    coordinateMatcher.appendReplacement(stringBuffer, String.format("~%s %s ~%s", coordinateMatcher.group(3), coordinateMatcher.group(2), tryToInvert(coordinateMatcher.group(1))));
+                    coordinateMatcher.appendReplacement(stringBuffer, HString.format("~%s %s ~%s", coordinateMatcher.group(3), coordinateMatcher.group(2), tryToInvert(coordinateMatcher.group(1))));
                 }
                 else
                 {
                     // case DIR_SOUTH, just negate x and z numbers
-                    coordinateMatcher.appendReplacement(stringBuffer, String.format("~%s %s ~%s", tryToInvert(coordinateMatcher.group(1)), coordinateMatcher.group(2), tryToInvert(coordinateMatcher.group(3))));
+                    coordinateMatcher.appendReplacement(stringBuffer, HString.format("~%s %s ~%s", tryToInvert(coordinateMatcher.group(1)), coordinateMatcher.group(2), tryToInvert(coordinateMatcher.group(3))));
                 }
             }
             /*
@@ -1489,12 +1489,12 @@ public class RuinTemplateRule
                     }
                     else
                     {
-                        System.err.printf("Warning: Ruins template [%s] contains out-of-range block data value [%d]\n", owner.getName(), value);
+                        System.err.print(HString.format("Warning: Ruins template [%s] contains out-of-range block data value [%d]\n", owner.getName(), value));
                     }
                 }
                 catch (NumberFormatException exception)
                 {
-                    System.err.printf("Warning: Ruins template [%s] contains non-integer block data value [%s]\n", owner.getName(), metadata);
+                    System.err.print(HString.format("Warning: Ruins template [%s] contains non-integer block data value [%s]\n", owner.getName(), metadata));
                 }
             }
 

@@ -1,10 +1,14 @@
 package atomicstryker.ruins.common;
 
+import net.lax1dude.eaglercraft.v1_8.sp.server.WorldsDB;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.io.StringReader;
+import java.io.OutputStreamWriter;
+import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +17,6 @@ import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.io.Files;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -32,9 +35,8 @@ class FileHandler
     float chanceToSpawnNormal = 10, chanceToSpawnNether = 10;
     private int[] allowedDimensions = { -1, 0, 1 };
 
-    public boolean loaded;
     boolean disableLogging = true;
-    final File saveFolder;
+    final VFile2 saveFolder;
 
     public float templateInstancesMinDistance = 256;
     float anyRuinsMinDistance = 64;
@@ -46,130 +48,102 @@ class FileHandler
 
     private int templateCount;
 
-    public FileHandler(File worldPath, int dim)
+    public FileHandler(VFile2 worldPath, int dim)
     {
         saveFolder = worldPath;
-        loaded = false;
         templateCount = 0;
         dimension = dim;
-        new LoaderThread().start();
+        load();
     }
 
-    private class LoaderThread extends Thread
+    private void load()
     {
-        @Override
-        public void run()
+        PrintWriter pw;
+        try
         {
-            PrintWriter pw;
-            File basedir;
-            try
-            {
-                basedir = RuinsMod.getMinecraftBaseDir();
-            }
-            catch (Exception e)
-            {
-                System.err.println("Could not access the main Minecraft directory; error: " + e);
-                System.err.println("The ruins mod could not be loaded.");
-                e.printStackTrace();
-                loaded = true;
-                return;
-            }
-            try
-            {
-                File log = new File(basedir, "logs/ruins_log_dim_" + dimension + ".txt");
-                if (log.exists())
-                {
-                    if (!log.delete() || !log.createNewFile())
-                    {
-                        throw new RuntimeException("Ruins crashed trying to access file: " + log.getAbsolutePath());
-                    }
-                }
-                pw = new PrintWriter(new BufferedWriter(new FileWriter(log)));
-            }
-            catch (Exception e)
-            {
-                System.err.println("There was an error when creating the log file.");
-                System.err.println("The ruins mod could not be loaded.");
-                e.printStackTrace();
-                loaded = true;
-                return;
-            }
-
-            final File templPath = new File(basedir, RuinsMod.TEMPLATE_PATH_MC_EXTRACTED);
-            if (!templPath.exists())
-            {
-                System.out.println("Could not access the resources path for the ruins templates, file doesn't exist!");
-                System.err.println("The ruins mod could not be loaded.");
-                pw.close();
-                loaded = true;
-                return;
-            }
-
-            try
-            {
-                // load in the generic templates
-                // pw.println("Loading the generic ruins templates...");
-                HashSet<RuinTemplate> set = new HashSet<>();
-                templates.put(RuinsMod.BIOME_ANY, set);
-                addRuins(pw, new File(templPath, RuinsMod.BIOME_ANY), RuinsMod.BIOME_ANY, set);
-            }
-            catch (Exception e)
-            {
-                printErrorToLog(pw, e, "There was an error when loading the generic ruins templates:");
-            }
-
-            /*
-             * dynamic Biome config loader, gets all information straight from
-             * Biome
-             */
-            Biome bgb;
-            for (ResourceLocation rl : Biome.REGISTRY.getKeys())
-            {
-                bgb = Biome.REGISTRY.getObject(rl);
-                if (bgb != null)
-                {
-                    try
-                    {
-                        loadSpecificTemplates(pw, templPath, bgb.getRegistryName().getResourcePath());
-                        // pw.println("Loaded " + bgb.biomeName + " ruins templates, biomeID " + bgb.biomeID);
-                    }
-                    catch (Exception e)
-                    {
-                        printErrorToLog(pw, e, "There was an error when loading the " + bgb.getRegistryName().getResourcePath() + " ruins templates:");
-                    }
-                }
-            }
-
-            // after all templates are loaded, calculate biome template weights
-            for (String bname: templates.keySet())
-            {
-                double[] val = new double[2];
-                vars.put(bname, val);
-                recalcBiomeWeight(bname);
-            }
-
-            /*
-             * Now load in the main options file. All of these will revert to
-             * defaults if the file could not be loaded.
-             */
-            try
-            {
-                pw.println();
-                pw.println("Loading options from: " + saveFolder.getCanonicalPath());
-                readPerWorldOptions(saveFolder, pw);
-            }
-            catch (Exception e)
-            {
-                printErrorToLog(pw, e, "There was an error when loading the options file.  Defaults will be used instead.");
-            }
-
-            registeredTEBlocks.add(Blocks.CHAIN_COMMAND_BLOCK);
-            registeredTEBlocks.add(Blocks.REPEATING_COMMAND_BLOCK);
-            loaded = true;
-            pw.println("Ruins mod loaded successfully for world " + saveFolder + ", template files: " + templateCount);
-            pw.flush();
-            pw.close();
+            VFile2 log = new VFile2("logs/ruins_log_dim_" + dimension + ".txt");
+            pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(log.getOutputStream(), StandardCharsets.UTF_8)));
         }
+        catch (Exception e)
+        {
+            System.err.println("There was an error when creating the log file.");
+            System.err.println("The ruins mod could not be loaded.");
+            e.printStackTrace();
+            return;
+        }
+
+        final VFile2 templPath = new VFile2(RuinsMod.TEMPLATE_PATH_MC_EXTRACTED);
+        if (templPath.listFilenames(false).isEmpty())
+        {
+            System.out.println("Could not access the resources path for the ruins templates, file doesn't exist!");
+            System.err.println("The ruins mod could not be loaded.");
+            pw.close();
+            return;
+        }
+
+        try
+        {
+            // load in the generic templates
+            // pw.println("Loading the generic ruins templates...");
+            HashSet<RuinTemplate> set = new HashSet<>();
+            templates.put(RuinsMod.BIOME_ANY, set);
+            addRuins(pw, new VFile2(templPath, RuinsMod.BIOME_ANY), RuinsMod.BIOME_ANY, set);
+        }
+        catch (Exception e)
+        {
+            printErrorToLog(pw, e, "There was an error when loading the generic ruins templates:");
+        }
+
+        /*
+         * dynamic Biome config loader, gets all information straight from
+         * Biome
+         */
+        Biome bgb;
+        for (ResourceLocation rl : Biome.REGISTRY.getKeys())
+        {
+            bgb = Biome.REGISTRY.getObject(rl);
+            if (bgb != null)
+            {
+                try
+                {
+                    loadSpecificTemplates(pw, templPath, bgb.getRegistryName().getResourcePath());
+                    // pw.println("Loaded " + bgb.biomeName + " ruins templates, biomeID " + bgb.biomeID);
+                }
+                catch (Exception e)
+                {
+                    printErrorToLog(pw, e, "There was an error when loading the " + bgb.getRegistryName().getResourcePath() + " ruins templates:");
+                }
+            }
+        }
+
+        // after all templates are loaded, calculate biome template weights
+        for (String bname: templates.keySet())
+        {
+            double[] val = new double[2];
+            vars.put(bname, val);
+            recalcBiomeWeight(bname);
+        }
+
+        /*
+         * Now load in the main options file. All of these will revert to
+         * defaults if the file could not be loaded.
+         */
+        try
+        {
+            pw.println();
+            pw.println("Loading options from: " + saveFolder.getPath());
+            readPerWorldOptions(saveFolder, pw);
+        }
+        catch (Exception e)
+        {
+            printErrorToLog(pw, e, "There was an error when loading the options file.  Defaults will be used instead.");
+        }
+
+        registeredTEBlocks.add(Blocks.CHAIN_COMMAND_BLOCK);
+        registeredTEBlocks.add(Blocks.REPEATING_COMMAND_BLOCK);
+        pw.println("Ruins mod loaded successfully for world " + saveFolder + ", template files: " + templateCount);
+        pw.flush();
+        pw.close();
     }
 
     RuinTemplate getTemplate(EaglercraftRandom random, String biome)
@@ -200,11 +174,11 @@ class FileHandler
         return RuinsMod.BIOME_ANY.equals(biome) || (val != null && random.nextDouble() >= val[CHANCE]);
     }
 
-    private void loadSpecificTemplates(PrintWriter pw, File dir, String bname) throws Exception
+    private void loadSpecificTemplates(PrintWriter pw, VFile2 dir, String bname) throws Exception
     {
         // pw.println("Loading the " + bname + " ruins templates...");
         pw.flush();
-        File path_biome = new File(dir, bname);
+        VFile2 path_biome = new VFile2(dir, bname);
         // if no template entry for this biome, create (empty) one
         // may already exist if this biome appeared in earlier biomesToSpawnIn list
         if (!templates.containsKey(bname))
@@ -237,14 +211,19 @@ class FileHandler
 
     private static final Pattern patternSpecificBiome = Pattern.compile("specific_([^=]++)=(.++)");
 
-    private void readPerWorldOptions(File dir, PrintWriter ruinsLog) throws Exception
+    private void readPerWorldOptions(VFile2 dir, PrintWriter ruinsLog) throws Exception
     {
-        final File file = new File(dir, "ruins.txt");
+        final VFile2 file = WorldsDB.newVFile(dir, "ruins.txt");
         if (!file.exists())
         {
             copyGlobalOptionsTo(dir);
         }
-        final BufferedReader br = new BufferedReader(new FileReader(file));
+        final String chars = file.getAllChars();
+        if (chars == null)
+        {
+            throw new FileNotFoundException(file.getPath());
+        }
+        final BufferedReader br = new BufferedReader(new StringReader(chars));
         String read = br.readLine();
         String[] check;
         while (read != null)
@@ -355,19 +334,20 @@ class FileHandler
         br.close();
     }
 
-    private void addRuins(PrintWriter pw, File path, String name, HashSet<RuinTemplate> targetList)
+    private void addRuins(PrintWriter pw, VFile2 path, String name, HashSet<RuinTemplate> targetList)
     {
         RuinTemplate r;
         Biome bgb;
-        File[] listFiles = path.listFiles();
+        List<VFile2> listFiles = path.listFiles(false);
         final String dimensionName = DimensionType.getById(dimension).getName();
-        if (listFiles != null)
+        if (!listFiles.isEmpty())
         {
-            for (File f : listFiles)
+            for (int i = 0, l = listFiles.size(); i < l; ++i)
             {
+                VFile2 f = listFiles.get(i);
                 try
                 {
-                    r = new RuinTemplate(pw, f.getCanonicalPath(), f.getName());
+                    r = new RuinTemplate(pw, f, f.getName());
                     if (!r.acceptsDimension(dimensionName))
                     {
                         continue;
@@ -409,7 +389,7 @@ class FileHandler
         }
         else
         {
-            pw.println("Did not find any Building data for " + path + ", creating empty folder for it: " + (path.mkdir() ? "success" : "failed"));
+            pw.println("Did not find any Building data for " + path);
         }
         pw.flush();
     }
@@ -426,26 +406,26 @@ class FileHandler
         return false;
     }
 
-    private void copyGlobalOptionsTo(File dir) throws Exception
+    private void copyGlobalOptionsTo(VFile2 dir) throws Exception
     {
-        File copyfile = new File(dir, "ruins.txt");
+        VFile2 copyfile = WorldsDB.newVFile(dir, "ruins.txt");
         if (copyfile.exists())
         {
             return;
         }
-        File configdir = new File(RuinsMod.getMinecraftBaseDir(), "config");
-        File basefile = new File(configdir, "ruins.txt");
+        VFile2 configdir = new VFile2("config");
+        VFile2 basefile = new VFile2(configdir, "ruins.txt");
         if (!basefile.exists())
         {
             createDefaultGlobalOptions(configdir);
         }
-        Files.copy(basefile, copyfile);
+        copyfile.setAllBytes(basefile.getAllBytes());
     }
 
-    private void createDefaultGlobalOptions(File dir) throws Exception
+    private void createDefaultGlobalOptions(VFile2 dir) throws Exception
     {
-        File file = new File(dir, "ruins.txt");
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+        VFile2 file = new VFile2(dir, "ruins.txt");
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(file.getOutputStream(), StandardCharsets.UTF_8)));
         pw.println("# Global Options for the Ruins mod");
         pw.println("#");
         pw.println("# tries_per_chunk is the number of times, per chunk, that the generator will");

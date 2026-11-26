@@ -1,5 +1,6 @@
 package atomicstryker.ruins.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,7 +8,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CommandParseTemplate extends CommandBase
 {
@@ -17,15 +17,18 @@ public class CommandParseTemplate extends CommandBase
 
     public CommandParseTemplate()
     {
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus) {
+       bus.register(BreakEvent.class, this::onBlockBroken);
+    }
+
     public void onBlockBroken(BreakEvent event)
     {
         if (event.getPlayer() == player)
         {
-            new World2TemplateParser(player, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), templateName).start();
+            new World2TemplateParser(player, event.getPos().getX(), event.getPos().getY(), event.getPos().getZ(), templateName).run();
             player = null;
             event.setCanceled(true);
         }

@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntitySkull extends TileEntity implements ITickable
 {
-    private int skullType;
-    private int skullRotation;
-    private GameProfile playerProfile;
+    public int skullType;
+    public int skullRotation;
+    public GameProfile playerProfile;
     private int dragonAnimatedTicks;
     private boolean dragonAnimated;
     private static PlayerProfileCache profileCache;

@@ -1,5 +1,6 @@
 package atomicstryker.ruins.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Deque;
@@ -287,7 +288,7 @@ class RuinVennCriterion
                         {
                             if (strict_validation)
                             {
-                                throw new RuntimeException(String.format("invalid element '%s' encountered", element));
+                                throw new RuntimeException(HString.format("invalid element '%s' encountered", element));
                             }
 
                             // limit warnings to one per expression so as not to spam log
@@ -338,7 +339,7 @@ class RuinVennCriterion
                             break;
                         }
                         default:
-                            throw new RuntimeException(String.format("element expected, invalid operator '%s' encountered", operator));
+                            throw new RuntimeException(HString.format("element expected, invalid operator '%s' encountered", operator));
                         }
                     }
                     else
@@ -413,7 +414,7 @@ class RuinVennCriterion
                             break;
                         }
                         default:
-                            throw new RuntimeException(String.format("invalid operator '%s' encountered", operator));
+                            throw new RuntimeException(HString.format("invalid operator '%s' encountered", operator));
                         }
                     }
                     else
@@ -424,7 +425,7 @@ class RuinVennCriterion
                     break;
                 }
                 default:
-                    throw new AssertionError(String.format("unrecognized parser state '%s'", state));
+                    throw new AssertionError(HString.format("unrecognized parser state '%s'", state));
                 }
             }
 
@@ -481,7 +482,7 @@ class RuinVennCriterion
                 break;
             }
             default:
-                throw new AssertionError(String.format("unrecognized parser end state '%s'", state));
+                throw new AssertionError(HString.format("unrecognized parser end state '%s'", state));
             }
 
             // make a new criterion from the constructed root node
@@ -598,7 +599,7 @@ class RuinVennCriterion
                 //
                 if (nodes_.size() < 1)
                 {
-                    throw new AssertionError(String.format("insufficient operands for unary operator '%s'", operator.toString()));
+                    throw new AssertionError(HString.format("insufficient operands for unary operator '%s'", operator.toString()));
                 }
 
                 final Node node = nodes_.pop();
@@ -611,7 +612,7 @@ class RuinVennCriterion
                 //
                 if (nodes_.size() < 2)
                 {
-                    throw new AssertionError(String.format("insufficient operands for binary operator '%s'", operator.toString()));
+                    throw new AssertionError(HString.format("insufficient operands for binary operator '%s'", operator.toString()));
                 }
 
                 final Node right_node = nodes_.pop();
@@ -626,7 +627,7 @@ class RuinVennCriterion
                 //
                 if (nodes_.size() < 2)
                 {
-                    throw new AssertionError(String.format("insufficient operands for binary operator '%s'", operator.toString()));
+                    throw new AssertionError(HString.format("insufficient operands for binary operator '%s'", operator.toString()));
                 }
 
                 final Node right_node = nodes_.pop();
@@ -640,7 +641,7 @@ class RuinVennCriterion
                 //
                 if (nodes_.size() < 2)
                 {
-                    throw new AssertionError(String.format("insufficient operands for binary operator '%s'", operator.toString()));
+                    throw new AssertionError(HString.format("insufficient operands for binary operator '%s'", operator.toString()));
                 }
 
                 final Node right_node = nodes_.pop();
@@ -649,7 +650,7 @@ class RuinVennCriterion
                 break;
             }
             default:
-                throw new AssertionError(String.format("no processing defined for operator '%s'", operator.toString()));
+                throw new AssertionError(HString.format("no processing defined for operator '%s'", operator.toString()));
             }
         }
     }

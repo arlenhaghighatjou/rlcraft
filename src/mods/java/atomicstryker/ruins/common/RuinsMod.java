@@ -1,12 +1,16 @@
 package atomicstryker.ruins.common;
 
-import java.io.File;
-import java.lang.reflect.Field;
+import net.minecraft.world.chunk.storage.IChunkLoader;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerChunkLoader;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import java.util.HashMap;
+import java.util.ArrayDeque;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.ArrayList;
-import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -18,31 +22,35 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraft.world.storage.ISaveHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.network.NetworkCheckHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = "ruins", name = "Ruins Mod", version = RuinsMod.modversion, dependencies = "after:extrabiomes")
 public class RuinsMod
 {
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+      } else if (event instanceof FMLInitializationEvent) {
+         this.load((FMLInitializationEvent)event);
+      } else if (event instanceof FMLServerAboutToStartEvent) {
+         this.serverAboutToStart((FMLServerAboutToStartEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.serverStarted((FMLServerStartingEvent)event);
+      }
+
+   }
+
     static final String modversion = "17.2";
 
     public static final String TEMPLATE_PATH_MC_EXTRACTED = "config/ruins_config/";
@@ -51,30 +59,21 @@ public class RuinsMod
     public final static int DIR_NORTH = 0, DIR_EAST = 1, DIR_SOUTH = 2, DIR_WEST = 3;
     public static final String BIOME_ANY = "generic";
 
-    private ConcurrentHashMap<Integer, WorldHandle> generatorMap;
+    private HashMap<Integer, WorldHandle> generatorMap;
 
-    @NetworkCheckHandler
-    public boolean checkModLists(Map<String, String> modList, Side side)
-    {
-        return true;
-    }
-
-    @EventHandler
     public void load(FMLInitializationEvent evt)
     {
         GameRegistry.registerWorldGenerator(new RuinsWorldGenerator(), 0);
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
 
-        ConfigFolderPreparator.copyFromJarIfNotPresent(this, new File(getMinecraftBaseDir(), TEMPLATE_PATH_MC_EXTRACTED));
+        ConfigFolderPreparator.copyFromJarIfNotPresent(new VFile2(TEMPLATE_PATH_MC_EXTRACTED));
     }
 
-    @EventHandler
     public void serverAboutToStart(FMLServerAboutToStartEvent evt)
     {
-        generatorMap = new ConcurrentHashMap<>();
+        generatorMap = new HashMap<>();
     }
 
-    @EventHandler
     public void serverStarted(FMLServerStartingEvent evt)
     {
         evt.registerServerCommand(new CommandParseTemplate());
@@ -84,7 +83,13 @@ public class RuinsMod
 
     private long nextInfoTime;
 
-    @SubscribeEvent
+    public void register(EventBus bus) {
+       bus.register(BreakSpeed.class, this::onBreakSpeed);
+       bus.register(BreakEvent.class, this::onBreak);
+       bus.register(WorldEvent.Save.class, this::eventWorldSave);
+       bus.register(EntityEvent.EnteringChunk.class, this::onEntityEnteringChunk);
+    }
+
     public void onBreakSpeed(BreakSpeed event)
     {
         WorldHandle wh = getWorldHandle(event.getEntity().getEntityWorld());
@@ -94,13 +99,12 @@ public class RuinsMod
             if (is != null && is.getItem() == Items.STICK && System.currentTimeMillis() > nextInfoTime)
             {
                 nextInfoTime = System.currentTimeMillis() + 1000L;
-                event.getEntityPlayer().sendMessage(new TextComponentTranslation(String.format("BlockName [%s], blockID [%s], metadata [%d]", event.getState().getBlock().getUnlocalizedName(),
+                event.getEntityPlayer().sendMessage(new TextComponentTranslation(HString.format("BlockName [%s], blockID [%s], metadata [%d]", event.getState().getBlock().getUnlocalizedName(),
                         event.getState().getBlock().getRegistryName().getResourcePath(), event.getState().getBlock().getMetaFromState(event.getState()))));
             }
         }
     }
 
-    @SubscribeEvent
     public void onBreak(BreakEvent event)
     {
         if (event.getPlayer() != null && !(event.getPlayer() instanceof FakePlayer))
@@ -112,7 +116,7 @@ public class RuinsMod
                 if (is != null && is.getItem() == Items.STICK && System.currentTimeMillis() > nextInfoTime)
                 {
                     nextInfoTime = System.currentTimeMillis() + 1000L;
-                    event.getPlayer().sendMessage(new TextComponentTranslation(String.format("BlockName [%s], blockID [%s], metadata [%d]", event.getState().getBlock().getUnlocalizedName(),
+                    event.getPlayer().sendMessage(new TextComponentTranslation(HString.format("BlockName [%s], blockID [%s], metadata [%d]", event.getState().getBlock().getUnlocalizedName(),
                             event.getState().getBlock().getRegistryName().getResourcePath(), event.getState().getBlock().getMetaFromState(event.getState()))));
                     event.setCanceled(true);
                 }
@@ -120,7 +124,6 @@ public class RuinsMod
         }
     }
 
-    @SubscribeEvent
     public void eventWorldSave(WorldEvent.Save evt)
     {
         WorldHandle wh = getWorldHandle(evt.getWorld());
@@ -130,7 +133,6 @@ public class RuinsMod
         }
     }
 
-    @SubscribeEvent
     public void onEntityEnteringChunk(EntityEvent.EnteringChunk event)
     {
         if (event.getEntity() instanceof EntityPlayer && !event.getEntity().world.isRemote)
@@ -164,7 +166,7 @@ public class RuinsMod
                 tecb2.getCommandBlockLogic().trigger(event.getEntity().world);
                 // kill block
                 BlockPos pos = tecb2.getPos();
-                System.out.printf("Ruins executed and killed Command Block at [%s]\n", pos);
+                System.out.println("Ruins executed and killed Command Block at [" + pos + "]");
                 event.getEntity().world.setBlockToAir(pos);
             }
         }
@@ -186,7 +188,7 @@ public class RuinsMod
                 int[] tuple = { chunkX, chunkZ };
                 if (wh.currentlyGenerating.contains(tuple))
                 {
-                    System.err.printf("Ruins Mod caught recursive generator call at chunk [%d|%d]", chunkX, chunkZ);
+                    System.err.print("Ruins Mod caught recursive generator call at chunk [" + chunkX + "|" + chunkZ + "]");
                 }
                 else
                 {
@@ -214,10 +216,6 @@ public class RuinsMod
         WorldHandle wh = getWorldHandle(world);
         if (wh.fileHandle != null)
         {
-            while (!wh.fileHandle.loaded)
-            {
-                Thread.yield();
-            }
             wh.generator.generateNether(world, random, chunkX, chunkZ);
         }
     }
@@ -227,10 +225,6 @@ public class RuinsMod
         WorldHandle wh = getWorldHandle(world);
         if (wh.fileHandle != null)
         {
-            while (!wh.fileHandle.loaded)
-            {
-                Thread.yield();
-            }
             wh.generator.generateNormal(world, random, chunkX, chunkZ);
         }
     }
@@ -239,7 +233,7 @@ public class RuinsMod
     {
         FileHandler fileHandle;
         RuinGenerator generator;
-        ConcurrentLinkedQueue<int[]> currentlyGenerating;
+        ArrayDeque<int[]> currentlyGenerating;
         ChunkLoggerData chunkLogger;
     }
 
@@ -263,50 +257,16 @@ public class RuinsMod
         return wh;
     }
 
-    private static File getWorldSaveDir(World world)
+    private static VFile2 getWorldSaveDir(World world)
     {
-        ISaveHandler worldsaver = world.getSaveHandler();
+        IChunkLoader loader = world.getSaveHandler().getChunkLoader(world.provider);
 
-        if (worldsaver.getChunkLoader(world.provider) instanceof AnvilChunkLoader)
+        if (loader instanceof EaglerChunkLoader)
         {
-            AnvilChunkLoader loader = (AnvilChunkLoader) worldsaver.getChunkLoader(world.provider);
-
-            for (Field f : loader.getClass().getDeclaredFields())
-            {
-                if (f.getType().equals(File.class))
-                {
-                    try
-                    {
-                        f.setAccessible(true);
-                        // System.out.println("Ruins mod determines World Save
-                        // Dir to be at: "+saveLoc);
-                        return (File) f.get(loader);
-                    }
-                    catch (Exception e)
-                    {
-                        System.out.println("Ruins mod failed trying to find World Save dir:");
-                        e.printStackTrace();
-                    }
-                }
-            }
+            return ((EaglerChunkLoader) loader).chunkDirectory;
         }
 
         return null;
-    }
-
-    public static File getMinecraftBaseDir()
-    {
-        if (FMLCommonHandler.instance().getSide() == Side.CLIENT)
-        {
-            File file = FMLClientHandler.instance().getClient().mcDataDir;
-            String abspath = file.getAbsolutePath();
-            if (abspath.endsWith("."))
-            {
-                file = new File(abspath.substring(0, abspath.length() - 1));
-            }
-            return file;
-        }
-        return FMLCommonHandler.instance().getMinecraftServerInstance().getFile("");
     }
 
     private void initWorldHandle(WorldHandle worldHandle, World world)
@@ -314,10 +274,10 @@ public class RuinsMod
         // load in defaults
         try
         {
-            File worlddir = getWorldSaveDir(world);
+            VFile2 worlddir = getWorldSaveDir(world);
             worldHandle.fileHandle = new FileHandler(worlddir, world.provider.getDimension());
             worldHandle.generator = new RuinGenerator(worldHandle.fileHandle, world);
-            worldHandle.currentlyGenerating = new ConcurrentLinkedQueue<>();
+            worldHandle.currentlyGenerating = new ArrayDeque<>();
 
             worldHandle.chunkLogger = (ChunkLoggerData) world.getPerWorldStorage().getOrLoadData(ChunkLoggerData.class, "ruinschunklogger");
             if (worldHandle.chunkLogger == null)

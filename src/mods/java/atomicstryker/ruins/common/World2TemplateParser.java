@@ -1,10 +1,10 @@
 package atomicstryker.ruins.common;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.nio.charset.StandardCharsets;
+import java.io.OutputStreamWriter;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -22,15 +22,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityCommandBlock;
-import net.minecraft.tileentity.TileEntityMobSpawner;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
-class World2TemplateParser extends Thread
+class World2TemplateParser
 {
 
     private static final int SPAWN_RULE_EXISTSBELOW = 1;
@@ -117,7 +115,6 @@ class World2TemplateParser extends Thread
         layerData = new ArrayList<>();
     }
 
-    @Override
     public void run()
     {
         failed = templateHelperBlock.block == Blocks.AIR;
@@ -165,7 +162,7 @@ class World2TemplateParser extends Thread
             readBlocks(world);
             player.sendMessage(new TextComponentTranslation("Block reading finished. Rules: " + usedBlocks.size() + ", layers: " + layerData.size() + ", xlen: " + xLength + ", zlen: " + zLength));
 
-            File templateFile = new File(RuinsMod.getMinecraftBaseDir(), RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + "templateparser/" + fileName + ".tml");
+            VFile2 templateFile = new VFile2(RuinsMod.TEMPLATE_PATH_MC_EXTRACTED + "templateparser/" + fileName + ".tml");
             toFile(templateFile);
 
             if (!failed)
@@ -250,19 +247,6 @@ class World2TemplateParser extends Thread
                     }
                     else if (temp.block == Blocks.MOB_SPAWNER)
                     {
-                        try
-                        {
-                            if (te != null)
-                            {
-                                Field f = ((TileEntityMobSpawner) te).getSpawnerBaseLogic().getClass().getDeclaredFields()[1];
-                                f.setAccessible(true);
-                                temp.data = (String) f.get(((TileEntityMobSpawner) te).getSpawnerBaseLogic());
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            e.printStackTrace();
-                        }
                     }
                     else if (temp.block == Blocks.TORCH || temp.block == Blocks.REDSTONE_TORCH)
                     {
@@ -372,10 +356,10 @@ class World2TemplateParser extends Thread
                     else if (temp.block == Blocks.SKULL)
                     {
                         TileEntitySkull tes = (TileEntitySkull) te;
-                        int skulltype = ReflectionHelper.getPrivateValue(TileEntitySkull.class, tes, 0);
-                        int rot = ReflectionHelper.getPrivateValue(TileEntitySkull.class, tes, 1);
+                        int skulltype = tes.skullType;
+                        int rot = tes.skullRotation;
                         String specialType = "";
-                        GameProfile playerhead = ReflectionHelper.getPrivateValue(TileEntitySkull.class, tes, 2);
+                        GameProfile playerhead = tes.playerProfile;
                         if (playerhead != null)
                         {
                             specialType = playerhead.getId().toString() + "-" + playerhead.getName();
@@ -436,25 +420,11 @@ class World2TemplateParser extends Thread
         return prefix + a + ":" + b + ":" + c + ":" + d;
     }
 
-    private void toFile(File file)
+    private void toFile(VFile2 file)
     {
         try
         {
-            if (file.exists())
-            {
-                if (!file.delete())
-                {
-                    throw new RuntimeException("Ruins crashed trying to access file " + file);
-                }
-            }
-            else
-            {
-                if (!file.createNewFile())
-                {
-                    throw new RuntimeException("Ruins crashed trying to access file " + file);
-                }
-            }
-            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(file.getOutputStream(), StandardCharsets.UTF_8)));
 
             pw.println();
             pw.println("# Created by Ruins mod version " + RuinsMod.modversion + " Ingame Parser");
@@ -581,7 +551,7 @@ class World2TemplateParser extends Thread
 
             pw.close();
 
-            CommandTestTemplate.parsedRuin = new RuinTemplate(new PrintWriter(System.out), file.getCanonicalPath(), file.getName());
+            CommandTestTemplate.parsedRuin = new RuinTemplate(new PrintWriter(System.out), file, file.getName());
         }
         catch (Exception e)
         {

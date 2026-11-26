@@ -1,5 +1,6 @@
 package atomicstryker.ruins.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 
 import net.minecraft.block.Block;
@@ -14,7 +15,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CommandUndo extends CommandBase
 {
@@ -31,10 +31,13 @@ public class CommandUndo extends CommandBase
 
     public CommandUndo()
     {
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus) {
+       bus.register(EventRuinTemplateSpawn.class, this::onSpawningRuin);
+    }
+
     public void onSpawningRuin(EventRuinTemplateSpawn event)
     {
         if (event.testingRuin || runningTemplateSpawn != null)
