@@ -1,6 +1,5 @@
 package atomicstryker.multimine.client;
 
-import java.lang.reflect.Field;
 import java.util.Map;
 
 import atomicstryker.multimine.common.MultiMine;
@@ -12,7 +11,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.renderer.DestroyBlockProgress;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -28,7 +26,6 @@ public class MultiMineClient
     private static Minecraft mc;
     private static EntityPlayer thePlayer;
     private final PartiallyMinedBlock[] partiallyMinedBlocksArray;
-    private Field vanillaDestroyBlockProgressField = null;
     private Map<Integer, DestroyBlockProgress> vanillaDestroyBlockProgressMap;
     private int arrayOverWriteIndex;
     private BlockPos curBlock;
@@ -52,24 +49,8 @@ public class MultiMineClient
         lastCloudTickReading = 0;
 
         MultiMine.instance().debugPrint("Multi Mine about to hack vanilla RenderMap");
-        for (Field f : RenderGlobal.class.getDeclaredFields())
-        {
-            if (f.getType().equals(Map.class))
-            {
-                f.setAccessible(true);
-                try
-                {
-                    vanillaDestroyBlockProgressField = f;
-                    vanillaDestroyBlockProgressMap = (Map) vanillaDestroyBlockProgressField.get(mc.renderGlobal);
-                    MultiMine.instance().debugPrint("Multi Mine vanilla RenderMap invasion successful, field: " + vanillaDestroyBlockProgressField.getName());
-                    break;
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
+        vanillaDestroyBlockProgressMap = mc.renderGlobal.damagedBlocks;
+        MultiMine.instance().debugPrint("Multi Mine vanilla RenderMap invasion successful, field: damagedBlocks");
     }
 
     public static MultiMineClient instance()
@@ -332,23 +313,11 @@ public class MultiMineClient
         DestroyBlockProgress dbp = vanillaDestroyBlockProgressMap.get(0);
         if (dbp == null) {
             // other mods may have written to the field
-            if (vanillaDestroyBlockProgressField != null) {
-                try
-                {
-                    vanillaDestroyBlockProgressMap = (Map) vanillaDestroyBlockProgressField.get(mc.renderGlobal);
-                    dbp = vanillaDestroyBlockProgressMap.get(0);
-                    MultiMine.instance().debugPrint("Reloaded vanillaDestroyBlockProgressMap, suspect another mod altered it!");
-                    if (dbp == null) {
-                        // total failure, meh
-                        return;
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    return;
-                }
-            } else {
+            vanillaDestroyBlockProgressMap = mc.renderGlobal.damagedBlocks;
+            dbp = vanillaDestroyBlockProgressMap.get(0);
+            MultiMine.instance().debugPrint("Reloaded vanillaDestroyBlockProgressMap, suspect another mod altered it!");
+            if (dbp == null) {
+                // total failure, meh
                 return;
             }
         }

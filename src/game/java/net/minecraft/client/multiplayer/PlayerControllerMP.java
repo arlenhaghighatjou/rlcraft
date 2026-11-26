@@ -314,6 +314,7 @@ public class PlayerControllerMP
 
                 ++this.stepSoundTickCounter;
                 this.mc.getTutorial().onHitBlock(this.mc.world, posBlock, iblockstate, MathHelper.clamp(this.curBlockDamageMP, 0.0F, 1.0F));
+                this.curBlockDamageMP = atomicstryker.multimine.client.MultiMineClient.instance().eventPlayerDamageBlock(posBlock, this.curBlockDamageMP);
 
                 if (this.curBlockDamageMP >= 1.0F)
                 {

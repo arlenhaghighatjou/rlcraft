@@ -1,5 +1,6 @@
 package atomicstryker.multimine.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,7 +33,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -69,7 +69,7 @@ public class MultiMineServer
             blacklistedBlocksAndTools.put(entry.getKey(), entry.getValue().getBoolean(false));
         }
 
-        MinecraftForge.EVENT_BUS.register(this);
+        this.register(MinecraftForge.EVENT_BUS);
     }
 
     public static MultiMineServer instance()
@@ -309,7 +309,12 @@ public class MultiMineServer
                 new TargetPoint(block.getDimension(), block.getPos().getX(), block.getPos().getY(), block.getPos().getZ(), 30D));
     }
 
-    @SubscribeEvent
+    public void register(EventBus bus)
+    {
+        bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+        bus.register(TickEvent.WorldTickEvent.class, this::onTick);
+    }
+
     public void onPlayerLogin(PlayerLoggedInEvent event)
     {
         final EntityPlayerMP player = (EntityPlayerMP) event.player;
@@ -369,7 +374,6 @@ public class MultiMineServer
      * Tick Handler to achieve Block Regeneration. We keep track of our Block
      * age using a PriorityQueue and start repairing Blocks if they get too old.
      */
-    @SubscribeEvent
     public void onTick(TickEvent.WorldTickEvent tick)
     {
         if (tick.phase == Phase.END)
