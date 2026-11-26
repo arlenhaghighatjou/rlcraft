@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.gui.overlays;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.GuiHandler;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.gui.BaseScreen;
@@ -10,7 +11,6 @@ import com.lycanitesmobs.core.network.MessageSummonSetSelection;
 import java.io.IOException;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
-import org.lwjgl.opengl.GL11;
 
 public class MinionSelectionOverlay extends BaseScreen {
    public EntityPlayer player;
@@ -63,7 +63,7 @@ public class MinionSelectionOverlay extends BaseScreen {
    }
 
    protected void drawControls() {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       int buttonSpacing = 2;
       int buttonWidth = 32;
       int buttonHeight = 32;

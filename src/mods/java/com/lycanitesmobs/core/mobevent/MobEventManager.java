@@ -1,5 +1,7 @@
 package com.lycanitesmobs.core.mobevent;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -14,15 +16,12 @@ import com.lycanitesmobs.core.JSONLoader;
 import com.lycanitesmobs.core.config.ConfigSpawning;
 import com.lycanitesmobs.core.info.ModInfo;
 import com.lycanitesmobs.core.spawner.condition.SpawnCondition;
-import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
@@ -64,15 +63,13 @@ public class MobEventManager extends JSONLoader {
       LycanitesMobs.logDebug("MobEvents", "Loading JSON Mob Events!");
       Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
       Map<String, JsonObject> mobEventJSONs = new HashMap();
-      Path path = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, "mobevents");
+      String path = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, "mobevents");
       Map<String, JsonObject> defaultMobEventJSONs = new HashMap();
       this.loadJsonObjects(gson, path, defaultMobEventJSONs, "name", "event");
-      String configPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs" + "/";
-      File customDir = new File(configPath + "mobevents");
-      customDir.mkdirs();
-      path = customDir.toPath();
+      String configPath = "config/" + "lycanitesmobs" + "/";
+      VFile2 customDir = new VFile2(configPath + "mobevents");
       Map<String, JsonObject> customMobEventJSONs = new HashMap();
-      this.loadJsonObjects(gson, path, customMobEventJSONs, "name", "event");
+      this.loadJsonObjects(gson, customDir, customMobEventJSONs, "name", "event");
       this.writeDefaultJSONObjects(gson, defaultMobEventJSONs, customMobEventJSONs, mobEventJSONs, true, "mobevents");
       LycanitesMobs.logDebug("MobEvents", "Loading " + mobEventJSONs.size() + " Mob Events...");
 
@@ -94,12 +91,12 @@ public class MobEventManager extends JSONLoader {
 
       LycanitesMobs.logDebug("MobEvents", "Complete! " + this.mobEvents.size() + " JSON Mob Events Loaded In Total.");
       this.mobEventSchedules.clear();
-      Path defaultSchedulePath = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, "mobeventschedule.json");
+      String defaultSchedulePath = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, "mobeventschedule.json");
       JsonObject defaultScheduleJson = this.loadJsonObject(gson, defaultSchedulePath);
-      File customScheduleFile = new File(configPath + "mobeventschedule.json");
+      VFile2 customScheduleFile = new VFile2(configPath + "mobeventschedule.json");
       JsonObject customScheduleJson = null;
       if (customScheduleFile.exists()) {
-         customScheduleJson = this.loadJsonObject(gson, customScheduleFile.toPath());
+         customScheduleJson = this.loadJsonObject(gson, customScheduleFile);
       }
 
       JsonObject scheduleJson = this.writeDefaultJSONObject(gson, "mobeventschedule", defaultScheduleJson, customScheduleJson);
@@ -119,12 +116,12 @@ public class MobEventManager extends JSONLoader {
       }
 
       this.globalEventConditions.clear();
-      Path defaultGlobalPath = Utilities.getAssetPath(this.getClass(), LycanitesMobs.modInfo.modid, "globalmobevent.json");
+      String defaultGlobalPath = Utilities.getAssetPath(this.getClass(), LycanitesMobs.modInfo.modid, "globalmobevent.json");
       JsonObject defaultGlobalJson = this.loadJsonObject(gson, defaultGlobalPath);
-      File customGlobalFile = new File(configPath + "globalmobevent.json");
+      VFile2 customGlobalFile = new VFile2(configPath + "globalmobevent.json");
       JsonObject customGlobalJson = null;
       if (customGlobalFile.exists()) {
-         customGlobalJson = this.loadJsonObject(gson, customGlobalFile.toPath());
+         customGlobalJson = this.loadJsonObject(gson, customGlobalFile);
       }
 
       JsonObject globalJson = this.writeDefaultJSONObject(gson, "globalmobevent", defaultGlobalJson, customGlobalJson);
@@ -183,7 +180,11 @@ public class MobEventManager extends JSONLoader {
       return !this.mobEvents.containsKey(mobEventName) ? null : (MobEvent)this.mobEvents.get(mobEventName);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldUpdate);
+      bus.register(ClientTickEvent.class, this::onClientUpdate);
+   }
+
    public void onWorldUpdate(WorldTickEvent event) {
       World world = event.world;
       if (!world.isRemote) {
@@ -206,7 +207,6 @@ public class MobEventManager extends JSONLoader {
       }
    }
 
-   @SubscribeEvent
    public void onClientUpdate(ClientTickEvent event) {
       if (LycanitesMobs.proxy.getClientPlayer() != null) {
          World world = LycanitesMobs.proxy.getClientPlayer().getEntityWorld();

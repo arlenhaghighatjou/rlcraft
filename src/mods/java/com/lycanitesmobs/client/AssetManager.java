@@ -114,7 +114,7 @@ public class AssetManager {
          if (models.containsKey(entityCreature.getSubspecies().modelClass.toString())) {
             return (ModelBase)models.get(entityCreature.getSubspecies().modelClass.toString());
          } else {
-            ModelBase creatureModel = (ModelBase)entityCreature.getSubspecies().modelClass.getConstructor().newInstance();
+            ModelBase creatureModel = LycanitesModels.create(entityCreature.getSubspecies().modelClass);
             models.put(entityCreature.getSubspecies().modelClass.toString(), creatureModel);
             return creatureModel;
          }
@@ -128,7 +128,7 @@ public class AssetManager {
          if (models.containsKey(creatureInfo.modelClass.toString())) {
             return (ModelBase)models.get(creatureInfo.modelClass.toString());
          } else {
-            ModelBase creatureModel = (ModelBase)creatureInfo.modelClass.getConstructor().newInstance();
+            ModelBase creatureModel = LycanitesModels.create(creatureInfo.modelClass);
             models.put(creatureInfo.modelClass.toString(), creatureModel);
             return creatureModel;
          }
@@ -179,7 +179,7 @@ public class AssetManager {
       for(ProjectileInfo projectileInfo : ProjectileManager.getInstance().projectiles.values()) {
          if (projectileInfo.modelClassName != null) {
             try {
-               projectileModels.put(projectileInfo, (ModelBase)Class.forName(projectileInfo.modelClassName).getConstructor().newInstance());
+               projectileModels.put(projectileInfo, LycanitesModels.create(LycanitesModels.forName(projectileInfo.modelClassName)));
             } catch (Exception var3) {
                LycanitesMobs.logWarning("", "Unable to load a Projectile model, check that the model class name is correct in the associated projectile json.");
                var3.printStackTrace();

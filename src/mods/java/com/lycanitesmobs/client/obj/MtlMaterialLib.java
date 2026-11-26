@@ -1,17 +1,15 @@
 package com.lycanitesmobs.client.obj;
 
+import net.minecraft.client.renderer.texture.TextureUtil;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.LycanitesMobs;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import javax.imageio.ImageIO;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 import net.lax1dude.eaglercraft.v1_8.vector.Vector3f;
 
 public class MtlMaterialLib {
@@ -70,7 +68,7 @@ public class MtlMaterialLib {
          string = string.replace("models/", "textures/");
          ResourceLocation resourceLocation = new ResourceLocation(string);
          InputStream inputStream = Minecraft.getMinecraft().getResourceManager().getResource(resourceLocation).getInputStream();
-         return loadTexture(ImageIO.read(inputStream));
+         return loadTexture(TextureUtil.readBufferedImage(inputStream));
       } catch (IOException var4) {
          LycanitesMobs.logWarning("", "Unable to load a texture from the obj material file.");
          var4.printStackTrace();
@@ -78,41 +76,9 @@ public class MtlMaterialLib {
       }
    }
 
-   public static ByteBuffer imageToByteBuffer(BufferedImage img) {
-      int[] pixels = img.getRGB(0, 0, img.getWidth(), img.getHeight(), (int[])null, 0, img.getWidth());
-      int bufLen = pixels.length * 4;
-      ByteBuffer oglPixelBuf = BufferUtils.createByteBuffer(bufLen);
-
-      for(int y = 0; y < img.getHeight(); ++y) {
-         for(int x = 0; x < img.getWidth(); ++x) {
-            int rgb = pixels[y * img.getWidth() + x];
-            float a = (float)(rgb >> 24 & 255) / 255.0F;
-            float r = (float)(rgb >> 16 & 255) / 255.0F;
-            float g = (float)(rgb >> 8 & 255) / 255.0F;
-            float b = (float)(rgb >> 0 & 255) / 255.0F;
-            oglPixelBuf.put((byte)((int)(r * 255.0F)));
-            oglPixelBuf.put((byte)((int)(g * 255.0F)));
-            oglPixelBuf.put((byte)((int)(b * 255.0F)));
-            oglPixelBuf.put((byte)((int)(a * 255.0F)));
-         }
-      }
-
-      oglPixelBuf.flip();
-      return oglPixelBuf;
-   }
-
-   public static int loadTexture(BufferedImage img) {
-      ByteBuffer oglPixelBuf = imageToByteBuffer(img);
-      int id = GL11.glGenTextures();
-      int target = 3553;
-      GL11.glBindTexture(target, id);
-      GL11.glTexParameterf(target, 10241, 9728.0F);
-      GL11.glTexParameterf(target, 10240, 9728.0F);
-      GL11.glTexEnvf(8960, 8704, 8448.0F);
-      GL11.glTexParameteri(target, 33084, 0);
-      GL11.glTexParameteri(target, 33085, 0);
-      GL11.glTexImage2D(target, 0, 32856, img.getWidth(), img.getHeight(), 0, 6408, 5121, oglPixelBuf);
-      GL11.glBindTexture(target, 0);
+   public static int loadTexture(ImageData img) {
+      int id = GlStateManager.generateTexture();
+      TextureUtil.uploadTextureImageAllocate(id, img, false, false);
       return id;
    }
 

@@ -1,5 +1,9 @@
 package com.lycanitesmobs;
 
+import net.minecraft.world.storage.MapStorage;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.lycanitesmobs.core.VersionChecker;
 import com.lycanitesmobs.core.capabilities.ExtendedEntityStorage;
 import com.lycanitesmobs.core.capabilities.ExtendedPlayerStorage;
@@ -9,7 +13,6 @@ import com.lycanitesmobs.core.dungeon.DungeonManager;
 import com.lycanitesmobs.core.entity.EntityHitArea;
 import com.lycanitesmobs.core.entity.ExtendedEntity;
 import com.lycanitesmobs.core.entity.ExtendedPlayer;
-import com.lycanitesmobs.core.helpers.LMReflectionHelper;
 import com.lycanitesmobs.core.info.AltarInfo;
 import com.lycanitesmobs.core.info.CreatureManager;
 import com.lycanitesmobs.core.info.ElementManager;
@@ -45,14 +48,10 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -84,17 +83,10 @@ public class LycanitesMobs {
    public static final PacketHandler packetHandler = new PacketHandler();
    public static ModInfo modInfo;
    public static ConfigBase config;
-   @Instance("lycanitesmobs")
    public static LycanitesMobs instance;
-   @SidedProxy(
-      clientSide = "com.lycanitesmobs.client.ClientProxy",
-      serverSide = "com.lycanitesmobs.CommonProxy"
-   )
    public static CommonProxy proxy;
-   @CapabilityInject(ExtendedEntity.class)
-   public static final Capability<ExtendedEntity> EXTENDED_ENTITY = null;
-   @CapabilityInject(ExtendedPlayer.class)
-   public static final Capability<ExtendedPlayer> EXTENDED_PLAYER = null;
+   public static Capability<ExtendedEntity> EXTENDED_ENTITY = null;
+   public static Capability<ExtendedPlayer> EXTENDED_PLAYER = null;
    public static final CreativeTabs itemsTab = new CreativeTabItems(CreativeTabs.getNextID(), "lycanitesmobs.items");
    public static final CreativeTabs blocksTab = new CreativeTabBlocks(CreativeTabs.getNextID(), "lycanitesmobs.blocks");
    public static final CreativeTabs creaturesTab = new CreativeTabCreatures(CreativeTabs.getNextID(), "lycanitesmobs.creatures");
@@ -107,8 +99,25 @@ public class LycanitesMobs {
    public LycanitesMobs() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.lycanitesmobs.client.ClientProxy() : new com.lycanitesmobs.CommonProxy();
+         com.lycanitesmobs.LycanitesMobs.registerCapabilities();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.serverLoad((FMLServerStartingEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
+      MapStorage.storageProviders.put(ExtendedWorld.class, ExtendedWorld::new);
       modInfo = new ModInfo(this, "Lycanites Mobs", 1000);
       ObjectManager.setCurrentModInfo(modInfo);
       proxy.initLanguageManager();
@@ -118,16 +127,16 @@ public class LycanitesMobs {
       config.setCategoryComment("Extras", "Other extra config settings, some of the aren't necessarily specific to Lycanites Mobs.");
       config.getBool("Extras", "Disable Sneak Dismount", true, "Set to true to prevent players from dismounting from Lycanites Mobs mounts when pressing shift (useful for shift to fly/swim down).");
       config.setCategoryComment("Player", "Settings for player related stats and features.");
-      MinecraftForge.EVENT_BUS.register(new GameEventListener());
-      MinecraftForge.EVENT_BUS.register(CreatureManager.getInstance());
-      MinecraftForge.EVENT_BUS.register(ProjectileManager.getInstance());
+      (new GameEventListener()).register(MinecraftForge.EVENT_BUS);
+      CreatureManager.getInstance().register(MinecraftForge.EVENT_BUS);
+      ProjectileManager.getInstance().register(MinecraftForge.EVENT_BUS);
       PlayerFamiliars.INSTANCE.familiarBlacklist = new ArrayList();
       String[] familiarBlacklist = config.getStringList("Extras", "Familiar Username Blacklist", new String[0], "Donation Familiars help support the development of this mod but can be turned of for individual players be adding their username to this list.");
       PlayerFamiliars.INSTANCE.familiarBlacklist.addAll(Arrays.asList(familiarBlacklist));
       VersionChecker.INSTANCE.enabled = config.getBool("Extras", "Version Checker", VersionChecker.INSTANCE.enabled, "Set to false to disable the version checker.");
       packetHandler.init();
       NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-      LMReflectionHelper.setPrivateFinalValue(RangedAttribute.class, (RangedAttribute)SharedMonsterAttributes.MAX_HEALTH, Integer.valueOf(100000), "maximumValue", "maximumValue");
+      ((RangedAttribute)SharedMonsterAttributes.MAX_HEALTH).maximumValue = 100000.0D;
       config.setCategoryComment("Admin", "Special tools for server admins.");
       ExtendedEntity.FORCE_REMOVE_ENTITY_IDS = config.getStringList("Admin", "Force Remove Entity Names", new String[0], "Here you can add a list of entity IDs for entity that you want to be forcefully removed.");
       if (ExtendedEntity.FORCE_REMOVE_ENTITY_IDS != null && ExtendedEntity.FORCE_REMOVE_ENTITY_IDS.length > 0) {
@@ -147,21 +156,21 @@ public class LycanitesMobs {
       ObjectLists.createCustomItems();
       ItemManager.getInstance().startup(modInfo);
       EquipmentPartManager.getInstance().loadAllFromJSON(modInfo);
-      ObjectManager.addTileEntity("summoningpedestal", TileEntitySummoningPedestal.class);
-      ObjectManager.addTileEntity("equipmentforge", TileEntityEquipmentForge.class);
-      ObjectManager.addTileEntity("equipment_infuser", EquipmentInfuserTileEntity.class);
-      ObjectManager.addTileEntity("equipment_station", EquipmentStationTileEntity.class);
+      ObjectManager.addTileEntity("summoningpedestal", TileEntitySummoningPedestal.class, TileEntitySummoningPedestal::new);
+      ObjectManager.addTileEntity("equipmentforge", TileEntityEquipmentForge.class, TileEntityEquipmentForge::new);
+      ObjectManager.addTileEntity("equipment_infuser", EquipmentInfuserTileEntity.class, EquipmentInfuserTileEntity::new);
+      ObjectManager.addTileEntity("equipment_station", EquipmentStationTileEntity.class, EquipmentStationTileEntity::new);
       ObjectManager.addSpecialEntity("hitarea", EntityHitArea.class);
       CapabilityManager.INSTANCE.register(ExtendedPlayer.class, new ExtendedPlayerStorage(), ExtendedPlayer::new);
       CapabilityManager.INSTANCE.register(ExtendedEntity.class, new ExtendedEntityStorage(), ExtendedEntity::new);
       CreatureManager.getInstance().startup(modInfo);
       ProjectileManager.getInstance().startup(modInfo);
-      FMLCommonHandler.instance().bus().register(SpawnerEventListener.getInstance());
+      SpawnerEventListener.getInstance().register(FMLCommonHandler.instance().bus());
       SpawnerManager.getInstance().loadAllFromJSON();
       AltarInfo.loadGlobalSettings();
       AltarInfo.createAltars();
-      FMLCommonHandler.instance().bus().register(MobEventManager.getInstance());
-      FMLCommonHandler.instance().bus().register(MobEventListener.getInstance());
+      MobEventManager.getInstance().register(FMLCommonHandler.instance().bus());
+      MobEventListener.getInstance().register(FMLCommonHandler.instance().bus());
       MobEventManager.getInstance().loadConfig();
       MobEventManager.getInstance().loadAllFromJSON(modInfo);
       GameRegistry.registerWorldGenerator(new WorldGeneratorFluids(), 0);
@@ -175,17 +184,14 @@ public class LycanitesMobs {
       proxy.registerTextures();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.registerModels(modInfo);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       CreatureManager.getInstance().lateStartup(modInfo);
    }
 
-   @EventHandler
    public void serverLoad(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandMain());
    }
@@ -213,5 +219,10 @@ public class LycanitesMobs {
 
    static {
       FluidRegistry.enableUniversalBucket();
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(ExtendedEntity.class, capability -> EXTENDED_ENTITY = capability);
+      CapabilityManager.INSTANCE.onRegistered(ExtendedPlayer.class, capability -> EXTENDED_PLAYER = capability);
    }
 }

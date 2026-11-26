@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
-import org.apache.commons.io.output.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream;
 
 public class OBJLoader {
    private static final String COMMENT = "#";

@@ -11,7 +11,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import org.apache.logging.log4j.util.TriConsumer;
 
 public class PacketHandler {
    public final SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel("lycanitesmobs");
@@ -21,32 +20,32 @@ public class PacketHandler {
 
    public void init() {
       int messageID = 0;
-      this.network.registerMessage(this.clientHandler(MessageBeastiary::onMessage), MessageBeastiary.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageCreature::onMessage), MessageCreature.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageCreatureKnowledge::onMessage), MessageCreatureKnowledge.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessagePlayerStats::onMessage), MessagePlayerStats.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessagePetEntry::onMessage), MessagePetEntry.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessagePetEntryRemove::onMessage), MessagePetEntryRemove.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageSummonSet::onMessage), MessageSummonSet.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageSummonSetSelection::onMessage), MessageSummonSetSelection.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageEntityPickedUp::onMessage), MessageEntityPickedUp.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageEntityPerched::onMessage), MessageEntityPerched.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageWorldEvent::onMessage), MessageWorldEvent.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageMobEvent::onMessage), MessageMobEvent.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageSummoningPedestalStats::onMessage), MessageSummoningPedestalStats.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.clientHandler(MessageEntityVelocity::onMessage), MessageEntityVelocity.class, messageID++, Side.CLIENT);
-      this.network.registerMessage(this.serverHandler(MessageEntityGUICommand::onMessage), MessageEntityGUICommand.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageSyncRequest::onMessage), MessageSyncRequest.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageGUIRequest::onMessage), MessageGUIRequest.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessagePlayerControl::onMessage), MessagePlayerControl.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessagePlayerLeftClick::onMessage), MessagePlayerLeftClick.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessagePlayerAttack::onMessage), MessagePlayerAttack.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessagePetEntry::onMessage), MessagePetEntry.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessagePetEntryRemove::onMessage), MessagePetEntryRemove.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageSummonSet::onMessage), MessageSummonSet.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageSummonSetSelection::onMessage), MessageSummonSetSelection.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageSummoningPedestalSummonSet::onMessage), MessageSummoningPedestalSummonSet.class, messageID++, Side.SERVER);
-      this.network.registerMessage(this.serverHandler(MessageTileEntityButton::onMessage), MessageTileEntityButton.class, messageID++, Side.SERVER);
+      this.network.registerMessage(this.clientHandler(MessageBeastiary::onMessage), MessageBeastiary.class, MessageBeastiary::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageCreature::onMessage), MessageCreature.class, MessageCreature::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageCreatureKnowledge::onMessage), MessageCreatureKnowledge.class, MessageCreatureKnowledge::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessagePlayerStats::onMessage), MessagePlayerStats.class, MessagePlayerStats::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessagePetEntry::onMessage), MessagePetEntry.class, MessagePetEntry::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessagePetEntryRemove::onMessage), MessagePetEntryRemove.class, MessagePetEntryRemove::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageSummonSet::onMessage), MessageSummonSet.class, MessageSummonSet::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageSummonSetSelection::onMessage), MessageSummonSetSelection.class, MessageSummonSetSelection::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageEntityPickedUp::onMessage), MessageEntityPickedUp.class, MessageEntityPickedUp::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageEntityPerched::onMessage), MessageEntityPerched.class, MessageEntityPerched::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageWorldEvent::onMessage), MessageWorldEvent.class, MessageWorldEvent::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageMobEvent::onMessage), MessageMobEvent.class, MessageMobEvent::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageSummoningPedestalStats::onMessage), MessageSummoningPedestalStats.class, MessageSummoningPedestalStats::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.clientHandler(MessageEntityVelocity::onMessage), MessageEntityVelocity.class, MessageEntityVelocity::new, messageID++, Side.CLIENT);
+      this.network.registerMessage(this.serverHandler(MessageEntityGUICommand::onMessage), MessageEntityGUICommand.class, MessageEntityGUICommand::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageSyncRequest::onMessage), MessageSyncRequest.class, MessageSyncRequest::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageGUIRequest::onMessage), MessageGUIRequest.class, MessageGUIRequest::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessagePlayerControl::onMessage), MessagePlayerControl.class, MessagePlayerControl::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessagePlayerLeftClick::onMessage), MessagePlayerLeftClick.class, MessagePlayerLeftClick::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessagePlayerAttack::onMessage), MessagePlayerAttack.class, MessagePlayerAttack::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessagePetEntry::onMessage), MessagePetEntry.class, MessagePetEntry::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessagePetEntryRemove::onMessage), MessagePetEntryRemove.class, MessagePetEntryRemove::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageSummonSet::onMessage), MessageSummonSet.class, MessageSummonSet::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageSummonSetSelection::onMessage), MessageSummonSetSelection.class, MessageSummonSetSelection::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageSummoningPedestalSummonSet::onMessage), MessageSummoningPedestalSummonSet.class, MessageSummoningPedestalSummonSet::new, messageID++, Side.SERVER);
+      this.network.registerMessage(this.serverHandler(MessageTileEntityButton::onMessage), MessageTileEntityButton.class, MessageTileEntityButton::new, messageID++, Side.SERVER);
    }
 
    private <REQ extends IMessage, REPLY extends IMessage> IMessageHandler<REQ, REPLY> clientHandler(TriConsumer<REQ, MessageContext, EntityPlayer> c) {
@@ -91,5 +90,9 @@ public class PacketHandler {
 
    public void sendToServer(IMessage message) {
       this.network.sendToServer(message);
+   }
+
+   public interface TriConsumer<A, B, C> {
+      void accept(A var1, B var2, C var3);
    }
 }

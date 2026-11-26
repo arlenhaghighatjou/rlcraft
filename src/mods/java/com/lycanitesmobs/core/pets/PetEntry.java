@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.pets;
 
+import net.minecraft.entity.EntityList;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.entity.AgeableCreatureEntity;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
@@ -330,7 +331,7 @@ public class PetEntry {
    public void spawnEntity() {
       if (this.entity == null && this.host != null) {
          try {
-            this.entity = (Entity)this.summonSet.getCreatureClass().getConstructor(World.class).newInstance(this.host.getEntityWorld());
+            this.entity = EntityList.newEntity(this.summonSet.getCreatureClass(), this.host.getEntityWorld());
          } catch (Exception var5) {
             LycanitesMobs.logWarning("Pets", "[Pet Entry] Unable to find an entity class for pet entry.  Type: " + this.summonSet.summonType + " Class: " + this.summonSet.getCreatureClass() + " ID: " + this.petEntryID);
          }

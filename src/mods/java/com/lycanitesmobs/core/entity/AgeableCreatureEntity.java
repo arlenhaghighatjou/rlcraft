@@ -316,7 +316,7 @@ public abstract class AgeableCreatureEntity extends BaseCreatureEntity {
          this.onCreateBaby(partner, baby);
          this.getEntityWorld().spawnEntity(baby);
 
-         for(EntityPlayer player : this.getEntityWorld().getPlayers(EntityPlayer.class, (playerx) -> {
+         for(EntityPlayer player : this.getEntityWorld().getPlayers(EntityPlayer.class, (player) -> {
             return player != null && this.getDistance(player) <= 5.0F;
          })) {
             ExtendedPlayer extendedPlayer = ExtendedPlayer.getForPlayer(player);

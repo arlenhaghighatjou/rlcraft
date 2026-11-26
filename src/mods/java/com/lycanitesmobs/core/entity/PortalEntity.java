@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.entity;
 
+import net.minecraft.entity.EntityList;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.ObjectManager;
 import com.lycanitesmobs.Utilities;
@@ -158,7 +159,7 @@ public class PortalEntity extends BaseProjectileEntity {
             Entity entity = null;
 
             try {
-               entity = (Entity)this.summonClass.getConstructor(World.class).newInstance(this.getEntityWorld());
+               entity = EntityList.newEntity(this.summonClass, this.getEntityWorld());
             } catch (Exception var4) {
                LycanitesMobs.logWarning("", "A none Entity class type was passed to an EntityPortal, only entities can be summoned from portals!");
                var4.printStackTrace();

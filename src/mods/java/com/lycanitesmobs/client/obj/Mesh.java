@@ -1,10 +1,11 @@
 package com.lycanitesmobs.client.obj;
 
+import net.minecraft.client.renderer.GLAllocation;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import javax.vecmath.Vector3f;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import org.lwjgl.opengl.GL15;
 
 public class Mesh {
    public int[] indices;
@@ -46,12 +47,10 @@ public class Mesh {
             bufferBuilder.endVertex();
          }
 
-         bufferBuilder.finishDrawing();
-         this.vbo = GL15.glGenBuffers();
-         GL15.glBindBuffer(34962, this.vbo);
-         GL15.glBufferData(34962, bufferBuilder.getByteBuffer(), 35044);
-         GL15.glBindBuffer(34962, 0);
-         bufferBuilder.reset();
+         this.vbo = GLAllocation.generateDisplayLists();
+         EaglercraftGPU.glNewList(this.vbo, 4864);
+         tesselator.draw();
+         EaglercraftGPU.glEndList();
          return this.vbo;
       }
    }
@@ -68,7 +67,7 @@ public class Mesh {
    }
 
    public void delete() {
-      GL15.glDeleteBuffers(this.vbo);
+      GLAllocation.deleteDisplayLists(this.vbo);
       this.vbo = -1;
    }
 }

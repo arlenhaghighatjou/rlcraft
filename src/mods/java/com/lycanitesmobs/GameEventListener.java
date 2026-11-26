@@ -1,5 +1,6 @@
 package com.lycanitesmobs;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.block.BlockFireBase;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
@@ -57,7 +58,6 @@ import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -69,29 +69,52 @@ public class GameEventListener {
    public GameEventListener() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, Potion.class, this::registerPotions);
+      bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntities);
+      bus.register(Load.class, this::onWorldLoading);
+      bus.register(Unload.class, this::onWorldUnloading);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::onAttachCapabilities);
+      bus.register(Clone.class, this::onPlayerClone);
+      bus.register(PlayerChangedDimensionEvent.class, this::onPlayerChangedDimensionEvent);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawnEvent);
+      bus.register(EntityConstructing.class, this::onEntityConstructing);
+      bus.register(LivingDeathEvent.class, this::onLivingDeathEvent);
+      bus.register(LivingUpdateEvent.class, this::onEntityUpdate);
+      bus.register(LeftClickEmpty.class, this::onPlayerLeftClickEmpty);
+      bus.register(LeftClickBlock.class, this::onPlayerLeftClickBlock);
+      bus.register(EntityInteract.class, this::onEntityInteract);
+      bus.register(LivingSetAttackTargetEvent.class, EventPriority.HIGHEST, false, this::onAttackTarget);
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::onLivingHurt);
+      bus.register(LivingDropsEvent.class, this::onLivingDrops);
+      bus.register(EntityMountEvent.class, this::onMountEntity);
+      bus.register(FillBucketEvent.class, this::onBucketFill);
+      bus.register(BreakEvent.class, this::onBlockBreak);
+      bus.register(PlaceEvent.class, this::onBlockPlace);
+      bus.register(EntityMountEvent.class, this::onEntityMount);
+      bus.register(ProjectileImpactEvent.class, this::onProjectileImpact);
+   }
+
    public void registerBlocks(Register<Block> event) {
       ObjectManager.registerBlocks(event);
       ItemManager.getInstance().registerBlockOres();
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       ObjectManager.registerItems(event);
       ItemManager.getInstance().registerItemOres();
    }
 
-   @SubscribeEvent
    public void registerPotions(Register<Potion> event) {
       ObjectManager.registerPotions(event);
    }
 
-   @SubscribeEvent
    public void registerEntities(Register<EntityEntry> event) {
       ObjectManager.registerSpecialEntities(event);
    }
 
-   @SubscribeEvent
    public void onWorldLoading(Load event) {
       if (event.getWorld() != null) {
          ExtendedWorld.getForWorld(event.getWorld());
@@ -99,12 +122,10 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onWorldUnloading(Unload event) {
       ExtendedWorld.remove(event.getWorld());
    }
 
-   @SubscribeEvent
    public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
       if (event.getObject() instanceof EntityLivingBase) {
          event.addCapability(new ResourceLocation("lycanitesmobs", "IExtendedEntity"), new ICapabilitySerializable<NBTTagCompound>() {
@@ -152,7 +173,6 @@ public class GameEventListener {
 
    }
 
-   @SubscribeEvent
    public void onPlayerClone(Clone event) {
       ExtendedPlayer extendedPlayerOld = ExtendedPlayer.getForPlayer(event.getOriginal());
       ExtendedPlayer extendedPlayerNew = ExtendedPlayer.getForPlayer(event.getEntityPlayer());
@@ -161,17 +181,14 @@ public class GameEventListener {
       extendedPlayerNew.readNBT(nbt);
    }
 
-   @SubscribeEvent
    public void onPlayerChangedDimensionEvent(PlayerChangedDimensionEvent event) {
       ExtendedPlayer.getForPlayer(event.player).needsFullSync = true;
    }
 
-   @SubscribeEvent
    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
       ExtendedPlayer.getForPlayer(event.player).needsFullSync = true;
    }
 
-   @SubscribeEvent
    public void onEntityConstructing(EntityConstructing event) {
       if (event.getEntity() != null && event.getEntity().getEntityWorld() != null && !event.getEntity().getEntityWorld().isRemote) {
          if (!(event.getEntity() instanceof EntityLivingBase) && ExtendedEntity.FORCE_REMOVE_ENTITY_IDS != null && ExtendedEntity.FORCE_REMOVE_ENTITY_IDS.length > 0) {
@@ -188,7 +205,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onLivingDeathEvent(LivingDeathEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {
@@ -208,7 +224,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onEntityUpdate(LivingUpdateEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {
@@ -228,7 +243,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerLeftClickEmpty(LeftClickEmpty event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null) {
@@ -242,7 +256,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerLeftClickBlock(LeftClickBlock event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null && !event.getSide().isClient()) {
@@ -255,7 +268,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onEntityInteract(EntityInteract event) {
       EntityPlayer player = event.getEntityPlayer();
       Entity entity = event.getTarget();
@@ -271,9 +283,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void onAttackTarget(LivingSetAttackTargetEvent event) {
       Entity targetEntity = event.getTarget();
       if (event.getEntityLiving() != null && targetEntity != null) {
@@ -291,9 +300,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void onLivingHurt(LivingHurtEvent event) {
       if (!event.isCanceled()) {
          if (event.getSource() != null && event.getEntityLiving() != null) {
@@ -338,7 +344,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onLivingDrops(LivingDropsEvent event) {
       World world = event.getEntityLiving().getEntityWorld();
       if (ItemConfig.seasonalItemDropChance > 0.0D && (Utilities.isHalloween() || Utilities.isYuletide() || Utilities.isNewYear())) {
@@ -369,7 +374,6 @@ public class GameEventListener {
 
    }
 
-   @SubscribeEvent
    public void onMountEntity(EntityMountEvent event) {
       if (event.isMounting() && event.getEntityBeingMounted() instanceof EntityBoat && event.getEntityBeingMounted() instanceof EntityMinecart && event.getEntityMounting() instanceof BaseCreatureEntity) {
          BaseCreatureEntity creatureEntity = (BaseCreatureEntity)event.getEntityMounting();
@@ -380,7 +384,6 @@ public class GameEventListener {
 
    }
 
-   @SubscribeEvent
    public void onBucketFill(FillBucketEvent event) {
       World world = event.getWorld();
       RayTraceResult target = event.getTarget();
@@ -399,7 +402,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onBlockBreak(BreakEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.isCanceled() && !event.getWorld().isRemote) {
          if (event.getPlayer() != null && !event.getPlayer().isCreative()) {
@@ -424,7 +426,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onBlockPlace(PlaceEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.isCanceled()) {
          if (event.getPlayer() != null && !event.getPlayer().isCreative()) {
@@ -439,7 +440,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onEntityMount(EntityMountEvent event) {
       if (LycanitesMobs.config.getBool("Extras", "Disable Sneak Dismount", true)) {
          if (event.isDismounting() && event.getEntityMounting() instanceof EntityPlayer && event.getEntityBeingMounted() instanceof RideableCreatureEntity) {
@@ -451,7 +451,6 @@ public class GameEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onProjectileImpact(ProjectileImpactEvent event) {
       Entity shooter = null;
       Entity target = event.getRayTraceResult().entityHit;

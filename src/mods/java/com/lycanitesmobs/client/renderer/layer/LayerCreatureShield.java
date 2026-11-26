@@ -1,12 +1,11 @@
 package com.lycanitesmobs.client.renderer.layer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.client.renderer.RenderCreature;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -34,7 +33,7 @@ public class LayerCreatureShield extends LayerCreatureBase {
       int j = i % 65536;
       int k = i / 65536;
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE);
       GlStateManager.enableCull();
    }
 

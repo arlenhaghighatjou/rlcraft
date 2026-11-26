@@ -1,5 +1,7 @@
 package com.lycanitesmobs.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.localisation.LanguageManager;
@@ -15,7 +17,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import org.lwjgl.opengl.GL11;
 
 public class CreatureInventoryScreen extends BaseContainerScreen {
    public BaseCreatureEntity creature;
@@ -57,7 +58,7 @@ public class CreatureInventoryScreen extends BaseContainerScreen {
       this.drawTexture(AssetManager.getTexture("GUIPetBarEmpty"), (float)barX, (float)barY, 0.0F, 1.0F, 1.0F, (float)barWidth, (float)barHeight);
       float healthNormal = Math.min(1.0F, this.creature.getHealth() / this.creature.getMaxHealth());
       this.drawTexture(AssetManager.getTexture("GUIPetBarHealth"), (float)barX, (float)barY, 0.0F, healthNormal, 1.0F, (float)barWidth * healthNormal, (float)barHeight);
-      String healthText = LanguageManager.translate("entity.health") + ": " + String.format("%.0f", this.creature.getHealth()) + "/" + String.format("%.0f", this.creature.getMaxHealth());
+      String healthText = LanguageManager.translate("entity.health") + ": " + HString.format("%.0f", this.creature.getHealth()) + "/" + HString.format("%.0f", this.creature.getMaxHealth());
       this.fontRenderer.drawString(healthText, barCenter - this.fontRenderer.getStringWidth(healthText) / 2, barY + 2, 16777215);
       barY = barY + barHeight + 1;
       this.drawTexture(AssetManager.getTexture("GUIPetBarEmpty"), (float)barX, (float)barY, 0.0F, 1.0F, 1.0F, (float)barWidth, (float)barHeight);
@@ -68,7 +69,7 @@ public class CreatureInventoryScreen extends BaseContainerScreen {
    }
 
    protected void drawGuiContainerBackgroundLayer(float f, int i, int j) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIInventoryCreature"));
       this.xSize = 176;
       this.ySize = 166;
@@ -80,7 +81,7 @@ public class CreatureInventoryScreen extends BaseContainerScreen {
    }
 
    protected void drawFrames(int backX, int backY, int mouseX, int mouseY) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIInventoryCreature"));
       int statusWidth = 90;
       int statusHeight = 54;
@@ -92,7 +93,7 @@ public class CreatureInventoryScreen extends BaseContainerScreen {
    }
 
    protected void drawSlots(int backX, int backY) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIInventoryCreature"));
       BaseContainer container = (BaseContainer)this.inventorySlots;
       List<Slot> creatureSlots = container.inventorySlots.subList(container.specialStart, container.inventoryFinish + 1);
@@ -125,7 +126,7 @@ public class CreatureInventoryScreen extends BaseContainerScreen {
       if (this.creature instanceof TameableCreatureEntity) {
          TameableCreatureEntity pet = (TameableCreatureEntity)this.creature;
          if (pet.petControlsEnabled()) {
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             int buttonSpacing = 2;
             int buttonWidth = 128;
             int buttonHeight = 20;

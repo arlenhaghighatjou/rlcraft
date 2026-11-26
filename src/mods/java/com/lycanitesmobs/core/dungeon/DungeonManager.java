@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.dungeon;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -12,8 +13,6 @@ import com.lycanitesmobs.core.dungeon.definition.DungeonSector;
 import com.lycanitesmobs.core.dungeon.definition.DungeonStructure;
 import com.lycanitesmobs.core.dungeon.definition.DungeonTheme;
 import com.lycanitesmobs.core.info.ModInfo;
-import java.io.File;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,15 +124,13 @@ public class DungeonManager extends JSONLoader {
       LycanitesMobs.logDebug("Dungeon", "Loading JSON Dungeons!");
       Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
       Map<String, JsonObject> spawnerJSONs = new HashMap();
-      Path path = Utilities.getAssetPath(this.getClass(), LycanitesMobs.modInfo.modid, "dungeons/" + type);
+      String path = Utilities.getAssetPath(this.getClass(), LycanitesMobs.modInfo.modid, "dungeons/" + type);
       Map<String, JsonObject> defaultJSONs = new HashMap();
       this.loadJsonObjects(gson, path, defaultJSONs, "name", (String)null);
-      String configPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs" + "/";
-      File customDir = new File(configPath + "dungeons/" + type);
-      customDir.mkdirs();
-      path = customDir.toPath();
+      String configPath = "config/" + "lycanitesmobs" + "/";
+      VFile2 customDir = new VFile2(configPath + "dungeons/" + type);
       Map<String, JsonObject> customJSONs = new HashMap();
-      this.loadJsonObjects(gson, path, customJSONs, "name", (String)null);
+      this.loadJsonObjects(gson, customDir, customJSONs, "name", (String)null);
       this.writeDefaultJSONObjects(gson, defaultJSONs, customJSONs, spawnerJSONs, true, "dungeons/" + type);
       return spawnerJSONs;
    }

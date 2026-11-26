@@ -1,5 +1,9 @@
 package com.lycanitesmobs.core;
 
+import java.io.StringReader;
+import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -7,18 +11,10 @@ import com.google.gson.JsonParseException;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.Utilities;
 import com.lycanitesmobs.core.info.ModInfo;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import net.minecraft.util.JsonUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 
 public abstract class JSONLoader {
    public JSONLoader() {
@@ -28,15 +24,13 @@ public abstract class JSONLoader {
       LycanitesMobs.logDebug(name, "Loading JSON " + name + "...");
       Gson gson = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
       Map<String, JsonObject> jsons = new HashMap();
-      Path path = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, assetPath);
+      String path = Utilities.getAssetPath(groupInfo.getClass(), groupInfo.modid, assetPath);
       Map<String, JsonObject> defaultJsons = new HashMap();
       this.loadJsonObjects(gson, path, defaultJsons, mapKey, (String)null);
-      String configPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs" + "/";
-      File customDir = new File(configPath + assetPath);
-      customDir.mkdirs();
-      path = customDir.toPath();
+      String configPath = "config/" + "lycanitesmobs" + "/";
+      VFile2 customDir = new VFile2(configPath + assetPath);
       Map<String, JsonObject> customJsons = new HashMap();
-      this.loadJsonObjects(gson, path, customJsons, mapKey, (String)null);
+      this.loadJsonObjects(gson, customDir, customJsons, mapKey, (String)null);
       this.writeDefaultJSONObjects(gson, defaultJsons, customJsons, jsons, loadCustom, assetPath);
       LycanitesMobs.logDebug(name, "Loading " + jsons.size() + " " + name + "...");
 
@@ -58,48 +52,58 @@ public abstract class JSONLoader {
 
    public abstract void parseJson(ModInfo var1, String var2, JsonObject var3);
 
-   public void loadJsonObjects(Gson gson, Path path, Map<String, JsonObject> jsonObjectMap, String mapKey, String jsonType) {
+   public void loadJsonObjects(Gson gson, String path, Map<String, JsonObject> jsonObjectMap, String mapKey, String jsonType) {
       if (path != null) {
-         try {
-            Iterator<Path> iterator = Files.walk(path).iterator();
+         String prefix = path.endsWith("/") ? path : path + "/";
+         List<String> files = EagRuntime.listResources(prefix);
 
-            while(iterator.hasNext()) {
-               Path filePath = (Path)iterator.next();
-               Path relativePath = path.relativize(filePath);
-               if ("json".equals(FilenameUtils.getExtension(filePath.toString()))) {
-                  BufferedReader reader = null;
-
-                  try {
-                     reader = Files.newBufferedReader(filePath);
-                     JsonObject json = (JsonObject)JsonUtils.fromJson(gson, reader, JsonObject.class);
-                     boolean validJSON = true;
-                     if (jsonType != null) {
-                        if (!json.has("type")) {
-                           validJSON = false;
-                        } else {
-                           validJSON = jsonType.equalsIgnoreCase(json.get("type").getAsString());
-                        }
-                     }
-
-                     if (validJSON) {
-                        jsonObjectMap.put(json.get(mapKey).getAsString(), json);
-                     }
-                  } catch (JsonParseException var17) {
-                     LycanitesMobs.logWarning("", "Parsing error loading JSON " + relativePath + "\n" + var17.toString());
-                     var17.printStackTrace();
-                  } catch (Exception var18) {
-                     LycanitesMobs.logWarning("", "There was a problem loading JSON " + relativePath + "\n" + var18.toString());
-                     var18.printStackTrace();
-                  } finally {
-                     IOUtils.closeQuietly(reader);
-                  }
-               }
+         for(int i = 0, l = files.size(); i < l; ++i) {
+            String filePath = files.get(i);
+            if ("json".equals(FilenameUtils.getExtension(filePath))) {
+               this.loadJsonObject(gson, EagRuntime.getResourceString("/" + filePath), filePath.substring(prefix.length()), jsonObjectMap, mapKey, jsonType);
             }
-         } catch (Exception var20) {
-            LycanitesMobs.logWarning("", "Unable to read files from directory.\n" + var20.toString());
          }
 
       }
+   }
+
+   public void loadJsonObjects(Gson gson, VFile2 path, Map<String, JsonObject> jsonObjectMap, String mapKey, String jsonType) {
+      if (path != null) {
+         List<VFile2> files = path.listFiles(true);
+
+         for(int i = 0, l = files.size(); i < l; ++i) {
+            VFile2 file = files.get(i);
+            if ("json".equals(FilenameUtils.getExtension(file.getName()))) {
+               this.loadJsonObject(gson, file.getAllChars(), file.getPath().substring(path.getPath().length() + 1), jsonObjectMap, mapKey, jsonType);
+            }
+         }
+
+      }
+   }
+
+   private void loadJsonObject(Gson gson, String content, String relativePath, Map<String, JsonObject> jsonObjectMap, String mapKey, String jsonType) {
+      try {
+         JsonObject json = (JsonObject)JsonUtils.fromJson(gson, new StringReader(content), JsonObject.class);
+         boolean validJSON = true;
+         if (jsonType != null) {
+            if (!json.has("type")) {
+               validJSON = false;
+            } else {
+               validJSON = jsonType.equalsIgnoreCase(json.get("type").getAsString());
+            }
+         }
+
+         if (validJSON) {
+            jsonObjectMap.put(json.get(mapKey).getAsString(), json);
+         }
+      } catch (JsonParseException var17) {
+         LycanitesMobs.logWarning("", "Parsing error loading JSON " + relativePath + "\n" + var17.toString());
+         var17.printStackTrace();
+      } catch (Exception var18) {
+         LycanitesMobs.logWarning("", "There was a problem loading JSON " + relativePath + "\n" + var18.toString());
+         var18.printStackTrace();
+      }
+
    }
 
    public void writeDefaultJSONObjects(Gson gson, Map<String, JsonObject> defaultJSONs, Map<String, JsonObject> customJSONs, Map<String, JsonObject> mixedJSONs, boolean custom, String assetPath) {
@@ -141,36 +145,25 @@ public abstract class JSONLoader {
 
    }
 
-   public JsonObject loadJsonObject(Gson gson, Path path) {
-      if (path == null) {
+   public JsonObject loadJsonObject(Gson gson, String path) {
+      return path == null ? null : this.loadJsonObject(gson, EagRuntime.getResourceString("/" + path), path);
+   }
+
+   public JsonObject loadJsonObject(Gson gson, VFile2 path) {
+      return path == null ? null : this.loadJsonObject(gson, path.getAllChars(), path.getPath());
+   }
+
+   private JsonObject loadJsonObject(Gson gson, String content, String relativePath) {
+      try {
+         return (JsonObject)JsonUtils.fromJson(gson, new StringReader(content), JsonObject.class);
+      } catch (JsonParseException var12) {
+         LycanitesMobs.logWarning("", "Parsing error loading JSON " + relativePath + "\n" + var12.toString());
+         var12.printStackTrace();
          return null;
-      } else {
-         try {
-            Path relativePath = path.relativize(path);
-            BufferedReader reader = null;
-
-            JsonObject var6;
-            try {
-               reader = Files.newBufferedReader(path);
-               JsonObject json = (JsonObject)JsonUtils.fromJson(gson, reader, JsonObject.class);
-               var6 = json;
-            } catch (JsonParseException var12) {
-               LycanitesMobs.logWarning("", "Parsing error loading JSON " + relativePath + "\n" + var12.toString());
-               var12.printStackTrace();
-               return null;
-            } catch (Exception var13) {
-               LycanitesMobs.logWarning("", "There was a problem loading JSON " + relativePath + "\n" + var13.toString());
-               var13.printStackTrace();
-               return null;
-            } finally {
-               IOUtils.closeQuietly(reader);
-            }
-
-            return var6;
-         } catch (Exception var15) {
-            LycanitesMobs.logWarning("", "Unable to read file from path.\n" + var15.toString());
-            return null;
-         }
+      } catch (Exception var13) {
+         LycanitesMobs.logWarning("", "There was a problem loading JSON " + relativePath + "\n" + var13.toString());
+         var13.printStackTrace();
+         return null;
       }
    }
 
@@ -204,17 +197,11 @@ public abstract class JSONLoader {
    }
 
    public void saveJsonObject(Gson gson, JsonObject jsonObject, String name, String assetPath) {
-      String configPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs" + "/";
+      String configPath = "config/" + "lycanitesmobs" + "/";
 
       try {
-         File jsonFile = new File(configPath + (!"".equals(assetPath) ? assetPath + "/" : "") + name + ".json");
-         jsonFile.getParentFile().mkdirs();
-         jsonFile.createNewFile();
-         FileOutputStream outputStream = new FileOutputStream(jsonFile);
-         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-         outputStreamWriter.append(gson.toJson(jsonObject));
-         outputStreamWriter.close();
-         outputStream.close();
+         VFile2 jsonFile = new VFile2(configPath + (!"".equals(assetPath) ? assetPath + "/" : "") + name + ".json");
+         jsonFile.setAllChars(gson.toJson(jsonObject));
       } catch (Exception var9) {
          LycanitesMobs.logWarning("", "Unable to save JSON into the config folder.");
          var9.printStackTrace();

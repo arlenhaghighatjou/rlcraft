@@ -1,13 +1,12 @@
 package com.lycanitesmobs.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.LycanitesMobs;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
@@ -33,7 +32,7 @@ public class BaseScreen extends GuiScreen {
       GlStateManager.enableBlend();
       GlStateManager.disableDepth();
       GlStateManager.depthMask(false);
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       GlStateManager.disableAlpha();
       this.mc.getTextureManager().bindTexture(texture);
@@ -55,7 +54,7 @@ public class BaseScreen extends GuiScreen {
       GlStateManager.enableBlend();
       GlStateManager.disableDepth();
       GlStateManager.depthMask(false);
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       GlStateManager.disableAlpha();
       this.mc.getTextureManager().bindTexture(texture);

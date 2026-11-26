@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.spawner;
 
+import net.minecraft.entity.EntityList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.ExtendedWorld;
@@ -281,7 +282,7 @@ public class MobSpawn {
          if (this.creatureInfo != null) {
             return this.creatureInfo.createEntity(world);
          } else {
-            return this.entityClass == null ? null : (EntityLiving)this.entityClass.getConstructor(World.class).newInstance(world);
+            return this.entityClass == null ? null : (EntityLiving)EntityList.newEntity(this.entityClass, world);
          }
       } catch (Exception var3) {
          var3.printStackTrace();

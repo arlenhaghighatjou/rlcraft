@@ -1,17 +1,15 @@
 package com.lycanitesmobs.core.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.info.ItemDrop;
 import com.lycanitesmobs.core.info.ModInfo;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-import org.apache.commons.io.FileUtils;
 
 public class ConfigBase {
    public static Map<String, ConfigBase> configs = new HashMap();
@@ -54,16 +52,13 @@ public class ConfigBase {
       }
 
       if (oldVersion) {
-         String configDirPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs";
-         File configDir = new File(configDirPath);
-         configDir.mkdir();
+         String configDirPath = "config/" + "lycanitesmobs";
+         VFile2 configDir = new VFile2(configDirPath);
          LycanitesMobs.logWarning("", "[Config] The current configs are too old, clearing all configs now...");
+         List<VFile2> configFiles = configDir.listFiles(true);
 
-         try {
-            FileUtils.cleanDirectory(configDir);
-         } catch (IOException var11) {
-            LycanitesMobs.logWarning("", "[Config] Unable to clear the config directory! This could be a file permissions issue!");
-            var11.printStackTrace();
+         for(int i = 0, l = configFiles.size(); i < l; ++i) {
+            configFiles.get(i).delete();
          }
       }
 
@@ -102,19 +97,9 @@ public class ConfigBase {
    }
 
    public void init() {
-      String configDirPath = LycanitesMobs.proxy.getMinecraftDir() + "/config/" + "lycanitesmobs";
-      File configDir = new File(configDirPath);
-      configDir.mkdir();
-      File configFile = new File(configDirPath + "/" + this.fileName + ".cfg");
-
-      try {
-         configFile.createNewFile();
-         LycanitesMobs.logInfo("", "Config " + this.fileName + " created successfully.");
-      } catch (IOException var5) {
-         LycanitesMobs.logWarning("", "Config " + this.fileName + " could not be created:");
-         System.out.println(var5);
-         LycanitesMobs.logWarning("", "Make sure the config folder has write permissions or (if using Windows) isn't read only and that Minecraft is not in Program Files on a non-administrator account.");
-      }
+      String configDirPath = "config/" + "lycanitesmobs";
+      VFile2 configFile = new VFile2(configDirPath + "/" + this.fileName + ".cfg");
+      LycanitesMobs.logInfo("", "Config " + this.fileName + " created successfully.");
 
       this.config = new Configuration(configFile);
       this.config.load();

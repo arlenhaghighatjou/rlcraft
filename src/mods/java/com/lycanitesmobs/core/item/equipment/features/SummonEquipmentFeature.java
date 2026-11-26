@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.item.equipment.features;
 
+import net.minecraft.entity.EntityList;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.client.localisation.LanguageManager;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
@@ -100,7 +101,7 @@ public class SummonEquipmentFeature extends EquipmentFeature {
                   }
 
                   if (entityClass != null) {
-                     EntityLiving entity = (EntityLiving)entityClass.getConstructor(World.class).newInstance(attacker.getEntityWorld());
+                     EntityLiving entity = (EntityLiving)EntityList.newEntity(entityClass, attacker.getEntityWorld());
                      if (entity instanceof BaseCreatureEntity) {
                         BaseCreatureEntity entityCreature = (BaseCreatureEntity)entity;
                         entityCreature.setMinion(true);

@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.info.projectile;
 
+import com.lycanitesmobs.core.LycanitesClasses;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -83,7 +84,7 @@ public class ProjectileInfo {
 
       if (json.has("entityClass")) {
          try {
-            this.entityClass = Class.forName(json.get("entityClass").getAsString());
+            this.entityClass = (Class<? extends Entity>)LycanitesClasses.forName(json.get("entityClass").getAsString());
          } catch (Exception var7) {
             LycanitesMobs.logWarning("", "[Projectile] Unable to find the Java Entity Class: " + json.get("entityClass").getAsString() + " for " + this.getName());
          }

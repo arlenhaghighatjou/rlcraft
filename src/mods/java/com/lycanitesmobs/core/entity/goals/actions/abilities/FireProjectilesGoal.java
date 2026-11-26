@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.entity.goals.actions.abilities;
 
+import com.lycanitesmobs.core.LycanitesClasses;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import com.lycanitesmobs.core.entity.BaseProjectileEntity;
@@ -161,7 +162,7 @@ public class FireProjectilesGoal extends BaseGoal {
          projectile = projectileInfo.createProjectile(this.host.getEntityWorld(), this.host);
       } else if (this.projectileClass != null) {
          try {
-            projectile = (BaseProjectileEntity)this.projectileClass.getConstructor(World.class, EntityLivingBase.class).newInstance(this.host.getEntityWorld(), this.host);
+            projectile = (BaseProjectileEntity)LycanitesClasses.create(this.projectileClass, this.host.getEntityWorld(), this.host);
          } catch (Exception var3) {
             LycanitesMobs.logWarning("", "Unable to create a projectile from the class: " + this.projectileClass);
          }

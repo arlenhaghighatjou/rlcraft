@@ -1,21 +1,13 @@
 package com.lycanitesmobs;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.lycanitesmobs.core.config.ConfigBase;
-import java.net.URI;
-import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -122,13 +114,13 @@ public class Utilities {
 
    public static Predicate<Entity> collidable() {
       return (entity) -> {
-         return EntitySelectors.NOT_SPECTATING.test(entity) && entity.canBeCollidedWith();
+         return EntitySelectors.NOT_SPECTATING.apply(entity) && entity.canBeCollidedWith();
       };
    }
 
    public static Predicate<Entity> collidableExlcuding(Entity entityToIgnore) {
       return entityToIgnore == null ? collidable() : (entity) -> {
-         return EntitySelectors.NOT_SPECTATING.test(entity) && entity.canBeCollidedWith() && entity != entityToIgnore;
+         return EntitySelectors.NOT_SPECTATING.apply(entity) && entity.canBeCollidedWith() && entity != entityToIgnore;
       };
    }
 
@@ -137,7 +129,7 @@ public class Utilities {
          return collidableExlcuding(entityToIgnore2);
       } else {
          return entityToIgnore2 == null ? collidableExlcuding(entityToIgnore1) : (entity) -> {
-            return EntitySelectors.NOT_SPECTATING.test(entity) && entity.canBeCollidedWith() && entity != entityToIgnore1 && entity != entityToIgnore2;
+            return EntitySelectors.NOT_SPECTATING.apply(entity) && entity.canBeCollidedWith() && entity != entityToIgnore1 && entity != entityToIgnore2;
          };
       }
    }
@@ -149,7 +141,7 @@ public class Utilities {
          return collidableExlcuding(entityToIgnore1, entityToIgnore3);
       } else {
          return entityToIgnore3 == null ? collidableExlcuding(entityToIgnore1, entityToIgnore2) : (entity) -> {
-            return EntitySelectors.NOT_SPECTATING.test(entity) && entity.canBeCollidedWith() && entity != entityToIgnore1 && entity != entityToIgnore2 && entity != entityToIgnore3;
+            return EntitySelectors.NOT_SPECTATING.apply(entity) && entity.canBeCollidedWith() && entity != entityToIgnore1 && entity != entityToIgnore2 && entity != entityToIgnore3;
          };
       }
    }
@@ -175,7 +167,7 @@ public class Utilities {
 
       Set<Entity> entitySet = (Set)Arrays.stream(entities).filter(Objects::nonNull).collect(Collectors.toSet());
       return (entity) -> {
-         return EntitySelectors.NOT_SPECTATING.test(entity) && entity.canBeCollidedWith() && !entitySet.contains(entity);
+         return EntitySelectors.NOT_SPECTATING.apply(entity) && entity.canBeCollidedWith() && !entitySet.contains(entity);
       };
    }
 
@@ -238,54 +230,21 @@ public class Utilities {
       return (int)((d2.getTime() - d1.getTime()) / 86400000L);
    }
 
-   public static Path getAssetPath(Class clazz, String assetDomain, String assetPath) {
-      Path path = null;
-      String assetDir = "/assets/" + assetDomain + (!"".equals(assetPath) ? "/" + assetPath : "");
-
-      try {
-         URL url = clazz.getResource("/assets/" + assetDomain + "/.root");
-         URI uri = url.toURI();
-         if ("file".equals(uri.getScheme())) {
-            path = Paths.get(clazz.getResource(assetDir).toURI());
-         } else {
-            if (!"jar".equals(uri.getScheme())) {
-               LycanitesMobs.logWarning("", "Unsupported file scheme: " + uri.getScheme());
-               return null;
-            }
-
-            FileSystem filesystem;
-            try {
-               filesystem = FileSystems.getFileSystem(uri);
-            } catch (Exception var9) {
-               filesystem = FileSystems.newFileSystem(uri, Collections.emptyMap());
-            }
-
-            path = filesystem.getPath(assetDir);
-         }
-      } catch (Exception var10) {
-         LycanitesMobs.logWarning("", "No data found in: " + assetDir);
-      }
-
-      return path;
+   public static String getAssetPath(Class clazz, String assetDomain, String assetPath) {
+      return "lycanitesmobs/assets/" + assetDomain + (!"".equals(assetPath) ? "/" + assetPath : "");
    }
 
-   public static List<ResourceLocation> getPathResourceLocations(Path path, String assetDomain, String fileType) {
+   public static List<ResourceLocation> getPathResourceLocations(String path, String assetDomain, String fileType) {
       List<ResourceLocation> resourceLocations = new ArrayList();
+      String prefix = path.endsWith("/") ? path : path + "/";
+      List<String> files = EagRuntime.listResources(prefix);
 
-      try {
-         Iterator<Path> iterator = Files.walk(path).iterator();
-
-         while(iterator.hasNext()) {
-            Path filePath = (Path)iterator.next();
-            if (fileType == null || fileType.equals(FilenameUtils.getExtension(filePath.toString()))) {
-               Path relativePath = path.relativize(filePath);
-               String resourceLocationPath = FilenameUtils.removeExtension(relativePath.toString()).replaceAll("\\\\", "/");
-               ResourceLocation resourceLocation = new ResourceLocation(assetDomain, resourceLocationPath);
-               resourceLocations.add(resourceLocation);
-            }
+      for(int i = 0, l = files.size(); i < l; ++i) {
+         String filePath = files.get(i);
+         if (fileType == null || fileType.equals(FilenameUtils.getExtension(filePath))) {
+            String resourceLocationPath = FilenameUtils.removeExtension(filePath.substring(prefix.length()));
+            resourceLocations.add(new ResourceLocation(assetDomain, resourceLocationPath));
          }
-      } catch (Exception var9) {
-         LycanitesMobs.logWarning("", "There was a problem getting ResourceLocations for: " + path + ", " + fileType + ",  \n" + var9.toString());
       }
 
       return resourceLocations;

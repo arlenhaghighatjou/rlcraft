@@ -7,7 +7,7 @@ import java.util.List;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
-import org.apache.commons.io.output.ByteArrayOutputStream;
+import java.io.ByteArrayOutputStream;
 
 public abstract class ObjModel extends Model {
    public List<ObjObject> objObjects;

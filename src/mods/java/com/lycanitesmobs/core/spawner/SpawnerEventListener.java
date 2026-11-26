@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.spawner;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.lycanitesmobs.ExtendedWorld;
 import com.lycanitesmobs.core.spawner.trigger.BlockSpawnTrigger;
 import com.lycanitesmobs.core.spawner.trigger.ChunkSpawnTrigger;
@@ -39,7 +40,6 @@ import net.minecraftforge.event.world.BlockEvent.FluidPlaceBlockEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.world.ExplosionEvent.Detonate;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -158,7 +158,21 @@ public class SpawnerEventListener {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldUpdate);
+      bus.register(PlayerTickEvent.class, this::onPlayerTickEvent);
+      bus.register(LivingDeathEvent.class, this::onEntityDeath);
+      bus.register(LivingSpawnEvent.class, this::onEntitySpawn);
+      bus.register(Post.class, this::onChunkPopulate);
+      bus.register(HarvestDropsEvent.class, this::onHarvestDrops);
+      bus.register(BreakEvent.class, this::onBlockBreak);
+      bus.register(PlaceEvent.class, this::onBlockPlace);
+      bus.register(PlayerSleepInBedEvent.class, this::onSleep);
+      bus.register(ItemFishedEvent.class, this::onFished);
+      bus.register(Detonate.class, this::onExplosion);
+      bus.register(FluidPlaceBlockEvent.class, this::onLavaMix);
+   }
+
    public void onWorldUpdate(WorldTickEvent event) {
       World world = event.world;
       if (!world.isRemote) {
@@ -203,7 +217,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerTickEvent(PlayerTickEvent event) {
       if (event.phase == Phase.START) {
          EntityPlayer player = event.player;
@@ -222,7 +235,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onEntityDeath(LivingDeathEvent event) {
       EntityLivingBase killedEntity = event.getEntityLiving();
       if (killedEntity != null && killedEntity.getEntityWorld() != null && !killedEntity.getEntityWorld().isRemote && !event.isCanceled() && killedEntity instanceof EntityLiving) {
@@ -236,7 +248,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onEntitySpawn(LivingSpawnEvent event) {
       EntityLivingBase spawnedEntity = event.getEntityLiving();
       if (spawnedEntity != null && spawnedEntity.getEntityWorld() != null && !spawnedEntity.getEntityWorld().isRemote && !event.isCanceled() && spawnedEntity instanceof EntityLiving) {
@@ -247,7 +258,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onChunkPopulate(Post event) {
       if (!this.chunkSpawnTriggersActive) {
          for(ChunkSpawnTrigger spawnTrigger : this.chunkSpawnTriggers) {
@@ -260,7 +270,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onHarvestDrops(HarvestDropsEvent event) {
       EntityPlayer player = event.getHarvester();
       if (event.getState() != null && event.getWorld() != null && !event.getWorld().isRemote && !event.isCanceled()) {
@@ -277,7 +286,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onBlockBreak(BreakEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.getWorld().isRemote && !event.isCanceled()) {
          this.onBlockBreak(event.getWorld(), event.getPos(), event.getState(), event.getPlayer(), 0);
@@ -293,7 +301,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onBlockPlace(PlaceEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.getWorld().isRemote && !event.isCanceled()) {
          this.onBlockPlace(event.getWorld(), event.getPos(), event.getState(), event.getPlayer(), 0);
@@ -309,7 +316,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onSleep(PlayerSleepInBedEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null && player.getEntityWorld() != null && !player.getEntityWorld().isRemote && !event.isCanceled()) {
@@ -332,7 +338,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onFished(ItemFishedEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null && player.getEntityWorld() != null && !player.getEntityWorld().isRemote && !event.isCanceled()) {
@@ -348,7 +353,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onExplosion(Detonate event) {
       Explosion explosion = event.getExplosion();
       if (explosion != null) {
@@ -367,7 +371,6 @@ public class SpawnerEventListener {
       }
    }
 
-   @SubscribeEvent
    public void onLavaMix(FluidPlaceBlockEvent event) {
       if (event.getWorld() != null) {
          World world = event.getWorld();

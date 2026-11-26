@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.info.projectile.behaviours;
 
+import net.minecraft.entity.EntityList;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.GuiHandler;
 import com.lycanitesmobs.LycanitesMobs;
@@ -114,7 +115,7 @@ public class ProjectileBehaviourSummon extends ProjectileBehaviour {
                for(int i = 0; i < summonCount; ++i) {
                   if (projectile.getEntityWorld().rand.nextDouble() <= this.summonChance) {
                      try {
-                        EntityLiving entity = (EntityLiving)entityClass.getConstructor(World.class).newInstance(projectile.getEntityWorld());
+                        EntityLiving entity = (EntityLiving)EntityList.newEntity(entityClass, projectile.getEntityWorld());
                         if (entity instanceof BaseCreatureEntity) {
                            BaseCreatureEntity entityCreature = (BaseCreatureEntity)entity;
                            entityCreature.setMinion(true);

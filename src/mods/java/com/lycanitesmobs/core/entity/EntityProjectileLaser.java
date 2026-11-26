@@ -1,7 +1,7 @@
 package com.lycanitesmobs.core.entity;
 
+import com.lycanitesmobs.core.LycanitesClasses;
 import com.lycanitesmobs.Utilities;
-import java.lang.reflect.Constructor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -331,13 +331,9 @@ public class EntityProjectileLaser extends BaseProjectileEntity {
       if (!world.isRemote) {
          try {
             if (this.shootingEntity == null) {
-               Constructor constructor = this.getLaserEndClass().getDeclaredConstructor(World.class, Double.TYPE, Double.TYPE, Double.TYPE, EntityProjectileLaser.class);
-               constructor.setAccessible(true);
-               this.laserEnd = (LaserEndProjectileEntity)constructor.newInstance(world, this.posX, this.posY, this.posZ, this);
+               this.laserEnd = (LaserEndProjectileEntity)LycanitesClasses.create(this.getLaserEndClass(), world, this.posX, this.posY, this.posZ, this);
             } else {
-               Constructor constructor = this.getLaserEndClass().getDeclaredConstructor(World.class, EntityLivingBase.class, EntityProjectileLaser.class);
-               constructor.setAccessible(true);
-               this.laserEnd = (LaserEndProjectileEntity)constructor.newInstance(world, this.shootingEntity, this);
+               this.laserEnd = (LaserEndProjectileEntity)LycanitesClasses.create(this.getLaserEndClass(), world, this.shootingEntity, this);
             }
 
             if (this.getLaunchSound() != null) {

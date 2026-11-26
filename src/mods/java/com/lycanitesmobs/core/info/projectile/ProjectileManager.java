@@ -1,5 +1,7 @@
 package com.lycanitesmobs.core.info.projectile;
 
+import com.lycanitesmobs.core.LycanitesClasses;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
@@ -23,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
@@ -84,27 +85,30 @@ public class ProjectileManager extends JSONLoader {
       return this.nextProjectileNetworkId++;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntities);
+   }
+
    public void registerEntities(Register<EntityEntry> event) {
       ModInfo modInfo = LycanitesMobs.modInfo;
       LycanitesMobs.logDebug("Projectile", "Forge registering all " + this.projectiles.size() + " projectiles from the mod: " + modInfo.name + "...");
 
       for(ProjectileInfo projectileInfo : this.projectiles.values()) {
          if (projectileInfo.modInfo == modInfo) {
-            EntityEntry entityEntry = EntityEntryBuilder.create().entity(projectileInfo.entityClass).id(projectileInfo.getEntityId(), this.getNextProjectileNetworkId()).name(projectileInfo.getEntityId()).tracker(40, 3, true).build();
+            EntityEntry entityEntry = EntityEntryBuilder.create().entity(projectileInfo.entityClass).factory(LycanitesClasses.worldFactory(projectileInfo.entityClass)).id(projectileInfo.getEntityId(), this.getNextProjectileNetworkId()).name(projectileInfo.getEntityId()).tracker(40, 3, true).build();
             event.getRegistry().register(entityEntry);
          }
       }
 
       for(String entityName : this.oldSpriteProjectiles.keySet()) {
          String registryName = LycanitesMobs.modInfo.modid + ":" + entityName;
-         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)this.oldSpriteProjectiles.get(entityName)).id(registryName, this.getNextProjectileNetworkId()).name(registryName).tracker(40, 3, true).build();
+         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)this.oldSpriteProjectiles.get(entityName)).factory(LycanitesClasses.worldFactory(this.oldSpriteProjectiles.get(entityName))).id(registryName, this.getNextProjectileNetworkId()).name(registryName).tracker(40, 3, true).build();
          event.getRegistry().register(entityEntry);
       }
 
       for(String entityName : this.oldModelProjectiles.keySet()) {
          String registryName = LycanitesMobs.modInfo.modid + ":" + entityName;
-         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)this.oldModelProjectiles.get(entityName)).id(registryName, this.getNextProjectileNetworkId()).name(registryName).tracker(40, 3, true).build();
+         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)this.oldModelProjectiles.get(entityName)).factory(LycanitesClasses.worldFactory(this.oldModelProjectiles.get(entityName))).id(registryName, this.getNextProjectileNetworkId()).name(registryName).tracker(40, 3, true).build();
          event.getRegistry().register(entityEntry);
       }
 

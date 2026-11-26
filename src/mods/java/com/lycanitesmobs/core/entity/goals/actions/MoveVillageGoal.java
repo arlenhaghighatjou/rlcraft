@@ -18,7 +18,7 @@ public class MoveVillageGoal extends EntityAIBase {
    private boolean isNocturnal = true;
    private Path entityPathNavigate;
    private VillageDoorInfo doorInfo;
-   private List doorList = new ArrayList();
+   private List<VillageDoorInfo> doorList = new ArrayList();
 
    public MoveVillageGoal(BaseCreatureEntity setHost) {
       this.host = setHost;

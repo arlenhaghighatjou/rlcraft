@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -25,15 +26,12 @@ import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.IOUtils;
-import org.lwjgl.opengl.GL11;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 public abstract class ModelItemBase implements IAnimationModel {
    public static float modelXRotOffset = 180.0F;
@@ -165,7 +163,7 @@ public abstract class ModelItemBase implements IAnimationModel {
          GlStateManager.enableBlend();
       }
 
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       if (layer != null) {
          layer.onRenderStart(itemStack);
       }
@@ -232,21 +230,21 @@ public abstract class ModelItemBase implements IAnimationModel {
    }
 
    public void doAngle(float rotation, float angleX, float angleY, float angleZ) {
-      GL11.glRotatef(rotation, angleX, angleY, angleZ);
+      GlStateManager.rotate(rotation, angleX, angleY, angleZ);
    }
 
    public void doRotate(float rotX, float rotY, float rotZ) {
-      GL11.glRotatef(rotX, 1.0F, 0.0F, 0.0F);
-      GL11.glRotatef(rotY, 0.0F, 1.0F, 0.0F);
-      GL11.glRotatef(rotZ, 0.0F, 0.0F, 1.0F);
+      GlStateManager.rotate(rotX, 1.0F, 0.0F, 0.0F);
+      GlStateManager.rotate(rotY, 0.0F, 1.0F, 0.0F);
+      GlStateManager.rotate(rotZ, 0.0F, 0.0F, 1.0F);
    }
 
    public void doTranslate(float posX, float posY, float posZ) {
-      GL11.glTranslatef(posX, posY, posZ);
+      GlStateManager.translate(posX, posY, posZ);
    }
 
    public void doScale(float scaleX, float scaleY, float scaleZ) {
-      GL11.glScalef(scaleX, scaleY, scaleZ);
+      GlStateManager.scale(scaleX, scaleY, scaleZ);
    }
 
    public void angle(float rotation, float angleX, float angleY, float angleZ) {

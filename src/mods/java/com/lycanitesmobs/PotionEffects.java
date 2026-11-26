@@ -1,5 +1,6 @@
 package com.lycanitesmobs;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import com.lycanitesmobs.api.IGroupBoss;
 import com.lycanitesmobs.client.AssetManager;
@@ -34,7 +35,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PotionEffects {
    private static final EaglercraftUUID swiftswimmingMoveBoostUUID = EaglercraftUUID.fromString("6d4fe17f-06eb-4ebc-a573-364b79faed5e");
@@ -79,14 +79,23 @@ public class PotionEffects {
          ObjectManager.addEffect("staticaura", config, false, 268154193, true);
          ObjectManager.addEffect("freezeaura", config, false, 5618687, true);
          ObjectManager.addEffect("envenom", config, false, 4513126, true);
-         MinecraftForge.EVENT_BUS.register(this);
+         this.register(MinecraftForge.EVENT_BUS);
          AssetManager.addSound("effect_fear", LycanitesMobs.modInfo, "effect.fear");
       }
 
       this.disableNausea = config.getBool("Potion Effects", "Disable Nausea Debuff", this.disableNausea, "Set to true to disable the vanilla nausea debuff on players.");
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, this::onEntityUpdate);
+      bus.register(LivingJumpEvent.class, this::onEntityJump);
+      bus.register(LivingAttackEvent.class, this::onLivingAttack);
+      bus.register(LivingHurtEvent.class, this::onLivingHurt);
+      bus.register(LivingHealEvent.class, this::onEntityHeal);
+      bus.register(PlayerSleepInBedEvent.class, this::onSleep);
+      bus.register(LivingEntityUseItemEvent.class, this::onLivingUseItem);
+   }
+
    public void onEntityUpdate(LivingUpdateEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {
@@ -280,7 +289,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onEntityJump(LivingJumpEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {
@@ -305,7 +313,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onLivingAttack(LivingAttackEvent event) {
       if (!event.isCancelable() || !event.isCanceled()) {
          if (event.getEntityLiving() != null) {
@@ -330,7 +337,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onLivingHurt(LivingHurtEvent event) {
       if (!event.isCancelable() || !event.isCanceled()) {
          if (event.getEntityLiving() != null) {
@@ -395,7 +401,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onEntityHeal(LivingHealEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {
@@ -412,7 +417,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onSleep(PlayerSleepInBedEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null && !player.getEntityWorld().isRemote && !event.isCanceled()) {
@@ -424,7 +428,6 @@ public class PotionEffects {
       }
    }
 
-   @SubscribeEvent
    public void onLivingUseItem(LivingEntityUseItemEvent event) {
       if (!event.isCancelable() || !event.isCanceled()) {
          if (event.getEntityLiving() != null) {

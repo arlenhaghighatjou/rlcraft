@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import java.util.Map.Entry;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -7,7 +8,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class ModelBipedCustom extends ModelCustom {
@@ -68,13 +68,13 @@ public class ModelBipedCustom extends ModelCustom {
    public void render(Entity entity, float time, float distance, float loop, float lookY, float lookX, float scale) {
       super.render(entity, time, distance, loop, lookY, lookX, scale);
       if (this.isChild) {
-         GL11.glTranslatef(0.0F, 0.5F, 0.25F);
+         GlStateManager.translate(0.0F, 0.5F, 0.25F);
       }
 
       this.head.render(scale);
       if (this.isChild) {
-         GL11.glTranslatef(0.0F, 0.25F, -0.25F);
-         GL11.glScalef(0.5F, 0.5F, 0.5F);
+         GlStateManager.translate(0.0F, 0.25F, -0.25F);
+         GlStateManager.scale(0.5F, 0.5F, 0.5F);
       }
 
       this.body.render(scale);

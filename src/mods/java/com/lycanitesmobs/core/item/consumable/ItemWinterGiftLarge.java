@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.item.consumable;
 
+import net.minecraft.entity.EntityList;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.localisation.LanguageManager;
@@ -50,7 +51,7 @@ public class ItemWinterGiftLarge extends ItemBase {
                   Entity entity = null;
 
                   try {
-                     entity = (Entity)entityClass.getConstructor(World.class).newInstance(world);
+                     entity = EntityList.newEntity(entityClass, world);
                   } catch (Exception var10) {
                      var10.printStackTrace();
                   }

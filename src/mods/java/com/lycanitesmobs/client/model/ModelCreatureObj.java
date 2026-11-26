@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -27,8 +28,6 @@ import java.util.WeakHashMap;
 import java.util.function.Function;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -36,7 +35,7 @@ import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 @SideOnly(Side.CLIENT)
 public class ModelCreatureObj extends ModelCustom implements IAnimationModel {
@@ -239,7 +238,7 @@ public class ModelCreatureObj extends ModelCustom implements IAnimationModel {
          GlStateManager.enableBlend();
       }
 
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       if (layer != null) {
          layer.onRenderStart(entity, renderAsTrophy);
       }

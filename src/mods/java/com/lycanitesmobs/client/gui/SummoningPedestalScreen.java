@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.gui.buttons.MainTab;
 import com.lycanitesmobs.client.gui.widgets.SummoningPedestalList;
@@ -16,7 +17,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.GuiScrollingList;
-import org.lwjgl.opengl.GL11;
 
 public class SummoningPedestalScreen extends BaseContainerScreen {
    public EntityPlayer player;
@@ -82,7 +82,7 @@ public class SummoningPedestalScreen extends BaseContainerScreen {
    }
 
    protected void initControls() {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       int buttonSpacing = 2;
       int buttonWidth = this.windowWidth / 4 - buttonSpacing * 2;
       int buttonHeight = 20;
@@ -112,7 +112,7 @@ public class SummoningPedestalScreen extends BaseContainerScreen {
    }
 
    protected void drawGuiContainerForegroundLayer(float partialTicks, int mouseX, int mouseY) {
-      GL11.glColor4f(255.0F, 255.0F, 255.0F, 1.0F);
+      GlStateManager.color(255.0F, 255.0F, 255.0F, 1.0F);
       Minecraft.getMinecraft().getTextureManager().bindTexture(this.getTexture());
       if (!this.hasPets()) {
          this.getFontRenderer().drawStringWithShadow(LanguageManager.translate("gui.beastiary.summoning.empty.title"), (float)(this.centerX - 96), (float)(this.windowY + 6), 16777215);
@@ -132,7 +132,7 @@ public class SummoningPedestalScreen extends BaseContainerScreen {
    }
 
    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-      GL11.glColor4f(255.0F, 255.0F, 255.0F, 1.0F);
+      GlStateManager.color(255.0F, 255.0F, 255.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(this.getTexture());
       this.drawTexturedModalRect(this.windowX, this.windowY, 0, 0, this.windowWidth, this.windowHeight);
       this.drawTexturedModalRect(this.windowX + 40, this.windowY + this.windowHeight, 40, 224, this.windowWidth - 80, 29);
@@ -179,7 +179,7 @@ public class SummoningPedestalScreen extends BaseContainerScreen {
    }
 
    public void drawProgressBar() {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIInventoryCreature"));
       int barWidth = 80;
       int barHeight = 11;

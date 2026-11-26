@@ -508,7 +508,7 @@ public class Spawner {
    public Map<Biome, List<MobSpawn>> getMobSpawns(World world, EntityPlayer player, int blockCount, List<Biome> biomes) {
       Map<Biome, List<MobSpawn>> mobSpawns = new HashMap();
       if (biomes == null) {
-         mobSpawns.put((Object)null, this.getBiomeSpawns(world, player, blockCount, (Biome)null));
+         mobSpawns.put((Biome)null, this.getBiomeSpawns(world, player, blockCount, (Biome)null));
          return mobSpawns;
       } else {
          for(Biome biome : biomes) {

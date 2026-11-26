@@ -1,8 +1,6 @@
 package com.lycanitesmobs.client.gui.buttons;
 
 import com.lycanitesmobs.LycanitesMobs;
-import com.lycanitesmobs.client.gui.InventorySnooperScreen;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.client.Minecraft;
@@ -27,18 +25,7 @@ public class TabManager {
 
    public static void addTabsToInventory(GuiScreen gui) {
       if (LycanitesMobs.config.getBool("GUI", "Show Inventory Tabs", true, "Set to false to disable the GUI tabs.") && gui.getClass() == GuiInventory.class) {
-         InventorySnooperScreen inventorySnooperScreen = new InventorySnooperScreen(mc.player);
-
-         try {
-            Field field = GuiScreen.class.getDeclaredField(inventorySnooperScreen.getButtonListFieldName());
-            field.setAccessible(true);
-            List buttonList = (List)field.get(gui);
-            addTabsToList(buttonList);
-            field.set(gui, buttonList);
-         } catch (Exception var4) {
-            LycanitesMobs.logWarning("", "A problem occured when adding custom inventory tabs:");
-            var4.printStackTrace();
-         }
+         addTabsToList(gui.buttonList);
       }
 
    }

@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.localisation;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -8,19 +9,14 @@ import com.lycanitesmobs.Utilities;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 public class LanguageManager {
    public static LanguageManager INSTANCE;
@@ -44,7 +40,6 @@ public class LanguageManager {
    }
 
    public void loadLocaleData(InputStream inputStreamIn) throws IOException {
-      inputStreamIn = FMLCommonHandler.instance().loadLanguage(this.map, inputStreamIn);
       if (inputStreamIn != null) {
          for(String s : IOUtils.readLines(inputStreamIn, StandardCharsets.UTF_8)) {
             if (!s.isEmpty() && s.charAt(0) != '#') {
@@ -70,38 +65,24 @@ public class LanguageManager {
       int laodedLangFiles = 0;
 
       for(String language : languageList) {
-         String languageDir = String.format("lang/%s/", language);
-         Path languageWalkPath = Utilities.getAssetPath(LycanitesMobs.modInfo.getClass(), LycanitesMobs.modInfo.modid, "lang/en_us/");
+         String languageDir = "lang/" + language + "/";
+         String languageWalkPath = Utilities.getAssetPath(LycanitesMobs.modInfo.getClass(), LycanitesMobs.modInfo.modid, "lang/en_us/");
 
          try {
-            Iterator<Path> languageDirIter = Files.walk(languageWalkPath).iterator();
-            String languageSubdir = "";
+            List<String> languageFiles = EagRuntime.listResources(languageWalkPath);
 
-            while(languageDirIter.hasNext()) {
-               Path subdirPath = (Path)languageDirIter.next();
-               if (!Files.isDirectory(subdirPath, new LinkOption[0])) {
-                  try {
-                     if (!subdirPath.toString().replace("\\", "/").contains(languageSubdir)) {
-                        languageSubdir = "";
-                     }
-
-                     String languagePath = languageDir + languageSubdir + subdirPath.getFileName();
-                     LycanitesMobs.logDebug("Language", "Reading translations from lang: " + languagePath + " Subdir Path:" + subdirPath.toString().replace("en_us", language));
-                     ResourceLocation langLocation = new ResourceLocation(LycanitesMobs.modInfo.modid, languagePath);
-                     getInstance().loadLocaleData(resourceManager.getResource(langLocation).getInputStream());
-                  } catch (Exception var14) {
-                     LycanitesMobs.logWarning("", "Error reading translations from lang: " + languageDir + languageSubdir + subdirPath.getFileName() + " Subdir: " + languageSubdir + " Subdir Path: " + subdirPath.toString().replace("en_us", language));
-                  }
-
-                  ++laodedLangFiles;
-               } else {
-                  languageSubdir = subdirPath.getName(subdirPath.getNameCount() - 1).toString().replace("\\", "/");
-                  if (!languageSubdir.substring(languageSubdir.length() - 1).equals("/")) {
-                     languageSubdir = languageSubdir + "/";
-                  }
-
-                  LycanitesMobs.logDebug("Language", "Setting Subdir: " + languageSubdir);
+            for(int i = 0, l = languageFiles.size(); i < l; ++i) {
+               String languageFile = languageFiles.get(i).substring(languageWalkPath.length());
+               try {
+                  String languagePath = languageDir + languageFile;
+                  LycanitesMobs.logDebug("Language", "Reading translations from lang: " + languagePath);
+                  ResourceLocation langLocation = new ResourceLocation(LycanitesMobs.modInfo.modid, languagePath);
+                  getInstance().loadLocaleData(resourceManager.getResource(langLocation).getInputStream());
+               } catch (Exception var14) {
+                  LycanitesMobs.logWarning("", "Error reading translations from lang: " + languageDir + languageFile);
                }
+
+               ++laodedLangFiles;
             }
          } catch (Exception var15) {
             ;

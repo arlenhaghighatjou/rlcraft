@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.item.consumable;
 
+import net.minecraft.entity.EntityList;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.ObjectManager;
 import com.lycanitesmobs.client.AssetManager;
@@ -75,7 +76,7 @@ public class ItemHalloweenTreat extends ItemBase {
                Entity entity = null;
 
                try {
-                  entity = (Entity)entityClass.getConstructor(World.class).newInstance(world);
+                  entity = EntityList.newEntity(entityClass, world);
                } catch (Exception var9) {
                   var9.printStackTrace();
                }

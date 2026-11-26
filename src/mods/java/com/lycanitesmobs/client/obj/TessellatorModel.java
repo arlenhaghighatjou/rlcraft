@@ -1,11 +1,9 @@
 package com.lycanitesmobs.client.obj;
 
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
@@ -15,7 +13,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
-import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -95,29 +92,7 @@ public class TessellatorModel extends ObjModel {
             }
          }
 
-         bufferBuilder.finishDrawing();
-         if (bufferBuilder.getVertexCount() > 0) {
-            VertexFormat vertexformat = bufferBuilder.getVertexFormat();
-            int i = vertexformat.getNextOffset();
-            ByteBuffer bytebuffer = bufferBuilder.getByteBuffer();
-            List<VertexFormatElement> list = vertexformat.getElements();
-
-            for(int j = 0; j < list.size(); ++j) {
-               VertexFormatElement vertexformatelement = (VertexFormatElement)list.get(j);
-               bytebuffer.position(vertexformat.getOffset(j));
-               vertexformatelement.getUsage().preDraw(vertexformat, j, i, bytebuffer);
-            }
-
-            GlStateManager.glDrawArrays(bufferBuilder.getDrawMode(), 0, bufferBuilder.getVertexCount());
-            int i1 = 0;
-
-            for(int j1 = list.size(); i1 < j1; ++i1) {
-               VertexFormatElement vertexformatelement1 = (VertexFormatElement)list.get(i1);
-               vertexformatelement1.getUsage().postDraw(vertexformat, i1, i, bytebuffer);
-            }
-         }
-
-         bufferBuilder.reset();
+         tess.draw();
       }
    }
 

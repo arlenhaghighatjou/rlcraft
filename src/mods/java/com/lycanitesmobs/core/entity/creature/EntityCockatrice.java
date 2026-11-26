@@ -125,7 +125,7 @@ public class EntityCockatrice extends RideableCreatureEntity implements IMob {
 
    public void specialAttack() {
       double distance = 5.0D;
-      List<EntityLivingBase> possibleTargets = this.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(distance, distance, distance), (possibleTargetx) -> {
+      List<EntityLivingBase> possibleTargets = this.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, this.getEntityBoundingBox().grow(distance, distance, distance), (possibleTarget) -> {
          return possibleTarget.isEntityAlive() && possibleTarget != this && !this.isRidingOrBeingRiddenBy(possibleTarget) && !this.isOnSameTeam(possibleTarget) && this.canAttackClass(possibleTarget.getClass()) && this.canAttackEntity(possibleTarget);
       });
       if (!possibleTargets.isEmpty()) {

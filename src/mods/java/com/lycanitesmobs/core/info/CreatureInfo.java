@@ -1,5 +1,7 @@
 package com.lycanitesmobs.core.info;
 
+import net.minecraft.entity.EntityList;
+import com.lycanitesmobs.core.LycanitesClasses;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,7 +13,7 @@ import com.lycanitesmobs.core.entity.AgeableCreatureEntity;
 import com.lycanitesmobs.core.entity.RideableCreatureEntity;
 import com.lycanitesmobs.core.entity.TameableCreatureEntity;
 import com.lycanitesmobs.core.helpers.JSONHelper;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +96,7 @@ public class CreatureInfo {
       this.name = json.get("name").getAsString();
 
       try {
-         this.entityClass = Class.forName(json.get("entityClass").getAsString());
+         this.entityClass = (Class<? extends EntityLiving>)LycanitesClasses.forName(json.get("entityClass").getAsString());
       } catch (Exception var11) {
          LycanitesMobs.logWarning("", "[Creature] Unable to find the Java Entity Class: " + json.get("entityClass").getAsString() + " for " + this.getName());
          throw new RuntimeException("Creature config loading error, clear your config if updating from an older version of the mod. Missing Class: " + json.get("entityClass").getAsString() + " Creature: " + this.getName());
@@ -662,7 +664,7 @@ public class CreatureInfo {
 
    public EntityLiving createEntity(World world) {
       try {
-         return this.entityClass == null ? null : (EntityLiving)this.entityClass.getConstructor(World.class).newInstance(world);
+         return this.entityClass == null ? null : (EntityLiving)EntityList.newEntity(this.entityClass, world);
       } catch (Exception var3) {
          var3.printStackTrace();
          return null;

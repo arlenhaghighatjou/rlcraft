@@ -1,5 +1,7 @@
 package com.lycanitesmobs.client.gui.overlays;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.lycanitesmobs.ExtendedWorld;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
@@ -19,8 +21,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -31,10 +31,8 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Text;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 public class BaseOverlay extends BaseGui {
    public DrawHelper drawHelper;
@@ -49,9 +47,11 @@ public class BaseOverlay extends BaseGui {
       this.scaledResolution = new ScaledResolution(this.minecraft);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
+   public void register(EventBus bus) {
+      bus.register(RenderGameOverlayEvent.class, EventPriority.HIGH, false, this::onRenderExperienceBar);
+      bus.register(Text.class, this::onGameOverlay);
+   }
+
    public void onRenderExperienceBar(RenderGameOverlayEvent event) {
       if (LycanitesMobs.proxy.getClientPlayer() != null) {
          EntityPlayer player = LycanitesMobs.proxy.getClientPlayer();
@@ -59,7 +59,7 @@ public class BaseOverlay extends BaseGui {
             GlStateManager.pushMatrix();
             GlStateManager.disableLighting();
             GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+            GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             ScaledResolution scaledresolution = new ScaledResolution(this.minecraft);
             int sWidth = scaledresolution.getScaledWidth();
@@ -75,13 +75,13 @@ public class BaseOverlay extends BaseGui {
                if (worldExt.clientWorldEventPlayer != null) {
                   GlStateManager.pushMatrix();
                   worldExt.clientWorldEventPlayer.onGUIUpdate(this, sWidth, sHeight);
-                  GL11.glPopMatrix();
+                  GlStateManager.popMatrix();
                }
             }
 
             ExtendedPlayer playerExt = ExtendedPlayer.getForPlayer(player);
             if (playerExt != null && !this.minecraft.player.capabilities.isCreativeMode && (this.minecraft.player.getHeldItem(EnumHand.MAIN_HAND) != null && this.minecraft.player.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof ItemStaffSummoning || this.minecraft.player.getHeldItem(EnumHand.OFF_HAND) != null && this.minecraft.player.getHeldItem(EnumHand.OFF_HAND).getItem() instanceof ItemStaffSummoning)) {
-               GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+               GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                this.minecraft.getTextureManager().bindTexture(AssetManager.getTexture("GUIInventoryCreature"));
                int barYSpace = 10;
                int barXSpace = -1;
@@ -117,7 +117,7 @@ public class BaseOverlay extends BaseGui {
                   this.minecraft.ingameGUI.setOverlayMessage(mountMessage, false);
                }
 
-               GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+               GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                this.minecraft.getTextureManager().bindTexture(ICONS);
                int staminaBarWidth = 182;
                int staminaBarHeight = 5;
@@ -176,7 +176,6 @@ public class BaseOverlay extends BaseGui {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void onGameOverlay(Text event) {
       if (LycanitesMobs.config.getBool("Debug", "Overlay", false)) {
          RayTraceResult mouseOver = Minecraft.getMinecraft().objectMouseOver;

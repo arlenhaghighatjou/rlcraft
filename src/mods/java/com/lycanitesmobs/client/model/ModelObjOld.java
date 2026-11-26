@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.obj.ObjObject;
 import com.lycanitesmobs.client.obj.TessellatorModel;
@@ -13,8 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -24,7 +23,6 @@ import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.client.model.obj.OBJModel.MaterialLibrary;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class ModelObjOld extends ModelCustom {
@@ -169,7 +167,7 @@ public class ModelObjOld extends ModelCustom {
          GlStateManager.enableBlend();
       }
 
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       if (layer != null) {
          layer.onRenderStart(entity, renderAsTrophy);
       }
@@ -228,21 +226,21 @@ public class ModelObjOld extends ModelCustom {
    }
 
    public void rotate(float rotX, float rotY, float rotZ) {
-      GL11.glRotatef(rotX, 1.0F, 0.0F, 0.0F);
-      GL11.glRotatef(rotY, 0.0F, 1.0F, 0.0F);
-      GL11.glRotatef(rotZ, 0.0F, 0.0F, 1.0F);
+      GlStateManager.rotate(rotX, 1.0F, 0.0F, 0.0F);
+      GlStateManager.rotate(rotY, 0.0F, 1.0F, 0.0F);
+      GlStateManager.rotate(rotZ, 0.0F, 0.0F, 1.0F);
    }
 
    public void rotate(float rotation, float angleX, float angleY, float angleZ) {
-      GL11.glRotatef(rotation, angleX, angleY, angleZ);
+      GlStateManager.rotate(rotation, angleX, angleY, angleZ);
    }
 
    public void translate(float posX, float posY, float posZ) {
-      GL11.glTranslatef(posX, posY, posZ);
+      GlStateManager.translate(posX, posY, posZ);
    }
 
    public void scale(float scaleX, float scaleY, float scaleZ) {
-      GL11.glScalef(scaleX, scaleY, scaleZ);
+      GlStateManager.scale(scaleX, scaleY, scaleZ);
    }
 
    public void setPartCenter(String partName, float centerX, float centerY, float centerZ) {

@@ -1,11 +1,10 @@
 package com.lycanitesmobs.client.renderer.layer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.client.renderer.IItemModelRenderer;
 import com.lycanitesmobs.core.item.equipment.ItemEquipmentPart;
 import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -26,7 +25,7 @@ public class LayerItemDye extends LayerItem {
    }
 
    public void onRenderStart(ItemStack itemStack) {
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
    }
 
    public void onRenderFinish(ItemStack itemStack) {

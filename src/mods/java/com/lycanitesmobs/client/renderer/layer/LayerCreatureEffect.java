@@ -1,13 +1,12 @@
 package com.lycanitesmobs.client.renderer.layer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.client.renderer.RenderCreature;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -64,9 +63,9 @@ public class LayerCreatureEffect extends LayerCreatureBase {
       int k = i / 65536;
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)j, (float)k);
       if (this.blending == LayerCreatureEffect.BLEND.ADD.id) {
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE);
       } else if (this.blending == LayerCreatureEffect.BLEND.SUB.id) {
-         GlStateManager.blendFunc(SourceFactor.DST_COLOR, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       }
 
    }

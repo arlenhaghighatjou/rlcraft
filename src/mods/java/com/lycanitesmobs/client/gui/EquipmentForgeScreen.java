@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.localisation.LanguageManager;
@@ -13,7 +14,6 @@ import java.util.List;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
-import org.lwjgl.opengl.GL11;
 
 public class EquipmentForgeScreen extends BaseContainerScreen {
    public InventoryPlayer playerInventory;
@@ -40,7 +40,7 @@ public class EquipmentForgeScreen extends BaseContainerScreen {
    }
 
    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIEquipmentForge"));
       this.xSize = 176;
       this.ySize = 166;
@@ -51,7 +51,7 @@ public class EquipmentForgeScreen extends BaseContainerScreen {
    }
 
    protected void drawSlots(int backX, int backY) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       this.mc.getTextureManager().bindTexture(AssetManager.getTexture("GUIEquipmentForge"));
       BaseContainer container = (BaseContainer)this.inventorySlots;
       List<Slot> forgeSlots = container.inventorySlots.subList(container.inventoryStart, container.inventoryFinish);
@@ -91,7 +91,7 @@ public class EquipmentForgeScreen extends BaseContainerScreen {
    }
 
    protected void initControls(int backX, int backY) {
-      GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+      GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
       int buttonSpacing = 2;
       int buttonWidth = 128;
       int buttonHeight = 20;

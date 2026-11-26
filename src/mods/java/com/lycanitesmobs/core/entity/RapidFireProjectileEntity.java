@@ -1,7 +1,7 @@
 package com.lycanitesmobs.core.entity;
 
+import com.lycanitesmobs.core.LycanitesClasses;
 import com.lycanitesmobs.core.info.projectile.ProjectileInfo;
-import java.lang.reflect.Constructor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
@@ -113,9 +113,7 @@ public class RapidFireProjectileEntity extends BaseProjectileEntity {
                   projectile = this.projectileInfo.createProjectile(this.getEntityWorld(), this.posX, this.posY, this.posZ);
                   projectile.shoot(this.motionX, this.motionY, this.motionZ, (float)this.projectileInfo.velocity, 0.0F);
                } else {
-                  Constructor constructor = this.projectileClass.getDeclaredConstructor(World.class, Double.TYPE, Double.TYPE, Double.TYPE);
-                  constructor.setAccessible(true);
-                  projectile = (IProjectile)constructor.newInstance(world, this.posX, this.posY, this.posZ);
+                  projectile = (IProjectile)LycanitesClasses.create(this.projectileClass, world, this.posX, this.posY, this.posZ);
                   projectile.shoot(this.motionX, this.motionY, this.motionZ, 1.0F, 1.0F);
                }
             } else {
@@ -123,9 +121,7 @@ public class RapidFireProjectileEntity extends BaseProjectileEntity {
                   projectile = this.projectileInfo.createProjectile(this.getEntityWorld(), this.shootingEntity);
                   projectile.shoot(this.motionX, this.motionY, this.motionZ, (float)this.projectileInfo.velocity, 0.0F);
                } else {
-                  Constructor constructor = this.projectileClass.getDeclaredConstructor(World.class, EntityLivingBase.class);
-                  constructor.setAccessible(true);
-                  projectile = (IProjectile)constructor.newInstance(world, this.shootingEntity);
+                  projectile = (IProjectile)LycanitesClasses.create(this.projectileClass, world, this.shootingEntity);
                   projectile.shoot(this.motionX, this.motionY, this.motionZ, 1.0F, 1.0F);
                }
 

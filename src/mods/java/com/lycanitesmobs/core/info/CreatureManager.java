@@ -1,5 +1,7 @@
 package com.lycanitesmobs.core.info;
 
+import com.lycanitesmobs.core.LycanitesClasses;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.gson.JsonObject;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.core.JSONLoader;
@@ -13,7 +15,6 @@ import java.util.Locale;
 import java.util.Map;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
@@ -236,7 +237,10 @@ public class CreatureManager extends JSONLoader {
       return this.nextCreatureNetworkId++;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntities);
+   }
+
    public void registerEntities(Register<EntityEntry> event) {
       ModInfo modInfo = LycanitesMobs.modInfo;
       LycanitesMobs.logDebug("Creature", "Forge registering all " + this.creatures.size() + " creatures from the mod: " + modInfo.name + "...");
@@ -244,7 +248,7 @@ public class CreatureManager extends JSONLoader {
       for(CreatureInfo creatureInfo : this.creatures.values()) {
          if (creatureInfo.modInfo == modInfo) {
             try {
-               EntityEntry entityEntry = EntityEntryBuilder.create().entity(creatureInfo.entityClass).id(creatureInfo.getEntityId(), this.getNextCreatureNetworkId()).name(creatureInfo.getName()).tracker(creatureInfo.isBoss() ? 160 : 80, 3, false).build();
+               EntityEntry entityEntry = EntityEntryBuilder.create().entity(creatureInfo.entityClass).factory(LycanitesClasses.worldFactory(creatureInfo.entityClass)).id(creatureInfo.getEntityId(), this.getNextCreatureNetworkId()).name(creatureInfo.getName()).tracker(creatureInfo.isBoss() ? 160 : 80, 3, false).build();
                event.getRegistry().register(entityEntry);
             } catch (Exception var6) {
                LycanitesMobs.logWarning("", "Unable to find entity class for: " + creatureInfo.getName() + ".");

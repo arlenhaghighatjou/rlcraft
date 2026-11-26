@@ -5,8 +5,6 @@ import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL15;
 
 public class VBOModel extends TessellatorModel {
    public VBOModel(ResourceLocation resourceLocation) {
@@ -23,18 +21,7 @@ public class VBOModel extends TessellatorModel {
          GlStateManager.matrixMode(5888);
       }
 
-      GL15.glBindBuffer(34962, obj.mesh.getVbo());
-      GL11.glVertexPointer(3, 5126, 24, 0L);
-      GL11.glTexCoordPointer(2, 5126, 24, 12L);
-      GL11.glNormalPointer(5120, 24, 20L);
-      GL11.glEnableClientState(32884);
-      GL11.glEnableClientState(32888);
-      GL11.glEnableClientState(32885);
-      GL11.glDrawArrays(4, 0, obj.mesh.indices.length);
-      GL11.glDisableClientState(32884);
-      GL11.glDisableClientState(32888);
-      GL11.glDisableClientState(32885);
-      GL15.glBindBuffer(34962, 0);
+      GlStateManager.callList(obj.mesh.getVbo());
       if (hasTextureOffset) {
          GlStateManager.matrixMode(5890);
          GlStateManager.popMatrix();

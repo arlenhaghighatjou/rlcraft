@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.gui.beastiary;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.lycanitesmobs.GuiHandler;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
@@ -212,7 +213,7 @@ public class PetsBeastiaryScreen extends BeastiaryScreen {
             if (this.playerExt.selectedPet.respawnTime <= 0) {
                float healthNormal = Math.min(this.playerExt.selectedPet.getHealth() / this.playerExt.selectedPet.getMaxHealth(), 1.0F);
                this.drawTexture(AssetManager.getTexture("GUIPetBarHealth"), (float)barX, (float)barY, 0.0F, healthNormal, 1.0F, (float)barWidth * healthNormal, (float)barHeight);
-               String healthText = String.format("%.0f", this.playerExt.selectedPet.getHealth()) + "/" + String.format("%.0f", this.playerExt.selectedPet.getMaxHealth());
+               String healthText = HString.format("%.0f", this.playerExt.selectedPet.getHealth()) + "/" + HString.format("%.0f", this.playerExt.selectedPet.getMaxHealth());
                this.getFontRenderer().drawString(healthText, barCenter - this.getFontRenderer().getStringWidth(healthText) / 2, barY + 1, 16777215);
             } else {
                float respawnNormal = 1.0F - (float)this.playerExt.selectedPet.respawnTime / (float)this.playerExt.selectedPet.respawnTimeMax;

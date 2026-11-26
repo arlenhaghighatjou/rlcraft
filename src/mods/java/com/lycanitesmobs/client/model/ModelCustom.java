@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client.model;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.client.renderer.RenderCreature;
 import com.lycanitesmobs.client.renderer.layer.LayerCreatureBase;
 import com.lycanitesmobs.client.renderer.layer.LayerCreatureEquipment;
@@ -16,7 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class ModelCustom extends ModelBase {
@@ -57,8 +57,8 @@ public class ModelCustom extends ModelBase {
          sizeScale = (float)((double)sizeScale * ((BaseCreatureEntity)entity).getRenderScale());
       }
 
-      GL11.glScalef(sizeScale, sizeScale, sizeScale);
-      GL11.glTranslatef(0.0F, 0.5F - sizeScale / 2.0F, 0.0F);
+      GlStateManager.scale(sizeScale, sizeScale, sizeScale);
+      GlStateManager.translate(0.0F, 0.5F - sizeScale / 2.0F, 0.0F);
       this.setAngles((EntityLiving)entity, time, distance, loop, lookY, lookX, scale);
       this.animate((EntityLiving)entity, time, distance, loop, lookY, lookX, scale);
    }

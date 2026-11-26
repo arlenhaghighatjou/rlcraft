@@ -1,5 +1,7 @@
 package com.lycanitesmobs.client.gui.beastiary;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.minecraft.entity.EntityList;
 import com.lycanitesmobs.GuiHandler;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
@@ -222,13 +224,7 @@ public abstract class BeastiaryScreen extends BaseScreen {
    }
 
    protected void openURI(URI uri) {
-      try {
-         Class oclass = Class.forName("java.awt.Desktop");
-         Object object = oclass.getMethod("getDesktop").invoke((Object)null);
-         oclass.getMethod("browse", URI.class).invoke(object, uri);
-      } catch (Throwable var4) {
-         LycanitesMobs.logWarning("", "Unable to open link: " + uri.toString());
-      }
+      EagRuntime.openLink(uri.toString());
 
    }
 
@@ -254,7 +250,7 @@ public abstract class BeastiaryScreen extends BaseScreen {
             }
 
             if (this.creaturePreviewEntity == null || this.creaturePreviewEntity.getClass() != creatureInfo.entityClass || !subspeciesMatch) {
-               this.creaturePreviewEntity = (EntityLivingBase)creatureInfo.entityClass.getConstructor(World.class).newInstance(this.player.getEntityWorld());
+               this.creaturePreviewEntity = (EntityLivingBase)EntityList.newEntity(creatureInfo.entityClass, this.player.getEntityWorld());
                this.creaturePreviewEntity.onGround = true;
                if (this.creaturePreviewEntity instanceof BaseCreatureEntity) {
                   ((BaseCreatureEntity)this.creaturePreviewEntity).setSubspecies(this.getDisplaySubspecies(creatureInfo));

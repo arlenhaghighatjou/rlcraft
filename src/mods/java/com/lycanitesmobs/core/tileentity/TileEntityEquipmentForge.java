@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.NonNullList;
 
@@ -120,7 +120,7 @@ public class TileEntityEquipmentForge extends TileEntityBase {
       return new SPacketUpdateTileEntity(this.getPos(), 1, syncData);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       if (this.getWorld().isRemote) {
          NBTTagCompound syncData = packet.getNbtCompound();
          if (syncData.hasKey("ForgeLevel")) {

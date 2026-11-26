@@ -139,7 +139,7 @@ public class IndexedModel {
       return this.objindices;
    }
 
-   public org.lwjgl.util.vector.Vector3f computeCenter() {
+   public net.lax1dude.eaglercraft.v1_8.vector.Vector3f computeCenter() {
       float x = 0.0F;
       float y = 0.0F;
       float z = 0.0F;
@@ -153,6 +153,6 @@ public class IndexedModel {
       x = x / (float)this.vertices.size();
       y = y / (float)this.vertices.size();
       z = z / (float)this.vertices.size();
-      return new org.lwjgl.util.vector.Vector3f(x, y, z);
+      return new net.lax1dude.eaglercraft.v1_8.vector.Vector3f(x, y, z);
    }
 }

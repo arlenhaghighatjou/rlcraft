@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.mobevent;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.client.gui.overlays.BaseOverlay;
@@ -14,7 +15,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opengl.GL11;
 
 public class MobEventPlayerClient {
    public MobEvent mobEvent;
@@ -88,7 +88,7 @@ public class MobEventPlayerClient {
                   x = x + (3 - this.ticks % 6);
                   y = y + (2 - this.ticks % 4);
                   gui.minecraft.getTextureManager().bindTexture(this.getTexture());
-                  GL11.glColor4f(1.0F, 1.0F, 1.0F, animation);
+                  GlStateManager.color(1.0F, 1.0F, 1.0F, animation);
                   if (animation > 0.0F) {
                      gui.drawTexturedModalRect(x, y, width, height, width, height);
                   }

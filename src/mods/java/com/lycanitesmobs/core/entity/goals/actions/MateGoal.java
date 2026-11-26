@@ -78,7 +78,7 @@ public class MateGoal extends EntityAIBase {
 
    private AgeableCreatureEntity getPartner() {
       float distance = 8.0F;
-      List possibleMates = this.host.getEntityWorld().getEntitiesWithinAABB(this.targetClass, this.host.getEntityBoundingBox().grow((double)distance, (double)distance, (double)distance));
+      List<EntityLivingBase> possibleMates = this.host.getEntityWorld().getEntitiesWithinAABB(this.targetClass, this.host.getEntityBoundingBox().grow((double)distance, (double)distance, (double)distance));
       double closestDistance = Double.MAX_VALUE;
       AgeableCreatureEntity newMate = null;
 

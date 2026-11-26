@@ -1,10 +1,10 @@
 package com.lycanitesmobs.client.gui.buttons;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.client.gui.InventorySnooperScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
 
 public abstract class Tab extends ButtonBase {
    public ResourceLocation texture = new ResourceLocation("textures/gui/container/creative_inventory/tabs.png");
@@ -23,7 +23,7 @@ public abstract class Tab extends ButtonBase {
 
    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
       if (this.visible) {
-         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
          int yTexPos = this.enabled ? 0 : tabHeight;
          int ySize = this.enabled ? tabWidth : tabHeight;
          int xOffset = this.id == 2 ? 0 : 1;

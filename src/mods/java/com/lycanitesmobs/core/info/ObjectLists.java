@@ -120,7 +120,7 @@ public class ObjectLists {
          if (!itemLists.containsKey(list)) {
             return false;
          } else {
-            for(ItemStack listStack : (List)itemLists.get(list)) {
+            for(ItemStack listStack : (List<ItemStack>)itemLists.get(list)) {
                if (testStack.getItem() == listStack.getItem() && testStack.getItemDamage() == listStack.getItemDamage()) {
                   return true;
                }

@@ -74,9 +74,9 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void registerEvents() {
-      FMLCommonHandler.instance().bus().register(new KeyHandler(Minecraft.getMinecraft()));
-      MinecraftForge.EVENT_BUS.register(new BaseOverlay(Minecraft.getMinecraft()));
-      MinecraftForge.EVENT_BUS.register(new ClientEventListener());
+      (new KeyHandler(Minecraft.getMinecraft())).register(FMLCommonHandler.instance().bus());
+      (new BaseOverlay(Minecraft.getMinecraft())).register(MinecraftForge.EVENT_BUS);
+      (new ClientEventListener()).register(MinecraftForge.EVENT_BUS);
       IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
       if (resourceManager instanceof IReloadableResourceManager) {
          ((IReloadableResourceManager)resourceManager).registerReloadListener(LanguageLoader.getInstance());
@@ -119,11 +119,11 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void loadCreatureModel(CreatureInfo creature, String modelClassName) throws ClassNotFoundException {
-      creature.modelClass = Class.forName(modelClassName);
+      creature.modelClass = LycanitesModels.forName(modelClassName);
    }
 
    public void loadSubspeciesModel(Subspecies subspecies, String modelClassName) throws ClassNotFoundException {
-      subspecies.modelClass = Class.forName(modelClassName);
+      subspecies.modelClass = LycanitesModels.forName(modelClassName);
    }
 
    public EntityPlayer getClientPlayer() {

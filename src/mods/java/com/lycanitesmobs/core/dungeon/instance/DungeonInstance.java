@@ -93,7 +93,7 @@ public class DungeonInstance {
 
    public void buildChunk(World world, ChunkPos chunkPos) {
       if (!this.complete && this.layout != null && this.layout.sectorChunkMap.containsKey(chunkPos)) {
-         for(SectorInstance sectorInstance : (List)this.layout.sectorChunkMap.get(chunkPos)) {
+         for(SectorInstance sectorInstance : (List<SectorInstance>)this.layout.sectorChunkMap.get(chunkPos)) {
             sectorInstance.build(world, chunkPos, world.rand);
          }
 

@@ -1,10 +1,10 @@
 package com.lycanitesmobs.client.gui.buttons;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import com.lycanitesmobs.client.AssetManager;
 import com.lycanitesmobs.core.info.CreatureInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import org.lwjgl.opengl.GL11;
 
 public class CreatureButton extends ButtonBase {
    public CreatureInfo creatureInfo;
@@ -22,7 +22,7 @@ public class CreatureButton extends ButtonBase {
    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
       if (this.visible) {
          FontRenderer fontrenderer = mc.fontRenderer;
-         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
          this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
          int hoverState = this.getHoverState(this.isMouseOver());
          int buttonW = this.width;

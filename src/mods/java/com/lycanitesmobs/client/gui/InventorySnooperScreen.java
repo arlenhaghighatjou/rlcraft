@@ -1,8 +1,5 @@
 package com.lycanitesmobs.client.gui;
 
-import java.lang.reflect.Field;
-import java.util.List;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -11,21 +8,6 @@ public class InventorySnooperScreen extends GuiInventory {
       super(entityPlayer);
    }
 
-   public String getButtonListFieldName() {
-      try {
-         for(Field field : GuiScreen.class.getDeclaredFields()) {
-            field.setAccessible(true);
-            Object object = field.get(this);
-            if (object instanceof List && (List)object == this.buttonList) {
-               return field.getName();
-            }
-         }
-      } catch (Exception var6) {
-         ;
-      }
-
-      return "";
-   }
 
    public int getGUIXSize() {
       return this.xSize;

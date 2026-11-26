@@ -24,7 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -327,7 +327,7 @@ public class TileEntitySummoningPedestal extends TileEntityBase {
       return new SPacketUpdateTileEntity(this.getPos(), 1, syncData);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       if (this.getWorld().isRemote) {
          NBTTagCompound syncData = packet.getNbtCompound();
          if (syncData.hasKey("OwnerUUID")) {

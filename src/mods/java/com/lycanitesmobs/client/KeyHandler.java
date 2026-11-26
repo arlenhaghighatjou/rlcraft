@@ -1,5 +1,6 @@
 package com.lycanitesmobs.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.lycanitesmobs.LycanitesMobs;
 import com.lycanitesmobs.client.gui.beastiary.CreaturesBeastiaryScreen;
 import com.lycanitesmobs.client.gui.beastiary.IndexBeastiaryScreen;
@@ -17,7 +18,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
@@ -50,7 +50,11 @@ public class KeyHandler {
       ClientRegistry.registerKeyBinding(this.minionSelection);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::onPlayerTick);
+      bus.register(MouseEvent.class, this::onMouseEvent);
+   }
+
    public void onPlayerTick(ClientTickEvent event) {
       ExtendedPlayer playerExt = ExtendedPlayer.getForPlayer(this.mc.player);
       if (playerExt != null) {
@@ -130,7 +134,6 @@ public class KeyHandler {
       }
    }
 
-   @SubscribeEvent
    public void onMouseEvent(MouseEvent event) {
       ExtendedPlayer playerExt = ExtendedPlayer.getForPlayer(this.mc.player);
       if (this.mc.player != null && playerExt != null && this.mc.objectMouseOver != null) {

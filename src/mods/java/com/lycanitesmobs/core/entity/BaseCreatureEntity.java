@@ -1,5 +1,7 @@
 package com.lycanitesmobs.core.entity;
 
+import com.lycanitesmobs.core.LycanitesClasses;
+import net.minecraft.entity.EntityList;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.lycanitesmobs.ExtendedWorld;
@@ -361,7 +363,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
       this.inventory = new InventoryCreature(this.getName(), this);
       this.loadItemDrops();
       if (ItemEquipmentPart.MOB_PART_DROPS.containsKey(this.creatureInfo.getEntityId())) {
-         for(ItemEquipmentPart itemEquipmentPart : (List)ItemEquipmentPart.MOB_PART_DROPS.get(this.creatureInfo.getEntityId())) {
+         for(ItemEquipmentPart itemEquipmentPart : (List<ItemEquipmentPart>)ItemEquipmentPart.MOB_PART_DROPS.get(this.creatureInfo.getEntityId())) {
             ItemDrop partDrop = (new ItemDrop(itemEquipmentPart.getRegistryName().toString(), 0, itemEquipmentPart.dropChance)).setMaxAmount(1);
             partDrop.bonusAmount = false;
             partDrop.amountMultiplier = false;
@@ -1270,7 +1272,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
       EntityLivingBase transformedEntity = null;
 
       try {
-         transformedEntity = (EntityLivingBase)transformClass.getConstructor(World.class).newInstance(this.getEntityWorld());
+         transformedEntity = (EntityLivingBase)EntityList.newEntity(transformClass, this.getEntityWorld());
       } catch (Exception var12) {
          var12.printStackTrace();
       }
@@ -1338,7 +1340,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
                         Entity var14 = ((TameableCreatureEntity)partnerCreature).getPlayerOwner();
                         if (var14 != null) {
                            transformedCreature.applyLevel(transformedLevel);
-                           fusionTameable.setPlayerOwner(var14);
+                           fusionTameable.setPlayerOwner((EntityPlayer)var14);
                            ((TameableCreatureEntity)partnerCreature).copyPetBehaviourTo(fusionTameable);
                            if (partnerCreature.isTemporary) {
                               transformedCreature.setTemporary(partnerCreature.temporaryDuration);
@@ -1441,7 +1443,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
          }
 
          if (!this.getEntityWorld().isRemote && this.updateTick % 40L == 0L) {
-            for(EntityPlayer player : this.getEntityWorld().getPlayers(EntityPlayer.class, (playerx) -> {
+            for(EntityPlayer player : this.getEntityWorld().getPlayers(EntityPlayer.class, (player) -> {
                return player != null && this.getDistance(player) <= 5.0F;
             })) {
                ExtendedPlayer extendedPlayer = ExtendedPlayer.getForPlayer(player);
@@ -2594,7 +2596,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
       BaseProjectileEntity projectile = null;
 
       try {
-         projectile = (BaseProjectileEntity)projectileClass.getConstructor(World.class, EntityLivingBase.class).newInstance(this.getEntityWorld(), this);
+         projectile = (BaseProjectileEntity)LycanitesClasses.create(projectileClass, this.getEntityWorld(), this);
       } catch (Exception var11) {
          LycanitesMobs.logWarning("", "Unable to create a projectile from the class: " + projectileClass);
       }
@@ -4074,7 +4076,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
 
    public <T extends Entity> T getNearestEntity(Class<? extends T> clazz, Class filterClass, double range, boolean canAttack) {
       List aoeTargets = this.getNearbyEntities(clazz, (entity) -> {
-         return (T)(filterClass == null || filterClass.isAssignableFrom(entity.getClass()));
+         return filterClass == null || filterClass.isAssignableFrom(entity.getClass());
       }, range);
       if (aoeTargets.size() == 0) {
          return (T)null;
@@ -4083,7 +4085,7 @@ public abstract class BaseCreatureEntity extends EntityLiving {
          T nearestEntity = null;
 
          for(Object entityObj : aoeTargets) {
-            T targetEntity = entityObj;
+            T targetEntity = (T)entityObj;
             if (targetEntity != this && targetEntity instanceof EntityLivingBase && (!canAttack || this.canAttackEntity((EntityLivingBase)targetEntity)) && targetEntity != this.getControllingPassenger()) {
                double distance = (double)this.getDistance(targetEntity);
                if (distance < nearestDistance) {

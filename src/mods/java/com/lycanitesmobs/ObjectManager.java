@@ -1,5 +1,8 @@
 package com.lycanitesmobs;
 
+import com.lycanitesmobs.core.LycanitesClasses;
+import net.minecraft.tileentity.TileEntity;
+import java.util.function.Supplier;
 import com.lycanitesmobs.core.block.BlockSlabCustom;
 import com.lycanitesmobs.core.config.ConfigBase;
 import com.lycanitesmobs.core.info.ModInfo;
@@ -34,7 +37,6 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class ObjectManager {
    public static Map<String, Block> blocks = new HashMap();
@@ -122,10 +124,10 @@ public class ObjectManager {
       return addItem(name, item);
    }
 
-   public static Class addTileEntity(String name, Class tileEntityClass) {
+   public static <T extends TileEntity> Class addTileEntity(String name, Class<T> tileEntityClass, Supplier<T> factory) {
       name = name.toLowerCase();
       tileEntities.put(name, tileEntityClass);
-      GameRegistry.registerTileEntity(tileEntityClass, "lycanitesmobs." + name);
+      GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation("lycanitesmobs." + name), factory);
       return tileEntityClass;
    }
 
@@ -188,7 +190,7 @@ public class ObjectManager {
    }
 
    public static void registerBlocks(Register<Block> event) {
-      event.getRegistry().registerAll((IForgeRegistryEntry[])blocks.values().toArray(new Block[blocks.size()]));
+      event.getRegistry().registerAll(blocks.values().toArray(new Block[blocks.size()]));
 
       for(Block block : blocks.values()) {
          if (block.getRegistryName() == null) {
@@ -230,7 +232,7 @@ public class ObjectManager {
    public static void registerSpecialEntities(Register<EntityEntry> event) {
       for(String entityName : specialEntities.keySet()) {
          String registryName = LycanitesMobs.modInfo.modid + ":" + entityName;
-         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)specialEntities.get(entityName)).id(registryName, getNextSpecialEntityNetworkId()).name(entityName).tracker(80, 3, false).build();
+         EntityEntry entityEntry = EntityEntryBuilder.create().entity((Class)specialEntities.get(entityName)).factory(LycanitesClasses.worldFactory(specialEntities.get(entityName))).id(registryName, getNextSpecialEntityNetworkId()).name(entityName).tracker(80, 3, false).build();
          event.getRegistry().register(entityEntry);
       }
 

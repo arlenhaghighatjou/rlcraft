@@ -1,5 +1,6 @@
 package com.lycanitesmobs.core.mobevent;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.lycanitesmobs.ExtendedWorld;
 import com.lycanitesmobs.core.mobevent.trigger.AltarMobEventTrigger;
 import com.lycanitesmobs.core.mobevent.trigger.MobEventTrigger;
@@ -11,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class MobEventListener {
@@ -58,7 +58,10 @@ public class MobEventListener {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, this::onWorldUpdate);
+   }
+
    public void onWorldUpdate(WorldTickEvent event) {
       World world = event.world;
       if (!world.isRemote) {

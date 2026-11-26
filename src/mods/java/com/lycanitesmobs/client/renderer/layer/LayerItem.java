@@ -1,13 +1,12 @@
 package com.lycanitesmobs.client.renderer.layer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.lycanitesmobs.client.renderer.IItemModelRenderer;
 import com.lycanitesmobs.core.entity.BaseCreatureEntity;
 import javax.vecmath.Vector2f;
 import javax.vecmath.Vector4f;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -86,9 +85,9 @@ public class LayerItem {
       }
 
       if (this.blending == LayerItem.BLEND.ADD.id) {
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE);
       } else if (this.blending == LayerItem.BLEND.SUB.id) {
-         GlStateManager.blendFunc(SourceFactor.DST_COLOR, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       }
 
    }
