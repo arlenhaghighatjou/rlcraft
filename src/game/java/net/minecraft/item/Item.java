@@ -3,8 +3,9 @@ package net.minecraft.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
@@ -1769,7 +1770,8 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
     public static final class ToolMaterial
     {
-        private static final Map<String, ToolMaterial> MATERIALS = new LinkedHashMap<>();
+        private static final List<ToolMaterial> VALUES = new ArrayList<>();
+        private static final Map<String, ToolMaterial> BY_NAME = new HashMap<>();
         public static final ToolMaterial WOOD = register("WOOD", 0, 59, 2.0F, 0.0F, 15);
         public static final ToolMaterial STONE = register("STONE", 1, 131, 4.0F, 1.0F, 5);
         public static final ToolMaterial IRON = register("IRON", 2, 250, 6.0F, 2.0F, 14);
@@ -1799,30 +1801,25 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
         public static ToolMaterial register(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability)
         {
-            ToolMaterial existing = MATERIALS.get(name);
-            if (existing != null)
-            {
-                return existing;
-            }
-            ToolMaterial material = new ToolMaterial(name, MATERIALS.size(), harvestLevel, maxUses, efficiency, damage, enchantability);
-            MATERIALS.put(name, material);
+            ToolMaterial material = new ToolMaterial(name, VALUES.size(), harvestLevel, maxUses, efficiency, damage, enchantability);
+            VALUES.add(material);
+            BY_NAME.put(name, material);
             return material;
         }
 
         public static ToolMaterial valueOf(String name)
         {
-            java.util.Objects.requireNonNull(name, "name");
-            ToolMaterial material = MATERIALS.get(name);
+            ToolMaterial material = BY_NAME.get(java.util.Objects.requireNonNull(name, "name"));
             if (material == null)
             {
-                throw new IllegalArgumentException("Unknown tool material " + name);
+                throw new IllegalArgumentException("No enum constant net.minecraft.item.Item.ToolMaterial." + name);
             }
             return material;
         }
 
         public static ToolMaterial[] values()
         {
-            return MATERIALS.values().toArray(new ToolMaterial[0]);
+            return VALUES.toArray(new ToolMaterial[VALUES.size()]);
         }
 
         public String name()
