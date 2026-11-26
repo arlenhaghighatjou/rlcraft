@@ -1,5 +1,7 @@
 package net.minecraft.client.renderer;
 
+import bl4ckscor3.mod.particleculling.ParticleCulling;
+import bl4ckscor3.mod.particleculling.CameraHolder;
 import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import net.lax1dude.eaglercraft.v1_8.opengl.EffectPipelineEntityOutline;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
@@ -106,8 +108,9 @@ import net.optifine.CustomSky;
 import dev.redstudio.alfheim.utils.DeduplicatedLongQueue;
 
 @SideOnly(Side.CLIENT)
-public class RenderGlobal implements IWorldEventListener, IResourceManagerReloadListener
+public class RenderGlobal implements IWorldEventListener, IResourceManagerReloadListener, CameraHolder
 {
+    private ICamera camera;
     private static final Logger LOGGER = LogManager.getLogger();
     private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation SUN_TEXTURES = new ResourceLocation("textures/environment/sun.png");
@@ -665,6 +668,11 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     {
     }
 
+    public ICamera getCamera()
+    {
+        return this.camera;
+    }
+
     public void renderEntities(Entity renderViewEntity, ICamera camera, float partialTicks)
     {
         int pass = net.minecraftforge.client.MinecraftForgeClient.getRenderPass();
@@ -1047,6 +1055,12 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
 
     public void setupTerrain(Entity viewEntity, double partialTicks, ICamera camera, int frameCount, boolean playerSpectator)
     {
+        this.camera = camera;
+        if (ParticleCulling.cullThread != null)
+        {
+            ParticleCulling.cullThread.run();
+        }
+
         if (this.mc.gameSettings.renderDistanceChunks != this.renderDistanceChunks)
         {
             this.loadRenderers();

@@ -251,6 +251,7 @@ public class Loader
         mods.add(new FMLModContainer<>("carrots", "Carrots Lib", "1.0.0b1", "required-after:forge@[14.23.4.2705,)", "[1.12.2,)", "carrots", org.jwaresoftware.mcmods.lib.CarrotsLib::new, org.jwaresoftware.mcmods.lib.CarrotsLib::handleModStateEvent));
         mods.add(new FMLModContainer<>("armorunder", "Armor Underwear", "1.0.0", "required-after:forge@[14.23.4.2705,);required-after:carrots@[1.0.0b1]", "[1.12,)", "armorunder", org.jwaresoftware.mcmods.armorunder.ArmorUnderwear::new, org.jwaresoftware.mcmods.armorunder.ArmorUnderwear::handleModStateEvent));
         mods.add(new FMLModContainer<>("ruins", "Ruins Mod", "17.2", "after:extrabiomes", "", "ruins", atomicstryker.ruins.common.RuinsMod::new, atomicstryker.ruins.common.RuinsMod::handleModStateEvent).acceptableRemoteVersions("*"));
+        mods.add(new FMLModContainer<>("particleculling", "Particle Culling", "v1.4.1", "", "[1.12.2]", "particleculling", bl4ckscor3.mod.particleculling.ParticleCulling::new, bl4ckscor3.mod.particleculling.ParticleCulling::handleModStateEvent).clientSideOnly());
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

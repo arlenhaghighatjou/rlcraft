@@ -1,5 +1,6 @@
 package net.minecraft.client.particle;
 
+import bl4ckscor3.mod.particleculling.CullCheck;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
@@ -15,8 +16,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class Particle
+public class Particle implements CullCheck
 {
+    private boolean culled = true;
     private static final AxisAlignedBB EMPTY_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     protected World world;
     public double prevPosX;
@@ -371,5 +373,15 @@ public class Particle
     public void setBoundingBox(AxisAlignedBB bb)
     {
         this.boundingBox = bb;
+    }
+
+    public void setCulled(boolean culled)
+    {
+        this.culled = culled;
+    }
+
+    public boolean isCulled()
+    {
+        return this.culled;
     }
 }

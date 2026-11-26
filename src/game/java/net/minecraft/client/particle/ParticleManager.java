@@ -48,7 +48,7 @@ public class ParticleManager
     public IAcceleratedParticleEngine acceleratedParticleRenderer = null;
     private static final ResourceLocation PARTICLE_TEXTURES = new ResourceLocation("textures/particle/particles.png");
     protected World world;
-    private final List<Particle>[][] fxLayers = new List[4][];
+    public final List<Particle>[][] fxLayers = new List[4][];
     private final Queue<ParticleEmitter> particleEmitters = new ArrayDeque<>();
     private final TextureManager renderer;
     private final EaglercraftRandom rand = new EaglercraftRandom();
@@ -376,7 +376,7 @@ public class ParticleManager
                         final Particle particle = particleList.get(index);
                         try
                         {
-                            if (this.acceleratedParticleRenderer == null || !particle.renderAccelerated(this.acceleratedParticleRenderer, entityIn, partialTicks, f, f4, f1, f2, f3))
+                            if (!particle.isCulled() && (this.acceleratedParticleRenderer == null || !particle.renderAccelerated(this.acceleratedParticleRenderer, entityIn, partialTicks, f, f4, f1, f2, f3)))
                             {
                                 particle.renderParticle(bufferbuilder, entityIn, partialTicks, f, f4, f1, f2, f3);
                                 legacyRenderingHasOccured = true;
@@ -458,7 +458,10 @@ public class ParticleManager
                 for (int index = 0; index < queue.size(); ++index)
                 {
                     Particle particle = queue.get(index);
-                    particle.renderParticle(bufferbuilder, entityIn, partialTick, f1, f5, f2, f3, f4);
+                    if (!particle.isCulled())
+                    {
+                        particle.renderParticle(bufferbuilder, entityIn, partialTick, f1, f5, f2, f3, f4);
+                    }
                 }
             }
         }

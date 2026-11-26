@@ -1,10 +1,6 @@
 package bl4ckscor3.mod.particleculling;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -18,61 +14,28 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 
-public class CullThread extends Thread {
-   private double sleepOverhead = 0.0D;
-   private final List<Particle> temporaryParticleStorage = new ArrayList();
-
+public class CullThread {
    public CullThread() {
-      this.setName("Particle Culling");
-      this.setDaemon(true);
    }
 
    public void run() {
       Minecraft mc = Minecraft.getMinecraft();
-
-      while(!Thread.currentThread().isInterrupted()) {
-         try {
-            long start = System.nanoTime();
-            if (mc.world != null) {
-               for(int i = 0; i < 4; ++i) {
-                  for(int j = 0; j < 2; ++j) {
-                     this.iterateParticles(mc, mc.effectRenderer.fxLayers[i][j]);
-                  }
-               }
+      if (mc.world != null) {
+         for(int i = 0; i < 4; ++i) {
+            for(int j = 0; j < 2; ++j) {
+               this.iterateParticles(mc, mc.effectRenderer.fxLayers[i][j]);
             }
-
-            double d = (double)(System.nanoTime() - start) / 1000000.0D + this.sleepOverhead;
-            long sleepTime = 10L - (long)d;
-            this.sleepOverhead = d % 1.0D;
-            if (sleepTime > 0L) {
-               Thread.sleep(sleepTime);
-            }
-         } catch (InterruptedException var8) {
-            Thread.currentThread().interrupt();
          }
       }
 
    }
 
-   private void iterateParticles(Minecraft mc, ArrayDeque<Particle> deque) {
-      try {
-         for(Particle particle : deque) {
-            try {
-               ;
-            } catch (NoSuchElementException | ConcurrentModificationException var9) {
-               break;
-            }
-
-            if (particle != null) {
-               this.temporaryParticleStorage.add(particle);
-            }
-         }
-
-         for(Particle particle : this.temporaryParticleStorage) {
+   private void iterateParticles(Minecraft mc, List<Particle> particles) {
+      for(int i = 0, l = particles.size(); i < l; ++i) {
+         Particle particle = particles.get(i);
+         if (particle != null) {
             ((CullCheck)particle).setCulled(this.shouldCullParticle(particle, mc));
          }
-      } finally {
-         this.temporaryParticleStorage.clear();
       }
 
    }
@@ -83,9 +46,13 @@ public class CullThread extends Thread {
          if (camera == null) {
             return false;
          } else {
-            for(Class<?> ignoredParticleClass : ParticleCulling.Configuration.ignoredParticleClasses) {
-               if (ignoredParticleClass.isAssignableFrom(particle.getClass())) {
-                  return false;
+            List<String> ignoredParticleClasses = ParticleCulling.Configuration.ignoredParticleClasses;
+            for(int i = 0, l = ignoredParticleClasses.size(); i < l; ++i) {
+               String ignoredParticleClass = ignoredParticleClasses.get(i);
+               for(Class<?> clazz = particle.getClass(); clazz != null; clazz = clazz.getSuperclass()) {
+                  if (ignoredParticleClass.equals(clazz.getName())) {
+                     return false;
+                  }
                }
             }
 
