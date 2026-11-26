@@ -16,7 +16,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,7 +26,6 @@ public class repeller extends Item {
       this.setUnlocalizedName("repeller");
       this.setMaxDamage(500);
       this.setCreativeTab(grapplemod.tabGrapplemod);
-      MinecraftForge.EVENT_BUS.register(this);
    }
 
    public int getMaxItemUseDuration(ItemStack par1ItemStack) {

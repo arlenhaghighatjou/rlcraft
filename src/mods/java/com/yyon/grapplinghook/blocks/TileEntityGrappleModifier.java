@@ -6,7 +6,7 @@ import com.yyon.grapplinghook.network.GrappleModifierMessage;
 import java.util.HashMap;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -50,7 +50,7 @@ public class TileEntityGrappleModifier extends TileEntity {
       return new SPacketUpdateTileEntity(this.pos, metadata, nbtTagCompound);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       this.readFromNBT(pkt.getNbtCompound());
    }
 

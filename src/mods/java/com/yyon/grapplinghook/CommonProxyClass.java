@@ -1,17 +1,16 @@
 package com.yyon.grapplinghook;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.yyon.grapplinghook.blocks.TileEntityGrappleModifier;
 import com.yyon.grapplinghook.controllers.grappleController;
 import com.yyon.grapplinghook.entities.grappleArrow;
 import com.yyon.grapplinghook.items.grappleBow;
 import com.yyon.grapplinghook.network.GrappleDetachMessage;
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -20,24 +19,16 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class CommonProxyClass {
-   Method capturePosition = null;
-
    public CommonProxyClass() {
    }
 
    public void preInit(FMLPreInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(this);
-      this.capturePosition = ObfuscationReflectionHelper.findMethod(NetHandlerPlayServer.class, "captureCurrentPosition", Void.class, new Class[0]);
-      if (this.capturePosition == null) {
-         System.out.println("Error: could not access capturePosition function");
-      }
+      this.register(MinecraftForge.EVENT_BUS);
 
    }
 
@@ -63,7 +54,12 @@ public class CommonProxyClass {
       return entity.isSneaking();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(BreakEvent.class, this::onBlockBreak);
+      bus.register(LivingHurtEvent.class, this::onLivingHurt);
+      bus.register(LivingDeathEvent.class, this::onLivingDeath);
+   }
+
    public void onBlockBreak(BreakEvent event) {
       EntityPlayer player = event.getPlayer();
       if (player != null) {
@@ -83,7 +79,6 @@ public class CommonProxyClass {
    public void blockbreak(BreakEvent event) {
    }
 
-   @SubscribeEvent
    public void onLivingHurt(LivingHurtEvent event) {
       if (event.getSource() == DamageSource.IN_WALL && grapplemod.attached.contains(Integer.valueOf(event.getEntity().getEntityId()))) {
          event.setCanceled(true);
@@ -120,10 +115,6 @@ public class CommonProxyClass {
       return false;
    }
 
-   public Method getCapturePositionMethod() {
-      return this.capturePosition;
-   }
-
    public grappleController createControl(int id, int arrowid, int entityid, World world, vec pos, BlockPos blockpos, GrappleCustomization custom) {
       return null;
    }
@@ -131,7 +122,6 @@ public class CommonProxyClass {
    public void playSlideSound(Entity entity) {
    }
 
-   @SubscribeEvent
    public void onLivingDeath(LivingDeathEvent event) {
       Entity entity = event.getEntity();
       int id = entity.getEntityId();

@@ -1,5 +1,6 @@
 package com.yyon.grapplinghook;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.yyon.grapplinghook.blocks.TileEntityGrappleModifier;
 import com.yyon.grapplinghook.controllers.airfrictionController;
 import com.yyon.grapplinghook.controllers.grappleController;
@@ -57,7 +58,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -205,7 +205,17 @@ public class ClientProxyClass extends CommonProxyClass {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      super.register(bus);
+      bus.register(ModelRegistryEvent.class, this::registerAllModels);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+      bus.register(ClientDisconnectionFromServerEvent.class, this::onPlayerLoggedOutEvent);
+      bus.register(ClientTickEvent.class, this::clientTick);
+      bus.register(KeyInputEvent.class, EventPriority.LOW, false, this::onKeyInputEvent);
+      bus.register(InputUpdateEvent.class, this::onInputUpdate);
+      bus.register(CameraSetup.class, this::CameraSetup);
+   }
+
    public void registerAllModels(ModelRegistryEvent event) {
       System.out.println("REGISTERING ALL MODELS!!!!!!!!!!!!!");
       this.registerItemModels();
@@ -273,7 +283,6 @@ public class ClientProxyClass extends CommonProxyClass {
       }
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       EntityPlayer player = Minecraft.getMinecraft().player;
       if (player != null && (!Minecraft.getMinecraft().isGamePaused() || !Minecraft.getMinecraft().isSingleplayer())) {
@@ -481,13 +490,11 @@ public class ClientProxyClass extends CommonProxyClass {
       Minecraft.getMinecraft().displayGuiScreen(new GuiModifier(tileent));
    }
 
-   @SubscribeEvent
    public void onPlayerLoggedOutEvent(ClientDisconnectionFromServerEvent e) {
       System.out.println("deleting server options");
       GrappleConfig.setserveroptions((GrappleConfig.Config)null);
    }
 
-   @SubscribeEvent
    public void clientTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          ;
@@ -627,9 +634,6 @@ public class ClientProxyClass extends CommonProxyClass {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public void onKeyInputEvent(KeyInputEvent event) {
       EntityPlayer player = Minecraft.getMinecraft().player;
       grappleController controller = null;
@@ -644,7 +648,6 @@ public class ClientProxyClass extends CommonProxyClass {
       this.checkslide(Minecraft.getMinecraft().player);
    }
 
-   @SubscribeEvent
    public void onInputUpdate(InputUpdateEvent event) {
       int id = Minecraft.getMinecraft().player.getEntityId();
       if (grapplemod.controllers.containsKey(Integer.valueOf(id))) {
@@ -669,7 +672,6 @@ public class ClientProxyClass extends CommonProxyClass {
 
    }
 
-   @SubscribeEvent
    public void CameraSetup(CameraSetup event) {
       EntityPlayer player = Minecraft.getMinecraft().player;
       int id = player.getEntityId();

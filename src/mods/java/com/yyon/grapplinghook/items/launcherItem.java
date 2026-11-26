@@ -14,7 +14,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,7 +24,6 @@ public class launcherItem extends Item {
       this.setUnlocalizedName("launcheritem");
       this.setMaxDamage(500);
       this.setCreativeTab(grapplemod.tabGrapplemod);
-      MinecraftForge.EVENT_BUS.register(this);
    }
 
    public int getMaxItemUseDuration(ItemStack par1ItemStack) {

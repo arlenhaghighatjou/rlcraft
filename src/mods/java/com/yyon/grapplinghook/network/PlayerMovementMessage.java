@@ -1,9 +1,6 @@
 package com.yyon.grapplinghook.network;
 
-import com.yyon.grapplinghook.grapplemod;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.IThreadListener;
@@ -94,20 +91,7 @@ public class PlayerMovementMessage implements IMessage {
                      entity.motionY = this.message.my;
                      entity.motionZ = this.message.mz;
                      EntityPlayerMP player = (EntityPlayerMP)entity;
-                     Method capturePositionMethod = grapplemod.proxy.getCapturePositionMethod();
-                     if (capturePositionMethod != null) {
-                        try {
-                           capturePositionMethod.invoke(player.connection);
-                        } catch (IllegalAccessException var8) {
-                           var8.printStackTrace();
-                        } catch (IllegalArgumentException var9) {
-                           var9.printStackTrace();
-                        } catch (InvocationTargetException var10) {
-                           var10.printStackTrace();
-                        }
-                     } else {
-                        System.out.println("Error capturePositionMethod is null");
-                     }
+                     player.connection.captureCurrentPosition();
 
                      if (!player.onGround) {
                         if (this.message.my >= 0.0D) {

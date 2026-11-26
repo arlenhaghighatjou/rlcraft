@@ -65,8 +65,8 @@ public class GrappleAttachMessage implements IMessage {
       this.segmentbottomsides = new LinkedList();
       this.segmenttopsides = new LinkedList();
       this.segments.add(new vec(0.0D, 0.0D, 0.0D));
-      this.segmentbottomsides.add((Object)null);
-      this.segmenttopsides.add((Object)null);
+      this.segmentbottomsides.add(null);
+      this.segmenttopsides.add(null);
 
       for(int i = 1; i < size - 1; ++i) {
          this.segments.add(new vec(buf.readDouble(), buf.readDouble(), buf.readDouble()));
@@ -75,8 +75,8 @@ public class GrappleAttachMessage implements IMessage {
       }
 
       this.segments.add(new vec(0.0D, 0.0D, 0.0D));
-      this.segmentbottomsides.add((Object)null);
-      this.segmenttopsides.add((Object)null);
+      this.segmentbottomsides.add(null);
+      this.segmenttopsides.add(null);
    }
 
    public void toBytes(ByteBuf buf) {

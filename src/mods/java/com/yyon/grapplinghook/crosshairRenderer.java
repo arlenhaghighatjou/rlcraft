@@ -1,5 +1,7 @@
 package com.yyon.grapplinghook;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.yyon.grapplinghook.items.grappleBow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -7,8 +9,6 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -16,18 +16,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class crosshairRenderer {
    public Minecraft mc;
    float zLevel = -90.0F;
 
    public crosshairRenderer() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       this.mc = Minecraft.getMinecraft();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onRenderGameOverlayPost);
+   }
+
    public void onRenderGameOverlayPost(Post event) {
       GameSettings gamesettings = this.mc.gameSettings;
       if (gamesettings.thirdPersonView == 0) {
@@ -67,7 +69,7 @@ public class crosshairRenderer {
                         GlStateManager.enableBlend();
                         int offset = (int)(Math.tan(angle) * l);
                         int verticaloffset = (int)(-Math.tan(verticalangle) * l);
-                        GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+                        GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_ONE_MINUS_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_COLOR, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                         GlStateManager.enableAlpha();
                         this.drawTexturedModalRect(w / 2 - 7 + offset, h / 2 - 7 + verticaloffset, 0, 0, 16, 16);
                         if (angle != 0.0D) {
@@ -77,7 +79,7 @@ public class crosshairRenderer {
 
                      if (custom.rocket && custom.rocket_vertical_angle != 0.0D) {
                         int verticaloffset = (int)(-Math.tan(Math.toRadians(custom.rocket_vertical_angle)) * l);
-                        GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+                        GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_ONE_MINUS_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_COLOR, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                         GlStateManager.enableAlpha();
                         this.drawTexturedModalRect(w / 2 - 7, h / 2 - 7 + verticaloffset, 0, 0, 16, 16);
                      }

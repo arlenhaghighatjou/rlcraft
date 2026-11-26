@@ -31,7 +31,6 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
@@ -47,7 +46,6 @@ public class grappleBow extends Item implements KeypressItem {
       this.setUnlocalizedName("grapplinghook");
       this.setMaxDamage(GrappleConfig.getconf().default_durability);
       this.setCreativeTab(grapplemod.tabGrapplemod);
-      MinecraftForge.EVENT_BUS.register(this);
    }
 
    public int getMaxItemUseDuration(ItemStack par1ItemStack) {

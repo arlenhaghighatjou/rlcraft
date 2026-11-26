@@ -29,11 +29,11 @@ public class SegmentHandler {
       this.segments.add(hookpos);
       this.segments.add(playerpos);
       this.segmentbottomsides = new LinkedList();
-      this.segmentbottomsides.add((Object)null);
-      this.segmentbottomsides.add((Object)null);
+      this.segmentbottomsides.add(null);
+      this.segmentbottomsides.add(null);
       this.segmenttopsides = new LinkedList();
-      this.segmenttopsides.add((Object)null);
-      this.segmenttopsides.add((Object)null);
+      this.segmenttopsides.add(null);
+      this.segmenttopsides.add(null);
       this.world = w;
       this.arrow = arrow;
       this.prevhookpos = new vec(hookpos);

@@ -1,7 +1,7 @@
 package com.yyon.grapplinghook;
 
 import com.yyon.grapplinghook.blocks.TileEntityGrappleModifier;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
