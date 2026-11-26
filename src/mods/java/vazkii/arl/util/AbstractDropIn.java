@@ -11,10 +11,10 @@ public abstract class AbstractDropIn implements ICapabilityProvider, IDropInItem
    }
 
    public boolean hasCapability(@Nonnull Capability<?> capability, EnumFacing facing) {
-      return capability == DROP_IN_CAPABILITY;
+      return capability == DropInHandler.DROP_IN_CAPABILITY;
    }
 
    public <T> T getCapability(@Nonnull Capability<T> capability, EnumFacing facing) {
-      return (T)(capability == DROP_IN_CAPABILITY ? DROP_IN_CAPABILITY.cast(this) : null);
+      return (T)(capability == DropInHandler.DROP_IN_CAPABILITY ? DropInHandler.DROP_IN_CAPABILITY.cast(this) : null);
    }
 }

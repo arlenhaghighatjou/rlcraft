@@ -26,11 +26,14 @@ import vazkii.arl.network.NetworkHandler;
 import vazkii.arl.network.message.MessageDropIn;
 
 public final class DropInHandler {
+   public static Capability<IDropInItem> DROP_IN_CAPABILITY;
+
    public DropInHandler() {
    }
 
    public static void register() {
       CapabilityManager.INSTANCE.register(IDropInItem.class, DropInHandler.CapabilityFactory.INSTANCE, DropInHandler.CapabilityFactory.INSTANCE);
+      CapabilityManager.INSTANCE.onRegistered(IDropInItem.class, capability -> DROP_IN_CAPABILITY = capability);
    }
 
    public static void register(EventBus bus) {
@@ -113,8 +116,8 @@ public final class DropInHandler {
    }
 
    public static IDropInItem getDropInHandler(ItemStack stack) {
-      if (stack.hasCapability(IDropInItem.DROP_IN_CAPABILITY, (EnumFacing)null)) {
-         IDropInItem item = (IDropInItem)stack.getCapability(IDropInItem.DROP_IN_CAPABILITY, (EnumFacing)null);
+      if (stack.hasCapability(DROP_IN_CAPABILITY, (EnumFacing)null)) {
+         IDropInItem item = (IDropInItem)stack.getCapability(DROP_IN_CAPABILITY, (EnumFacing)null);
          if (item != null) {
             return item;
          }
