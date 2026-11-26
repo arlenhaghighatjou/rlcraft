@@ -62,11 +62,13 @@ public class RenderBaubleOnHUDEvent extends Event {
 
    public static class Post extends RenderBaubleOnHUDEvent {
       public Post(ItemStack stack, int posX, int posY, AlignmentHelper.Alignment align, boolean vertical, ScaledResolution res, GuiIngame gui, FontRenderer font) {
+         super(stack, posX, posY, align, vertical, res, gui, font);
       }
    }
 
    public static class Pre extends RenderBaubleOnHUDEvent {
       public Pre(ItemStack stack, int posX, int posY, AlignmentHelper.Alignment align, boolean vertical, ScaledResolution res, GuiIngame gui, FontRenderer font) {
+         super(stack, posX, posY, align, vertical, res, gui, font);
       }
    }
 }

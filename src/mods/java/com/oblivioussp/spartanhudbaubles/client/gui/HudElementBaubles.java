@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanhudbaubles.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import baubles.api.BaublesApi;
 import baubles.api.cap.IBaublesItemHandler;
 import com.oblivioussp.spartanhudbaubles.client.event.RenderBaubleOnHUDEvent;
@@ -18,14 +19,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   modid = "spartanhudbaubles",
-   value = {Side.CLIENT}
-)
 public class HudElementBaubles extends HudElement {
    private static HudElementBaubles ACTIVE = null;
    private static final ResourceLocation HUD = new ResourceLocation("spartanhudbaubles", "textures/gui/hud.png");
@@ -173,7 +168,10 @@ public class HudElementBaubles extends HudElement {
       Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(texX, texY, texU, texV, texWidth, texHeight);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Post.class, HudElementBaubles::onHUDOverlay);
+   }
+
    public static void onHUDOverlay(Post ev) {
       Minecraft mc = Minecraft.getMinecraft();
       if (!Config.disableHUD && ev.getType() == ElementType.EXPERIENCE) {

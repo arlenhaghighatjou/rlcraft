@@ -1,13 +1,12 @@
 package com.oblivioussp.spartanhudbaubles.util;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanhudbaubles.client.gui.AlignmentHelper;
-import java.io.File;
-import java.nio.file.Path;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config {
    private static final String VERSION = Integer.toString(1);
@@ -30,8 +29,8 @@ public class Config {
    public Config() {
    }
 
-   public static void init(Path configPath) {
-      File configFile = configPath.resolve("spartanhudbaubles".toLowerCase() + ".cfg").toFile();
+   public static void init(VFile2 configPath) {
+      VFile2 configFile = new VFile2(configPath, "spartanhudbaubles".toLowerCase() + ".cfg");
       if (config == null) {
          config = new Configuration(configFile, VERSION);
          load();
@@ -39,7 +38,10 @@ public class Config {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onConfigChanged(OnConfigChangedEvent ev) {
       if (ev.getModID().equalsIgnoreCase("spartanhudbaubles")) {
          load();

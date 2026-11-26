@@ -10,26 +10,26 @@ public class Log {
    }
 
    public static void debug(Object object) {
-      LOGGER.debug(object);
+      LOGGER.debug(String.valueOf(object));
    }
 
    public static void error(Object object) {
-      LOGGER.error(object);
+      LOGGER.error(String.valueOf(object));
    }
 
    public static void fatal(Object object) {
-      LOGGER.fatal(object);
+      LOGGER.fatal(String.valueOf(object));
    }
 
    public static void info(Object object) {
-      LOGGER.info(object);
+      LOGGER.info(String.valueOf(object));
    }
 
    public static void trace(Object object) {
-      LOGGER.trace(object);
+      LOGGER.trace(String.valueOf(object));
    }
 
    public static void warn(Object object) {
-      LOGGER.warn(object);
+      LOGGER.warn(String.valueOf(object));
    }
 }

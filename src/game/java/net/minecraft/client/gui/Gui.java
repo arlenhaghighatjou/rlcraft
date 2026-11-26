@@ -78,7 +78,7 @@ public class Gui
         GlStateManager.disableBlend();
     }
 
-    protected void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor)
+    public void drawGradientRect(int left, int top, int right, int bottom, int startColor, int endColor)
     {
         float f = (float)(startColor >> 24 & 255) / 255.0F;
         float f1 = (float)(startColor >> 16 & 255) / 255.0F;

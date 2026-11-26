@@ -1,12 +1,11 @@
 package com.oblivioussp.spartanhudbaubles.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import java.io.IOException;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
@@ -66,10 +65,10 @@ public class GuiPreviewHUD extends GuiScreen {
          }
 
          this.mc.getTextureManager().bindTexture(ICONS);
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_ONE_MINUS_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_COLOR, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.enableAlpha();
          this.drawTexturedModalRect(halfWidth - 7, halfHeight - 7, 0, 0, 16, 16);
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          this.drawTexturedModalRect(halfWidth - 91, res.getScaledHeight() - 32 + 3, 0, 64, 182, 5);
          int armorHeight = res.getScaledHeight() - 49;
 
