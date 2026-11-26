@@ -1,5 +1,6 @@
 package dttraverse;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.ModItems;
 import com.ferreusveritas.dynamictrees.ModRecipes;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
@@ -36,17 +37,11 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import prospector.traverse.init.TraverseBlocks;
 
-@EventBusSubscriber(
-   modid = "dttraverse"
-)
 public final class ModContent {
    public static ILeavesProperties firLeavesProperties;
    public static ILeavesProperties autumnYellowLeavesProperties;
@@ -59,12 +54,18 @@ public final class ModContent {
    public ModContent() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(BiomeDataBasePopulatorRegistryEvent.class, ModContent::registerDataBasePopulators);
+      bus.registerGeneric(Register.class, Block.class, ModContent::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, ModContent::registerItems);
+      bus.registerGeneric(Register.class, IRecipe.class, ModContent::registerRecipes);
+      bus.register(ModelRegistryEvent.class, ModContent::registerModels);
+   }
+
    public static void registerDataBasePopulators(BiomeDataBasePopulatorRegistryEvent event) {
       event.register(new BiomeDataBasePopulator());
    }
 
-   @SubscribeEvent
    public static void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> registry = event.getRegistry();
       TreeFamily oakTree = TreeRegistry.findSpecies(new ResourceLocation("dynamictrees", "oak")).getFamily();
@@ -81,10 +82,7 @@ public final class ModContent {
       LeavesPaging.getLeavesBlockForSequence("dttraverse", 12, autumnRedLeavesProperties);
       LeavesPaging.getLeavesBlockForSequence("dttraverse", 16, autumnBrownLeavesProperties);
       SPECIES.addAll(Arrays.asList(new SpeciesAutumnYellow(birchTree), new SpeciesAutumnOrange(oakTree), new SpeciesAutumnRed(oakTree), new SpeciesAutumnBrown(oakTree), new SpeciesMiniJungle(jungleTree), new SpeciesOakShrub(oakTree)));
-      ArrayList var10000 = SPECIES;
-      IForgeRegistry var10001 = Species.REGISTRY;
-      Species.REGISTRY.getClass();
-      var10000.forEach(var10001::register);
+      SPECIES.forEach(Species.REGISTRY::register);
       TreeFamily firTree = new TreeFir();
       Collections.addAll(TREES, new TreeFamily[]{firTree});
       TREES.forEach((tree) -> {
@@ -95,7 +93,7 @@ public final class ModContent {
          tree.getRegisterableBlocks(treeBlocks);
       });
       treeBlocks.addAll(LeavesPaging.getLeavesMapForModId("dttraverse").values());
-      registry.registerAll((IForgeRegistryEntry[])treeBlocks.toArray(new Block[treeBlocks.size()]));
+      registry.registerAll(treeBlocks.toArray(new Block[treeBlocks.size()]));
    }
 
    public static ILeavesProperties setUpLeaves(final Block primitiveLeavesBlock, String cellKit, final int smotherLeavesMax) {
@@ -114,7 +112,6 @@ public final class ModContent {
       };
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       IForgeRegistry<Item> registry = event.getRegistry();
       SPECIES.forEach((species) -> {
@@ -127,10 +124,9 @@ public final class ModContent {
       TREES.forEach((tree) -> {
          tree.getRegisterableItems(treeItems);
       });
-      registry.registerAll((IForgeRegistryEntry[])treeItems.toArray(new Item[treeItems.size()]));
+      registry.registerAll(treeItems.toArray(new Item[treeItems.size()]));
    }
 
-   @SubscribeEvent
    public static void registerRecipes(Register<IRecipe> event) {
       setupRecipes("fir", "fir_sapling");
       setupRecipes("autumn_yellow", "yellow_autumnal_sapling");
@@ -148,7 +144,6 @@ public final class ModContent {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void registerModels(ModelRegistryEvent event) {
       for(TreeFamily tree : TREES) {
          ModelHelper.regModel(tree.getDynamicBranch());
