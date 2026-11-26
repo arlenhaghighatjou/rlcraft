@@ -20,6 +20,7 @@ import net.minecraft.tileentity.TileEntityCommandBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.WorldProviderHell;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
@@ -63,6 +64,7 @@ public class RuinsMod
 
     public void load(FMLInitializationEvent evt)
     {
+        MapStorage.storageProviders.put(ChunkLoggerData.class, ChunkLoggerData::new);
         GameRegistry.registerWorldGenerator(new RuinsWorldGenerator(), 0);
         this.register(MinecraftForge.EVENT_BUS);
 
