@@ -19,6 +19,7 @@
 
 package net.minecraftforge.fml.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
@@ -50,27 +51,27 @@ public class FMLLog
     @Deprecated
     public static void log(String targetLog, Level level, String format, Object... data)
     {
-        LogManager.getLogger(targetLog).log(level, format, data);
+        LogManager.getLogger(targetLog).log(level, HString.format(format, data));
     }
 
     @Deprecated
     public static void log(Level level, String format, Object... data)
     {
-        log.log(level, format, data);
+        log.log(level, HString.format(format, data));
     }
 
     @Deprecated
     public static void log(String targetLog, Level level, Throwable ex, String format, Object... data)
     {
         Logger logger = LogManager.getLogger(targetLog);
-        logger.log(level, format, data);
+        logger.log(level, HString.format(format, data));
         logger.log(level, ex);
     }
 
     @Deprecated
     public static void log(Level level, Throwable ex, String format, Object... data)
     {
-        log.log(level, format, data);
+        log.log(level, HString.format(format, data));
         log.log(level, ex);
     }
 
