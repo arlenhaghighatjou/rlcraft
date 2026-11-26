@@ -138,7 +138,7 @@ public class WeakCache<T extends IHaveCoords> {
 
       for(int i = 0; i < old.length; ++i) {
          if (old[i] != null && old[i].get() != null) {
-            this.rebucket((IHaveCoords)old[i].get());
+            this.rebucket(old[i].get());
          }
       }
 
@@ -153,7 +153,7 @@ public class WeakCache<T extends IHaveCoords> {
 
       for(int i = 0; i < old.length; ++i) {
          if (old[i] != null && old[i].get() != null) {
-            this.rebucket((IHaveCoords)old[i].get());
+            this.rebucket(old[i].get());
          }
       }
 
@@ -171,7 +171,7 @@ public class WeakCache<T extends IHaveCoords> {
 
          for(int i = 0; i < old.length; ++i) {
             if (old[i] != null && old[i].get() != null) {
-               this.rebucket((IHaveCoords)old[i].get());
+               this.rebucket(old[i].get());
             }
          }
       }

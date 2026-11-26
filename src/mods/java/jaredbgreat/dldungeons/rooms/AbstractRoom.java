@@ -134,8 +134,8 @@ public abstract class AbstractRoom {
          return base.plan(dungeon, parent);
       case ROOM:
       default:
-         Room base = new Room(beginX, endX, beginZ, endZ, floorY, ceilY, dungeon, parent, previous);
-         return base.plan(dungeon, parent);
+         Room room = new Room(beginX, endX, beginZ, endZ, floorY, ceilY, dungeon, parent, previous);
+         return room.plan(dungeon, parent);
       }
    }
 
@@ -146,8 +146,8 @@ public abstract class AbstractRoom {
          return base.plan(dungeon, parent);
       case ROOM:
       default:
-         Room base = new Room(beginX, endX, beginZ, endZ, floorY, ceilY, dungeon, parent, previous);
-         return base.plan(dungeon, parent);
+         Room room = new Room(beginX, endX, beginZ, endZ, floorY, ceilY, dungeon, parent, previous);
+         return room.plan(dungeon, parent);
       }
    }
 }

@@ -241,6 +241,7 @@ public class Loader
         mods.add(new FMLModContainer<>("bettercaves", "YUNG's Better Caves", "1.12.2", "", "[1.12.2]", "bettercaves", com.yungnickyoung.minecraft.bettercaves.BetterCaves::new, com.yungnickyoung.minecraft.bettercaves.BetterCaves::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("spartanhudbaubles", "Spartan HUD: Baubles", "1.0.0 Indev 1", "required-after:baubles", "[1.12.2]", "spartanhudbaubles", com.oblivioussp.spartanhudbaubles.ModSpartanHUDBaubles::new, com.oblivioussp.spartanhudbaubles.ModSpartanHUDBaubles::handleModStateEvent).clientSideOnly().guiFactory(com.oblivioussp.spartanhudbaubles.client.gui.GuiFactorySHB::new));
         mods.add(new FMLModContainer<>("fishingmadebetter", "Fishing Made Better", "2.2.6", "after:advanced-fishing;after:aquaculture;after:levelup2", "", "fishingmadebetter", net.theawesomegem.fishingmadebetter.Primary::new, net.theawesomegem.fishingmadebetter.Primary::handleModStateEvent));
+        mods.add(new FMLModContainer<>("dldungeonsjbg", "Doomlike Dungeons", "1.14.12", "", "[1.12]", "dldungeonsjbg", jaredbgreat.dldungeons.DoomlikeDungeons::new, jaredbgreat.dldungeons.DoomlikeDungeons::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

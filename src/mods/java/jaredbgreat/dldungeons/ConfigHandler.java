@@ -1,5 +1,8 @@
 package jaredbgreat.dldungeons;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import jaredbgreat.dldungeons.builder.Builder;
 import jaredbgreat.dldungeons.builder.RegisteredBlock;
 import jaredbgreat.dldungeons.pieces.chests.BasicChest;
@@ -10,8 +13,6 @@ import jaredbgreat.dldungeons.setup.Externalizer;
 import jaredbgreat.dldungeons.themes.ThemeReader;
 import jaredbgreat.dldungeons.util.debug.Logging;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,10 +28,10 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public final class ConfigHandler {
-   private static File mainConfig;
-   private static File themesDir;
-   private static File listsDir;
-   protected static File configDir;
+   private static VFile2 mainConfig;
+   private static VFile2 themesDir;
+   private static VFile2 listsDir;
+   protected static VFile2 configDir;
    private static final int DEFAULT_SCALE = 8;
    private static final int DEFAULT_MINXZ = 16;
    private static final int DEFAULT_DIF = 3;
@@ -78,7 +79,7 @@ public final class ConfigHandler {
    }
 
    public static void init() {
-      File file = new File(configDir.toString() + File.separator + "DLDungeonsJBG" + ".cfg");
+      VFile2 file = new VFile2(configDir, "DLDungeonsJBG" + ".cfg");
       Configuration config = new Configuration(file);
       config.load();
       config.addCustomCategoryComment("General", "Main config settings");
@@ -179,21 +180,11 @@ public final class ConfigHandler {
 
    public static void generateLists() {
       if (writeLists) {
-         listsDir = new File(configDir.toString() + File.separator + "lists");
-         if (!listsDir.exists()) {
-            listsDir.mkdir();
-         }
-
-         if (!listsDir.exists()) {
-            Logging.logInfo("Warning: Could not create " + listsDir + ".");
-         } else if (!listsDir.isDirectory()) {
-            Logging.logInfo("Warning: " + listsDir + " is not a directory (folder); no themes loaded.");
-         } else {
-            listMobs();
-            listItems();
-            listBlocks();
-            listBiomes();
-         }
+         listsDir = new VFile2(configDir, "lists");
+         listMobs();
+         listItems();
+         listBlocks();
+         listBiomes();
 
       }
    }
@@ -208,13 +199,10 @@ public final class ConfigHandler {
 
       Collections.sort(mobs);
       BufferedWriter outstream = null;
-      File moblist = new File(listsDir.toString() + File.separator + "entities.txt");
-      if (moblist.exists()) {
-         moblist.delete();
-      }
+      VFile2 moblist = new VFile2(listsDir, "entities.txt");
 
       try {
-         outstream = new BufferedWriter(new FileWriter(moblist.toString()));
+         outstream = new BufferedWriter(new OutputStreamWriter(moblist.getOutputStream(), StandardCharsets.UTF_8));
 
          for(String mob : mobs) {
             outstream.write(mob.toString());
@@ -232,13 +220,10 @@ public final class ConfigHandler {
 
    public static void listItems() {
       BufferedWriter outstream = null;
-      File itemlist = new File(listsDir.toString() + File.separator + "items.txt");
-      if (itemlist.exists()) {
-         itemlist.delete();
-      }
+      VFile2 itemlist = new VFile2(listsDir, "items.txt");
 
       try {
-         outstream = new BufferedWriter(new FileWriter(itemlist.toString()));
+         outstream = new BufferedWriter(new OutputStreamWriter(itemlist.getOutputStream(), StandardCharsets.UTF_8));
 
          for(Object item : Item.REGISTRY) {
             String name = ((ResourceLocation)Item.REGISTRY.getNameForObject((Item)item)).toString();
@@ -258,13 +243,10 @@ public final class ConfigHandler {
 
    public static void listBlocks() {
       BufferedWriter outstream = null;
-      File itemlist = new File(listsDir.toString() + File.separator + "blocks.txt");
-      if (itemlist.exists()) {
-         itemlist.delete();
-      }
+      VFile2 itemlist = new VFile2(listsDir, "blocks.txt");
 
       try {
-         outstream = new BufferedWriter(new FileWriter(itemlist.toString()));
+         outstream = new BufferedWriter(new OutputStreamWriter(itemlist.getOutputStream(), StandardCharsets.UTF_8));
 
          for(Object block : Block.REGISTRY) {
             String name = ((ResourceLocation)Block.REGISTRY.getNameForObject((Block)block)).toString();
@@ -284,13 +266,10 @@ public final class ConfigHandler {
 
    public static void listBiomes() {
       BufferedWriter outstream = null;
-      File itemlist = new File(listsDir.toString() + File.separator + "biomes.txt");
-      if (itemlist.exists()) {
-         itemlist.delete();
-      }
+      VFile2 itemlist = new VFile2(listsDir, "biomes.txt");
 
       try {
-         outstream = new BufferedWriter(new FileWriter(itemlist.toString()));
+         outstream = new BufferedWriter(new OutputStreamWriter(itemlist.getOutputStream(), StandardCharsets.UTF_8));
 
          for(Biome biome : ForgeRegistries.BIOMES) {
             String name = ForgeRegistries.BIOMES.getKey(biome).toString();
@@ -309,28 +288,12 @@ public final class ConfigHandler {
    }
 
    private static void openThemesDir() {
-      String themesDirName = configDir.toString() + File.separator + "themes" + File.separator;
+      String themesDirName = configDir.toString() + "/" + "themes" + "/";
       Logging.logInfo("themesdir will be set to " + themesDirName);
-      themesDir = new File(themesDirName);
+      themesDir = new VFile2(configDir, "themes");
       Logging.logInfo("themesdir File is be set to " + themesDir);
-      if (!themesDir.exists()) {
-         themesDir.mkdir();
-      }
-
-      if (!themesDir.exists()) {
-         Logging.logInfo("Warning: Could not create " + themesDirName + ".");
-      } else if (!themesDir.isDirectory()) {
-         Logging.logInfo("Warning: " + themesDirName + " is not a directory (folder); no themes loaded.");
-      } else {
-         ThemeReader.setThemesDir(themesDir);
-      }
-
-      File chestDir = new File(configDir.toString() + File.separator + "SpecialChests");
-      if (!chestDir.exists()) {
-         chestDir.mkdir();
-      }
-
-      Externalizer exporter = new Externalizer(configDir.toString() + File.separator);
+      ThemeReader.setThemesDir(themesDir);
+      Externalizer exporter = new Externalizer(configDir.toString() + "/");
       exporter.makeChestCfg();
    }
 
@@ -358,20 +321,10 @@ public final class ConfigHandler {
 
    }
 
-   public static File findConfigDir(File fd) {
-      File out = new File(fd.toString() + File.separator + "DLDungeonsJBG");
-      if (!out.exists()) {
-         out.mkdir();
-      }
-
-      if (!out.exists()) {
-         System.err.println("ERROR: Could not create config directory");
-      } else if (!out.isDirectory()) {
-         System.err.println("ERROR: Config directory is not a directory!");
-      } else {
-         configDir = out;
-         ThemeReader.setConfigDir(out);
-      }
+   public static VFile2 findConfigDir(VFile2 fd) {
+      VFile2 out = new VFile2(fd, "DLDungeonsJBG");
+      configDir = out;
+      ThemeReader.setConfigDir(out);
 
       return out;
    }
@@ -395,7 +348,7 @@ public final class ConfigHandler {
    }
 
    public static String getConfigDir() {
-      return configDir + File.separator;
+      return configDir + "/";
    }
 
    public static void listDBlocks() {

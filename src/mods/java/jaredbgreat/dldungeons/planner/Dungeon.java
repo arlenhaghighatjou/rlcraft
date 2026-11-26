@@ -310,7 +310,7 @@ public class Dungeon implements IHaveCoords {
       while(true) {
          doMore = false;
          this.grower = this.planter;
-         Collections.shuffle(this.grower, this.random);
+         this.random.shuffle(this.grower);
          this.planter = new ArrayList();
 
          for(Room room : this.grower) {

@@ -41,7 +41,7 @@ public class DoorChecker {
          out.add(exits.peek());
       }
 
-      Collections.shuffle(out, random);
+      random.shuffle(out);
       return out;
    }
 

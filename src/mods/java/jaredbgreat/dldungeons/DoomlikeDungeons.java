@@ -1,5 +1,7 @@
 package jaredbgreat.dldungeons;
 
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import jaredbgreat.dldungeons.builder.RegisteredBlock;
 import jaredbgreat.dldungeons.commands.CmdDimID;
 import jaredbgreat.dldungeons.commands.CmdForceInstallThemes;
@@ -13,8 +15,6 @@ import jaredbgreat.dldungeons.util.debug.DoNothing;
 import jaredbgreat.dldungeons.util.debug.IProfiler;
 import jaredbgreat.dldungeons.util.debug.Logging;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -30,13 +30,26 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 public class DoomlikeDungeons {
    private static GenerationHandler dungeonPlacer;
    public static IProfiler profiler;
-   @Instance("dldungeonsjbg")
    public static DoomlikeDungeons instance;
 
    public DoomlikeDungeons() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.serverLoad((FMLServerStartingEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       Logging.logInfo("Doomlike Dungeons is in preInit, should now load config.");
       ConfigHandler.configDir = ConfigHandler.findConfigDir(event.getModConfigurationDirectory());
@@ -50,7 +63,6 @@ public class DoomlikeDungeons {
 
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       if (ConfigHandler.naturalSpawn) {
          dungeonPlacer = new GenerationHandler();
@@ -59,14 +71,12 @@ public class DoomlikeDungeons {
       RegisteredBlock.add("minecraft:air");
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       ConfigHandler.generateLists();
       ThemeReader.readThemes();
       ThemeType.SyncMobLists();
    }
 
-   @EventHandler
    public void serverLoad(FMLServerStartingEvent event) {
       event.registerServerCommand(new CmdSpawn());
       event.registerServerCommand(new CmdReload());

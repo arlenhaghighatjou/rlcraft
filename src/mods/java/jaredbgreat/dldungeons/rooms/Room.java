@@ -257,7 +257,7 @@ public class Room extends AbstractRoom {
 
       features.add(new IslandRoom(dungeon.islands));
       features.trimToSize();
-      Collections.shuffle(features, dungeon.random);
+      dungeon.random.shuffle(features);
       if (dungeon.complexity.value > 0) {
          int tries = (this.endX - this.beginX + this.endZ - this.beginZ) / (4 + this.sym.level);
 
@@ -622,7 +622,7 @@ public class Room extends AbstractRoom {
          break;
       case 2:
          x = this.beginX;
-         int oppX = this.endX;
+         oppX = this.endX;
          z = (int)this.realZ;
          xSeedDir = -1;
          zSeedDir = 0;
@@ -630,7 +630,7 @@ public class Room extends AbstractRoom {
          break;
       case 3:
          z = this.beginZ;
-         int oppZ = this.endZ;
+         oppZ = this.endZ;
          x = (int)this.realX;
          xSeedDir = 0;
          zSeedDir = -1;
@@ -638,7 +638,7 @@ public class Room extends AbstractRoom {
          break;
       default:
          x = this.beginX;
-         int oppX = this.endX;
+         oppX = this.endX;
          z = (int)this.realZ;
          z = z + this.beginZ;
          xSeedDir = -1;

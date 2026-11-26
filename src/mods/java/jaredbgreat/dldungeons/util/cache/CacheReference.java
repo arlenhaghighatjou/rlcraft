@@ -1,6 +1,6 @@
 package jaredbgreat.dldungeons.util.cache;
 
-import java.lang.ref.WeakReference;
+import com.arlenh7.eaglercraft.ref.WeakReference;
 
 public class CacheReference<T> extends WeakReference<T> {
    private final WeakCache owner;

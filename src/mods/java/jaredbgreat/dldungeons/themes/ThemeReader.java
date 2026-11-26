@@ -1,5 +1,8 @@
 package jaredbgreat.dldungeons.themes;
 
+import java.io.StringReader;
+import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import jaredbgreat.dldungeons.builder.BlockFamily;
 import jaredbgreat.dldungeons.builder.RegisteredBlock;
 import jaredbgreat.dldungeons.nbt.NBTHelper;
@@ -12,64 +15,59 @@ import jaredbgreat.dldungeons.setup.Externalizer;
 import jaredbgreat.dldungeons.util.debug.Logging;
 import jaredbgreat.dldungeons.util.parser.Tokenizer;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ThemeReader {
-   private static File configDir;
-   private static File themesDir;
-   private static File chestDir;
-   private static File blocksDir;
+   private static VFile2 configDir;
+   private static VFile2 themesDir;
+   private static VFile2 chestDir;
+   private static VFile2 blocksDir;
    public static final String CHESTS_DIR = "SpecialChests";
    public static final String BLOCKS_DIR = "BlockFamilies";
-   private static ArrayList<File> files;
+   private static ArrayList<String> files;
    private static final String ESTRING = "";
 
    public ThemeReader() {
    }
 
-   public static void setThemesDir(File dir) {
+   public static void setThemesDir(VFile2 dir) {
       Logging.logInfo("themesdir is " + dir);
       themesDir = dir;
    }
 
-   public static void setConfigDir(File dir) {
+   public static void setConfigDir(VFile2 dir) {
       Logging.logInfo("themesdir is " + dir);
       configDir = dir;
    }
 
    public static String getThemesDir() {
-      return themesDir + File.separator;
+      return themesDir + "/";
    }
 
    public static String getConfigDir() {
-      return configDir + File.separator;
+      return configDir + "/";
    }
 
-   private static int findChestFiles(File dir) {
+   private static int findChestFiles(VFile2 dir) {
       int num = 0;
       files = new ArrayList();
-      String[] fileNames = dir.list();
+      String[] fileNames = listNames(dir);
       if (fileNames.length < 1) {
          return 0;
       } else {
          for(String name : fileNames) {
             if (name.length() >= 5 && name.substring(name.length() - 4).equalsIgnoreCase(".cfg")) {
-               files.add(new File(name));
+               files.add(name);
                ++num;
             }
          }
@@ -78,14 +76,14 @@ public class ThemeReader {
       }
    }
 
-   private static int findThemeFiles(File dir) {
+   private static int findThemeFiles(VFile2 dir) {
       int num = 0;
       files = new ArrayList();
-      String[] fileNames = dir.list();
+      String[] fileNames = listNames(dir);
       if (fileNames.length < 1) {
-         Externalizer exporter = new Externalizer(dir.toString() + File.separator);
+         Externalizer exporter = new Externalizer(dir.toString() + "/");
          exporter.makeThemes();
-         fileNames = dir.list();
+         fileNames = listNames(dir);
       }
 
       if (fileNames.length < 1) {
@@ -93,7 +91,7 @@ public class ThemeReader {
       } else {
          for(String name : fileNames) {
             if (name.length() > 4 && !name.equals("template.cfg") && name.substring(name.length() - 4).equalsIgnoreCase(".cfg")) {
-               files.add(new File(name));
+               files.add(name);
                ++num;
             }
          }
@@ -102,18 +100,14 @@ public class ThemeReader {
       }
    }
 
-   private static int findBlockFiles(File dir) {
+   private static int findBlockFiles(VFile2 dir) {
       int num = 0;
       files = new ArrayList();
-      if (!dir.exists()) {
-         dir.mkdirs();
-      }
-
-      String[] fileNames = dir.list();
+      String[] fileNames = listNames(dir);
       if (fileNames.length < 1) {
-         Externalizer exporter = new Externalizer(dir.toString() + File.separator);
+         Externalizer exporter = new Externalizer(dir.toString() + "/");
          exporter.makeBlocks();
-         fileNames = dir.list();
+         fileNames = listNames(dir);
       }
 
       if (fileNames.length < 1) {
@@ -121,7 +115,7 @@ public class ThemeReader {
       } else {
          for(String name : fileNames) {
             if (name.length() > 5 && name.substring(name.length() - 5).equalsIgnoreCase(".json")) {
-               files.add(new File(name));
+               files.add(name);
                ++num;
             }
          }
@@ -138,45 +132,43 @@ public class ThemeReader {
       TreasureChest.initSlots();
       openNBTConfig();
       openLoot("chests.cfg", true);
-      chestDir = new File(configDir.toString() + File.separator + "SpecialChests");
-      if (!chestDir.exists()) {
-         chestDir.mkdir();
-      }
+      chestDir = new VFile2(configDir, "SpecialChests");
 
       int num = findChestFiles(chestDir);
       Logging.logInfo("Found " + num + " special chest configs.");
 
-      for(File file : files) {
-         openLoot(file.toString(), false);
+      for(String file : files) {
+         openLoot(file, false);
       }
 
-      blocksDir = new File(configDir.toString() + File.separator + "BlockFamilies");
+      blocksDir = new VFile2(configDir, "BlockFamilies");
       num = findBlockFiles(blocksDir);
       Logging.logInfo("Found " + num + " block family configs.");
       num = findThemeFiles(themesDir);
       Logging.logInfo("Found " + num + " themes.");
 
-      for(File file : files) {
+      for(String file : files) {
          readTheme(file);
       }
 
    }
 
-   private static void readBlockFamilies(File dir) {
-      if (dir.exists() && dir.isDirectory() && dir.canRead()) {
+   private static void readBlockFamilies(VFile2 dir) {
+      String[] fileNames = listNames(dir);
+      if (fileNames.length > 0) {
          BufferedReader instream = null;
-         String[] fileNames = dir.list();
 
          for(String fn : fileNames) {
             if (fn.substring(fn.length() - 5).equalsIgnoreCase(".json")) {
                StringBuilder json = new StringBuilder();
-               fn = dir.toString() + File.separator + fn;
+               fn = dir.toString() + "/" + fn;
 
                try {
-                  instream = new BufferedReader(new FileReader(fn));
+                  instream = new BufferedReader(new StringReader(readText(new VFile2(fn))));
 
-                  while(instream.ready()) {
-                     json.append(instream.readLine());
+                  String line;
+                  while((line = instream.readLine()) != null) {
+                     json.append(line);
                   }
 
                   instream.close();
@@ -197,10 +189,10 @@ public class ThemeReader {
 
    public static void openNBTConfig() {
       BufferedReader instream = null;
-      File nbtconfig = new File(configDir.toString() + File.separator + "nbt.cfg");
+      VFile2 nbtconfig = new VFile2(configDir, "nbt.cfg");
       if (nbtconfig.exists()) {
          try {
-            instream = new BufferedReader(new FileReader(nbtconfig.toString()));
+            instream = new BufferedReader(new StringReader(readText(nbtconfig)));
             readNBT(instream);
             if (instream != null) {
                instream.close();
@@ -230,16 +222,16 @@ public class ThemeReader {
    public static void openLoot(String name, boolean isMain) {
       LootCategory cat = LootHandler.getLootHandler().createCategory(name);
       BufferedReader instream = null;
-      File chests;
+      VFile2 chests;
       if (isMain) {
-         chests = new File(configDir.toString() + File.separator + name);
+         chests = new VFile2(configDir, name);
       } else {
-         chests = new File(configDir.toString() + File.separator + "SpecialChests" + File.separator + name);
+         chests = new VFile2(configDir, "SpecialChests", name);
       }
 
       if (chests.exists()) {
          try {
-            instream = new BufferedReader(new FileReader(chests.toString()));
+            instream = new BufferedReader(new StringReader(readText(chests)));
             readLoot(instream, name, cat.getLists());
             if (instream != null) {
                instream.close();
@@ -300,11 +292,11 @@ public class ThemeReader {
       loots.addDiscs();
    }
 
-   private static void readTheme(File file) {
+   private static void readTheme(String file) {
       BufferedReader instream = null;
 
       try {
-         instream = new BufferedReader(new FileReader(themesDir.toString() + File.separator + file.toString()));
+         instream = new BufferedReader(new StringReader(readText(new VFile2(themesDir, file))));
          parseTheme(instream, file.toString());
          if (instream != null) {
             instream.close();
@@ -322,28 +314,20 @@ public class ThemeReader {
 
          Logging.logError("Theme " + file.toString() + " contained a fatal error!");
          var11.printStackTrace();
-         File broken = new File(themesDir.toString() + File.separator + file.toString());
-         File errorDir = new File(themesDir.toString() + File.separator + "errors");
-         if (!errorDir.exists()) {
-            errorDir.mkdir();
-         }
-
+         VFile2 broken = new VFile2(themesDir, file);
+         VFile2 errorDir = new VFile2(themesDir, "errors");
          int i = 0;
 
-         File errorFile;
+         VFile2 errorFile;
          while(true) {
-            errorFile = new File(errorDir.toString() + File.separator + file.toString() + ".err" + i++);
+            errorFile = new VFile2(errorDir, file + ".err" + i++);
             if (!errorFile.exists()) {
                break;
             }
          }
 
          if (!broken.renameTo(errorFile)) {
-            try {
-               Files.move(broken.toPath(), errorFile.toPath());
-            } catch (IOException var8) {
-               Logger.getLogger(ThemeReader.class.getName()).log(Level.SEVERE, (String)null, var8);
-            }
+            Logging.logError("Theme " + broken + " could not be moved to " + errorFile);
          }
 
          if (errorFile.exists()) {
@@ -802,5 +786,24 @@ public class ThemeReader {
       }
 
       return flags;
+   }
+
+   private static String[] listNames(VFile2 dir) {
+      List<String> paths = dir.listFilenames(false);
+      String[] names = new String[paths.size()];
+      for (int i = 0; i < names.length; ++i) {
+         names[i] = VFile2.getNameFromPath(paths.get(i));
+      }
+
+      return names;
+   }
+
+   private static String readText(VFile2 file) throws IOException {
+      String text = file.getAllChars();
+      if (text == null) {
+         throw new FileNotFoundException(file.getPath());
+      } else {
+         return text;
+      }
    }
 }

@@ -1,16 +1,18 @@
 package jaredbgreat.dldungeons.setup;
 
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Externalizer {
    private BufferedReader instream;
    private BufferedWriter outstream;
-   private File outFile;
+   private VFile2 outFile;
    private static final String BASE_LOCATION = "/jaredbgreat/dldungeons/res/themes/";
    private static String outDirectory;
    private static final String[] THEMES = new String[]{"common.cfg", "continentalShelf.cfg", "dank.cfg", "desert.cfg", "frozen.cfg", "jungle.cfg", "mesa.cfg", "nether.cfg", "oceanic.cfg", "template.cfg", "urban.cfg", "villagelike.cfg", "volcanic.cfg"};
@@ -26,17 +28,17 @@ public class Externalizer {
 
    public void copyOut(String name, String outloc) {
       try {
-         this.outFile = new File(outDirectory + outloc);
+         this.outFile = new VFile2(outDirectory + outloc);
          if (this.outFile.exists()) {
             return;
          }
 
-         this.instream = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/jaredbgreat/dldungeons/res/themes/" + name)));
-         this.outstream = new BufferedWriter(new FileWriter(this.outFile));
+         this.instream = new BufferedReader(new InputStreamReader(EagRuntime.getRequiredResourceStream("/dldungeonsjbg/jaredbgreat/dldungeons/res/themes/" + name), StandardCharsets.UTF_8));
+         this.outstream = new BufferedWriter(new OutputStreamWriter(this.outFile.getOutputStream(), StandardCharsets.UTF_8));
          String line;
          if (this.instream != null && this.outstream != null) {
             while((line = this.instream.readLine()) != null) {
-               this.outstream.write(line + System.lineSeparator());
+               this.outstream.write(line + "\n");
             }
          } else {
             System.err.println("[DLDUNGEONS] Error! Failed to write theme file " + this.outFile);
@@ -63,22 +65,17 @@ public class Externalizer {
       boolean result = true;
 
       try {
-         this.outFile = new File(outDirectory + outloc);
+         this.outFile = new VFile2(outDirectory + outloc);
          if (this.outFile.exists()) {
-            if (this.outFile.canWrite() && !this.outFile.isDirectory()) {
-               this.outFile.delete();
-            } else {
-               System.err.println("[DLDUNGEONS] Warning, could not delete " + this.outFile);
-               result = false;
-            }
+            this.outFile.delete();
          }
 
-         this.instream = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/jaredbgreat/dldungeons/res/themes/" + name)));
-         this.outstream = new BufferedWriter(new FileWriter(this.outFile));
+         this.instream = new BufferedReader(new InputStreamReader(EagRuntime.getRequiredResourceStream("/dldungeonsjbg/jaredbgreat/dldungeons/res/themes/" + name), StandardCharsets.UTF_8));
+         this.outstream = new BufferedWriter(new OutputStreamWriter(this.outFile.getOutputStream(), StandardCharsets.UTF_8));
          String line;
          if (this.instream != null && this.outstream != null) {
             while((line = this.instream.readLine()) != null) {
-               this.outstream.write(line + System.lineSeparator());
+               this.outstream.write(line + "\n");
             }
          } else {
             System.err.println("[DLDUNGEONS] Error! Failed to write theme file " + this.outFile);
@@ -137,13 +134,13 @@ public class Externalizer {
       System.out.println("[DLDUNGEONS] Installing files " + outDirectory + "chests.cfg");
       this.copyOut("nbt.cfg");
       this.copyOut("chests.cfg");
-      this.copyOut("oceanic_chests.cfg", "SpecialChests" + File.separator + "oceanic_chests.cfg");
+      this.copyOut("oceanic_chests.cfg", "SpecialChests/oceanic_chests.cfg");
    }
 
    public void forceChestCfg() {
       System.out.println("[DLDUNGEONS] Installing files " + outDirectory + "chests.cfg");
       this.forceOut("chests.cfg");
-      this.forceOut("SpecialChests" + File.separator + "oceanic_chests.cfg");
+      this.forceOut("SpecialChests/oceanic_chests.cfg");
    }
 
    public void makeNBTCfg() {

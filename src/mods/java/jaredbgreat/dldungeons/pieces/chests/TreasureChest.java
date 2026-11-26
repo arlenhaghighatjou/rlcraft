@@ -24,7 +24,7 @@ public class TreasureChest extends BasicChest {
 
    public void place(World world, int x, int y, int z, EaglercraftRandom random) {
       BlockPos pos = new BlockPos(x, y, z);
-      Collections.shuffle(slots, random);
+      random.shuffle(slots);
       this.slot = 0;
       this.level += random.nextInt(2);
       if (NERF && !this.withBoss && this.level > 6) {

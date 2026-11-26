@@ -27,7 +27,7 @@ public class SpawnerCounter {
       targetNum = (int)((double)targetNum + (double)targetNum * Math.max(5.0D, Math.min(0.0D, random.nextGaussian() + 2.0D)) / 10.0D);
       int existing = this.list.size();
       if (existing > targetNum) {
-         Collections.shuffle(this.list, random);
+         random.shuffle(this.list);
 
          for(int i = targetNum; i < existing; ++i) {
             Spawner s = (Spawner)this.list.get(i);

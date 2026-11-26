@@ -1,10 +1,12 @@
 package jaredbgreat.dldungeons;
 
+import java.io.FileNotFoundException;
+import java.io.StringReader;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.lax1dude.eaglercraft.v1_8.sp.server.EaglerSaveHandler;
 import jaredbgreat.dldungeons.builder.Builder;
 import jaredbgreat.dldungeons.themes.ThemeReader;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
@@ -75,11 +77,10 @@ public class ReadAPI {
 
    public static void loadTheme(String file) {
       if (!ConfigHandler.disableAPI) {
-         new File(file);
          BufferedReader instream = null;
 
          try {
-            instream = new BufferedReader(new FileReader(ConfigHandler.configDir.toString() + File.separator + file.toString()));
+            instream = new BufferedReader(new StringReader(readText(new VFile2(ConfigHandler.configDir, file))));
             System.out.println("[DLDUNGEONS] Loading theme file " + file.toString());
             ThemeReader.parseTheme(instream, file.toString());
             if (instream != null) {
@@ -104,9 +105,17 @@ public class ReadAPI {
       }
    }
 
-   public static File saveWorldData(World world) {
-      File saveDir = world.getSaveHandler().getWorldDirectory();
-      return saveDir;
+   public static VFile2 saveWorldData(World world) {
+      return world.getSaveHandler() instanceof EaglerSaveHandler ? ((EaglerSaveHandler)world.getSaveHandler()).getWorldPath() : null;
+   }
+
+   private static String readText(VFile2 file) throws IOException {
+      String text = file.getAllChars();
+      if (text == null) {
+         throw new FileNotFoundException(file.getPath());
+      } else {
+         return text;
+      }
    }
 
    public static void reloadConfig() {

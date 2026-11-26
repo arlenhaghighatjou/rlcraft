@@ -42,7 +42,7 @@ public class LootCategory {
          int l = Math.min(6, level);
          return this.enchantedLowerLevel(this.gear[Math.min(6, l)].getLoot(random), l, random);
       case HEAL:
-         int l = Math.min(6, level);
+         l = Math.min(6, level);
          return new LootResult(this.heal[Math.min(6, l)].getLoot(random).getStack(random), l);
       case LOOT:
          if (level > 6) {

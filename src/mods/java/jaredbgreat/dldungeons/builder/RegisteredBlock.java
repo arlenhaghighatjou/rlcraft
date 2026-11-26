@@ -1,10 +1,11 @@
 package jaredbgreat.dldungeons.builder;
 
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import jaredbgreat.dldungeons.api.DLDEvent;
 import jaredbgreat.dldungeons.util.debug.Logging;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,19 +51,16 @@ public final class RegisteredBlock extends AbstractBlock {
       }
    }
 
-   public static void listDBlocks(File listsDir) {
+   public static void listDBlocks(VFile2 listsDir) {
       ArrayList<String> namel = new ArrayList();
       names.forEach((namex) -> {
-         namel.add(name);
+         namel.add(namex);
       });
       Collections.sort(namel);
-      File itemlist = new File(listsDir.toString() + File.separator + "DBlocks.txt");
-      if (itemlist.exists()) {
-         itemlist.delete();
-      }
+      VFile2 itemlist = new VFile2(listsDir, "DBlocks.txt");
 
       try {
-         BufferedWriter outstream = new BufferedWriter(new FileWriter(itemlist.toString()));
+         BufferedWriter outstream = new BufferedWriter(new OutputStreamWriter(itemlist.getOutputStream(), StandardCharsets.UTF_8));
 
          for(String name : namel) {
             outstream.write(name);
