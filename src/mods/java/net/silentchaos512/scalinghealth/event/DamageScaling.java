@@ -1,6 +1,7 @@
 package net.silentchaos512.scalinghealth.event;
 
-import gnu.trove.map.hash.THashMap;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,17 +14,13 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.silentchaos512.lib.config.ConfigMultiValueLineParser;
 import net.silentchaos512.scalinghealth.ScalingHealth;
 import net.silentchaos512.scalinghealth.api.ScalingHealthAPI;
 import net.silentchaos512.scalinghealth.config.Config;
-import org.apache.logging.log4j.Marker;
-import org.apache.logging.log4j.MarkerManager;
 
 public final class DamageScaling {
-   private static final Marker MARKER = MarkerManager.getMarker("DamageScaling");
    private static final String[] SOURCES_DEFAULT = new String[]{"inFire", "lightningBolt", "onFire", "lava", "hotFloor", "inWall", "cramming", "drown", "starve", "cactus", "fall", "flyIntoWall", "outOfWorld", "generic", "magic", "wither", "anvil", "fallingBlock", "dragonBreath", "fireworks"};
    private static final String SOURCES_COMMENT = "Set damage scaling by damage source. All vanilla sources should be included, but set to no scaling. Mod sources can be added too, you'll just need the damage type string. The number represents how steeply the damage scales. 0 means no scaling (vanilla), 1 means it will be proportional to difficulty/max health (whichever you set). The scaling number can be anything, although I recommend a non-negative number.";
    public static final DamageScaling INSTANCE = new DamageScaling();
@@ -32,15 +29,17 @@ public final class DamageScaling {
    private boolean affectHostileMobs;
    private boolean affectPassiveMobs;
    private DamageScaling.Mode scaleMode;
-   private final Map<String, Float> scalingMap = new THashMap();
+   private final Map<String, Float> scalingMap = new HashMap();
    private final Set<EaglercraftUUID> entityAttackedThisTick = new HashSet();
 
    private DamageScaling() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.HIGHEST, false, this::onPlayerHurt);
+      bus.register(ServerTickEvent.class, this::onServerTick);
+   }
+
    public void onPlayerHurt(LivingAttackEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (!entity.world.isRemote) {
@@ -58,7 +57,7 @@ public final class DamageScaling {
                      this.entityAttackedThisTick.add(entity.getPersistentID());
                      entity.attackEntityFrom(event.getSource(), newAmount);
                      if (Config.Debug.debugMode && Config.Debug.logPlayerDamage) {
-                        ScalingHealth.LOGGER.info(MARKER, "{} on {}: {} -> {} (scale={}, affected={}, change={})", source.damageType, entity.getName(), Float.valueOf(original), Float.valueOf(newAmount), Float.valueOf(scale), Float.valueOf(affectedAmount), Float.valueOf(change));
+                        ScalingHealth.LOGGER.info("{} on {}: {} -> {} (scale={}, affected={}, change={})", source.damageType, entity.getName(), Float.valueOf(original), Float.valueOf(newAmount), Float.valueOf(scale), Float.valueOf(affectedAmount), Float.valueOf(change));
                      }
                   }
 
@@ -90,7 +89,6 @@ public final class DamageScaling {
       }
    }
 
-   @SubscribeEvent
    public void onServerTick(ServerTickEvent event) {
       this.entityAttackedThisTick.clear();
    }

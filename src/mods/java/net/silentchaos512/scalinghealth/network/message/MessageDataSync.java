@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.network.message;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,7 +16,7 @@ import net.silentchaos512.scalinghealth.network.Message;
 import net.silentchaos512.scalinghealth.utils.ModifierHandler;
 import net.silentchaos512.scalinghealth.utils.SHPlayerDataHandler;
 
-public class MessageDataSync extends Message {
+public class MessageDataSync extends Message<MessageDataSync> {
    public NBTTagCompound tags;
    public String playerName;
    public int experienceLevel;
@@ -32,6 +33,18 @@ public class MessageDataSync extends Message {
 
    @Nullable
    @SideOnly(Side.CLIENT)
+   public void fromBytes(ByteBuf buf) {
+      this.experienceLevel = readInt(buf);
+      this.playerName = readString(buf);
+      this.tags = readNBT(buf);
+   }
+
+   public void toBytes(ByteBuf buf) {
+      writeInt(this.experienceLevel, buf);
+      writeString(this.playerName, buf);
+      writeNBT(this.tags, buf);
+   }
+
    public IMessage handleMessage(MessageContext context) {
       ClientTicks.scheduleAction(() -> {
          EntityPlayer player = getPlayerByName(this.playerName);

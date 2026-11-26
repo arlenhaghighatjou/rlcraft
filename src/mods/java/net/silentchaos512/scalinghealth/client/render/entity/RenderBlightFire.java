@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.client.render.entity;
 
+import com.arlenh7.eaglercraft.awt.Color;
 import javax.annotation.Nonnull;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -15,7 +16,6 @@ import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.scalinghealth.entity.EntityBlightFire;
 import net.silentchaos512.scalinghealth.lib.module.ModuleAprilTricks;
-import org.lwjgl.util.Color;
 
 public final class RenderBlightFire extends Render<EntityBlightFire> {
    private static final float FIRE_SCALE = 1.8F;
@@ -65,9 +65,8 @@ public final class RenderBlightFire extends Render<EntityBlightFire> {
          GlStateManager.translate(0.0F, 0.0F, (float)((int)f3) * 0.02F);
          if (ModuleAprilTricks.instance.isRightDay() && ModuleAprilTricks.instance.isEnabled()) {
             float changeRate = 40.0F + (float)parent.getEntityId() % 80.0F;
-            Color color = new Color();
             float hue = (float)(ClientTicks.ticksInGame + parent.getEntityId()) % changeRate / changeRate;
-            color.fromHSB(hue, 1.0F, 1.0F);
+            Color color = new Color(Color.HSBtoRGB(hue, 1.0F, 1.0F));
             GlStateManager.color((float)color.getRed() / 255.0F, (float)color.getGreen() / 255.0F, (float)color.getBlue() / 255.0F, 1.0F);
          } else {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

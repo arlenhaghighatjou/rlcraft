@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.command;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -79,8 +80,8 @@ public class CommandScalingHealth extends CommandBaseSL {
                tell(sender, "Player data is null for " + player.getName(), false);
             } else if (subCommand == CommandScalingHealth.SubCommand.GET) {
                double current = data.getDifficulty();
-               String strCurrent = String.format("%.2f", current);
-               String strMax = String.format("%.2f", Config.Difficulty.maxValue);
+               String strCurrent = HString.format("%.2f", current);
+               String strMax = HString.format("%.2f", Config.Difficulty.maxValue);
                tell(sender, "showDifficulty", true, player.getName(), strCurrent, strMax);
             } else {
                double current = data.getDifficulty();
@@ -88,12 +89,12 @@ public class CommandScalingHealth extends CommandBaseSL {
                double min = getMinValue(subCommand, current, (double)Config.Difficulty.minValue, (double)Config.Difficulty.maxValue);
                double max = getMaxValue(subCommand, current, (double)Config.Difficulty.minValue, (double)Config.Difficulty.maxValue);
                if (!checkBounds(value, min, max)) {
-                  tell(sender, TextFormatting.RED, "outOfBounds", true, String.format("%.2f", min), String.format("%.2f", max));
+                  tell(sender, TextFormatting.RED, "outOfBounds", true, HString.format("%.2f", min), HString.format("%.2f", max));
                   return;
                }
 
                data.setDifficulty(toSet);
-               tell(sender, "setDifficulty", true, player.getName(), String.format("%.2f", toSet));
+               tell(sender, "setDifficulty", true, player.getName(), HString.format("%.2f", toSet));
             }
          }
 
@@ -107,8 +108,8 @@ public class CommandScalingHealth extends CommandBaseSL {
       } else {
          if (subCommand == CommandScalingHealth.SubCommand.GET) {
             double current = data.difficulty;
-            String strCurrent = String.format("%.2f", current);
-            String strMax = String.format("%.2f", Config.Difficulty.maxValue);
+            String strCurrent = HString.format("%.2f", current);
+            String strMax = HString.format("%.2f", Config.Difficulty.maxValue);
             tell(sender, "showWorldDifficulty", true, strCurrent, strMax);
          } else {
             double current = data.difficulty;
@@ -116,13 +117,13 @@ public class CommandScalingHealth extends CommandBaseSL {
             double min = getMinValue(subCommand, current, (double)Config.Difficulty.minValue, (double)Config.Difficulty.maxValue);
             double max = getMaxValue(subCommand, current, (double)Config.Difficulty.minValue, (double)Config.Difficulty.maxValue);
             if (!checkBounds(value, min, max)) {
-               tell(sender, TextFormatting.RED, "outOfBounds", true, String.format("%.2f", min), String.format("%.2f", max));
+               tell(sender, TextFormatting.RED, "outOfBounds", true, HString.format("%.2f", min), HString.format("%.2f", max));
                return;
             }
 
             data.difficulty = toSet;
             data.markDirty();
-            tell(sender, "setWorldDifficulty", true, String.format("%.2f", toSet));
+            tell(sender, "setWorldDifficulty", true, HString.format("%.2f", toSet));
          }
 
       }
@@ -138,8 +139,8 @@ public class CommandScalingHealth extends CommandBaseSL {
                float current = player.getHealth();
                float max = player.getMaxHealth();
                float modValue = data.getMaxHealth() - (float)Config.Player.Health.startingHealth;
-               String strCurrent = String.format("%.2f", current);
-               String strMax = String.format("%.2f", max);
+               String strCurrent = HString.format("%.2f", current);
+               String strMax = HString.format("%.2f", max);
                String strMod = (modValue >= 0.0F ? "+" : "") + modValue;
                tell(sender, "showHealth", true, player.getName(), strCurrent, strMax, strMod);
             } else {
@@ -226,7 +227,7 @@ public class CommandScalingHealth extends CommandBaseSL {
       if (fromLocalizationFile) {
          sender.sendMessage((new TextComponentString(String.valueOf(format))).appendSibling(new TextComponentTranslation(key, args)));
       } else {
-         sender.sendMessage(new TextComponentString(format + String.format(key, args)));
+         sender.sendMessage(new TextComponentString(format + HString.format(key, args)));
       }
 
    }

@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.network.message;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.util.Objects;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +15,7 @@ import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.scalinghealth.ScalingHealth;
 import net.silentchaos512.scalinghealth.network.Message;
 
-public class MessagePlaySound extends Message {
+public class MessagePlaySound extends Message<MessagePlaySound> {
    public String soundId;
    public float volume;
    public float pitch;
@@ -30,6 +31,18 @@ public class MessagePlaySound extends Message {
 
    @Nullable
    @SideOnly(Side.CLIENT)
+   public void fromBytes(ByteBuf buf) {
+      this.pitch = readFloat(buf);
+      this.soundId = readString(buf);
+      this.volume = readFloat(buf);
+   }
+
+   public void toBytes(ByteBuf buf) {
+      writeFloat(this.pitch, buf);
+      writeString(this.soundId, buf);
+      writeFloat(this.volume, buf);
+   }
+
    public IMessage handleMessage(MessageContext ctx) {
       ClientTicks.scheduleAction(() -> {
          EntityPlayer player = ScalingHealth.proxy.getClientPlayer();

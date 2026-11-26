@@ -244,6 +244,7 @@ public class Loader
         mods.add(new FMLModContainer<>("dldungeonsjbg", "Doomlike Dungeons", "1.14.12", "", "[1.12]", "dldungeonsjbg", jaredbgreat.dldungeons.DoomlikeDungeons::new, jaredbgreat.dldungeons.DoomlikeDungeons::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("reskillable", "Reskillable", "1.12.2-1.13.0", "", "[1.12.2]", "reskillable", codersafterdark.reskillable.Reskillable::new, codersafterdark.reskillable.Reskillable::handleModStateEvent).guiFactory(codersafterdark.reskillable.client.gui.GuiFactory::new));
         mods.add(new FMLModContainer<>("silentlib", "Silent Lib", "3.0.13", "required-after:forge@[14.23.3.2669,);", "[1.12.2]", "silentlib", net.silentchaos512.lib.SilentLib::new, net.silentchaos512.lib.SilentLib::handleModStateEvent));
+        mods.add(new FMLModContainer<>("scalinghealth", "Scaling Health", "1.3.37", "required-after:forge@[14.23.5.2779,);required-after:silentlib@[3.0.13,);after:morpheus", "[1.12.2]", "scalinghealth", net.silentchaos512.scalinghealth.ScalingHealth::new, net.silentchaos512.scalinghealth.ScalingHealth::handleModStateEvent).guiFactory(net.silentchaos512.scalinghealth.gui.GuiFactoryScalingHealth::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

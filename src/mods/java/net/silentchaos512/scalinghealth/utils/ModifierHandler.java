@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.utils;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -36,7 +37,7 @@ public class ModifierHandler {
       if (amount <= 0.0D) {
          ScalingHealth.logHelper.warn("ModifierHandler.setMaxHealth: amount <= 0!", new Object[0]);
       } else if (entity instanceof EntityPlayer && !Config.Player.Health.allowModify) {
-         ScalingHealth.logHelper.info(String.format("Would have set player %s's health to %.1f, but modified player health has been disabled in the config!", entity.getName(), amount), new Object[0]);
+         ScalingHealth.logHelper.info(HString.format("Would have set player %s's health to %.1f, but modified player health has been disabled in the config!", entity.getName(), amount), new Object[0]);
       } else {
          float originalHealth = entity.getHealth();
          IAttributeInstance attr = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);

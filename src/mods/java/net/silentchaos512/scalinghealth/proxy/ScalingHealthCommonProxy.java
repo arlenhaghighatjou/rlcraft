@@ -9,7 +9,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -17,7 +16,6 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.silentchaos512.lib.proxy.IProxy;
 import net.silentchaos512.lib.registry.SRegistry;
 import net.silentchaos512.lib.util.Color;
-import net.silentchaos512.scalinghealth.compat.morpheus.SHMorpheusCompat;
 import net.silentchaos512.scalinghealth.config.Config;
 import net.silentchaos512.scalinghealth.event.BlightHandler;
 import net.silentchaos512.scalinghealth.event.DamageScaling;
@@ -51,15 +49,12 @@ public class ScalingHealthCommonProxy implements IProxy {
       ModEntities.init(registry);
       DifficultyHandler.INSTANCE.initDefaultEquipment();
       NetworkHandler.init();
-      MinecraftForge.EVENT_BUS.register(new ScalingHealthCommonEvents());
-      MinecraftForge.EVENT_BUS.register(new SHPlayerDataHandler.EventHandler());
-      MinecraftForge.EVENT_BUS.register(DifficultyHandler.INSTANCE);
-      MinecraftForge.EVENT_BUS.register(BlightHandler.INSTANCE);
-      MinecraftForge.EVENT_BUS.register(PetEventHandler.INSTANCE);
-      MinecraftForge.EVENT_BUS.register(DamageScaling.INSTANCE);
-      if (Loader.isModLoaded("morpheus") && Config.MORPHEUS_OVERRIDE) {
-         SHMorpheusCompat.init();
-      }
+      (new ScalingHealthCommonEvents()).register(MinecraftForge.EVENT_BUS);
+      (new SHPlayerDataHandler.EventHandler()).register(MinecraftForge.EVENT_BUS);
+      DifficultyHandler.INSTANCE.register(MinecraftForge.EVENT_BUS);
+      BlightHandler.INSTANCE.register(MinecraftForge.EVENT_BUS);
+      PetEventHandler.INSTANCE.register(MinecraftForge.EVENT_BUS);
+      DamageScaling.INSTANCE.register(MinecraftForge.EVENT_BUS);
 
    }
 

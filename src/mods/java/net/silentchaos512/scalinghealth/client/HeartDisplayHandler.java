@@ -1,6 +1,8 @@
 package net.silentchaos512.scalinghealth.client;
 
-import java.awt.Color;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import com.arlenh7.eaglercraft.awt.Color;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -16,7 +18,6 @@ import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.silentchaos512.lib.config.ConfigBase;
 import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.scalinghealth.config.Config;
@@ -33,9 +34,10 @@ public final class HeartDisplayHandler extends Gui {
    private HeartDisplayHandler() {
    }
 
-   @SubscribeEvent(
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Pre.class, EventPriority.NORMAL, true, this::onHealthBar);
+   }
+
    public void onHealthBar(Pre event) {
       Minecraft mc = Minecraft.getMinecraft();
       EntityPlayer player = mc.player;

@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Calendar;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nullable;
@@ -24,7 +25,6 @@ import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.silentchaos512.lib.util.ChatHelper;
@@ -40,7 +40,17 @@ public class ScalingHealthCommonEvents {
    public ScalingHealthCommonEvents() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingDropsEvent.class, this::onLivingDrops);
+      bus.register(LivingExperienceDropEvent.class, EventPriority.HIGHEST, false, this::onXPDropped);
+      bus.register(LivingDeathEvent.class, this::onPlayerDied);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawn);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerJoinedServer);
+      bus.register(PlayerSleepInBedEvent.class, this::onPlayerSleepInBed);
+      bus.register(PlayerWakeUpEvent.class, this::onPlayerWakeUp);
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onLivingDrops(LivingDropsEvent event) {
       EntityPlayer player = this.getPlayerThatCausedDeath(event.getSource());
       if (player != null && (!(player instanceof FakePlayer) || Config.FakePlayer.generateHearts)) {
@@ -75,9 +85,6 @@ public class ScalingHealthCommonEvents {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void onXPDropped(LivingExperienceDropEvent event) {
       EntityLivingBase entityLiving = event.getEntityLiving();
       short difficulty = entityLiving.getEntityData().getShort("scalinghealth:difficulty");
@@ -118,7 +125,6 @@ public class ScalingHealthCommonEvents {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerDied(LivingDeathEvent event) {
       if (event.getEntity() != null && event.getEntity() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.getEntity();
@@ -129,7 +135,6 @@ public class ScalingHealthCommonEvents {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerRespawn(PlayerRespawnEvent event) {
       if (event.player instanceof EntityPlayerMP) {
          EntityPlayerMP player = (EntityPlayerMP)event.player;
@@ -162,7 +167,6 @@ public class ScalingHealthCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerJoinedServer(PlayerLoggedInEvent event) {
       if (event.player instanceof EntityPlayerMP) {
          EntityPlayerMP player = (EntityPlayerMP)event.player;
@@ -194,7 +198,6 @@ public class ScalingHealthCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerSleepInBed(PlayerSleepInBedEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       if (!player.world.isRemote && Config.Client.Difficulty.warnWhenSleeping && Config.Difficulty.forSleeping != 0.0F) {
@@ -208,7 +211,6 @@ public class ScalingHealthCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerWakeUp(PlayerWakeUpEvent event) {
       if (!event.getEntityPlayer().world.isRemote && !event.updateWorld()) {
          EntityPlayer player = event.getEntityPlayer();
@@ -220,7 +222,6 @@ public class ScalingHealthCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equals("scalinghealth")) {
          Config.INSTANCE.load();

@@ -11,6 +11,7 @@ public class BlightSpawnEvent extends LivingSpawnEvent {
 
    public static class Post extends BlightSpawnEvent {
       public Post(EntityLiving entity, World world, float x, float y, float z) {
+         super(entity, world, x, y, z);
       }
 
       public boolean isCancelable() {
@@ -20,6 +21,7 @@ public class BlightSpawnEvent extends LivingSpawnEvent {
 
    public static class Pre extends BlightSpawnEvent {
       public Pre(EntityLiving entity, World world, float x, float y, float z) {
+         super(entity, world, x, y, z);
       }
    }
 }

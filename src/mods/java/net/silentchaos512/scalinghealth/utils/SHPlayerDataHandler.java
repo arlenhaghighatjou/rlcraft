@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.utils;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -21,8 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
@@ -30,7 +29,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.silentchaos512.lib.util.AttributeHelper;
 import net.silentchaos512.lib.util.EntityHelper;
 import net.silentchaos512.scalinghealth.ScalingHealth;
-import net.silentchaos512.scalinghealth.compat.gamestages.SHGameStagesCompat;
 import net.silentchaos512.scalinghealth.config.Config;
 import net.silentchaos512.scalinghealth.lib.EnumAreaDifficultyMode;
 import net.silentchaos512.scalinghealth.network.NetworkHandler;
@@ -117,7 +115,12 @@ public final class SHPlayerDataHandler {
       public EventHandler() {
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.register(ServerTickEvent.class, this::onServerTick);
+         bus.register(LivingUpdateEvent.class, this::onPlayerTick);
+         bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      }
+
       public void onServerTick(ServerTickEvent event) {
          if (event.phase == Phase.END) {
             SHPlayerDataHandler.cleanup();
@@ -125,7 +128,6 @@ public final class SHPlayerDataHandler {
 
       }
 
-      @SubscribeEvent
       public void onPlayerTick(LivingUpdateEvent event) {
          if (event.getEntityLiving() instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer)event.getEntityLiving();
@@ -156,7 +158,6 @@ public final class SHPlayerDataHandler {
          });
       }
 
-      @SubscribeEvent
       public void onPlayerLogin(PlayerLoggedInEvent event) {
          if (event.player instanceof EntityPlayerMP) {
             EntityPlayerMP playerMP = (EntityPlayerMP)event.player;
@@ -305,16 +306,12 @@ public final class SHPlayerDataHandler {
                this.lastPosX = (int)player.posX;
                this.lastPosY = (int)player.posY;
                this.lastPosZ = (int)player.posZ;
-               if (!Config.Difficulty.DIFFICULTY_BY_GAME_STAGES.isEmpty() && Loader.isModLoaded("gamestages")) {
-                  this.setDifficulty((double)SHGameStagesCompat.getDifficultyFromStages(player));
-               }
-
                if (!Config.Player.Health.byXP.isEmpty()) {
                   int highestLevel = 0;
-                  Iterator modAmount = Config.Player.Health.byXP.keySet().iterator();
+                  Iterator iter = Config.Player.Health.byXP.keySet().iterator();
 
-                  while(modAmount.hasNext()) {
-                     int key = ((Integer)modAmount.next()).intValue();
+                  while(iter.hasNext()) {
+                     int key = ((Integer)iter.next()).intValue();
                      if (key > highestLevel && key <= player.experienceLevel) {
                         highestLevel = key;
                      }

@@ -1,5 +1,7 @@
 package net.silentchaos512.scalinghealth.event;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -24,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
@@ -108,7 +109,13 @@ public class DifficultyHandler {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, this::onMobSpawn);
+      bus.register(LivingDeathEvent.class, this::onMobDeath);
+      bus.register(ServerTickEvent.class, this::onServerTick);
+      bus.register(WorldTickEvent.class, this::onWorldTick);
+   }
+
    public void onMobSpawn(LivingUpdateEvent event) {
       if (this.process(event.getEntityLiving())) {
          ++this.debugMobsProcessed;
@@ -158,7 +165,6 @@ public class DifficultyHandler {
       return Config.Mob.Blight.blightAlways && Config.Mob.Blight.blightAllList.matches(entity);
    }
 
-   @SubscribeEvent
    public void onMobDeath(LivingDeathEvent event) {
       EntityLivingBase killed = event.getEntityLiving();
       DamageSource source = event.getSource();
@@ -179,7 +185,6 @@ public class DifficultyHandler {
 
    }
 
-   @SubscribeEvent
    public void onServerTick(ServerTickEvent event) {
       if (++this.serverTicks % 20 == 0 && Config.Debug.debugMode) {
          NetworkHandler.INSTANCE.sendToAll(new MessageDebugData());
@@ -273,11 +278,11 @@ public class DifficultyHandler {
             ModifierHandler.setMaxHealth(entityLiving, (double)(healthMulti + baseMaxHealth), 1);
             break;
          case MULTI_HALF:
-            float healthMulti = genAddedHealth / (20.0F + healthScaleDiff * 0.5F);
+            healthMulti = genAddedHealth / (20.0F + healthScaleDiff * 0.5F);
             ModifierHandler.setMaxHealth(entityLiving, (double)(healthMulti + baseMaxHealth), 1);
             break;
          case MULTI_QUARTER:
-            float healthMulti = genAddedHealth / (20.0F + healthScaleDiff * 0.75F);
+            healthMulti = genAddedHealth / (20.0F + healthScaleDiff * 0.75F);
             ModifierHandler.setMaxHealth(entityLiving, (double)(healthMulti + baseMaxHealth), 1);
             break;
          default:
@@ -292,7 +297,7 @@ public class DifficultyHandler {
          if (Config.Debug.debugMode && Config.Debug.logSpawns && originalDifficulty > 0.0F) {
             BlockPos pos = entityLiving.getPosition();
             String line = "Spawn debug: %s (%d, %d, %d): Difficulty=%.2f, Health +%.2f, Damage +%.2f";
-            line = String.format(line, entityLiving.getName(), pos.getX(), pos.getY(), pos.getZ(), totalDifficulty, genAddedHealth, genAddedDamage);
+            line = HString.format(line, entityLiving.getName(), pos.getX(), pos.getY(), pos.getZ(), totalDifficulty, genAddedHealth, genAddedDamage);
             ScalingHealth.logHelper.info(line, new Object[0]);
          }
 
@@ -415,7 +420,6 @@ public class DifficultyHandler {
       }
    }
 
-   @SubscribeEvent
    public void onWorldTick(WorldTickEvent event) {
       if (event.world.getTotalWorldTime() % 20L == 0L) {
          ScalingHealthSavedData data = ScalingHealthSavedData.get(event.world);

@@ -1,9 +1,9 @@
 package net.silentchaos512.scalinghealth.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.silentchaos512.scalinghealth.config.Config;
 
 public class PetEventHandler {
@@ -12,7 +12,10 @@ public class PetEventHandler {
    public PetEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, this::onLivingUpdate);
+   }
+
    public void onLivingUpdate(LivingUpdateEvent event) {
       int regenDelay = Config.PET_REGEN_DELAY;
       if (regenDelay > 0) {

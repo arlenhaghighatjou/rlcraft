@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,16 +8,11 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.silentchaos512.lib.util.MathUtils;
 import net.silentchaos512.scalinghealth.config.Config;
 
-@EventBusSubscriber(
-   modid = "scalinghealth"
-)
 public final class PlayerBonusRegenHandler {
    private static final Map<String, Integer> TIMERS = new HashMap();
 
@@ -27,7 +23,11 @@ public final class PlayerBonusRegenHandler {
       return player != null && TIMERS.containsKey(player.getName()) ? ((Integer)TIMERS.get(player.getName())).intValue() : -1;
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, PlayerBonusRegenHandler::onPlayerTick);
+      bus.register(LivingHurtEvent.class, PlayerBonusRegenHandler::onPlayerHurt);
+   }
+
    public static void onPlayerTick(PlayerTickEvent event) {
       if (event.side != Side.CLIENT && Config.Player.BonusRegen.enabled) {
          EntityPlayer player = event.player;
@@ -68,7 +68,6 @@ public final class PlayerBonusRegenHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onPlayerHurt(LivingHurtEvent event) {
       EntityLivingBase entityLiving = event.getEntityLiving();
       if (!entityLiving.world.isRemote && entityLiving instanceof EntityPlayer) {

@@ -9,7 +9,7 @@ public class ModEntities {
    }
 
    public static void init(SRegistry reg) {
-      reg.registerEntity(EntityBlightFire.class, "BlightFire", 64, 20, true);
+      reg.registerEntity(EntityBlightFire.class, "BlightFire", 64, 20, true, EntityBlightFire::new);
    }
 
    public static void registerRenderers(SRegistry reg) {

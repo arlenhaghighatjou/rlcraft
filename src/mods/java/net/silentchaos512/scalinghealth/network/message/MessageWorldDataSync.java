@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.network.message;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,7 +13,7 @@ import net.silentchaos512.scalinghealth.ScalingHealth;
 import net.silentchaos512.scalinghealth.network.Message;
 import net.silentchaos512.scalinghealth.world.ScalingHealthSavedData;
 
-public class MessageWorldDataSync extends Message {
+public class MessageWorldDataSync extends Message<MessageWorldDataSync> {
    public NBTTagCompound tags;
 
    public MessageWorldDataSync() {
@@ -25,6 +26,14 @@ public class MessageWorldDataSync extends Message {
 
    @Nullable
    @SideOnly(Side.CLIENT)
+   public void fromBytes(ByteBuf buf) {
+      this.tags = readNBT(buf);
+   }
+
+   public void toBytes(ByteBuf buf) {
+      writeNBT(this.tags, buf);
+   }
+
    public IMessage handleMessage(MessageContext context) {
       ClientTicks.scheduleAction(() -> {
          EntityPlayer clientPlayer = ScalingHealth.proxy.getClientPlayer();

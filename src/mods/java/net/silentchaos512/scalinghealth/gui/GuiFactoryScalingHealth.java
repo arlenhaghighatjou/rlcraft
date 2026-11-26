@@ -10,4 +10,8 @@ public class GuiFactoryScalingHealth extends GuiFactorySL {
    public Class<? extends GuiScreen> mainConfigGuiClass() {
       return GuiConfigScalingHealth.class;
    }
+
+   public GuiScreen createMainConfigGui(GuiScreen parentScreen) {
+      return new GuiConfigScalingHealth(parentScreen);
+   }
 }

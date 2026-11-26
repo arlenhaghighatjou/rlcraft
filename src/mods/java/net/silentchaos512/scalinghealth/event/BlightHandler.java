@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
@@ -18,7 +19,6 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.silentchaos512.lib.util.ChatHelper;
 import net.silentchaos512.scalinghealth.ScalingHealth;
@@ -110,9 +110,12 @@ public final class BlightHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDeathEvent.class, EventPriority.LOWEST, false, this::onBlightKilled);
+      bus.register(LivingUpdateEvent.class, this::onBlightUpdate);
+      bus.register(LivingAttackEvent.class, this::onBlightAttack);
+   }
+
    public void onBlightKilled(LivingDeathEvent event) {
       if (event.getSource() != null && isBlight(event.getEntityLiving()) && !event.getEntity().world.isRemote) {
          Entity entitySource = event.getSource().getTrueSource();
@@ -167,7 +170,6 @@ public final class BlightHandler {
       }
    }
 
-   @SubscribeEvent
    public void onBlightUpdate(LivingUpdateEvent event) {
       EntityLivingBase entityLiving = event.getEntityLiving();
       if (entityLiving != null && !entityLiving.world.isRemote && isBlight(entityLiving)) {
@@ -185,7 +187,6 @@ public final class BlightHandler {
 
    }
 
-   @SubscribeEvent
    public void onBlightAttack(LivingAttackEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null && !entity.world.isRemote && isBlight(entity) && Config.Mob.Blight.immuneToSuffocation && event.getSource() == DamageSource.IN_WALL) {

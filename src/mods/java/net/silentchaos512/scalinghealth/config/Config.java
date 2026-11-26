@@ -1,7 +1,7 @@
 package net.silentchaos512.scalinghealth.config;
 
-import java.io.File;
-import java.lang.reflect.Field;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +13,6 @@ import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.silentchaos512.lib.config.ConfigBaseNew;
 import net.silentchaos512.lib.config.ConfigMultiValueLineParser;
 import net.silentchaos512.lib.config.ConfigOption;
@@ -81,9 +80,9 @@ public class Config extends ConfigBaseNew {
       super("scalinghealth");
    }
 
-   public void init(File file) {
+   public void init(VFile2 file) {
       String path = file.getPath().replaceFirst("\\.cfg$", "/main.cfg");
-      super.init(new File(path));
+      super.init(new VFile2(path));
    }
 
    public I18nHelper i18n() {
@@ -94,19 +93,108 @@ public class Config extends ConfigBaseNew {
       return ScalingHealth.logHelper;
    }
 
+   protected void readAnnotatedFields() {
+      Config.Client.enableWitSupport = this.loadBoolean("Enable WIT Support", "main.client.wit", true, "If true, additional information on entities will be added to WIT. Disable this if another mod is using the \"wit\" mod ID and causing the game to crash as a result.");
+      Config.Client.Difficulty.renderMeter = this.loadBoolean("Render Difficulty Meter", "main.client", true, "Show the difficulty meter. Usually, it is display for a few seconds occasionally. If false, it is never shown.");
+      Config.Client.Difficulty.renderMeterAlways = this.loadBoolean("Render Difficulty Meter Always", "main.client", false, "Render the difficulty meter at all times. If false, it displays occasionally.");
+      Config.Client.Difficulty.meterDisplayTime = this.loadInt("Difficulty Meter Display Time", "main.client", 160, 0, Integer.MAX_VALUE, "The time (in ticks) to show the difficulty meter whenever it pops up.");
+      Config.Client.Difficulty.meterPosX = this.loadInt("Position X", "main.client", 5, Integer.MIN_VALUE, Integer.MAX_VALUE, "Sets position of the difficulty meter. Negative numbers anchor it to the right side of the screen.");
+      Config.Client.Difficulty.meterPosY = this.loadInt("Position Y", "main.client", -30, Integer.MIN_VALUE, Integer.MAX_VALUE, "Sets position of the difficulty meter. Negative numbers anchor it to the bottom of the screen.");
+      Config.Client.Difficulty.warnWhenSleeping = this.loadBoolean("Warn When Sleeping", "main.client", true, "If difficulty is set to change when the player sleeps, they will be warned when they get in bed.");
+      Config.Client.Hearts.customHeartRendering = this.loadBoolean("Custom Heart Rendering", "main.client", true, "Replaces vanilla heart rendering (regular and absorption)");
+      Config.Client.Hearts.replaceVanillaRow = this.loadBoolean("Replace Vanilla Heart Row With Custom", "main.client", true, "If true, replaces the vanilla hearts with Scaling Health's hearts. Otherwise, regular vanilla hearts are rendered first, then custom hearts are used for extra health.");
+      Config.Client.Hearts.textOffsetX = this.loadInt("Text Offset X", "main.client", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "Offset the position of health text.");
+      Config.Client.Hearts.textOffsetY = this.loadInt("Text Offset Y", "main.client", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "Offset the position of health text.");
+      Config.Client.Hearts.absorbTextOffsetX = this.loadInt("Text Offset Absorption X", "main.client", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "Offset the position of the absorption text");
+      Config.Client.Hearts.absorbTextOffsetY = this.loadInt("Text Offset Absorption Y", "main.client", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "Offset the position of the absorption text");
+      Config.Client.Hearts.lastHeartOutline = this.loadBoolean("Last Heart Outline Enabled", "main.client", true, "Outline your highest (max health) heart in a different color. This makes seeing your max health a little bit easier.");
+      Config.Client.Hearts.lastHeartOutlineColor = this.loadInt("Last Heart Outline Color", "main.client", 16777215, 0, 16777215, "The color of the last heart outline (default value). Due to an oversight, this ended up as a decimal number. Oops.");
+      Config.Client.Hearts.heartColorLooping = this.loadBoolean("Color Looping", "main.client", true, "If true, heart colors will 'loop around' to the first color after going through the entire list. Set false to have every row after the last have the same color.");
+      Config.Debug.debugMode = this.loadBoolean("Debug Mode", "main.debug", false, "Master switch for the other debug configs.");
+      Config.Debug.debugOverlay = this.loadBoolean("Debug Overlay", "main.debug", true, "Draws information related to the mod on-screen, including health modifiers, difficulty data, and more. This is intended for testing purposes only, not normal gameplay.");
+      Config.Debug.logSpawns = this.loadBoolean("Log Spawns", "main.debug", false, "If debug mode is on, this will log details on mob spawns. This may slow down your game.");
+      Config.Debug.logPlayerDamage = this.loadBoolean("Log Player Damage", "main.debug", true, "If debug mode is on, this will log details of damage done to players.");
+      Config.Difficulty.forSleeping = this.loadFloat("Difficulty Added When Sleeping", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "Change in difficulty when a player sleeps through the night. Negative numbers cause difficulty to decrease.");
+      Config.Difficulty.groupAreaBonus = this.loadFloat("Group Area Bonus", "main.difficulty", 0.05F, -10.0F, 10.0F, "Adds extra difficulty per additional nearby player. So area difficulty will be multiplied by: 1 + group_bonus * (players_in_area - 1)");
+      Config.Difficulty.idleMulti = this.loadFloat("Idle Multiplier", "main.difficulty", 0.7F, -100.0F, 100.0F, "Difficulty added per second is multiplied by this if the player is not moving.");
+      Config.Difficulty.lostOnDeath = this.loadFloat("Lost On Death", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "The difficulty a player loses on death. Negative numbers cause the player to gain difficulty.");
+      Config.Difficulty.maxValue = this.loadFloat("Max Value", "main.difficulty", 250.0F, 0.0F, Float.MAX_VALUE, "The maximum difficulty level that can be reached.");
+      Config.Difficulty.minValue = this.loadFloat("Min Value", "main.difficulty", 0.0F, 0.0F, Float.MAX_VALUE, "The minimum difficulty value. This can be different from the starting value.");
+      Config.Difficulty.perBlightKill = this.loadFloat("Difficulty Per Blight Kill", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "Difficulty change per blight kill. Negative numbers cause difficulty to decrease.");
+      Config.Difficulty.perBossKill = this.loadFloat("Difficulty Per Boss Kill", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "Difficulty change per boss kill. Negative numbers cause difficulty to decrease.");
+      Config.Difficulty.perBlock = this.loadFloat("Difficulty Per Block", "main.difficulty", 0.0025F, -3.4028235E38F, Float.MAX_VALUE, "The amount of difficulty added per unit distance from the origin/spawn, assuming \"Area Mode\" is set to a distance-based option. Negative numbers will decrease difficulty over distance.");
+      Config.Difficulty.perHostileKill = this.loadFloat("Difficulty Per Kill", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "Difficulty change per hostile mob killed. Negative numbers cause difficulty to decrease.");
+      Config.Difficulty.perPassiveKill = this.loadFloat("Difficulty Per Passive Kill", "main.difficulty", 0.0F, -10000.0F, 10000.0F, "Difficulty change per passive mob kill. Negative numbers cause difficulty to decrease.");
+      Config.Difficulty.perSecond = this.loadFloat("Increase Per Second", "main.difficulty", 0.0011574F, -10000.0F, 10000.0F, "The amount difficulty changes each second. In Difficult Life, the option was named per tick, but was actually applied each second. Negative numbers will decrease difficulty over time.");
+      Config.Difficulty.searchRadius = this.loadInt("Search Radius", "main.difficulty", 256, 0, 32767, "The distance from a newly spawned mob to search for players to determine its difficulty level. Set to 0 for unlimited range.");
+      Config.Difficulty.startValue = this.loadFloat("Starting Value", "main.difficulty", 0.0F, 0.0F, Float.MAX_VALUE, "The starting difficulty level for new worlds or players joining for the first time.");
+      Config.Difficulty.statsConsumeDifficulty = this.loadBoolean("Stats Consume Difficulty", "main.client", false, "If true, the difficulty a mob is spawned with will be \"consumed\" when given health/damage bonuses and potion effects (as in older versions).");
+      Config.FakePlayer.generateHearts = this.loadBoolean("Can Generate Hearts", "main.fake_players", true, "If enabled, fake players will be able to get heart container drops when killing mobs. Disabling should prevent at least some mob grinders from getting heart drops.");
+      Config.Items.cursedHeartChange = this.loadFloat("Difficulty Change", "main.items.cursed_heart", 10.0F, -3.4028235E38F, Float.MAX_VALUE, "The amount of difficulty added/removed when using a cursed heart.");
+      Config.Items.enchantedHeartChange = this.loadFloat("Difficulty Change", "main.items.enchanted_heart", -10.0F, -3.4028235E38F, Float.MAX_VALUE, "The amount of difficulty added/removed when using an enchanted heart.");
+      Config.Items.healingItemFireEvent = this.loadBoolean("Healing Items Fire Healing Event", "main.items", true, "If true, the healing from bandages and medkits will fire a standard healing event, allowing other mods to execute additional code or cancel the healing altogether. Disable if needed.");
+      Config.Items.Heart.blightMin = this.loadInt("Hearts Dropped by Blight Min", "main.items", 0, 0, 64, "The minimum number of heart containers that a blight will drop when killed.");
+      Config.Items.Heart.blightMax = this.loadInt("Hearts Dropped by Blight Max", "main.items", 2, 0, 64, "The maximum number of heart containers that a blight will drop when killed.");
+      Config.Items.Heart.bossMin = this.loadInt("Hearts Dropped by Boss Min", "main.items", 3, 0, 64, "The minimum number of heart containers that a boss will drop when killed.");
+      Config.Items.Heart.bossMax = this.loadInt("Hearts Dropped by Boss Max", "main.items", 6, 0, 64, "The maximum number of heart containers that a boss will drop when killed.");
+      Config.Items.Heart.chanceHostile = this.loadFloat("Heart Drop Chance", "main.items", 0.01F, 0.0F, 1.0F, "The chance of a hostile mob dropping a heart container when killed.");
+      Config.Items.Heart.chancePassive = this.loadFloat("Heart Drop Chance (Passive)", "main.items", 0.001F, 0.0F, 1.0F, "The chance of a passive mob (animals) dropping a heart container when killed.");
+      Config.Items.Heart.dropShardsInstead = this.loadBoolean("Drop Shards Instead of Containers", "main.items", false, "If enabled, heart crystals drop shards instead of full containers.");
+      Config.Items.Heart.healingEvent = this.loadBoolean("Heart Healing Event", "main.items", true, "If true, the healing from heart containers will fire a standard healing event, allowing other mods to execute additional code or cancel the healing altogether. Disable if needed.");
+      Config.Items.Heart.healthRestored = this.loadInt("Hearts Health Restored", "main.items", 4, 0, Integer.MAX_VALUE, "The amount of extra health restored when using a heart container. This applies whether or not hearts increase max health.");
+      Config.Items.Heart.increaseHealth = this.loadBoolean("Hearts Increase Max Health", "main.items", true, "If set to false, hearts will no longer increase the player's maximum health, but can still be used for healing.");
+      Config.Items.Heart.xpCost = this.loadInt("Heart XP Level Cost", "main.items", 3, 0, Integer.MAX_VALUE, "The number of experience levels required to use a heart container.");
+      Config.Mob.damageMultiplier = this.loadFloat("Damage Modifier", "main.mob", 0.1F, 0.0F, Float.MAX_VALUE, "A multiplier for extra attack strength all mobs will receive. Set to 0 to disable extra attack strength.");
+      Config.Mob.maxDamageBoost = this.loadFloat("Max Damage Bonus", "main.mob", 10.0F, 0.0F, 1000.0F, "The maximum extra attack damage a mob can receive. Zero means unlimited.");
+      Config.Mob.hostilePotionChance = this.loadFloat("Potion Chance (Hostiles)", "main.mob", 0.375F, 0.0F, 1.0F, "The chance that an extra potion effect will be applied to any hostile mob. Note that this effect requires the mob to have a certain amount of \"difficulty\" left after it has been given extra health and damage. So entering 1 won't guarantee potion effects.");
+      Config.Mob.passivePotionChance = this.loadFloat("Potion Chance (Passives)", "main.mob", 0.025F, 0.0F, 1.0F, "The chance that an extra potion effect will be applied to any passive mob. Note that this effect requires the mob to have a certain amount of \"difficulty\" left after it has been given extra health and damage. So entering 1 won't guarantee potion effects.");
+      Config.Mob.xpBoost = this.loadFloat("XP Boost", "main.mob", 0.01F, 0.0F, 1.0F, "Additional XP (as percentage) per point of difficulty. For example, if this is 0.01, a mob will drop 2x (+1.0x) XP at 100 difficulty and 3x (+2.0x) at 200");
+      Config.Mob.Blight.blacklistBosses = this.loadBoolean("Blacklist All Bosses", "main.mob.blights", false, "If enabled, no bosses can become blights. If you need more control, use the Blacklist instead.");
+      Config.Mob.Blight.blacklistHostiles = this.loadBoolean("Blacklist All Hostiles", "main.mob.blights", false, "If enabled, no hostile mobs can become blights.");
+      Config.Mob.Blight.blacklistPassives = this.loadBoolean("Blacklist All Passives", "main.mob.blights", true, "If enabled, no passive (peaceful) mobs can become blights.");
+      Config.Mob.Blight.blightAlways = this.loadBoolean("All Mobs Are Blights", "main.mob.blights", false, "If true, every mob that can be a blight will be one 100% of the time.");
+      Config.Mob.Blight.chanceMultiplier = this.loadFloat("Blight Chance Multiplier", "main.mob.blights", 0.0625F, 0.0F, Float.MAX_VALUE, "Determines the chance of a mob spawning as a blight. Formula is \"blightChanceMulti * currentDifficulty / maxDifficulty\". Setting to 0 will disable blights. Setting to 1 will guarantee blights at max difficulty.");
+      Config.Mob.Blight.fixedBlightChance = this.loadBoolean("Fixed Chance", "main.mob.blights", false, "If true, blights will have a fixed chance of spawning, regardless of difficulty. Set the chance in \"Blight Chance Multiplier\".");
+      Config.Mob.Blight.difficultyMultiplier = this.loadFloat("Blight Difficulty Multiplier", "main.mob.blights", 3.0F, 1.0F, Float.MAX_VALUE, "When an entity spawns as a blight, their calculated difficulty is multiplied by this. Higher numbers mean more health and damage!");
+      Config.Mob.Blight.fireRidesBlight = this.loadBoolean("Fire Rides Blights", "main.mob.blights", false, "Set blight fires to \"ride\" on the blight they belong to. In some cases, this might cause the fire to follow the blight more smoothly, but doesn't seem to help in most cases. Leaving off is recommended.");
+      Config.Mob.Blight.fireResist = this.loadBoolean("Fire Resist", "main.mob.blights", true, "Should blights have the fire resistance potion effect?");
+      Config.Mob.Blight.immuneToSuffocation = this.loadBoolean("Immune To Suffocation", "main.mob.blights", true, "If true, blights will not take suffocation (inside a block) damage");
+      Config.Mob.Blight.invisibility = this.loadBoolean("Invisibility", "main.mob.blights", false, "Should blights have the invisibility potion effect?");
+      Config.Mob.Blight.notifyOnDeath = this.loadBoolean("Notify Players on Death", "main.mob.blights", true, "Let all players know when a blight dies in chat.");
+      Config.Mob.Blight.potionDuration = this.loadInt("Potion Duration", "main.mob.blights", 6000, -1, Integer.MAX_VALUE, "The duration (in ticks) of the potion effects applied to blights. The effects are refreshed frequently, so this value doesn't matter in most cases... except for the lingering potion effects left by blight creepers. Set to -1 for infinite time. Default is 5 minutes.");
+      Config.Mob.Blight.speedAmp = this.loadInt("Amplifier Speed", "main.mob.blights", 4, -1, 99, "The amplifier level on the speed potion effect applied to blights. Set -1 to disable, 0 is level 1.");
+      Config.Mob.Blight.strengthAmp = this.loadInt("Amplifier Strength", "main.mob.blights", 1, -1, 99, "The amplifier level on the strength potion effect applied to blights. Set -1 to disable, 0 is level 1.");
+      Config.Mob.Blight.superchargeCreepers = this.loadBoolean("Supercharge Creepers", "main.mob.blights", true, "Blight creepers will be supercharged, like when they are struck by lightning.");
+      Config.Mob.Blight.xpMultiplier = this.loadFloat("XP Multiplier", "main.mob.blights", 10.0F, 0.0F, 1000.0F, "The multiplier applied to the amount of XP dropped when a blight is killed.");
+      Config.Mob.Health.allowBoss = this.loadBoolean("Allow Boss Extra Health", "main.mob.health", true, "Allow boss mobs (dragon, wither, etc.) to spawn with extra health based on difficulty.");
+      Config.Mob.Health.allowPeaceful = this.loadBoolean("Allow Peaceful Extra Health", "main.mob.health", true, "Allow peaceful/passive mobs (such as animals) to spawn with extra health based on difficulty.");
+      Config.Mob.Health.allowHostile = this.loadBoolean("Allow Hostile Extra Health", "main.mob.health", true, "Allow hostile mobs (monsters) to spawn with extra health based on difficulty.");
+      Config.Mob.Health.hostileHealthMultiplier = this.loadFloat("Base Health Modifier", "main.mob.health", 0.5F, 0.0F, Float.MAX_VALUE, "The minimum extra health a hostile mob will have per point of difficulty, before the scaling mode is accounted for.");
+      Config.Mob.Health.peacefulHealthMultiplier = this.loadFloat("Base Health Modifier Peaceful", "main.mob.health", 0.25F, 0.0F, Float.MAX_VALUE, "The minimum extra health a peaceful mob will have per point of difficulty, before the scaling mode is accounted for. Same as \"Base Health Modifier\", but for peaceful/passive mobs!");
+      Config.Player.BonusRegen.enabled = this.loadBoolean("Enable Bonus Regen", "main.player.regen", true, "Enable bonus health regen for players. Vanilla regen is not changed in any way, this just adds extra healing! Vanilla regen can be disabled with the naturalRegeneration gamerule.");
+      Config.Player.BonusRegen.scaleWithMaxHealth = this.loadBoolean("Scale With Max Health", "main.player.regen", false, "If enabled, regen will be proportional to max health");
+      Config.Player.BonusRegen.minFood = this.loadInt("Food Min", "main.player.regen", 10, 0, Integer.MAX_VALUE, "The minimum food level at which bonus regen will be active (vanilla max food is 20).");
+      Config.Player.BonusRegen.maxFood = this.loadInt("Food Max", "main.player.regen", Integer.MAX_VALUE, 0, Integer.MAX_VALUE, "The maximum food level at which bonus regen will be active (vanilla max food is 20).");
+      Config.Player.BonusRegen.minHealth = this.loadInt("Health Min", "main.player.regen", 0, 0, Integer.MAX_VALUE, "Bonus regen will stop when players have this much health or less.");
+      Config.Player.BonusRegen.maxHealth = this.loadInt("Health Max", "main.player.regen", Integer.MAX_VALUE, 0, Integer.MAX_VALUE, "Bonus regen will stop when players have this much health or more.");
+      Config.Player.BonusRegen.initialDelay = this.loadInt("Delay (Initial)", "main.player.regen", 400, 0, Integer.MAX_VALUE, "The amount of time (in ticks) after being hurt before bonus regen activates.");
+      Config.Player.BonusRegen.delay = this.loadInt("Delay", "main.player.regen", 100, 0, Integer.MAX_VALUE, "The amount of time (in ticks) between each bonus regen tick (a half heart being healed).");
+      Config.Player.BonusRegen.exhaustion = this.loadFloat("Exhaustion Added", "main.player.regen", 0.1F, 0.0F, 1.0F, "The food consumption for each bonus regen tick.");
+      Config.Player.Health.allowModify = this.loadBoolean("Allow Modified Health", "main.player.health", true, "Allow Scaling Health to modify the player's health. Scaling Health's changes are often compatible with other mods, assuming they use Minecraft's attribute system. If set to false, heart containers and the '/scalinghealth health' command will not work.");
+      Config.Player.Health.startingHealth = this.loadInt("Starting Health", "main.player.health", 20, 2, Integer.MAX_VALUE, "The amount of health (in half hearts) players will start with when first joining the world. Vanilla is 20.");
+      Config.Player.Health.maxHealth = this.loadInt("Max Health", "main.player.health", 0, 0, Integer.MAX_VALUE, "The maximum amount of health (in half hearts) a player can achieve with heart containers alone. Zero means unlimited. NOTE: Players must still obey Minecraft's max health cap. You can change that value with the \"Max Health Cap\" setting under the main category.");
+      Config.Player.Health.minHealth = this.loadInt("Min Health", "main.player.health", 2, 2, Integer.MAX_VALUE, "The minimum amount of health (in half hearts) a player can have. This is different from starting health.");
+      Config.Player.Health.lostOnDeath = this.loadInt("Health Lost On Death", "main.player.health", 0, Integer.MIN_VALUE, Integer.MAX_VALUE, "The amount of health (in half hearts) a player will lose each time they die. Set to a negative number to cause players to gain health instead.");
+   }
+
    public void load() {
       try {
          super.load();
          this.config.setCategoryRequiresMcRestart("main.client.wit", true);
          int maxHealthCap = this.loadInt("Max Health Cap", "main", 2048, 2, Integer.MAX_VALUE, "Max health cap for all entities, players and mobs (vanilla is 1024)");
 
-         try {
-            ScalingHealth.logHelper.info("Trying to change max health cap to {}", new Object[]{maxHealthCap});
-            Field field = ObfuscationReflectionHelper.findField(RangedAttribute.class, "maximumValue");
-            field.setDouble(SharedMonsterAttributes.MAX_HEALTH, (double)maxHealthCap);
-         } catch (Exception var10) {
-            ScalingHealth.logHelper.warn(var10, "Failed to change max health cap", new Object[0]);
-         }
+         ScalingHealth.logHelper.info("Trying to change max health cap to {}", new Object[]{maxHealthCap});
+         ((RangedAttribute)SharedMonsterAttributes.MAX_HEALTH).maximumValue = (double)maxHealthCap;
 
          Config.Client.Hearts.textStyle = HeartDisplayHandler.TextStyle.loadFromConfig(this, "Health Text Style", HeartDisplayHandler.TextStyle.ROWS);
          Config.Client.Hearts.textColor = HeartDisplayHandler.TextColor.loadFromConfig(this, "Health Text Color", HeartDisplayHandler.TextColor.GREEN_TO_RED);
@@ -269,7 +357,7 @@ public class Config extends ConfigBaseNew {
       String[] defaults = new String[Config.Client.Hearts.defaultHeartColors.length];
 
       for(int i = 0; i < defaults.length; ++i) {
-         defaults[i] = String.format("%06x", Config.Client.Hearts.defaultHeartColors[i]);
+         defaults[i] = HString.format("%06x", Config.Client.Hearts.defaultHeartColors[i]);
       }
 
       String[] list = c.getStringList("Heart Colors", "main.client", defaults, "The colors for each additional row of hearts. The colors will loop back around to the beginning if necessary. Use hexadecimal to specify colors (like HTML color codes).");

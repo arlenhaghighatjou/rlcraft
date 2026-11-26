@@ -1,5 +1,7 @@
 package net.silentchaos512.scalinghealth.client;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -8,7 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.scalinghealth.ScalingHealth;
 import net.silentchaos512.scalinghealth.config.Config;
@@ -30,7 +31,10 @@ public class DifficultyDisplayHandler extends Gui {
       this.lastDifficultyDisplayed = -100;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onRenderOverlay);
+   }
+
    public void onRenderOverlay(Post event) {
       if (event.getType() == ElementType.TEXT && Config.Difficulty.maxValue > 0.0F && Config.Client.Difficulty.renderMeter) {
          Minecraft mc = Minecraft.getMinecraft();
@@ -82,7 +86,7 @@ public class DifficultyDisplayHandler extends Gui {
                GlStateManager.scale(textScale, textScale, 1.0F);
                String localizedString = ScalingHealth.i18n.miscText("difficultyMeterText", new Object[0]);
                mc.fontRenderer.drawStringWithShadow(localizedString, (float)posX / textScale + 4.0F, (float)posY / textScale - 9.0F, 16777215);
-               String str = String.format("%d", areaDifficultyUnclamped);
+               String str = HString.format("%d", areaDifficultyUnclamped);
                int strWidth = mc.fontRenderer.getStringWidth(str);
                mc.fontRenderer.drawStringWithShadow(str, (float)posX / textScale + 104.0F - (float)strWidth, (float)posY / textScale - 9.0F, 11184810);
                GlStateManager.popMatrix();

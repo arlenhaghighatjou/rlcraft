@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nullable;
@@ -31,7 +32,7 @@ public class ItemDifficultyChanger extends Item implements ICustomModel {
 
    public void addInformation(ItemStack stack, @Nullable World world, List<String> list, ITooltipFlag flag) {
       if (stack.getItemDamage() <= 1) {
-         String amountStr = String.format("%d", stack.getItemDamage() == ItemDifficultyChanger.Type.ENCHANTED.ordinal() ? (int)Config.Items.enchantedHeartChange : (int)Config.Items.cursedHeartChange);
+         String amountStr = HString.format("%d", stack.getItemDamage() == ItemDifficultyChanger.Type.ENCHANTED.ordinal() ? (int)Config.Items.enchantedHeartChange : (int)Config.Items.cursedHeartChange);
          if (amountStr.matches("^\\d+")) {
             amountStr = "+" + amountStr;
          }

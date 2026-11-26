@@ -1,5 +1,6 @@
 package net.silentchaos512.utils;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.primitives.UnsignedInts;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -207,7 +208,7 @@ public class Color {
    }
 
    public static String format(int color) {
-      return String.format(color > 16777215 ? "#%08X" : "#%06X", color);
+      return HString.format(color > 16777215 ? "#%08X" : "#%06X", color);
    }
 
    public static Color parse(String str) {

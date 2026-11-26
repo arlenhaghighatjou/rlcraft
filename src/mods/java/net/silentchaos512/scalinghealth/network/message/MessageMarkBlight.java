@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.network.message;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -12,7 +13,7 @@ import net.silentchaos512.lib.event.ClientTicks;
 import net.silentchaos512.scalinghealth.event.BlightHandler;
 import net.silentchaos512.scalinghealth.network.Message;
 
-public class MessageMarkBlight extends Message {
+public class MessageMarkBlight extends Message<MessageMarkBlight> {
    public int entityId;
    public boolean isBlight;
 
@@ -32,6 +33,16 @@ public class MessageMarkBlight extends Message {
 
    @Nullable
    @SideOnly(Side.CLIENT)
+   public void fromBytes(ByteBuf buf) {
+      this.entityId = readInt(buf);
+      this.isBlight = readBoolean(buf);
+   }
+
+   public void toBytes(ByteBuf buf) {
+      writeInt(this.entityId, buf);
+      writeBoolean(this.isBlight, buf);
+   }
+
    public IMessage handleMessage(MessageContext context) {
       ClientTicks.scheduleAction(() -> {
          Minecraft mc = Minecraft.getMinecraft();

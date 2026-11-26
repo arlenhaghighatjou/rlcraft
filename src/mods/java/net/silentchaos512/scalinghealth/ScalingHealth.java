@@ -1,5 +1,11 @@
 package net.silentchaos512.scalinghealth;
 
+import net.minecraft.world.storage.MapStorage;
+import net.silentchaos512.scalinghealth.world.ScalingHealthSavedData;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.function.Supplier;
 import mcp.MethodsReturnNonnullByDefault;
@@ -8,9 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -56,41 +59,54 @@ public class ScalingHealth implements IModBase {
    public static CreativeTabs creativeTab = registry.makeCreativeTab("scalinghealth", () -> {
       return new ItemStack(ModItems.heart);
    });
-   @Instance("scalinghealth")
    public static ScalingHealth instance;
-   @SidedProxy(
-      clientSide = "net.silentchaos512.scalinghealth.proxy.ScalingHealthClientProxy",
-      serverSide = "net.silentchaos512.scalinghealth.proxy.ScalingHealthCommonProxy"
-   )
    public static ScalingHealthCommonProxy proxy;
 
    public ScalingHealth() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new net.silentchaos512.scalinghealth.proxy.ScalingHealthClientProxy() : new net.silentchaos512.scalinghealth.proxy.ScalingHealthCommonProxy();
+         net.silentchaos512.scalinghealth.event.PlayerBonusRegenHandler.register(MinecraftForge.EVENT_BUS);
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            net.silentchaos512.scalinghealth.event.ScalingHealthClientEvents.register(MinecraftForge.EVENT_BUS);
+         }
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.onServerLoad((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStartedEvent) {
+         this.onServerStarted((FMLServerStartedEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       registry.setMod(this);
+      MapStorage.storageProviders.put(ScalingHealthSavedData.class, ScalingHealthSavedData::new);
       registry.getRecipeMaker().setJsonHellMode(this.isDevBuild());
       proxy.preInit(registry, event);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init(registry, event);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit(registry, event);
    }
 
-   @EventHandler
    public void onServerLoad(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandScalingHealth());
       event.registerServerCommand(new CommandRecalculate());
    }
 
-   @EventHandler
    public void onServerStarted(FMLServerStartedEvent event) {
       MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
       if (server != null) {

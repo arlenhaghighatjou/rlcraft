@@ -1,5 +1,6 @@
 package net.silentchaos512.scalinghealth.network;
 
+import java.util.function.Supplier;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,14 +18,14 @@ public final class NetworkHandler {
    }
 
    public static void init() {
-      register(MessageDataSync.class, Side.CLIENT);
-      register(MessageMarkBlight.class, Side.CLIENT);
-      register(MessageWorldDataSync.class, Side.CLIENT);
-      register(MessagePlaySound.class, Side.CLIENT);
-      register(MessageDebugData.class, Side.CLIENT);
+      register(MessageDataSync.class, MessageDataSync::new, Side.CLIENT);
+      register(MessageMarkBlight.class, MessageMarkBlight::new, Side.CLIENT);
+      register(MessageWorldDataSync.class, MessageWorldDataSync::new, Side.CLIENT);
+      register(MessagePlaySound.class, MessagePlaySound::new, Side.CLIENT);
+      register(MessageDebugData.class, MessageDebugData::new, Side.CLIENT);
    }
 
-   private static void register(Class clazz, Side handlerSide) {
-      INSTANCE.registerMessage(clazz, clazz, i++, handlerSide);
+   private static <T extends Message<T>> void register(Class<T> clazz, Supplier<T> factory, Side handlerSide) {
+      INSTANCE.registerMessage(factory.get(), clazz, factory, i++, handlerSide);
    }
 }
