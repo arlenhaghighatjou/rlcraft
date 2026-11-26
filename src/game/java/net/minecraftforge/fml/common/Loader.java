@@ -224,6 +224,7 @@ public class Loader
         mods.add(new FMLModContainer<>("waystones", "Waystones", "", "", "[1.12]", "waystones", net.blay09.mods.waystones.Waystones::new, net.blay09.mods.waystones.Waystones::handleModStateEvent));
         mods.add(new FMLModContainer<>("sereneseasons", "Serene Seasons", "1.2.18", "required-after:forge@[14.23.5.2768,)", "[1.12.2]", "sereneseasons", sereneseasons.core.SereneSeasons::new, sereneseasons.core.SereneSeasons::handleModStateEvent));
         mods.add(new FMLModContainer<>("toolbelt", "toolbelt", "1.9.14", "after:baubles;after:jei@[4.6,)", "[1.12.0,1.13.0)", "toolbelt", gigaherz.toolbelt.ToolBelt::new, gigaherz.toolbelt.ToolBelt::handleModStateEvent).guiFactory(gigaherz.toolbelt.client.config.ConfigGuiFactory::new));
+        namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {
             ModContainer mod = mods.get(i);
@@ -232,7 +233,6 @@ public class Loader
                 ((FMLModContainer<?>)mod).bindMetadata();
             }
         }
-        namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         FMLLog.log.info("Forge Mod Loader has identified {} mod{} to load", mods.size(), mods.size() != 1 ? "s" : "");
     }
 
