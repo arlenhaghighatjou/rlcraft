@@ -1,5 +1,8 @@
 package melonslise.locks.client.event;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.function.Consumer;
 import melonslise.locks.client.util.LocksClientUtil;
@@ -16,8 +19,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.culling.ClippingHelperImpl;
@@ -31,21 +32,20 @@ import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   modid = "locks",
-   value = {Side.CLIENT}
-)
 public final class LocksClientEvents {
    private LocksClientEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, LocksClientEvents::registerModels);
+      bus.register(ClientTickEvent.class, LocksClientEvents::onClientTick);
+      bus.register(RenderWorldLastEvent.class, LocksClientEvents::onRenderWorld);
+   }
+
    public static void registerModels(ModelRegistryEvent event) {
       for(Item item : LocksItems.ITEMS) {
          ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
@@ -53,7 +53,6 @@ public final class LocksClientEvents {
 
    }
 
-   @SubscribeEvent
    public static void onClientTick(ClientTickEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       if (event.phase != Phase.END && mc.world != null && !mc.isGamePaused()) {
@@ -66,17 +65,16 @@ public final class LocksClientEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onRenderWorld(RenderWorldLastEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       Vec3d origin = new Vec3d(TileEntityRendererDispatcher.staticPlayerX, TileEntityRendererDispatcher.staticPlayerY, TileEntityRendererDispatcher.staticPlayerZ);
       MutableBlockPos mutPos = new MutableBlockPos();
       ILockableHandler lockables = (ILockableHandler)mc.world.getCapability(LocksCapabilities.LOCKABLE_HANDLER, (EnumFacing)null);
       GlStateManager.enableRescaleNormal();
-      ObjectIterator select = lockables.getLoaded().values().iterator();
+      ObjectIterator<Lockable> iterator = lockables.getLoaded().values().iterator();
 
-      while(select.hasNext()) {
-         Lockable lockable = (Lockable)select.next();
+      while(iterator.hasNext()) {
+         Lockable lockable = iterator.next();
          Lockable.State state = lockable.getLockState(mc.world);
          if (state != null && state.inRange(origin) && state.inView(ClippingHelperImpl.getInstance(), origin)) {
             GlStateManager.pushMatrix();
@@ -118,8 +116,8 @@ public final class LocksClientEvents {
          }
 
          GlStateManager.enableBlend();
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-         GlStateManager.glLineWidth(1.0F);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
+         EaglercraftGPU.glLineWidth(1.0F);
          GlStateManager.disableTexture2D();
          GlStateManager.depthMask(false);
          GlStateManager.disableDepth();

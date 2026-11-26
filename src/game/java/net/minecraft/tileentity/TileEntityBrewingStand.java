@@ -1,5 +1,7 @@
 package net.minecraft.tileentity;
 
+import net.minecraftforge.items.wrapper.EmptyHandler;
+import melonslise.locks.common.util.LocksUtil;
 import java.util.Arrays;
 import net.minecraft.block.BlockBrewingStand;
 import net.minecraft.block.state.IBlockState;
@@ -386,6 +388,11 @@ public class TileEntityBrewingStand extends TileEntityLockable implements ITicka
     @javax.annotation.Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
     {
+        if (!this.isInvalid() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this.hasWorld() && LocksUtil.locked(this.getWorld(), this.getPos()))
+        {
+            return (T)EmptyHandler.INSTANCE;
+        }
+
         if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
         {
             if (facing == EnumFacing.UP)

@@ -1,5 +1,8 @@
 package net.minecraft.block;
 
+import melonslise.locks.common.item.LockItem;
+import melonslise.locks.common.util.LocksPredicates;
+import melonslise.locks.common.util.LocksUtil;
 import com.google.common.collect.Sets;
 import com.google.common.collect.UnmodifiableIterator;
 import java.util.List;
@@ -1520,7 +1523,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
      */
     public float getExplosionResistance(World world, BlockPos pos, @Nullable Entity exploder, Explosion explosion)
     {
-        return getExplosionResistance(exploder);
+        return Math.max(getExplosionResistance(exploder), LocksUtil.intersecting(world, pos).filter(LocksPredicates.LOCKED).findFirst().map(lkb -> LockItem.getResistance(lkb.stack)).orElse(0.0F));
     }
 
     /**

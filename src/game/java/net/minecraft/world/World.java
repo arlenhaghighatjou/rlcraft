@@ -1,5 +1,6 @@
 package net.minecraft.world;
 
+import melonslise.locks.common.util.LocksUtil;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
@@ -3284,6 +3285,11 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
 
     public boolean isBlockPowered(BlockPos pos)
     {
+        if (LocksUtil.locked(this, pos))
+        {
+            return false;
+        }
+
         if (this.getRedstonePower(pos.down(), EnumFacing.DOWN) > 0)
         {
             return true;

@@ -18,19 +18,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 
 public final class LocksCapabilities {
-   @CapabilityInject(ILockableHandler.class)
-   public static final Capability<ILockableHandler> LOCKABLE_HANDLER = null;
-   @CapabilityInject(ILockableStorage.class)
-   public static final Capability<ILockableStorage> LOCKABLE_STORAGE = null;
-   @CapabilityInject(ILockableWorldGenHandler.class)
-   public static final Capability<ILockableWorldGenHandler> LOCKABLE_WORLDGEN_HANDLER = null;
-   @CapabilityInject(ISelection.class)
-   public static final Capability<ISelection> SELECTION = null;
+   public static Capability<ILockableHandler> LOCKABLE_HANDLER = null;
+   public static Capability<ILockableStorage> LOCKABLE_STORAGE = null;
+   public static Capability<ILockableWorldGenHandler> LOCKABLE_WORLDGEN_HANDLER = null;
+   public static Capability<ISelection> SELECTION = null;
 
    private LocksCapabilities() {
    }
@@ -62,5 +57,12 @@ public final class LocksCapabilities {
          event.addCapability(Selection.ID, new CapabilityProvider(SELECTION, new Selection()));
       }
 
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(ILockableHandler.class, capability -> LOCKABLE_HANDLER = capability);
+      CapabilityManager.INSTANCE.onRegistered(ILockableStorage.class, capability -> LOCKABLE_STORAGE = capability);
+      CapabilityManager.INSTANCE.onRegistered(ILockableWorldGenHandler.class, capability -> LOCKABLE_WORLDGEN_HANDLER = capability);
+      CapabilityManager.INSTANCE.onRegistered(ISelection.class, capability -> SELECTION = capability);
    }
 }

@@ -1,7 +1,7 @@
 package melonslise.locks.common.item;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import javax.annotation.Nullable;
 import melonslise.locks.common.util.LocksUtil;
 import net.minecraft.client.util.ITooltipFlag;

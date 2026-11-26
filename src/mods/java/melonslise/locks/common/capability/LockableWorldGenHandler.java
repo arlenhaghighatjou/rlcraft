@@ -11,7 +11,6 @@ import melonslise.locks.common.util.Lock;
 import melonslise.locks.common.util.Lockable;
 import melonslise.locks.common.util.LocksUtil;
 import melonslise.locks.common.util.Orientation;
-import melonslise.locks.mixin.TileEntityLockableLootAccessor;
 import net.minecraft.block.BlockChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagInt;
@@ -57,7 +56,7 @@ public class LockableWorldGenHandler implements ILockableWorldGenHandler {
                boolean isForced = false;
                boolean isEmpty = true;
                if (te.getLootTable() == null) {
-                  for(ItemStack stack : ((TileEntityLockableLootAccessor)te).getItems()) {
+                  for(ItemStack stack : te.getItems()) {
                      if (!stack.isEmpty()) {
                         if (LocksConfig.isItemAlwaysLocked(stack)) {
                            isForced = true;

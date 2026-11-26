@@ -1,5 +1,6 @@
 package melonslise.locks.common.world;
 
+import melonslise.locks.common.util.Lockable;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -25,7 +26,7 @@ public final class LocksWorldEventListener implements IWorldEventListener {
    public void notifyBlockUpdate(World world, BlockPos pos, IBlockState oldState, IBlockState newState, int flags) {
       if (!world.isRemote && oldState.getBlock() != newState.getBlock()) {
          ILockableHandler lockables = (ILockableHandler)world.getCapability(LocksCapabilities.LOCKABLE_HANDLER, (EnumFacing)null);
-         ((List)LocksUtil.intersecting(lockables, pos).collect(Collectors.toList())).forEach((lockable) -> {
+         ((List<Lockable>)LocksUtil.intersecting(lockables, pos).collect(Collectors.toList())).forEach((lockable) -> {
             world.playSound((EntityPlayer)null, pos, SoundEvents.ENTITY_ITEM_BREAK, SoundCategory.BLOCKS, 0.8F, 0.8F + world.rand.nextFloat() * 0.4F);
             world.spawnEntity(new EntityItem(world, (double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, lockable.stack));
             lockables.remove(lockable.networkID);

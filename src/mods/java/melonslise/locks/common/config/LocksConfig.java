@@ -1,5 +1,7 @@
 package melonslise.locks.common.config;
 
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.ConfigEntry;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.NavigableMap;
@@ -214,5 +216,27 @@ public final class LocksConfig {
 
          return false;
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("locks", "", "general", null,
+         ConfigEntry.category("COMMON",
+            ConfigEntry.value("Generation Chance", double.class, () -> LocksConfig.COMMON.generationChance, v -> LocksConfig.COMMON.generationChance = (Double)v).comment("Chance to generate a random lock on every new chest during world generation. Set to 0 to disable").langKey("locks.general.common.generationchance").range(0.0, 1.0),
+            ConfigEntry.value("Generation Enchant Chance", double.class, () -> LocksConfig.COMMON.generationEnchantChance, v -> LocksConfig.COMMON.generationEnchantChance = (Double)v).comment("Chance to randomly enchant a generated lock during world generation. Set to 0 to disable").langKey("locks.general.common.generationenchantchance").range(0.0, 1.0),
+            ConfigEntry.value("Generated Locks", String[].class, () -> LocksConfig.COMMON.generatedLocks, v -> LocksConfig.COMMON.generatedLocks = (String[])v).comment("Items that can be generated as locks (must be instance of LockItem in code!)").langKey("locks.general.common.generatedlocks"),
+            ConfigEntry.value("Generated Lock Chances", int[].class, () -> LocksConfig.COMMON.generatedLockWeights, v -> LocksConfig.COMMON.generatedLockWeights = (int[])v).comment("WARNING: THE AMOUNT OF NUMBERS SHOULD BE EQUAL TO THE AMOUNT OF GENERATED LOCK ITEMS!!! The relative probability that the corresponding lock item will be generated on a chest. Higher number = higher chance to generate").langKey("locks.general.common.generatedlockweights"),
+            ConfigEntry.value("Generated Lock Pins", int[].class, () -> LocksConfig.COMMON.generatedLockPins, v -> LocksConfig.COMMON.generatedLockPins = (int[])v).comment("WARNING: THE AMOUNT OF NUMBERS SHOULD BE EQUAL TO THE AMOUNT OF GENERATED LOCK ITEMS!!! The number of pins on the lock item. Overrides the defaults if not zero").langKey("locks.general.common.generatedlockpins"),
+            ConfigEntry.value("Automatically Orient Placed Locks", boolean.class, () -> LocksConfig.COMMON.automaticallyOrientPlacedLocks, v -> LocksConfig.COMMON.automaticallyOrientPlacedLocks = (Boolean)v).comment("Placed locks will try to orient themselves smartly to doors and chests regardless of how they were placed").langKey("locks.general.common.automaticallyorientplacedlocks"),
+            ConfigEntry.value("Skip Generation Empty Chests", boolean.class, () -> LocksConfig.COMMON.skipGenerationEmptyChests, v -> LocksConfig.COMMON.skipGenerationEmptyChests = (Boolean)v).comment("Skip generating locks on empty chests").langKey("locks.general.common.skipgenerationemptychests"),
+            ConfigEntry.value("Chest Item List Always Generate", String[].class, () -> LocksConfig.COMMON.chestItemListAlwaysGenerate, v -> LocksConfig.COMMON.chestItemListAlwaysGenerate = (String[])v).comment("Always generate locks if the chests contain these items. Metadata can be specified (ex. minecraft:bed:0)").langKey("locks.general.common.chestitemlistalwaysgenerate"),
+            ConfigEntry.value("Chest Item List Skip Generating", String[].class, () -> LocksConfig.COMMON.chestItemListSkipGenerating, v -> LocksConfig.COMMON.chestItemListSkipGenerating = (String[])v).comment("Worldgen assumes chests with only these items are empty. Metadata can be specified (ex. minecraft:bed:0)").langKey("locks.general.common.chestitemlistskipgenerating")),
+         ConfigEntry.category("SERVER",
+            ConfigEntry.value("Max Lockable Volume", int.class, () -> LocksConfig.SERVER.maxLockableVolume, v -> LocksConfig.SERVER.maxLockableVolume = (Integer)v).comment("Maximum amount of blocks that can be locked at once").langKey("locks.general.server.maxlockablevolume"),
+            ConfigEntry.value("Lockable Blocks", String[].class, () -> LocksConfig.SERVER.lockableBlocks, v -> LocksConfig.SERVER.lockableBlocks = (String[])v).comment("Blocks that can be locked. Each entry is the mod domain followed by the block's registry name. Can include regular expressions").langKey("locks.general.server.lockableblocks"),
+            ConfigEntry.value("Allow Removing Locks", boolean.class, () -> LocksConfig.SERVER.allowRemovingLocks, v -> LocksConfig.SERVER.allowRemovingLocks = (Boolean)v).comment("Open locks can be removed with an empty hand while sneaking").langKey("locks.general.server.allowremovinglocks"),
+            ConfigEntry.value("Protect Lockables", boolean.class, () -> LocksConfig.SERVER.protectLockables, v -> LocksConfig.SERVER.protectLockables = (Boolean)v).comment("Locked blocks cannot be destroyed in survival mode").langKey("locks.general.server.protectlockables"),
+            ConfigEntry.value("Easy Lock", boolean.class, () -> LocksConfig.SERVER.easyLock, v -> LocksConfig.SERVER.easyLock = (Boolean)v).comment("Lock blocks with just one click! It's magic! (Will probably fail spectacularly with custom doors, custom double chests, etc)").langKey("locks.general.server.easylock")),
+         ConfigEntry.category("CLIENT",
+            ConfigEntry.value("Deaf Mode", boolean.class, () -> LocksConfig.CLIENT.deafMode, v -> LocksConfig.CLIENT.deafMode = (Boolean)v).comment("Display visual feedback when trying to use a locked block for certain hearing impaired individuals").langKey("locks.general.client.deafmode")));
    }
 }

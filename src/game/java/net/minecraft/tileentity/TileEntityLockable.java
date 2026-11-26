@@ -1,5 +1,7 @@
 package net.minecraft.tileentity;
 
+import net.minecraftforge.items.wrapper.EmptyHandler;
+import melonslise.locks.common.util.LocksUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
@@ -61,6 +63,11 @@ public abstract class TileEntityLockable extends TileEntity implements ILockable
     @javax.annotation.Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
     {
+        if (!this.isInvalid() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this.hasWorld() && LocksUtil.locked(this.getWorld(), this.getPos()))
+        {
+            return (T)EmptyHandler.INSTANCE;
+        }
+
         if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             return (T) (itemHandler == null ? (itemHandler = createUnSidedHandler()) : itemHandler);
         return super.getCapability(capability, facing);

@@ -19,6 +19,8 @@
 
 package net.minecraftforge.items;
 
+import net.minecraftforge.items.wrapper.EmptyHandler;
+import melonslise.locks.common.util.LocksUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDropper;
 import net.minecraft.block.BlockHopper;
@@ -256,6 +258,20 @@ public class VanillaInventoryCodeHooks
     @Nullable
     public static Pair<IItemHandler, Object> getItemHandler(World worldIn, double x, double y, double z, final EnumFacing side)
     {
+        if (worldIn != null)
+        {
+            BlockPos lockPos = new BlockPos(x, y, z);
+            if (LocksUtil.locked(worldIn, lockPos))
+            {
+                TileEntity te = worldIn.getTileEntity(lockPos);
+                if (te == null)
+                {
+                    return null;
+                }
+                return ImmutablePair.<IItemHandler, Object>of(EmptyHandler.INSTANCE, te);
+            }
+        }
+
         Pair<IItemHandler, Object> destination = null;
         int i = MathHelper.floor(x);
         int j = MathHelper.floor(y);

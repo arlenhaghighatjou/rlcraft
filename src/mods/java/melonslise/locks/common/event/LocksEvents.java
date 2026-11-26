@@ -1,5 +1,6 @@
 package melonslise.locks.common.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import java.util.List;
 import java.util.Optional;
@@ -62,8 +63,6 @@ import net.minecraftforge.event.world.ChunkWatchEvent.Watch;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -71,9 +70,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
-@EventBusSubscriber(
-   modid = "locks"
-)
 public final class LocksEvents {
    public static final LocksWorldEventListener LISTENER = new LocksWorldEventListener();
    public static final ITextComponent LOCKED_MESSAGE = new TextComponentTranslation("locks.status.locked", new Object[0]);
@@ -81,37 +77,53 @@ public final class LocksEvents {
    private LocksEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, LocksEvents::registerItems);
+      bus.registerGeneric(Register.class, Enchantment.class, LocksEvents::registerEnchantments);
+      bus.registerGeneric(Register.class, SoundEvent.class, LocksEvents::registerSoundEvents);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, World.class, LocksEvents::attachCapabilitiesToWorld);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Chunk.class, LocksEvents::attachCapabilitiesToChunk);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, LocksEvents::attachCapabilitiesToEntity);
+      bus.register(OnConfigChangedEvent.class, LocksEvents::onConfigChange);
+      bus.register(Load.class, LocksEvents::onWorldLoad);
+      bus.register(Post.class, LocksEvents::onChunkPopulate);
+      bus.register(PlayerLoggedInEvent.class, LocksEvents::onPlayerLogIn);
+      bus.register(PlayerChangedDimensionEvent.class, LocksEvents::onPlayerChangeDim);
+      bus.register(PlayerRespawnEvent.class, LocksEvents::onPlayerRespawn);
+      bus.register(PlayerTickEvent.class, LocksEvents::onPlayerTick);
+      bus.register(RightClickBlock.class, LocksEvents::onRightClick);
+      bus.register(BreakSpeed.class, LocksEvents::onBlockBreaking);
+      bus.register(BreakEvent.class, LocksEvents::onBlockBreak);
+      bus.register(Watch.class, LocksEvents::onChunkWatch);
+      bus.register(UnWatch.class, LocksEvents::onChunkUnWatch);
+      bus.register(Unload.class, LocksEvents::onChunkUnload);
+      bus.register(net.minecraftforge.event.world.ChunkEvent.Load.class, LocksEvents::onChunkLoad);
+   }
+
    public static void registerItems(Register<Item> event) {
       LocksItems.register(event);
    }
 
-   @SubscribeEvent
    public static void registerEnchantments(Register<Enchantment> event) {
       LocksEnchantments.register(event);
    }
 
-   @SubscribeEvent
    public static void registerSoundEvents(Register<SoundEvent> event) {
       LocksSoundEvents.register(event);
    }
 
-   @SubscribeEvent
    public static void attachCapabilitiesToWorld(AttachCapabilitiesEvent<World> event) {
       LocksCapabilities.attachToWorld(event);
    }
 
-   @SubscribeEvent
    public static void attachCapabilitiesToChunk(AttachCapabilitiesEvent<Chunk> event) {
       LocksCapabilities.attachToChunk(event);
    }
 
-   @SubscribeEvent
    public static void attachCapabilitiesToEntity(AttachCapabilitiesEvent<Entity> event) {
       LocksCapabilities.attachToEntity(event);
    }
 
-   @SubscribeEvent
    public static void onConfigChange(OnConfigChangedEvent event) {
       if (event.getModID().equals("locks")) {
          ConfigManager.sync("locks", Type.INSTANCE);
@@ -126,12 +138,10 @@ public final class LocksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onWorldLoad(Load event) {
       event.getWorld().addEventListener(LISTENER);
    }
 
-   @SubscribeEvent
    public static void onChunkPopulate(Post event) {
       Chunk chunk = event.getWorld().getChunkProvider().getLoadedChunk(event.getChunkX(), event.getChunkZ());
       if (chunk != null) {
@@ -139,20 +149,16 @@ public final class LocksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onPlayerLogIn(PlayerLoggedInEvent event) {
       LocksNetworks.MAIN.sendTo(new ConfigSyncPacket(LocksConfig.SERVER), (EntityPlayerMP)event.player);
    }
 
-   @SubscribeEvent
    public static void onPlayerChangeDim(PlayerChangedDimensionEvent event) {
    }
 
-   @SubscribeEvent
    public static void onPlayerRespawn(PlayerRespawnEvent event) {
    }
 
-   @SubscribeEvent
    public static void onPlayerTick(PlayerTickEvent event) {
       if (event.phase != Phase.END) {
          ISelection select = (ISelection)event.player.getCapability(LocksCapabilities.SELECTION, (EnumFacing)null);
@@ -168,7 +174,6 @@ public final class LocksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onRightClick(RightClickBlock event) {
       BlockPos pos = event.getPos();
       World world = event.getWorld();
@@ -225,7 +230,6 @@ public final class LocksEvents {
       return !LocksConfig.getServer(player.world).protectLockables || player.isCreative() || !LocksUtil.locked(player.world, pos);
    }
 
-   @SubscribeEvent
    public static void onBlockBreaking(BreakSpeed event) {
       if (!canBreakLockable(event.getEntityPlayer(), event.getPos())) {
          event.setCanceled(true);
@@ -233,7 +237,6 @@ public final class LocksEvents {
 
    }
 
-   @SubscribeEvent
    public static void onBlockBreak(BreakEvent event) {
       if (!canBreakLockable(event.getPlayer(), event.getPos())) {
          event.setCanceled(true);
@@ -241,7 +244,6 @@ public final class LocksEvents {
 
    }
 
-   @SubscribeEvent
    public static void onChunkWatch(Watch event) {
       EntityPlayerMP player = event.getPlayer();
       ((ILockableStorage)event.getChunkInstance().getCapability(LocksCapabilities.LOCKABLE_STORAGE, (EnumFacing)null)).get().values().stream().forEach((lkb) -> {
@@ -249,7 +251,6 @@ public final class LocksEvents {
       });
    }
 
-   @SubscribeEvent
    public static void onChunkUnWatch(UnWatch event) {
       EntityPlayerMP player = event.getPlayer();
       ((ILockableStorage)event.getChunkInstance().getCapability(LocksCapabilities.LOCKABLE_STORAGE, (EnumFacing)null)).get().keySet().stream().forEach((id) -> {
@@ -257,7 +258,6 @@ public final class LocksEvents {
       });
    }
 
-   @SubscribeEvent
    public static void onChunkUnload(Unload event) {
       Chunk ch = event.getChunk();
       World world = ch.getWorld();
@@ -282,7 +282,6 @@ public final class LocksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onChunkLoad(net.minecraftforge.event.world.ChunkEvent.Load event) {
       Chunk ch = event.getChunk();
       World world = ch.getWorld();

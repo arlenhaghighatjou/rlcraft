@@ -3,7 +3,7 @@ package melonslise.locks.client.gui;
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Collection;
-import java.util.concurrent.ThreadLocalRandom;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import melonslise.locks.client.gui.sprite.SpringSprite;
 import melonslise.locks.client.gui.sprite.Sprite;

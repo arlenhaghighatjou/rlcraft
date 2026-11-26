@@ -1,7 +1,7 @@
 package melonslise.locks.common.util;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.util.internal.ThreadLocalRandom;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.io.IOException;
 import java.util.HashSet;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;

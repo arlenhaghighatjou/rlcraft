@@ -1,5 +1,6 @@
 package net.minecraft.block;
 
+import melonslise.locks.common.util.LocksUtil;
 import com.google.common.collect.Lists;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -271,6 +272,11 @@ public class BlockPistonBase extends BlockDirectional
 
     public static boolean canPush(IBlockState blockStateIn, World worldIn, BlockPos pos, EnumFacing facing, boolean destroyBlocks, EnumFacing p_185646_5_)
     {
+        if (LocksUtil.locked(worldIn, pos))
+        {
+            return false;
+        }
+
         Block block = blockStateIn.getBlock();
 
         if (block == Blocks.OBSIDIAN)

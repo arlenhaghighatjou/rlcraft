@@ -1,5 +1,6 @@
 package melonslise.locks.common.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,14 +16,9 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.world.ChunkWatchEvent.Watch;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-@EventBusSubscriber(
-   modid = "locks"
-)
 public class LocksDelayEvents {
    private static Map<Integer, Map<ChunkPos, LocksDelayEvents.ChunkDelay>> chunksToPoll = new ConcurrentHashMap();
    public static int delay = 20;
@@ -30,26 +26,29 @@ public class LocksDelayEvents {
    private LocksDelayEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Watch.class, LocksDelayEvents::onChunkWatch);
+      bus.register(WorldTickEvent.class, LocksDelayEvents::onWorldTick);
+      bus.register(Load.class, LocksDelayEvents::onWorldLoad);
+      bus.register(Unload.class, LocksDelayEvents::onWorldUnload);
+   }
+
    public static void onChunkWatch(Watch event) {
       tryAddChunkToPoll(event.getChunkInstance());
    }
 
-   @SubscribeEvent
    public static void onWorldTick(WorldTickEvent event) {
       if (event.phase != Phase.START && !event.world.isRemote) {
          pollChunksInWorld(event.world);
       }
    }
 
-   @SubscribeEvent
    public static void onWorldLoad(Load event) {
       if (!event.getWorld().isRemote) {
          clearDimensionInPollMap(event.getWorld());
       }
    }
 
-   @SubscribeEvent
    public static void onWorldUnload(Unload event) {
       if (!event.getWorld().isRemote) {
          clearDimensionInPollMap(event.getWorld());

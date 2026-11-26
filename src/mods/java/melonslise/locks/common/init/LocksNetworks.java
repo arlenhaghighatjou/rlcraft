@@ -20,11 +20,11 @@ public final class LocksNetworks {
 
    public static void register() {
       NetworkRegistry.INSTANCE.registerGuiHandler(Locks.instance, new LocksGuiHandler());
-      MAIN.registerMessage(AddLockablePacket.Handler.class, AddLockablePacket.class, 0, Side.CLIENT);
-      MAIN.registerMessage(RemoveLockablePacket.Handler.class, RemoveLockablePacket.class, 1, Side.CLIENT);
-      MAIN.registerMessage(UpdateLockablePacket.Handler.class, UpdateLockablePacket.class, 2, Side.CLIENT);
-      MAIN.registerMessage(CheckPinPacket.Handler.class, CheckPinPacket.class, 3, Side.SERVER);
-      MAIN.registerMessage(CheckPinResultPacket.Handler.class, CheckPinResultPacket.class, 4, Side.CLIENT);
-      MAIN.registerMessage(ConfigSyncPacket.Handler.class, ConfigSyncPacket.class, 5, Side.CLIENT);
+      MAIN.registerMessage(new AddLockablePacket.Handler(), AddLockablePacket.class, AddLockablePacket::new, 0, Side.CLIENT);
+      MAIN.registerMessage(new RemoveLockablePacket.Handler(), RemoveLockablePacket.class, RemoveLockablePacket::new, 1, Side.CLIENT);
+      MAIN.registerMessage(new UpdateLockablePacket.Handler(), UpdateLockablePacket.class, UpdateLockablePacket::new, 2, Side.CLIENT);
+      MAIN.registerMessage(new CheckPinPacket.Handler(), CheckPinPacket.class, CheckPinPacket::new, 3, Side.SERVER);
+      MAIN.registerMessage(new CheckPinResultPacket.Handler(), CheckPinResultPacket.class, CheckPinResultPacket::new, 4, Side.CLIENT);
+      MAIN.registerMessage(new ConfigSyncPacket.Handler(), ConfigSyncPacket.class, ConfigSyncPacket::new, 5, Side.CLIENT);
    }
 }

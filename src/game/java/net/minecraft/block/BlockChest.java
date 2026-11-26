@@ -1,5 +1,6 @@
 package net.minecraft.block;
 
+import melonslise.locks.common.util.LocksUtil;
 import javax.annotation.Nullable;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -322,6 +323,32 @@ public class BlockChest extends BlockContainer
         BlockPos blockpos1 = pos.east();
         BlockPos blockpos2 = pos.north();
         BlockPos blockpos3 = pos.south();
+
+        if (worldIn.getBlockState(blockpos).getBlock() == this)
+        {
+            if (!this.isDoubleChest(worldIn, blockpos) && LocksUtil.locked(worldIn, blockpos))
+            {
+                return false;
+            }
+        }
+        else if (worldIn.getBlockState(blockpos1).getBlock() == this)
+        {
+            if (!this.isDoubleChest(worldIn, blockpos1) && LocksUtil.locked(worldIn, blockpos1))
+            {
+                return false;
+            }
+        }
+        else if (worldIn.getBlockState(blockpos2).getBlock() == this)
+        {
+            if (!this.isDoubleChest(worldIn, blockpos2) && LocksUtil.locked(worldIn, blockpos2))
+            {
+                return false;
+            }
+        }
+        else if (worldIn.getBlockState(blockpos3).getBlock() == this && !this.isDoubleChest(worldIn, blockpos3) && LocksUtil.locked(worldIn, blockpos3))
+        {
+            return false;
+        }
 
         if (worldIn.getBlockState(blockpos).getBlock() == this)
         {

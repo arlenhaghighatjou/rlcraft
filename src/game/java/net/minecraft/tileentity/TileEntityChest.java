@@ -1,5 +1,7 @@
 package net.minecraft.tileentity;
 
+import net.minecraftforge.items.wrapper.EmptyHandler;
+import melonslise.locks.common.util.LocksUtil;
 import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
@@ -358,6 +360,11 @@ public class TileEntityChest extends TileEntityLockableLoot implements ITickable
     @Nullable
     public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable net.minecraft.util.EnumFacing facing)
     {
+        if (!this.isInvalid() && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && this.hasWorld() && LocksUtil.locked(this.getWorld(), this.getPos()))
+        {
+            return (T)EmptyHandler.INSTANCE;
+        }
+
         if (capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
         {
             if(doubleChestHandler == null || doubleChestHandler.needsRefresh())
@@ -407,7 +414,7 @@ public class TileEntityChest extends TileEntityLockableLoot implements ITickable
         return new ContainerChest(playerInventory, this, playerIn);
     }
 
-    protected NonNullList<ItemStack> getItems()
+    public NonNullList<ItemStack> getItems()
     {
         return this.chestContents;
     }

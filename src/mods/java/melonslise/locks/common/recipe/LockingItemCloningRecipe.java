@@ -43,7 +43,7 @@ public class LockingItemCloningRecipe extends Impl<IRecipe> implements IRecipe {
       for(int a = 0; a < inv.getSizeInventory(); ++a) {
          ItemStack stack = inv.getStackInSlot(a);
          if (!stack.isEmpty()) {
-            if (LocksUtil.hasKey(stack, "Id") && this.locking.test(stack)) {
+            if (LocksUtil.hasKey(stack, "Id") && this.locking.apply(stack)) {
                locking = stack;
             } else {
                blanks.add(stack);
@@ -59,7 +59,7 @@ public class LockingItemCloningRecipe extends Impl<IRecipe> implements IRecipe {
 
       for(int a = 0; a < inv.getSizeInventory(); ++a) {
          ItemStack stack = inv.getStackInSlot(a);
-         if (this.locking.test(stack)) {
+         if (this.locking.apply(stack)) {
             stacks.set(a, stack.copy());
          }
       }
@@ -72,7 +72,7 @@ public class LockingItemCloningRecipe extends Impl<IRecipe> implements IRecipe {
 
       for(int a = 0; a < inventory.getSizeInventory() && locking.isEmpty(); ++a) {
          ItemStack stack = inventory.getStackInSlot(a);
-         if (!stack.isEmpty() && LocksUtil.hasKey(stack, "Id") && this.locking.test(stack)) {
+         if (!stack.isEmpty() && LocksUtil.hasKey(stack, "Id") && this.locking.apply(stack)) {
             locking = stack;
          }
       }
