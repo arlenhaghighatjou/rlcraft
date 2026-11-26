@@ -1,18 +1,21 @@
 package com.dhanantry.scapeandrunparasites.util.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.init.SRPBlocks;
 import com.dhanantry.scapeandrunparasites.util.ParasiteEventWorld;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigWorld;
 import net.minecraft.block.IGrowable;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class SRPEventHandlerTerrainGen {
    public SRPEventHandlerTerrainGen() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(SaplingGrowTreeEvent.class, this::allowTreeGrowthTick);
+   }
+
    public void allowTreeGrowthTick(SaplingGrowTreeEvent event) {
       if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof IGrowable) {
          if (event.getWorld().getBlockState(event.getPos()).getBlock() != SRPBlocks.ParasiteSapling) {

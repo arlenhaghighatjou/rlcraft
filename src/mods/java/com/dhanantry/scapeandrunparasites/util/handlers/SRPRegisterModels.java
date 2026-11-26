@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.util.handlers;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.block.BlockEvolutionLure;
 import com.dhanantry.scapeandrunparasites.block.BlockGore;
 import com.dhanantry.scapeandrunparasites.block.BlockInfestedBush;
@@ -23,16 +24,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber({Side.CLIENT})
 public class SRPRegisterModels {
    public SRPRegisterModels() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, SRPRegisterModels::registerModels);
+   }
+
    public static void registerModels(ModelRegistryEvent event) {
       registerItemModels();
    }

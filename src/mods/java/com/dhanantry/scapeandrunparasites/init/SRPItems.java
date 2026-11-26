@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.item.ItemBase;
 import com.dhanantry.scapeandrunparasites.item.ItemEPClock;
 import com.dhanantry.scapeandrunparasites.item.ItemLure;
@@ -19,8 +20,6 @@ import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class SRPItems {
@@ -274,14 +273,14 @@ public class SRPItems {
       armor_bootsSentient = new WeaponToolArmorBase(ARMOR_SENTIENT, "boots_sentient", 1, true, (byte)8, EntityEquipmentSlot.FEET);
    }
 
-   @EventBusSubscriber(
-      modid = "srparasites"
-   )
    public static class RegistrationHandler {
       public RegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Item.class, RegistrationHandler::registerItems);
+      }
+
       public static void registerItems(Register<Item> event) {
          IForgeRegistry<Item> registry = event.getRegistry();
          SRPItems.init();

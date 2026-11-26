@@ -256,6 +256,7 @@ public class Loader
         mods.add(new FMLModContainer<>("variedcommodities", "VariedCommodities", "1.12.2", "", "1.12, 1.12.1, 1.12.2", "variedcommodities", noppes.vc.VariedCommodities::new, noppes.vc.VariedCommodities::handleModStateEvent));
         mods.add(new FMLModContainer<>("antiqueatlas", "Antique Atlas", "4.6.3", "after:forge@[14.23.2.2611,);", "[1.12.2]", "antiqueatlas", hunternif.mc.atlas.AntiqueAtlasMod::new, hunternif.mc.atlas.AntiqueAtlasMod::handleModStateEvent));
         mods.add(new FMLModContainer<>("antiqueatlasoverlay", "antiqueatlasoverlay", "1.2", "required-after:antiqueatlas;after:forge@[13.20.0.2262,)", "[1.12.2]", "antiqueatlas", kenkron.antiqueatlasoverlay.AntiqueAtlasOverlayMod::new, kenkron.antiqueatlasoverlay.AntiqueAtlasOverlayMod::handleModStateEvent).clientSideOnly());
+        mods.add(new FMLModContainer<>("srparasites", "Scape and Run Parasites", "1.9.11", "", "[1.12.2]", "srparasites", com.dhanantry.scapeandrunparasites.SRPMain::new, com.dhanantry.scapeandrunparasites.SRPMain::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

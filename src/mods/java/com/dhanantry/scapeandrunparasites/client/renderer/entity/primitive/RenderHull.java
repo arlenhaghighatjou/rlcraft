@@ -1,11 +1,10 @@
 package com.dhanantry.scapeandrunparasites.client.renderer.entity.primitive;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.dhanantry.scapeandrunparasites.client.model.entity.primitive.ModelHull;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.primitive.EntityHull;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -56,7 +55,7 @@ public class RenderHull extends RenderMalleable<EntityHull> {
             GlStateManager.color(1.0F, 1.0F, 1.0F, f1);
             GlStateManager.depthMask(false);
             GlStateManager.enableBlend();
-            GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+            GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
             GlStateManager.alphaFunc(516, 0.003921569F);
          }
 

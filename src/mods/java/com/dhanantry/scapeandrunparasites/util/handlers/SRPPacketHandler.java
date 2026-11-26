@@ -23,12 +23,12 @@ public class SRPPacketHandler {
 
    public static void init() {
       SRPMain.network = NetworkRegistry.INSTANCE.newSimpleChannel("SRParasites");
-      SRPMain.network.registerMessage(SRPPacketMeleeRange.Handler.class, SRPPacketMeleeRange.class, nextID(), Side.SERVER);
-      SRPMain.network.registerMessage(SRPPacketEntityBodyHit.Handler.class, SRPPacketEntityBodyHit.class, nextID(), Side.SERVER);
-      SRPMain.network.registerMessage(SRPPacketBiomeChange.Handler.class, SRPPacketBiomeChange.class, nextID(), Side.CLIENT);
-      SRPMain.network.registerMessage(SRPPacketMovingSound.Handler.class, SRPPacketMovingSound.class, nextID(), Side.CLIENT);
-      SRPMain.network.registerMessage(SRPPacketParticle.Handler.class, SRPPacketParticle.class, nextID(), Side.CLIENT);
-      SRPMain.network.registerMessage(SRPPacketEntityBodyDead.Handler.class, SRPPacketEntityBodyDead.class, nextID(), Side.CLIENT);
-      SRPMain.network.registerMessage(SRPPacketFog.Handler.class, SRPPacketFog.class, nextID(), Side.CLIENT);
+      SRPMain.network.registerMessage(new SRPPacketMeleeRange.Handler(), SRPPacketMeleeRange.class, SRPPacketMeleeRange::new, nextID(), Side.SERVER);
+      SRPMain.network.registerMessage(new SRPPacketEntityBodyHit.Handler(), SRPPacketEntityBodyHit.class, SRPPacketEntityBodyHit::new, nextID(), Side.SERVER);
+      SRPMain.network.registerMessage(new SRPPacketBiomeChange.Handler(), SRPPacketBiomeChange.class, SRPPacketBiomeChange::new, nextID(), Side.CLIENT);
+      SRPMain.network.registerMessage(new SRPPacketMovingSound.Handler(), SRPPacketMovingSound.class, SRPPacketMovingSound::new, nextID(), Side.CLIENT);
+      SRPMain.network.registerMessage(new SRPPacketParticle.Handler(), SRPPacketParticle.class, SRPPacketParticle::new, nextID(), Side.CLIENT);
+      SRPMain.network.registerMessage(new SRPPacketEntityBodyDead.Handler(), SRPPacketEntityBodyDead.class, SRPPacketEntityBodyDead::new, nextID(), Side.CLIENT);
+      SRPMain.network.registerMessage(new SRPPacketFog.Handler(), SRPPacketFog.class, SRPPacketFog::new, nextID(), Side.CLIENT);
    }
 }

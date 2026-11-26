@@ -74,7 +74,7 @@ public class WeaponToolRangeBase extends ItemBow {
       });
    }
 
-   private ItemStack findAmmo(EntityPlayer player) {
+   private ItemStack findRangedAmmo(EntityPlayer player) {
       if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND))) {
          return player.getHeldItem(EnumHand.OFF_HAND);
       } else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND))) {
@@ -99,7 +99,7 @@ public class WeaponToolRangeBase extends ItemBow {
       if (entityLiving instanceof EntityPlayer) {
          EntityPlayer entityplayer = (EntityPlayer)entityLiving;
          boolean flag = entityplayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
-         ItemStack itemstack = this.findAmmo(entityplayer);
+         ItemStack itemstack = this.findRangedAmmo(entityplayer);
          int i = this.getMaxItemUseDuration(stack) - timeLeft;
          i = ForgeEventFactory.onArrowLoose(stack, worldIn, entityplayer, i, !itemstack.isEmpty() || flag);
          if (i < 0) {

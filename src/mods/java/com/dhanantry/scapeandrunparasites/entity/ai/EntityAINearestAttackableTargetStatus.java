@@ -69,7 +69,7 @@ public class EntityAINearestAttackableTargetStatus<T extends EntityLivingBase> e
                return true;
             }
          } else {
-            this.targetEntity = (T)this.getNearest(this.taskOwner.posX, this.taskOwner.posY + (double)this.taskOwner.getEyeHeight(), this.taskOwner.posZ, this.getTargetDistance(), this.getTargetDistance(), this.targetEntitySelector);
+            this.targetEntity = (T)this.getNearest(this.taskOwner.posX, this.taskOwner.posY + (double)this.taskOwner.getEyeHeight(), this.taskOwner.posZ, this.getTargetDistance(), this.getTargetDistance(), (Predicate)this.targetEntitySelector);
             return this.targetEntity != null;
          }
       } else {

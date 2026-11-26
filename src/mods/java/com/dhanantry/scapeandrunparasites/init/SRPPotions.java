@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPStationary;
 import com.dhanantry.scapeandrunparasites.potion.SRPEffectBase;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
@@ -11,8 +12,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class SRPPotions {
@@ -141,14 +140,15 @@ public class SRPPotions {
       }
    }
 
-   @EventBusSubscriber(
-      modid = "srparasites"
-   )
    public static class RegistrationHandler {
       public RegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Potion.class, RegistrationHandler::onEventE);
+         bus.registerGeneric(Register.class, PotionType.class, RegistrationHandler::onEventP);
+      }
+
       public static void onEventE(Register<Potion> event) {
          IForgeRegistry<Potion> registry = event.getRegistry();
          registry.register(SRPPotions.COTH_E);
@@ -167,7 +167,6 @@ public class SRPPotions {
          registry.register(SRPPotions.LINK_E);
       }
 
-      @SubscribeEvent
       public static void onEventP(Register<PotionType> event) {
          IForgeRegistry<PotionType> registry = event.getRegistry();
          registry.register(SRPPotions.COTH_P);

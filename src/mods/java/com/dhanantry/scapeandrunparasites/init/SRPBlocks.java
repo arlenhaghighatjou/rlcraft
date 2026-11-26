@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.block.BlockBiomeCore;
 import com.dhanantry.scapeandrunparasites.block.BlockBiomePurifier;
 import com.dhanantry.scapeandrunparasites.block.BlockBuglin;
@@ -40,8 +41,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSlab;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class SRPBlocks {
@@ -87,16 +86,17 @@ public class SRPBlocks {
       optionalRub = Block.getBlockFromName(SRPConfigSystems.optionalBlockRub);
    }
 
-   @EventBusSubscriber(
-      modid = "srparasites"
-   )
    public static class RegistrationHandler {
       private static IForgeRegistry<Item> itemRegistry;
 
       public RegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Block.class, RegistrationHandler::onEvent);
+         bus.registerGeneric(Register.class, Item.class, RegistrationHandler::registerItemBlocks);
+      }
+
       public static void onEvent(Register<Block> event) {
          IForgeRegistry<Block> registry = event.getRegistry();
          SRPBlocks.InfestedStain = new BlockInfestedStain(Material.GROUND, "infestedstain", 0.7F, true, true);
@@ -163,7 +163,6 @@ public class SRPBlocks {
          registry.register(SRPBlocks.dodN);
       }
 
-      @SubscribeEvent
       public static void registerItemBlocks(Register<Item> event) {
          itemRegistry = event.getRegistry();
          registerItemBlock(SRPBlocks.InfestedStain);

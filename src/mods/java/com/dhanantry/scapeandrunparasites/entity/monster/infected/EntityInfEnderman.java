@@ -208,10 +208,10 @@ public class EntityInfEnderman extends EntityPInfected {
             EntityPInfected mob;
             while(true) {
                if (!var4.hasNext()) {
-                  for(EntityParasiteBase mob : moblist) {
-                     if (mob instanceof EntityMudo && mob.getAttackTarget() == null && mob.getHealth() - SRPConfigMobs.infendermanTeleDamage >= 2.0F && this.teleportToEntity(mob, 1.0D)) {
+                  for(EntityParasiteBase ally : moblist) {
+                     if (ally instanceof EntityMudo && ally.getAttackTarget() == null && ally.getHealth() - SRPConfigMobs.infendermanTeleDamage >= 2.0F && this.teleportToEntity(ally, 1.0D)) {
                         this.setCoordTarget(target.posX, target.posY, target.posZ);
-                        this.toTele = mob;
+                        this.toTele = ally;
                         this.setWorkTask(false);
                         this.ally = 1;
                         return true;

@@ -140,71 +140,74 @@ public class EntityButhol extends EntityParasiteBase {
 
    protected void selfExplode() {
       switch(this.getSkin()) {
-      case 1:
-         boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this) && SRPConfigMobs.ButholGriefing;
-         ParasiteEventEntity.createExplosion(this.world, this, this.posX, this.posY, this.posZ, 4.0F, flag);
-         if (!this.world.isRemote) {
-            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D)).grow(4.0D);
+      case 1: {
+            boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this) && SRPConfigMobs.ButholGriefing;
+            ParasiteEventEntity.createExplosion(this.world, this, this.posX, this.posY, this.posZ, 4.0F, flag);
+            if (!this.world.isRemote) {
+               AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D)).grow(4.0D);
 
-            for(EntityLivingBase mob : this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb)) {
-               if (!(mob instanceof EntityParasiteBase)) {
-                  mob.attackEntityFrom(DamageSource.WITHER, (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
-                  SRPPotions.applyStackPotion(SRPPotions.VIRA_E, mob, 400, 1);
+               for(EntityLivingBase mob : this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb)) {
+                  if (!(mob instanceof EntityParasiteBase)) {
+                     mob.attackEntityFrom(DamageSource.WITHER, (float)this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+                     SRPPotions.applyStackPotion(SRPPotions.VIRA_E, mob, 400, 1);
+                  }
                }
+
+               this.playSound(SRPSounds.BUTHOL_BOOM, 1.0F, 1.0F);
+               this.dead = true;
+               this.setDead();
+               this.spawnLingeringCloud();
             }
 
-            this.playSound(SRPSounds.BUTHOL_BOOM, 1.0F, 1.0F);
-            this.dead = true;
-            this.setDead();
-            this.spawnLingeringCloud();
-         }
+            return;
+      }
+      default: {
+            boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this) && SRPConfigMobs.ButholGriefing;
+            ParasiteEventEntity.createExplosion(this.world, this, this.posX, this.posY, this.posZ, 4.0F, flag);
+            if (!this.world.isRemote) {
+               AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D)).grow(4.0D);
 
-         return;
-      default:
-         boolean flag = ForgeEventFactory.getMobGriefingEvent(this.world, this) && SRPConfigMobs.ButholGriefing;
-         ParasiteEventEntity.createExplosion(this.world, this, this.posX, this.posY, this.posZ, 4.0F, flag);
-         if (!this.world.isRemote) {
-            AxisAlignedBB axisalignedbb = (new AxisAlignedBB(this.posX, this.posY, this.posZ, this.posX + 1.0D, this.posY + 1.0D, this.posZ + 1.0D)).grow(4.0D);
-
-            for(EntityLivingBase mob : this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb)) {
-               if (!(mob instanceof EntityParasiteBase)) {
-                  SRPPotions.applyStackPotion(SRPPotions.VIRA_E, mob, 400, 1);
+               for(EntityLivingBase mob : this.world.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb)) {
+                  if (!(mob instanceof EntityParasiteBase)) {
+                     SRPPotions.applyStackPotion(SRPPotions.VIRA_E, mob, 400, 1);
+                  }
                }
+
+               this.playSound(SRPSounds.BUTHOL_BOOM, 1.0F, 1.0F);
+               this.dead = true;
+               this.setDead();
+               this.spawnLingeringCloud();
+               ParasiteEventEntity.spawnM(this, SRPConfigMobs.butholMobs, 0, false, this.getCustomNameTag());
             }
-
-            this.playSound(SRPSounds.BUTHOL_BOOM, 1.0F, 1.0F);
-            this.dead = true;
-            this.setDead();
-            this.spawnLingeringCloud();
-            ParasiteEventEntity.spawnM(this, SRPConfigMobs.butholMobs, 0, false, this.getCustomNameTag());
-         }
-
+      }
       }
    }
 
    private void spawnLingeringCloud() {
       switch(this.getSkin()) {
-      case 1:
-         EntityToxicCloud entityareaeffectcloud = new EntityToxicCloud(this.world, this.posX, this.posY, this.posZ);
-         entityareaeffectcloud.setRadius(this.width * 3.0F, this.height);
-         entityareaeffectcloud.setWaitTime(10);
-         entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
-         entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
-         entityareaeffectcloud.addEffect(new PotionEffect(MobEffects.POISON, 300, 2));
-         entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.COTH_E, 3600, 2, false, false));
-         entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.VIRA_E, 3600, 2, false, false));
-         this.world.spawnEntity(entityareaeffectcloud);
-         return;
-      default:
-         EntityToxicCloud entityareaeffectcloud = new EntityToxicCloud(this.world, this.posX, this.posY, this.posZ);
-         entityareaeffectcloud.setRadius(this.width * 2.0F, this.height);
-         entityareaeffectcloud.setWaitTime(10);
-         entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
-         entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
-         entityareaeffectcloud.addEffect(new PotionEffect(MobEffects.POISON, 300, 0));
-         entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.COTH_E, 3600, 0, false, false));
-         entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.VIRA_E, 3600, 0, false, false));
-         this.world.spawnEntity(entityareaeffectcloud);
+      case 1: {
+            EntityToxicCloud entityareaeffectcloud = new EntityToxicCloud(this.world, this.posX, this.posY, this.posZ);
+            entityareaeffectcloud.setRadius(this.width * 3.0F, this.height);
+            entityareaeffectcloud.setWaitTime(10);
+            entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
+            entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
+            entityareaeffectcloud.addEffect(new PotionEffect(MobEffects.POISON, 300, 2));
+            entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.COTH_E, 3600, 2, false, false));
+            entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.VIRA_E, 3600, 2, false, false));
+            this.world.spawnEntity(entityareaeffectcloud);
+            return;
+      }
+      default: {
+            EntityToxicCloud entityareaeffectcloud = new EntityToxicCloud(this.world, this.posX, this.posY, this.posZ);
+            entityareaeffectcloud.setRadius(this.width * 2.0F, this.height);
+            entityareaeffectcloud.setWaitTime(10);
+            entityareaeffectcloud.setDuration(entityareaeffectcloud.getDuration() / 2);
+            entityareaeffectcloud.setRadiusPerTick(-entityareaeffectcloud.getRadius() / (float)entityareaeffectcloud.getDuration());
+            entityareaeffectcloud.addEffect(new PotionEffect(MobEffects.POISON, 300, 0));
+            entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.COTH_E, 3600, 0, false, false));
+            entityareaeffectcloud.addEffect(new PotionEffect(SRPPotions.VIRA_E, 3600, 0, false, false));
+            this.world.spawnEntity(entityareaeffectcloud);
+      }
       }
    }
 

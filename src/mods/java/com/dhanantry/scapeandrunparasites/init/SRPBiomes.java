@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfigWorld;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeInfestedPlain;
 import com.dhanantry.scapeandrunparasites.world.biome.BiomeParasite;
@@ -11,8 +12,6 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SRPBiomes {
    public static final BiomeParasite biomeInfested = new BiomeInfestedPlain();
@@ -35,14 +34,14 @@ public class SRPBiomes {
       biomeInfested.mobListClear();
    }
 
-   @EventBusSubscriber(
-      modid = "srparasites"
-   )
    public static class RegistrationHandler {
       public RegistrationHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Biome.class, RegistrationHandler::onEvent);
+      }
+
       public static void onEvent(Register<Biome> event) {
          if (SRPConfigWorld.biomeRegster) {
             SRPBiomes.register(event, SRPBiomes.biomeInfested, BiomeType.COOL, "biome_parasite", SRPConfigWorld.biomeweight, Type.SPOOKY);

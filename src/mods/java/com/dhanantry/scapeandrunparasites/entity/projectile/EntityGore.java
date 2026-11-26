@@ -86,46 +86,50 @@ public class EntityGore extends Entity {
       if (this.world.isRemote && this.ticksExisted % 5 == 0 && !this.onGround) {
          label172:
          switch(this.getSkin()) {
-         case 1:
-            int i = 0;
+         case 1: {
+               int i = 0;
 
-            while(true) {
-               if (i > 0) {
-                  break label172;
+               while(true) {
+                  if (i > 0) {
+                     break label172;
+                  }
+
+                  this.spawnParticles(SRPEnumParticle.GSPLASH, 0, 0, 0);
+                  this.spawnParticles(SRPEnumParticle.GCLOUD, 127, 0, 0);
+                  ++i;
                }
+         }
+         case 2: {
+               int i = 0;
 
-               this.spawnParticles(SRPEnumParticle.GSPLASH, 0, 0, 0);
-               this.spawnParticles(SRPEnumParticle.GCLOUD, 127, 0, 0);
-               ++i;
-            }
-         case 2:
-            int i = 0;
+               while(true) {
+                  if (i > 0) {
+                     break label172;
+                  }
 
-            while(true) {
-               if (i > 0) {
-                  break label172;
+                  this.spawnParticles(SRPEnumParticle.GCLOUD, 150, 0, 0);
+                  this.spawnParticles(SRPEnumParticle.GCLOUD, 127, 0, 0);
+                  ++i;
                }
+         }
+         case 3: {
+               int i = 0;
 
-               this.spawnParticles(SRPEnumParticle.GCLOUD, 150, 0, 0);
-               this.spawnParticles(SRPEnumParticle.GCLOUD, 127, 0, 0);
-               ++i;
-            }
-         case 3:
-            int i = 0;
+               while(true) {
+                  if (i > 0) {
+                     break label172;
+                  }
 
-            while(true) {
-               if (i > 0) {
-                  break label172;
+                  this.spawnParticles(SRPEnumParticle.GCLOUD, 200, 200, 0);
+                  this.spawnParticles(SRPEnumParticle.GSPLASH, 3, -1, -1);
+                  ++i;
                }
-
-               this.spawnParticles(SRPEnumParticle.GCLOUD, 200, 200, 0);
-               this.spawnParticles(SRPEnumParticle.GSPLASH, 3, -1, -1);
-               ++i;
-            }
-         case 4:
-            for(int i = 0; i <= 0; ++i) {
-               this.spawnParticles(SRPEnumParticle.GSPLASH, 0, 0, 0);
-            }
+         }
+         case 4: {
+               for(int i = 0; i <= 0; ++i) {
+                  this.spawnParticles(SRPEnumParticle.GSPLASH, 0, 0, 0);
+               }
+         }
          }
       }
 
@@ -141,104 +145,117 @@ public class EntityGore extends Entity {
          if (!this.world.isRemote) {
             label140:
             switch(this.type) {
-            case 1:
-               this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.SIM_SMALL));
-               break;
-            case 2:
-               this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.PRI_SMALL));
-               break;
-            case 3:
-               this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.ADA_SMALL));
-               break;
-            case 4:
-               this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.PURE_SMALL));
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            default:
-               break;
-            case 10:
-               Block block = this.world.getBlockState(this.getPosition()).getBlock();
-               if (block != Blocks.AIR && block != Blocks.GRASS) {
-                  BlockPos helper = this.getPosition();
-                  int i = 4;
-
-                  for(int rand = this.rand.nextInt(4); i >= 0; rand = (rand + 1) % 4) {
-                     --i;
-                     helper = directionToSpread(this.getPosition(), rand);
-                     block = this.world.getBlockState(helper).getBlock();
-                     if (block == Blocks.AIR || block == Blocks.GRASS) {
-                        this.world.setBlockState(helper, SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
-                        this.addCystItems(helper);
-                        this.setDead();
-                        return;
-                     }
-                  }
-
-                  this.world.setBlockState(this.getPosition(), SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
-                  this.addCystItems(this.getPosition());
-               } else {
-                  this.world.setBlockState(this.getPosition(), SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
-                  this.addCystItems(this.getPosition());
-               }
-               break;
-            case 11:
-               Block block = this.world.getBlockState(this.getPosition()).getBlock();
-               if (block != Blocks.AIR && block != Blocks.GRASS) {
-                  BlockPos helper = this.getPosition();
-                  int i = 4;
-                  int rand = this.rand.nextInt(4);
-
-                  while(true) {
-                     if (i < 0) {
-                        break label140;
-                     }
-
-                     --i;
-                     helper = directionToSpread(this.getPosition(), rand);
-                     block = this.world.getBlockState(helper).getBlock();
-                     if (block == Blocks.AIR || block == Blocks.GRASS) {
-                        this.world.setBlockState(helper, SRPBlocks.dodN.getDefaultState(), 3);
-                        this.setDead();
-                        return;
-                     }
-
-                     rand = (rand + 1) % 4;
-                  }
-               } else {
-                  this.world.setBlockState(this.getPosition(), SRPBlocks.dodN.getDefaultState(), 3);
+            case 1: {
+                  this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.SIM_SMALL));
                   break;
-               }
-            case 12:
-               IBlockState state = SRPBlocks.InfestRemain.getStateFromMeta(1);
-               Block block22 = this.world.getBlockState(this.getPosition()).getBlock();
-               if ((block22 == Blocks.AIR || block22 instanceof BlockBush) && block22 != SRPBlocks.Gore) {
-                  this.world.setBlockState(this.getPosition(), state);
-               } else {
-                  BlockPos helper = this.getPosition();
-                  int i = 4;
-                  int rand = this.rand.nextInt(4);
-                  int ccc = 0;
+            }
+            case 2: {
+                  this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.PRI_SMALL));
+                  break;
+            }
+            case 3: {
+                  this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.ADA_SMALL));
+                  break;
+            }
+            case 4: {
+                  this.placeBlood(SRPBlocks.Gore.getDefaultState().withProperty(BlockGore.VARIANT, BlockGore.EnumType.PURE_SMALL));
+            }
+            case 5: {
+            }
+            case 6: {
+            }
+            case 7: {
+            }
+            case 8: {
+            }
+            case 9: {
+            }
+            default: {
+                  break;
+            }
+            case 10: {
+                  Block block = this.world.getBlockState(this.getPosition()).getBlock();
+                  if (block != Blocks.AIR && block != Blocks.GRASS) {
+                     BlockPos helper = this.getPosition();
+                     int i = 4;
 
-                  while(i >= 0) {
-                     --i;
-                     helper = directionToSpread(this.getPosition(), rand);
-                     block22 = this.world.getBlockState(helper).getBlock();
-                     if ((block22 == Blocks.AIR || block22 instanceof BlockBush) && block22 != SRPBlocks.Gore) {
-                        this.world.setBlockState(helper, state);
-                        ++ccc;
-                        if (ccc > 2) {
+                     for(int rand = this.rand.nextInt(4); i >= 0; rand = (rand + 1) % 4) {
+                        --i;
+                        helper = directionToSpread(this.getPosition(), rand);
+                        block = this.world.getBlockState(helper).getBlock();
+                        if (block == Blocks.AIR || block == Blocks.GRASS) {
+                           this.world.setBlockState(helper, SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
+                           this.addCystItems(helper);
+                           this.setDead();
+                           return;
+                        }
+                     }
+
+                     this.world.setBlockState(this.getPosition(), SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
+                     this.addCystItems(this.getPosition());
+                  } else {
+                     this.world.setBlockState(this.getPosition(), SRPBlocks.ParasiteCanisterActive.getDefaultState(), 3);
+                     this.addCystItems(this.getPosition());
+                  }
+                  break;
+            }
+            case 11: {
+                  Block block = this.world.getBlockState(this.getPosition()).getBlock();
+                  if (block != Blocks.AIR && block != Blocks.GRASS) {
+                     BlockPos helper = this.getPosition();
+                     int i = 4;
+                     int rand = this.rand.nextInt(4);
+
+                     while(true) {
+                        if (i < 0) {
+                           break label140;
+                        }
+
+                        --i;
+                        helper = directionToSpread(this.getPosition(), rand);
+                        block = this.world.getBlockState(helper).getBlock();
+                        if (block == Blocks.AIR || block == Blocks.GRASS) {
+                           this.world.setBlockState(helper, SRPBlocks.dodN.getDefaultState(), 3);
+                           this.setDead();
                            return;
                         }
 
                         rand = (rand + 1) % 4;
-                     } else {
-                        rand = (rand + 1) % 4;
+                     }
+                  } else {
+                     this.world.setBlockState(this.getPosition(), SRPBlocks.dodN.getDefaultState(), 3);
+                     break;
+                  }
+            }
+            case 12: {
+                  IBlockState state = SRPBlocks.InfestRemain.getStateFromMeta(1);
+                  Block block22 = this.world.getBlockState(this.getPosition()).getBlock();
+                  if ((block22 == Blocks.AIR || block22 instanceof BlockBush) && block22 != SRPBlocks.Gore) {
+                     this.world.setBlockState(this.getPosition(), state);
+                  } else {
+                     BlockPos helper = this.getPosition();
+                     int i = 4;
+                     int rand = this.rand.nextInt(4);
+                     int ccc = 0;
+
+                     while(i >= 0) {
+                        --i;
+                        helper = directionToSpread(this.getPosition(), rand);
+                        block22 = this.world.getBlockState(helper).getBlock();
+                        if ((block22 == Blocks.AIR || block22 instanceof BlockBush) && block22 != SRPBlocks.Gore) {
+                           this.world.setBlockState(helper, state);
+                           ++ccc;
+                           if (ccc > 2) {
+                              return;
+                           }
+
+                           rand = (rand + 1) % 4;
+                        } else {
+                           rand = (rand + 1) % 4;
+                        }
                      }
                   }
-               }
+            }
             }
          }
 

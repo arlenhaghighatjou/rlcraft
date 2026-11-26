@@ -43,7 +43,7 @@ public class RenderMes extends RenderMalleable<EntityMes> {
       super.applyRotations(entityLiving, ageInTicks, rotationYaw, partialTicks);
    }
 
-   protected void renderLivingLabel(EntityMes entityIn, String str, double x, double y, double z, int maxDistance) {
+   public void renderLivingLabel(EntityMes entityIn, String str, double x, double y, double z, int maxDistance) {
       double d0 = entityIn.getDistanceSq(this.renderManager.renderViewEntity);
       if (d0 <= (double)(maxDistance * maxDistance)) {
          boolean flag = entityIn.isSneaking();

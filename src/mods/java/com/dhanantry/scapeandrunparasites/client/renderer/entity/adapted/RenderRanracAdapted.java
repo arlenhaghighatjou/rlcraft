@@ -1,5 +1,7 @@
 package com.dhanantry.scapeandrunparasites.client.renderer.entity.adapted;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.dhanantry.scapeandrunparasites.client.model.entity.adapted.ModelRanracAdapted;
 import com.dhanantry.scapeandrunparasites.client.renderer.RenderMalleable;
 import com.dhanantry.scapeandrunparasites.entity.monster.adapted.EntityRanracAdapted;
@@ -7,8 +9,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
@@ -60,14 +60,14 @@ public class RenderRanracAdapted extends RenderMalleable<EntityRanracAdapted> {
          Tessellator tessellator = Tessellator.getInstance();
          WorldRenderer bufferbuilder = tessellator.getBuffer();
          this.bindTexture(GUARDIAN_BEAM_TEXTURE);
-         GlStateManager.glTexParameteri(3553, 10242, 10497);
-         GlStateManager.glTexParameteri(3553, 10243, 10497);
+         EaglercraftGPU.glTexParameteri(3553, 10242, 10497);
+         EaglercraftGPU.glTexParameteri(3553, 10243, 10497);
          GlStateManager.disableCull();
          GlStateManager.disableBlend();
          GlStateManager.depthMask(true);
          float f1 = 240.0F;
          OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240.0F, 240.0F);
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          float f2 = (float)entity.world.getTotalWorldTime() + partialTicks;
          float f3 = f2 * 0.5F % 1.0F;
          float f4 = entity.getEyeHeight();

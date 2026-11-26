@@ -1,5 +1,7 @@
 package com.dhanantry.scapeandrunparasites.util.handlers;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.client.particle.ParticleBiomass;
 import com.dhanantry.scapeandrunparasites.client.particle.ParticleFog;
@@ -32,7 +34,6 @@ import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.FogMode;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityList;
@@ -87,7 +88,6 @@ import net.minecraftforge.event.world.BlockEvent.CropGrowEvent.Pre;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
@@ -109,22 +109,40 @@ public class SRPEventHandlerBus {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Load.class, EventPriority.NORMAL, true, this::onWorldLoad);
+      bus.register(FogDensity.class, EventPriority.NORMAL, true, this::onEvent);
+      bus.register(FogColors.class, EventPriority.NORMAL, true, this::onEvent);
+      bus.register(Pre.class, this::cropGrow);
+      bus.register(LivingHealEvent.class, this::entityHeal);
+      bus.register(LivingHurtEvent.class, this::entityHurt);
+      bus.register(net.minecraftforge.client.event.TextureStitchEvent.Pre.class, this::stitchEventPre);
+      bus.register(ItemFishedEvent.class, this::playerFishing);
+      bus.register(EntityInteract.class, this::itemEntity);
+      bus.register(Start.class, this::itemPlayer);
+      bus.register(RightClickBlock.class, this::blockPlayer);
+      bus.register(EntityInteractSpecific.class, this::entityPlayer);
+      bus.register(GuiOpenEvent.class, EventPriority.NORMAL, true, this::guiPlayer);
+      bus.register(LivingDamageEvent.class, this::mobFear);
+      bus.register(EntityJoinWorldEvent.class, this::onEntitySpawn);
+      bus.register(ServerTickEvent.class, EventPriority.NORMAL, true, this::serverTick);
+      bus.register(LivingDropsEvent.class, this::setLoot);
+      bus.register(PlayerTickEvent.class, EventPriority.NORMAL, true, this::playerTick);
+      bus.register(LivingDeathEvent.class, this::playerDeath);
+      bus.register(PlayerWakeUpEvent.class, this::playerUp);
+      bus.register(WorldTickEvent.class, EventPriority.NORMAL, true, this::worldTick);
+      bus.register(EntityStruckByLightningEvent.class, this::light);
+      bus.register(MouseEvent.class, EventPriority.NORMAL, true, this::onEvent);
+   }
+
    public void onWorldLoad(Load event) {
       fog = 0.0F;
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void onEvent(FogDensity event) {
       if (fog > 0.0F && !Minecraft.getMinecraft().player.isPotionActive(MobEffects.BLINDNESS)) {
-         GlStateManager.setFog(FogMode.EXP);
+         GlStateManager.setFog(RealOpenGLEnums.GL_EXP);
          event.setDensity(fog);
          event.setCanceled(true);
       }
@@ -132,10 +150,6 @@ public class SRPEventHandlerBus {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void onEvent(FogColors event) {
       if ((double)fog > (double)SRPConfigWorld.biomeFogDensity * 0.2D && !Minecraft.getMinecraft().player.isPotionActive(MobEffects.BLINDNESS)) {
          event.setRed(SRPConfigWorld.biomeFogRed / 255.0F);
@@ -145,7 +159,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent
    public void cropGrow(Pre event) {
       if (event.getResult() != Result.DENY) {
          if (SRPConfigWorld.nodesActivated || SRPConfigSystems.useEvolution) {
@@ -224,7 +237,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void entityHeal(LivingHealEvent event) {
       if (!event.isCanceled()) {
          EntityLivingBase entity = event.getEntityLiving();
@@ -254,7 +266,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void entityHurt(LivingHurtEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null && !entity.world.isRemote) {
@@ -425,7 +436,6 @@ public class SRPEventHandlerBus {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void stitchEventPre(net.minecraftforge.client.event.TextureStitchEvent.Pre event) {
       event.getMap().registerSprite(ParticleSpore.PARTICLES_TEXTURE);
       event.getMap().registerSprite(ParticleFog.PARTICLES_TEXTURE);
@@ -438,7 +448,6 @@ public class SRPEventHandlerBus {
       event.getMap().registerSprite(ParticleBiomass.PARTICLES_TEXTURE);
    }
 
-   @SubscribeEvent
    public void playerFishing(ItemFishedEvent event) {
       if (!event.getEntity().world.isRemote && SRPConfigSystems.useEvolution) {
          SRPWorldData data = SRPWorldData.get(event.getEntity().world);
@@ -449,7 +458,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent
    public void itemEntity(EntityInteract event) {
       if (event.getTarget() instanceof EntityLivingBase && !event.getWorld().isRemote) {
          ItemStack stack = event.getItemStack();
@@ -477,7 +485,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent
    public void itemPlayer(Start event) {
       if (event.getEntityLiving() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)event.getEntityLiving();
@@ -499,7 +506,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void blockPlayer(RightClickBlock event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null) {
@@ -516,16 +522,11 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void entityPlayer(EntityInteractSpecific event) {
       int heart = ParasiteEventWorld.canBiomeStillExist(event.getWorld(), event.getPos(), false);
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void guiPlayer(GuiOpenEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       EntityPlayer player = mc.player;
@@ -540,7 +541,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void mobFear(LivingDamageEvent event) {
       EntityLivingBase in = event.getEntityLiving();
       if (in != null) {
@@ -565,7 +565,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void onEntitySpawn(EntityJoinWorldEvent event) {
       if (event.getEntity() != null) {
          if (event.getEntity() instanceof EntityLivingBase && !event.getEntity().world.isRemote) {
@@ -725,10 +724,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void serverTick(ServerTickEvent event) {
       if (event.phase != Phase.END) {
          if (ParasiteEventWorld.blockInfestedCount > SRPConfig.BlockInfestedLimit) {
@@ -773,7 +768,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void setLoot(LivingDropsEvent event) {
       if (event.getEntityLiving() instanceof EntityParasiteBase) {
          if (!event.getEntityLiving().world.getGameRules().getBoolean("doMobLoot")) {
@@ -1118,10 +1112,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void playerTick(PlayerTickEvent event) {
       if (event.phase == Phase.START) {
          EntityPlayer thePlayer = event.player;
@@ -1167,7 +1157,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent
    public void playerDeath(LivingDeathEvent event) {
       if (event.getEntity() instanceof EntityPlayer && SRPConfigSystems.cothActive && SRPConfigMobs.infadventurerEnabled && SRPConfigMobs.infadventurerSpawnBy && event.getSource().getTrueSource() instanceof EntityParasiteBase) {
          EntityPlayer player = (EntityPlayer)event.getEntity();
@@ -1196,7 +1185,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent
    public void playerUp(PlayerWakeUpEvent event) {
       if (SRPConfigSystems.useEvolution && !event.getEntity().world.isRemote) {
          SRPWorldData data = SRPWorldData.get(event.getEntityPlayer().world);
@@ -1238,10 +1226,6 @@ public class SRPEventHandlerBus {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void worldTick(WorldTickEvent event) {
       if (event.phase != Phase.END) {
          if (!event.world.isRemote && SRPConfigSystems.useEvolution && SRPConfigSystems.phaseCustomSpawner) {
@@ -1264,7 +1248,6 @@ public class SRPEventHandlerBus {
 
    }
 
-   @SubscribeEvent
    public void light(EntityStruckByLightningEvent event) {
       if (event.getEntity() instanceof EntityParasiteBase) {
          ((EntityParasiteBase)event.getEntity()).setKillC(1000000.0D);
@@ -1273,10 +1256,6 @@ public class SRPEventHandlerBus {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public void onEvent(MouseEvent event) {
       if (event.getButton() == 0 && event.isButtonstate()) {
          Minecraft mc = Minecraft.getMinecraft();

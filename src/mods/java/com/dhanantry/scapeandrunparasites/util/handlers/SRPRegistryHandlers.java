@@ -13,8 +13,8 @@ public class SRPRegistryHandlers {
    }
 
    public static void initEvents() {
-      MinecraftForge.EVENT_BUS.register(new SRPEventHandlerBus());
-      MinecraftForge.TERRAIN_GEN_BUS.register(new SRPEventHandlerTerrainGen());
+      (new SRPEventHandlerBus()).register(MinecraftForge.EVENT_BUS);
+      (new SRPEventHandlerTerrainGen()).register(MinecraftForge.TERRAIN_GEN_BUS);
       GameRegistry.registerWorldGenerator(new WorldGenCustomStructures(), 0);
    }
 }

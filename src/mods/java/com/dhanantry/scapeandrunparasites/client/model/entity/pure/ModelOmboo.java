@@ -551,7 +551,7 @@ public class ModelOmboo extends ModelSRP {
       this.jointRW.rotateAngleZ = 0.0F;
       int i = parasite.getParasiteStatus();
       i = 0;
-      if (!i) {
+      if (i == 0) {
          float f1 = MathHelper.sin(ageInTicks * 0.06F + 0.0F) * 0.1F;
          float f2 = MathHelper.sin(ageInTicks * 0.04F + 8.0F) * 0.1F;
          float f3 = MathHelper.sin(ageInTicks * 0.09F + 4.0F) * 0.1F;
@@ -573,7 +573,7 @@ public class ModelOmboo extends ModelSRP {
          this.taclejointBR4.rotateAngleX = -1.0F * f2;
          this.jointLW.rotateAngleZ = f3;
          this.jointRW.rotateAngleZ = -1.0F * f3;
-      } else if (i) {
+      } else if (i != 0) {
          ;
       }
 

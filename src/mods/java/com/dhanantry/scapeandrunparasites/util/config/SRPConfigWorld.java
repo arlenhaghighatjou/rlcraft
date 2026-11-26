@@ -1,8 +1,8 @@
 package com.dhanantry.scapeandrunparasites.util.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.dhanantry.scapeandrunparasites.SRPMain;
 import com.dhanantry.scapeandrunparasites.proxy.CommonProxy;
-import java.io.File;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
@@ -189,8 +189,8 @@ public class SRPConfigWorld {
    }
 
    public static void initConfig(FMLPreInitializationEvent e) {
-      File directory = e.getModConfigurationDirectory();
-      CommonProxy.configWorld = new Configuration(new File(directory.getPath(), "srparasites/SRParasitesWorld.cfg"));
+      VFile2 directory = e.getModConfigurationDirectory();
+      CommonProxy.configWorld = new Configuration(new VFile2(directory, "srparasites/SRParasitesWorld.cfg"));
       readConfig();
    }
 

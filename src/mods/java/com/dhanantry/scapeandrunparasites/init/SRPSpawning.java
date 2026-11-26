@@ -1,5 +1,6 @@
 package com.dhanantry.scapeandrunparasites.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.entity.monster.adapted.EntityBanoAdapted;
 import com.dhanantry.scapeandrunparasites.entity.monster.adapted.EntityCanraAdapted;
@@ -70,8 +71,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.CheckSpawn;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class SRPSpawning {
@@ -164,7 +163,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASEZERO.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASEZERO.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -176,7 +175,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASEONE.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASEONE.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -188,7 +187,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASETWO.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASETWO.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -200,7 +199,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASETHREE.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASETHREE.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -212,7 +211,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASEFOUR.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASEFOUR.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -224,7 +223,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASEFIVE.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASEFIVE.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -236,7 +235,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASESIX.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASESIX.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -248,7 +247,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASESEVEN.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASESEVEN.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
 
@@ -260,7 +259,7 @@ public class SRPSpawning {
                   int min = Integer.parseInt(here[1]);
                   int max = Integer.parseInt(here[2]);
                   int weight = Integer.parseInt(here[3]);
-                  PHASEEIGHT.add(new SpawnListEntry(EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
+                  PHASEEIGHT.add(new SpawnListEntry((Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), weight, min, max));
                }
             }
          }
@@ -334,7 +333,7 @@ public class SRPSpawning {
             int max = Integer.parseInt(here[2]);
             int weight = Integer.parseInt(here[3]);
             int type = Integer.parseInt(here[4]);
-            addSpawn(type, EntityList.getClass(new ResourceLocation(here[0])), min, max, biome, weight, true);
+            addSpawn(type, (Class<? extends EntityLiving>)EntityList.getClass(new ResourceLocation(here[0])), min, max, biome, weight, true);
          }
       }
 
@@ -349,14 +348,14 @@ public class SRPSpawning {
 
    }
 
-   @EventBusSubscriber(
-      modid = "srparasites"
-   )
    public static class DimensionHandler {
       public DimensionHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(CheckSpawn.class, DimensionHandler::onSpawn);
+      }
+
       public static void onSpawn(CheckSpawn event) {
          if (event.getEntity() instanceof EntityParasiteBase) {
             if (!SRPConfigSystems.useEvolution) {

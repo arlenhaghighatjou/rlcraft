@@ -172,7 +172,7 @@ public abstract class WorldGenParasiteColonyBase extends WorldGenParasiteGenAbst
       }
 
       for(BlockPos here = position.east(1); !(worldIn.getBlockState(here).getBlock() instanceof BlockBase); here = here.east()) {
-         int offsetN = 2;
+         offsetN = 2;
 
          for(BlockPos atm = here.north(); !(worldIn.getBlockState(atm).getBlock() instanceof BlockBase); offsetN += 2) {
             this.placeReplacement(worldIn, atm, this.floorColony);
@@ -187,7 +187,7 @@ public abstract class WorldGenParasiteColonyBase extends WorldGenParasiteGenAbst
       }
 
       for(BlockPos var9 = position.west(1); !(worldIn.getBlockState(var9).getBlock() instanceof BlockBase); var9 = var9.west()) {
-         int offsetN = 2;
+         offsetN = 2;
 
          for(BlockPos atm = var9.north(); !(worldIn.getBlockState(atm).getBlock() instanceof BlockBase); offsetN += 2) {
             this.placeReplacement(worldIn, atm, this.floorColony);

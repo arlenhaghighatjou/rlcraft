@@ -1,13 +1,12 @@
 package com.dhanantry.scapeandrunparasites.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.dhanantry.scapeandrunparasites.client.model.ModelSRP;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityPCosmical;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -143,7 +142,7 @@ public abstract class RenderCosmical<T extends EntityPCosmical> extends RenderMa
          GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F);
          GlStateManager.depthMask(false);
          GlStateManager.enableBlend();
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
          GlStateManager.alphaFunc(516, 0.003921569F);
          this.mainModel2.renderC(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
          GlStateManager.disableBlend();

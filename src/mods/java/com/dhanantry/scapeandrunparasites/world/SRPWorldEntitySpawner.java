@@ -1,12 +1,12 @@
 package com.dhanantry.scapeandrunparasites.world;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.dhanantry.scapeandrunparasites.entity.ai.misc.EntityParasiteBase;
 import com.dhanantry.scapeandrunparasites.init.SRPSpawning;
 import com.dhanantry.scapeandrunparasites.util.config.SRPConfig;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.Set;
@@ -80,7 +80,7 @@ public class SRPWorldEntitySpawner {
 
          if (count <= SRPConfig.worldMobCap) {
             ArrayList<ChunkPos> shuffled = Lists.newArrayList(eligibleChunksForSpawning);
-            Collections.shuffle(shuffled);
+            ThreadLocalRandom.current().shuffle(shuffled);
             MutableBlockPos blockpos$mutableblockpos = new MutableBlockPos();
 
             label125:

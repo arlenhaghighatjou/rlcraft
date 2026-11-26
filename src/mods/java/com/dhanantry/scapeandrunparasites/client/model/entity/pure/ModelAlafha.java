@@ -987,7 +987,7 @@ public class ModelAlafha extends ModelSRP {
       this.jointH.rotateAngleX = 0.0F;
       int i = parasite.getParasiteStatus();
       i = 0;
-      if (!i) {
+      if (i == 0) {
          float f1 = MathHelper.sin(ageInTicks * 0.06F + 0.0F) * 0.1F;
          float f2 = MathHelper.sin(ageInTicks * 0.04F + 8.0F) * 0.1F;
          float f3 = MathHelper.sin(ageInTicks * 0.09F + 4.0F) * 0.1F;
@@ -1042,7 +1042,7 @@ public class ModelAlafha extends ModelSRP {
          this.taclejointBRA3.rotateAngleX = -1.0F * f4;
          this.jointN.rotateAngleY = f1;
          this.jointH.rotateAngleX = f2;
-      } else if (i) {
+      } else if (i != 0) {
          ;
       }
 

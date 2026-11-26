@@ -12,7 +12,6 @@ import com.dhanantry.scapeandrunparasites.entity.monster.EntityTendril;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.Profile;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -71,7 +70,11 @@ public class RenderTendril extends RenderLiving<EntityTendril> {
          }
 
          if (flag1) {
-            GlStateManager.enableBlendProfile(Profile.TRANSPARENT_MODEL);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
+            GlStateManager.depthMask(false);
+            GlStateManager.enableBlend();
+            GlStateManager.blendFunc(770, 771);
+            GlStateManager.alphaFunc(516, 0.003921569F);
          }
 
          switch(entitylivingbaseIn.getSkin()) {
@@ -101,7 +104,9 @@ public class RenderTendril extends RenderLiving<EntityTendril> {
          }
 
          if (flag1) {
-            GlStateManager.disableBlendProfile(Profile.TRANSPARENT_MODEL);
+            GlStateManager.disableBlend();
+            GlStateManager.alphaFunc(516, 0.1F);
+            GlStateManager.depthMask(true);
          }
       }
 

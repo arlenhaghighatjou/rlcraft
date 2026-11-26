@@ -1,13 +1,12 @@
 package com.dhanantry.scapeandrunparasites.client.renderer.entity.misc;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.dhanantry.scapeandrunparasites.client.model.ModelSRP;
 import com.dhanantry.scapeandrunparasites.client.model.entity.misc.ModelScaryOrb;
 import com.dhanantry.scapeandrunparasites.entity.EntityScaryOrb;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.EntityLivingBase;
@@ -117,7 +116,7 @@ public class RenderScaryOrb extends Render<EntityScaryOrb> {
          GlStateManager.color(1.0F, 1.0F, 1.0F, 0.35F);
          GlStateManager.depthMask(false);
          GlStateManager.enableBlend();
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
          GlStateManager.alphaFunc(516, 0.003921569F);
          this.mainModel2.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
          GlStateManager.disableBlend();
