@@ -1,6 +1,6 @@
 package tschipp.tschipplib.helper;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 
 import net.minecraft.util.math.MathHelper;
 
