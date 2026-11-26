@@ -31,7 +31,6 @@ import org.jwaresoftware.mcmods.lib.Whatis;
 import org.jwaresoftware.mcmods.lib.api.mod.IModInventoryRenderingHelper;
 import org.jwaresoftware.mcmods.lib.api.mod.IModRuntime;
 import org.jwaresoftware.mcmods.lib.impl.ModLootLoadedListener;
-import org.jwaresoftware.mcmods.lib.integration.TANHelper;
 import org.jwaresoftware.mcmods.lib.loot.Loot;
 import org.jwaresoftware.mcmods.lib.loot.RandomChanceWithLuckCondition;
 
@@ -57,7 +56,7 @@ abstract class ModRuntimeSkeleton implements IModRuntime {
    public void beginStartUp(FMLStateEvent event) {
       this.getLog().info("Starting[B] {}...", this.getId());
       this._mainConfig = (new ModConfig((FMLPreInitializationEvent)event)).setInstance();
-      MinecraftForge.EVENT_BUS.register(new ModRegisterObjectsListener(this));
+      (new ModRegisterObjectsListener(this)).register(MinecraftForge.EVENT_BUS);
       ModItems.icon = ModItem.modicon();
       this.makeModItems();
    }
@@ -72,13 +71,6 @@ abstract class ModRuntimeSkeleton implements IModRuntime {
    protected void registerModRecipes() {
       this.registerModSharedDictIds();
       ArmorRecipes.initFinal(this.getConfig());
-      if (ModIntegration.TOUGH_AS_NAILS.isLoaded()) {
-         TANHelper.initArmorLining();
-         if (this._mainConfig.includePortablePaks()) {
-            TANHelper.initPortablePaks();
-         }
-      }
-
       this.registerModLoot();
    }
 
@@ -193,11 +185,11 @@ abstract class ModRuntimeSkeleton implements IModRuntime {
 
    protected void installModHandlers() {
       if (this._mainConfig.allowLootTableEnrichment()) {
-         MinecraftForge.EVENT_BUS.register(new ModLootLoadedListener(ModInfo.getInstance()));
+         (new ModLootLoadedListener(ModInfo.getInstance())).register(MinecraftForge.EVENT_BUS);
       }
 
       if (this._mainConfig.includeSpecialLiners()) {
-         MinecraftForge.EVENT_BUS.register(new ModDamageMitigationEventsHandler());
+         (new ModDamageMitigationEventsHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
    }

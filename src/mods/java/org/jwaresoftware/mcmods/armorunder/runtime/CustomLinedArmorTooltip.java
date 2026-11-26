@@ -1,9 +1,9 @@
 package org.jwaresoftware.mcmods.armorunder.runtime;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jwaresoftware.mcmods.lib.Armory;
@@ -16,7 +16,10 @@ public final class CustomLinedArmorTooltip {
    public CustomLinedArmorTooltip() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, this::addSpecialLinedArmorTooltip);
+   }
+
    public void addSpecialLinedArmorTooltip(ItemTooltipEvent event) {
       ItemStack stack = event.getItemStack();
       Def defn = Armory.getXLining(stack);

@@ -1,5 +1,6 @@
 package org.jwaresoftware.mcmods.armorunder.runtime;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -7,7 +8,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import org.jwaresoftware.mcmods.lib.Armory;
 import org.jwaresoftware.mcmods.lib.Effects;
 import org.jwaresoftware.mcmods.lib.Potions;
@@ -47,7 +47,12 @@ public final class ModDamageMitigationEventsHandler {
       }
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, this::onPlayerProtectedByObsidianShielding);
+      bus.register(LivingUpdateEvent.class, EventPriority.HIGH, false, this::onPlayerDousedByFireproofShielding);
+      bus.register(LivingUpdateEvent.class, EventPriority.HIGH, false, this::onPlayerProtectedByAntifreezeShielding);
+   }
+
    public void onPlayerProtectedByObsidianShielding(LivingDamageEvent event) {
       EntityPlayer player = SharedGlue.getRealPlayerOrNull(event.getEntity());
       if (player != null && !SharedGlue.isaClientWorld(player.getEntityWorld())) {
@@ -66,9 +71,6 @@ public final class ModDamageMitigationEventsHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public void onPlayerDousedByFireproofShielding(LivingUpdateEvent event) {
       EntityPlayer player = SharedGlue.getRealPlayerOrNull(event.getEntity());
       if (player != null && !player.isPotionActive(SharedGlue.Potion_fireResistance)) {
@@ -80,9 +82,6 @@ public final class ModDamageMitigationEventsHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public void onPlayerProtectedByAntifreezeShielding(LivingUpdateEvent event) {
       EntityPlayer player = SharedGlue.getRealPlayerOrNull(event.getEntity());
       if (player != null && !SharedGlue.isaClientWorld(player.getEntityWorld())) {

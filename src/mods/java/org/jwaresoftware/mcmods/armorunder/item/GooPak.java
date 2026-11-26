@@ -81,7 +81,7 @@ public final class GooPak extends ModItem implements ITemperatureChangeable {
    }
 
    public boolean hasBonusTemperature(ItemStack pak) {
-      return !this.isUsed(pak) && super.hasBonusTemperature(pak);
+      return !this.isUsed(pak) && ITemperatureChangeable.super.hasBonusTemperature(pak);
    }
 
    public int getItemStackLimit(ItemStack pak) {

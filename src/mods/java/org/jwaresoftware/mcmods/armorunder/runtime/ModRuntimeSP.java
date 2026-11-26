@@ -76,9 +76,9 @@ public class ModRuntimeSP extends ModRuntimeSkeleton {
 
    protected void installModHandlers() {
       super.installModHandlers();
-      MinecraftForge.EVENT_BUS.register(new LinedArmorTooltip());
+      (new LinedArmorTooltip()).register(MinecraftForge.EVENT_BUS);
       if (this.getConfig().includeSpecialLiners()) {
-         MinecraftForge.EVENT_BUS.register(new CustomLinedArmorTooltip());
+         (new CustomLinedArmorTooltip()).register(MinecraftForge.EVENT_BUS);
       }
 
    }

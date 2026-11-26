@@ -249,6 +249,7 @@ public class Loader
         mods.add(new FMLModContainer<>("lostcities", "The Lost Cities", "2.0.22", "after:forge@[13.19.0.2176,)", "[1.12,1.13)", "lostcities", mcjty.lostcities.LostCities::new, mcjty.lostcities.LostCities::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("traverse", "Traverse", "1.6.0", "", "1.12.2", "traverse", prospector.traverse.core.TraverseMod::new, prospector.traverse.core.TraverseMod::handleModStateEvent));
         mods.add(new FMLModContainer<>("carrots", "Carrots Lib", "1.0.0b1", "required-after:forge@[14.23.4.2705,)", "[1.12.2,)", "carrots", org.jwaresoftware.mcmods.lib.CarrotsLib::new, org.jwaresoftware.mcmods.lib.CarrotsLib::handleModStateEvent));
+        mods.add(new FMLModContainer<>("armorunder", "Armor Underwear", "1.0.0", "required-after:forge@[14.23.4.2705,);required-after:carrots@[1.0.0b1]", "[1.12,)", "armorunder", org.jwaresoftware.mcmods.armorunder.ArmorUnderwear::new, org.jwaresoftware.mcmods.armorunder.ArmorUnderwear::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

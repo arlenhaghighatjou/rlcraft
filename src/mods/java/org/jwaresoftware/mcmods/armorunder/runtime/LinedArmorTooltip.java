@@ -1,9 +1,9 @@
 package org.jwaresoftware.mcmods.armorunder.runtime;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jwaresoftware.mcmods.armorunder.recipes.AutoregLinedArmorRecipe;
@@ -17,7 +17,11 @@ public final class LinedArmorTooltip {
    public LinedArmorTooltip() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, this::addPlainLinedArmorTooltip);
+      bus.register(ItemTooltipEvent.class, this::addAutoregLiningTooltip);
+   }
+
    public void addPlainLinedArmorTooltip(ItemTooltipEvent event) {
       ItemStack stack = event.getItemStack();
       Def defn = Armory.getXLining(stack);
@@ -34,7 +38,6 @@ public final class LinedArmorTooltip {
 
    }
 
-   @SubscribeEvent
    public void addAutoregLiningTooltip(ItemTooltipEvent event) {
       ItemStack stack = event.getItemStack();
       if (!stack.isEmpty() && AutoregLinedArmorRecipe.isAutoregLining(stack.getItem())) {

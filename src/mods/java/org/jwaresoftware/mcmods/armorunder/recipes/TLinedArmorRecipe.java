@@ -1,5 +1,6 @@
 package org.jwaresoftware.mcmods.armorunder.recipes;
 
+import net.minecraftforge.fml.common.registry.ItemStackHolderInjector;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.fml.common.registry.GameRegistry.ItemStackHolder;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import net.minecraftforge.registries.IForgeRegistryEntry.Impl;
@@ -35,38 +35,22 @@ import org.jwaresoftware.mcmods.lib.recipes.JR.LegacyShapelessOreRecipe;
 public final class TLinedArmorRecipe extends Impl<IRecipe> implements IRecipe {
    private static final String _TAN = "toughasnails:";
    private static final String _MOD = "armorunder:";
-   @ItemStackHolder("toughasnails:wool_helmet")
-   public static final ItemStack TAN_WARMER_LINING_HELMET = null;
-   @ItemStackHolder("toughasnails:wool_chestplate")
-   public static final ItemStack TAN_WARMER_LINING_CHESTPLATE = null;
-   @ItemStackHolder("toughasnails:wool_leggings")
-   public static final ItemStack TAN_WARMER_LINING_LEGGINGS = null;
-   @ItemStackHolder("toughasnails:wool_boots")
-   public static final ItemStack TAN_WARMER_LINING_BOOTS = null;
-   @ItemStackHolder("toughasnails:jelled_slime_helmet")
-   public static final ItemStack TAN_COOLER_LINING_HELMET = null;
-   @ItemStackHolder("toughasnails:jelled_slime_chestplate")
-   public static final ItemStack TAN_COOLER_LINING_CHESTPLATE = null;
-   @ItemStackHolder("toughasnails:jelled_slime_leggings")
-   public static final ItemStack TAN_COOLER_LINING_LEGGINGS = null;
-   @ItemStackHolder("toughasnails:jelled_slime_boots")
-   public static final ItemStack TAN_COOLER_LINING_BOOTS = null;
-   @ItemStackHolder("armorunder:warm_helmet_liner")
-   public static final ItemStack WARMER_LINING_HELMET = null;
-   @ItemStackHolder("armorunder:warm_chestplate_liner")
-   public static final ItemStack WARMER_LINING_CHESTPLATE = null;
-   @ItemStackHolder("armorunder:warm_leggings_liner")
-   public static final ItemStack WARMER_LINING_LEGGINGS = null;
-   @ItemStackHolder("armorunder:warm_boots_liner")
-   public static final ItemStack WARMER_LINING_BOOTS = null;
-   @ItemStackHolder("armorunder:cool_helmet_liner")
-   public static final ItemStack COOLER_LINING_HELMET = null;
-   @ItemStackHolder("armorunder:cool_chestplate_liner")
-   public static final ItemStack COOLER_LINING_CHESTPLATE = null;
-   @ItemStackHolder("armorunder:cool_leggings_liner")
-   public static final ItemStack COOLER_LINING_LEGGINGS = null;
-   @ItemStackHolder("armorunder:cool_boots_liner")
-   public static final ItemStack COOLER_LINING_BOOTS = null;
+   public static ItemStack TAN_WARMER_LINING_HELMET = null;
+   public static ItemStack TAN_WARMER_LINING_CHESTPLATE = null;
+   public static ItemStack TAN_WARMER_LINING_LEGGINGS = null;
+   public static ItemStack TAN_WARMER_LINING_BOOTS = null;
+   public static ItemStack TAN_COOLER_LINING_HELMET = null;
+   public static ItemStack TAN_COOLER_LINING_CHESTPLATE = null;
+   public static ItemStack TAN_COOLER_LINING_LEGGINGS = null;
+   public static ItemStack TAN_COOLER_LINING_BOOTS = null;
+   public static ItemStack WARMER_LINING_HELMET = null;
+   public static ItemStack WARMER_LINING_CHESTPLATE = null;
+   public static ItemStack WARMER_LINING_LEGGINGS = null;
+   public static ItemStack WARMER_LINING_BOOTS = null;
+   public static ItemStack COOLER_LINING_HELMET = null;
+   public static ItemStack COOLER_LINING_CHESTPLATE = null;
+   public static ItemStack COOLER_LINING_LEGGINGS = null;
+   public static ItemStack COOLER_LINING_BOOTS = null;
    private static final List<Item> _LININGS = new ArrayList();
    private static final List<Item> _LININGS_WARMUP = new ArrayList();
    private static boolean ENABLED = false;
@@ -325,5 +309,24 @@ public final class TLinedArmorRecipe extends Impl<IRecipe> implements IRecipe {
          ShapelessOreRecipe var6 = new LegacyShapelessOreRecipe((ResourceLocation)null, impl);
          return new TLinedArmorRecipe(limit, var6);
       }
+   }
+
+   public static void registerHolders() {
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:wool_helmet", 0, null, v -> TAN_WARMER_LINING_HELMET = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:wool_chestplate", 0, null, v -> TAN_WARMER_LINING_CHESTPLATE = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:wool_leggings", 0, null, v -> TAN_WARMER_LINING_LEGGINGS = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:wool_boots", 0, null, v -> TAN_WARMER_LINING_BOOTS = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:jelled_slime_helmet", 0, null, v -> TAN_COOLER_LINING_HELMET = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:jelled_slime_chestplate", 0, null, v -> TAN_COOLER_LINING_CHESTPLATE = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:jelled_slime_leggings", 0, null, v -> TAN_COOLER_LINING_LEGGINGS = v);
+      ItemStackHolderInjector.INSTANCE.register("toughasnails:jelled_slime_boots", 0, null, v -> TAN_COOLER_LINING_BOOTS = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:warm_helmet_liner", 0, null, v -> WARMER_LINING_HELMET = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:warm_chestplate_liner", 0, null, v -> WARMER_LINING_CHESTPLATE = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:warm_leggings_liner", 0, null, v -> WARMER_LINING_LEGGINGS = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:warm_boots_liner", 0, null, v -> WARMER_LINING_BOOTS = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:cool_helmet_liner", 0, null, v -> COOLER_LINING_HELMET = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:cool_chestplate_liner", 0, null, v -> COOLER_LINING_CHESTPLATE = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:cool_leggings_liner", 0, null, v -> COOLER_LINING_LEGGINGS = v);
+      ItemStackHolderInjector.INSTANCE.register("armorunder:cool_boots_liner", 0, null, v -> COOLER_LINING_BOOTS = v);
    }
 }
