@@ -1,5 +1,6 @@
 package kenkron.antiqueatlasoverlay;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import hunternif.mc.atlas.AntiqueAtlasMod;
 import hunternif.mc.atlas.RegistrarAntiqueAtlas;
 import hunternif.mc.atlas.SettingsConfig;
@@ -27,14 +28,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import org.lwjgl.opengl.GL11;
 
-@EventBusSubscriber(
-   modid = "antiqueatlasoverlay"
-)
 public class AAORenderEventReceiver {
    private static final int CHUNK_SIZE = 16;
    private static int screenScale = 1;
@@ -63,9 +58,10 @@ public class AAORenderEventReceiver {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL
-   )
+   public static void register(EventBus bus) {
+      bus.register(Post.class, EventPriority.NORMAL, false, AAORenderEventReceiver::eventHandler);
+   }
+
    public static void eventHandler(Post event) {
       if (event.getType() == ElementType.ALL) {
          if (AAOConfig.appearance.enabled) {
@@ -127,8 +123,7 @@ public class AAORenderEventReceiver {
    }
 
    private static void drawTiles(Rect shape, int atlasID, Vec3d position, int dimension) {
-      GL11.glEnable(3089);
-      glScissorGUI(shape);
+      AtlasRenderHelper.beginClip(shape.minX, shape.minY, shape.getWidth(), shape.getHeight());
       GlStateManager.enableBlend();
       GlStateManager.blendFunc(770, 771);
       DimensionData biomeData = AntiqueAtlasMod.atlasData.getAtlasData(atlasID, Minecraft.getMinecraft().world).getDimensionData(dimension);
@@ -152,13 +147,12 @@ public class AAORenderEventReceiver {
       }
 
       renderer.draw();
-      GL11.glDisable(3089);
+      AtlasRenderHelper.endClip();
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
    }
 
    private static void drawMarkers(Rect shape, int atlasID, Vec3d position, int dimension) {
-      GL11.glEnable(3089);
-      glScissorGUI(shape);
+      AtlasRenderHelper.beginClip(shape.minX, shape.minY, shape.getWidth(), shape.getHeight());
       DimensionData biomeData = AntiqueAtlasMod.atlasData.getAtlasData(atlasID, Minecraft.getMinecraft().world).getDimensionData(dimension);
       DimensionMarkersData globalMarkersData = AntiqueAtlasMod.globalMarkersData.getData().getMarkersDataInDimension(dimension);
       drawMarkersData(globalMarkersData, shape, biomeData, position);
@@ -169,7 +163,7 @@ public class AAORenderEventReceiver {
       }
 
       drawMarkersData(localMarkersData, shape, biomeData, position);
-      GL11.glDisable(3089);
+      AtlasRenderHelper.endClip();
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
    }
 
@@ -228,12 +222,5 @@ public class AAORenderEventReceiver {
       int maxChunkY = (int)Math.ceil(position.z / 16.0D + (double)((float)windowShape.getHeight() / (2.0F * (float)AAOConfig.appearance.tileSize)));
       ++maxChunkY;
       return new Rect(minChunkX, minChunkY, maxChunkX, maxChunkY);
-   }
-
-   private static void glScissorGUI(Rect shape) {
-      int mcHeight = Minecraft.getMinecraft().displayHeight;
-      float scissorScaleX = (float)Minecraft.getMinecraft().displayWidth * 1.0F / (float)res.getScaledWidth();
-      float scissorScaleY = (float)mcHeight * 1.0F / (float)res.getScaledHeight();
-      GL11.glScissor((int)((float)shape.minX * scissorScaleX), (int)((float)mcHeight - (float)shape.maxY * scissorScaleY), (int)((float)shape.getWidth() * scissorScaleX), (int)((float)shape.getHeight() * scissorScaleY));
    }
 }
