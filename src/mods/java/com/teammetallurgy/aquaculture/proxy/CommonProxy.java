@@ -19,6 +19,6 @@ public class CommonProxy {
    }
 
    public void registerEntities() {
-      EntityRegistry.registerModEntity(new ResourceLocation("aquaculture:custom_fish_hook"), EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true);
+      EntityRegistry.registerModEntity(new ResourceLocation("aquaculture:custom_fish_hook"), EntityCustomFishHook.class, "CustomFishHook", 0, Aquaculture.instance, 64, 5, true, EntityCustomFishHook::new);
    }
 }

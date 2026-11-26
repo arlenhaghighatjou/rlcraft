@@ -128,13 +128,13 @@ public abstract class FMLMessage {
         String modId;
         int modEntityTypeId;
         EaglercraftUUID entityUUID;
-        double rawX;
-        double rawY;
-        double rawZ;
+        public double rawX;
+        public double rawY;
+        public double rawZ;
         float scaledYaw;
         float scaledPitch;
         float scaledHeadYaw;
-        int throwerId;
+        public int throwerId;
         double speedScaledX;
         double speedScaledY;
         double speedScaledZ;

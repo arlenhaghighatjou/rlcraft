@@ -9,7 +9,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.network.internal.FMLMessage.EntitySpawnMessage;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry.EntityRegistration;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -21,19 +20,10 @@ public class AquacultureEntitySpawnHandler {
    public static void init() {
       EntityRegistration customFishHookRegistration = EntityRegistry.instance().lookupModSpawn(EntityCustomFishHook.class, false);
       Function<EntitySpawnMessage, Entity> fishHookSpawnHandler = (input) -> {
-         int anglerId = 0;
-         double posX = 0.0D;
-         double posY = 0.0D;
-         double posZ = 0.0D;
-
-         try {
-            anglerId = ReflectionHelper.findField(EntitySpawnMessage.class, new String[]{"throwerId"}).getInt(input);
-            posX = ReflectionHelper.findField(EntitySpawnMessage.class, new String[]{"rawX"}).getDouble(input);
-            posY = ReflectionHelper.findField(EntitySpawnMessage.class, new String[]{"rawY"}).getDouble(input);
-            posZ = ReflectionHelper.findField(EntitySpawnMessage.class, new String[]{"rawZ"}).getDouble(input);
-         } catch (IllegalAccessException | IllegalArgumentException var10) {
-            var10.printStackTrace();
-         }
+         int anglerId = input.throwerId;
+         double posX = input.rawX;
+         double posY = input.rawY;
+         double posZ = input.rawZ;
 
          WorldClient world = FMLClientHandler.instance().getWorldClient();
          Entity angler = world.getEntityByID(anglerId);

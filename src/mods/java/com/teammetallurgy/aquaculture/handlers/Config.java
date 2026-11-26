@@ -1,15 +1,13 @@
 package com.teammetallurgy.aquaculture.handlers;
 
-import java.io.File;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber
 public class Config {
    public static Configuration config;
    public static final String categoryBasic = "BASIC_OPTIONS";
@@ -25,7 +23,7 @@ public class Config {
    public Config() {
    }
 
-   public static void init(File file) {
+   public static void init(VFile2 file) {
       if (config == null) {
          config = new Configuration(file);
          loadConfiguration();
@@ -59,7 +57,10 @@ public class Config {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, Config::onConfigurationChangedEvent);
+   }
+
    public static void onConfigurationChangedEvent(OnConfigChangedEvent event) {
       if (event.getModID().equalsIgnoreCase("aquaculture")) {
          loadConfiguration();

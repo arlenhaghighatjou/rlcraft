@@ -197,7 +197,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
             }
 
             if (!this.world.isRemote) {
-               this.checkCollision();
+               this.checkHookCollision();
             }
 
             if (!this.inGround && !this.onGround && !this.collidedHorizontally) {
@@ -246,7 +246,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
          }
 
          this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-         this.updateRotation();
+         this.updateHookRotation();
          double d1 = 0.92D;
          this.motionX *= d1;
          this.motionY *= d1;
@@ -274,7 +274,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
       return item instanceof ItemAquacultureFishingRod || item instanceof ItemAdminFishingRod;
    }
 
-   private void updateRotation() {
+   private void updateHookRotation() {
       float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
       this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * 57.29577951308232D);
 
@@ -298,7 +298,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
       this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
    }
 
-   private void checkCollision() {
+   private void checkHookCollision() {
       Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
       Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
       RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d, vec3d1, false, true, false);
@@ -333,7 +333,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
       if (raytraceresult != null && raytraceresult.typeOfHit != Type.MISS) {
          if (raytraceresult.typeOfHit == Type.ENTITY) {
             this.caughtEntity = raytraceresult.entityHit;
-            this.setHookedEntity();
+            this.updateHookedEntity();
          } else {
             this.inGround = true;
          }
@@ -341,7 +341,7 @@ public class EntityCustomFishHook extends EntityFishHook implements IThrowableEn
 
    }
 
-   private void setHookedEntity() {
+   private void updateHookedEntity() {
       this.getDataManager().set(DATA_HOOKED_ENTITY, Integer.valueOf(this.caughtEntity.getEntityId() + 1));
    }
 
