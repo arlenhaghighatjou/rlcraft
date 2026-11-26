@@ -1,20 +1,21 @@
 package com.ferreusveritas.dynamictrees.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.api.TreeHelper;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LeafUpdateEventHandler {
    public LeafUpdateEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
+   public void register(EventBus bus) {
+      bus.register(NeighborNotifyEvent.class, EventPriority.HIGH, false, this::UpdateNeighbour);
+   }
+
    public void UpdateNeighbour(NeighborNotifyEvent event) {
       World world = event.getWorld();
 

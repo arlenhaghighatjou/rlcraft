@@ -1,6 +1,5 @@
 package com.ferreusveritas.dynamictrees.client;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -115,18 +114,7 @@ public class QuadManipulator {
 
    public static ModelManager getModelManager() {
       if (modelManager == null) {
-         try {
-            Field[] fields = Minecraft.class.getDeclaredFields();
-
-            for(Field f : fields) {
-               if (f.getType() == ModelManager.class) {
-                  f.setAccessible(true);
-                  return modelManager = (ModelManager)f.get(Minecraft.getMinecraft());
-               }
-            }
-         } catch (IllegalArgumentException | IllegalAccessException | SecurityException var5) {
-            var5.printStackTrace();
-         }
+         modelManager = Minecraft.getMinecraft().getModelManager();
       }
 
       return modelManager;

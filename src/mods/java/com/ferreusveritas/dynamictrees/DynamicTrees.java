@@ -1,14 +1,16 @@
 package com.ferreusveritas.dynamictrees;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.ferreusveritas.dynamictrees.command.DTCommand;
 import com.ferreusveritas.dynamictrees.compat.CompatHandler;
 import com.ferreusveritas.dynamictrees.proxy.CommonProxy;
 import com.ferreusveritas.dynamictrees.seasons.SeasonHelper;
 import com.ferreusveritas.dynamictrees.worldgen.WorldGeneratorTrees;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -25,43 +27,57 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
    acceptedMinecraftVersions = "[1.12.2]"
 )
 public class DynamicTrees {
-   @Instance("dynamictrees")
    public static DynamicTrees instance;
-   @SidedProxy(
-      clientSide = "com.ferreusveritas.dynamictrees.proxy.ClientProxy",
-      serverSide = "com.ferreusveritas.dynamictrees.proxy.CommonProxy"
-   )
    public static CommonProxy proxy;
    public static Logger log;
 
    public DynamicTrees() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.ferreusveritas.dynamictrees.proxy.ClientProxy() : new com.ferreusveritas.dynamictrees.proxy.CommonProxy();
+         com.ferreusveritas.dynamictrees.ModBlocks.register(MinecraftForge.EVENT_BUS);
+         com.ferreusveritas.dynamictrees.ModEntities.register(MinecraftForge.EVENT_BUS);
+         com.ferreusveritas.dynamictrees.ModItems.register(MinecraftForge.EVENT_BUS);
+         com.ferreusveritas.dynamictrees.ModModels.register(MinecraftForge.EVENT_BUS);
+         com.ferreusveritas.dynamictrees.ModRecipes.register(MinecraftForge.EVENT_BUS);
+         com.ferreusveritas.dynamictrees.ModTrees.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         DynamicTrees.serverStarting((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStoppedEvent) {
+         DynamicTrees.serverStopped((FMLServerStoppedEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       log = event.getModLog();
       proxy.preInit(event);
       CompatHandler.preInit();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init(event);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
       proxy.cleanUp();
    }
 
-   @EventHandler
    public static void serverStarting(FMLServerStartingEvent event) {
       event.registerServerCommand(new DTCommand());
       SeasonHelper.getSeasonManager().flushMappings();
    }
 
-   @EventHandler
    public static void serverStopped(FMLServerStoppedEvent event) {
       WorldGeneratorTrees.clearFlatWorldCache();
    }

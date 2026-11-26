@@ -1,13 +1,13 @@
 package com.ferreusveritas.dynamictrees;
 
 import com.ferreusveritas.dynamictrees.blocks.BlockBranch;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.HashSet;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ModConfigs {
-   public static File configDirectory;
+   public static VFile2 configDirectory;
    public static float seedDropRate;
    public static float seedPlantRate;
    public static int seedTimeToLive;

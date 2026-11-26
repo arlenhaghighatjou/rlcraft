@@ -6,7 +6,7 @@ import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.util.ItemUtils;
 import com.ferreusveritas.dynamictrees.worldgen.JoCode;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.List;
 import java.util.function.Function;
 import net.minecraft.command.CommandBase;
@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import scala.actors.threadpool.Arrays;
+import java.util.Arrays;
 
 public class CommandCreateStaff extends SubCommand {
    public static final String CREATESTAFF = "createstaff";
@@ -45,7 +45,7 @@ public class CommandCreateStaff extends SubCommand {
       case 6:
          return this.getJoCode(sender.getEntityWorld(), targetPos, TreeHelper.getExactSpecies(sender.getEntityWorld(), targetPos));
       case 7:
-         return Arrays.asList(new Object[]{"#00FFFF"});
+         return Arrays.asList("#00FFFF");
       case 8:
          return CommandBase.getListOfStringsMatchingLastWord(args, new String[]{"true", "false"});
       case 9:

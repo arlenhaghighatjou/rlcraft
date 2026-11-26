@@ -25,7 +25,7 @@ public class FeatureGenRoots implements IPostGrowFeature, IPostGenFeature {
    private int levelLimit = 2;
    private final int minTrunkRadius;
    private BiFunction<Integer, Integer, Integer> scaler = (i, j) -> {
-      return (boolean)i;
+      return i;
    };
    private final SimpleVoxmap[] rootMaps;
 

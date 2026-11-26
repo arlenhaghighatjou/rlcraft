@@ -25,7 +25,7 @@ public class FeatureGenVine implements IPostGenFeature {
    protected float verSpread = 60.0F;
    protected float rayDistance = 5.0F;
    protected LazyValue<Block> vineBlock = LazyValue.<Block>supplied(() -> {
-      return (boolean)Block.getBlockFromName("vine");
+      return Block.getBlockFromName("vine");
    });
 
    public FeatureGenVine() {

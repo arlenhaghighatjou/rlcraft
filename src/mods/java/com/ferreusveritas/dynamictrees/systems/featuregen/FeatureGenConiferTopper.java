@@ -21,7 +21,7 @@ public class FeatureGenConiferTopper implements IPostGenFeature {
 
    public boolean postGeneration(World world, BlockPos rootPos, Species species, Biome biome, int radius, List<BlockPos> endPoints, SafeChunkBounds safeBounds, IBlockState initialDirtState) {
       BlockPos highest = (BlockPos)Collections.max(endPoints, (a, b) -> {
-         return (boolean)(a.getY() - b.getY());
+         return a.getY() - b.getY();
       });
       world.setBlockState(highest.up(1), this.leavesProperties.getDynamicLeavesState(4));
       world.setBlockState(highest.up(2), this.leavesProperties.getDynamicLeavesState(3));

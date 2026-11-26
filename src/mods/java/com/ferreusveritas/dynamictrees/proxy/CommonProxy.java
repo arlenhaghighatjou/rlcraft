@@ -75,25 +75,25 @@ public class CommonProxy {
    }
 
    public void registerCommonEventHandlers() {
-      MinecraftForge.EVENT_BUS.register(new CommonEventHandler());
+      (new CommonEventHandler()).register(MinecraftForge.EVENT_BUS);
       if (ModConfigs.worldGen) {
-         MinecraftForge.EVENT_BUS.register(new DropEventHandler());
+         (new DropEventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
       if (Loader.isModLoaded("fastleafdecay")) {
-         MinecraftForge.EVENT_BUS.register(new LeafUpdateEventHandler());
+         (new LeafUpdateEventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
       if (ModConfigs.replaceVanillaSapling) {
          VanillaSaplingEventHandler handler = new VanillaSaplingEventHandler();
-         MinecraftForge.EVENT_BUS.register(handler);
-         MinecraftForge.TERRAIN_GEN_BUS.register(handler);
+         handler.register(MinecraftForge.EVENT_BUS);
+         handler.register(MinecraftForge.TERRAIN_GEN_BUS);
       }
 
       if (WorldGenRegistry.isWorldGenEnabled()) {
          GameRegistry.registerWorldGenerator(new WorldGeneratorTrees(), 20);
-         MinecraftForge.TERRAIN_GEN_BUS.register(new TreeGenCancelEventHandler());
-         MinecraftForge.EVENT_BUS.register(new PoissonDiscEventHandler());
+         (new TreeGenCancelEventHandler()).register(MinecraftForge.TERRAIN_GEN_BUS);
+         (new PoissonDiscEventHandler()).register(MinecraftForge.EVENT_BUS);
       }
 
    }

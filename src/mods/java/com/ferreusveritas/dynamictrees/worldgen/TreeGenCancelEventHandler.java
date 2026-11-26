@@ -1,20 +1,20 @@
 package com.ferreusveritas.dynamictrees.worldgen;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.ModConfigs;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class TreeGenCancelEventHandler {
    public TreeGenCancelEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Decorate.class, EventPriority.NORMAL, true, this::onEvent);
+   }
+
    public void onEvent(Decorate event) {
       int dimensionId = event.getWorld().provider.getDimension();
       BiomeDataBase dbase = TreeGenerator.getTreeGenerator().getBiomeDataBase(dimensionId);

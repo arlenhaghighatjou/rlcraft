@@ -275,6 +275,7 @@ public abstract class BlockBranch extends Block implements ITreePart, IFutureBre
          chance = ForgeEventFactory.fireBlockHarvesting(woodItems, world, cutPos, state, fortune, chance, false, (EntityPlayer)entity);
       }
 
+      float finalChance = chance;
       List<ItemStack> woodDropList = (List)woodItems.stream().filter((i) -> {
          return world.rand.nextFloat() <= finalChance;
       }).collect(Collectors.toList());

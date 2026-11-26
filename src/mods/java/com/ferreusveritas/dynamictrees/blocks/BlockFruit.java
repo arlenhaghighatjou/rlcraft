@@ -38,7 +38,7 @@ public class BlockFruit extends Block implements IGrowable {
    protected Species species;
 
    public static BlockFruit getFruitBlockForSpecies(Species species) {
-      return (BlockFruit)speciesFruitMap.getOrDefault(species, (Object)null);
+      return (BlockFruit)speciesFruitMap.getOrDefault(species, (BlockFruit)null);
    }
 
    public BlockFruit() {

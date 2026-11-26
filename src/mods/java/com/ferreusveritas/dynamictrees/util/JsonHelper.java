@@ -1,12 +1,13 @@
 package com.ferreusveritas.dynamictrees.util;
 
-import com.ferreusveritas.dynamictrees.blocks.LeavesPaging;
+import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.Loader;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.logging.Level;
@@ -18,8 +19,9 @@ public class JsonHelper {
    }
 
    public static JsonElement load(ResourceLocation jsonLocation) {
-      String filename = "assets/" + jsonLocation.getResourceDomain() + "/" + jsonLocation.getResourcePath();
-      InputStream in = (new LeavesPaging()).getClass().getClassLoader().getResourceAsStream(filename);
+      ModContainer mod = Loader.instance().getIndexedModList().get(jsonLocation.getResourceDomain());
+      String filename = (mod != null ? mod.getAssetsPrefix() : "assets/") + jsonLocation.getResourceDomain() + "/" + jsonLocation.getResourcePath();
+      InputStream in = EagRuntime.getResourceStream("/" + filename);
       if (in == null) {
          Logger.getLogger("dynamictrees").log(Level.SEVERE, "Could not open resource " + filename);
          return null;
@@ -29,13 +31,13 @@ public class JsonHelper {
       }
    }
 
-   public static JsonElement load(File file) {
-      if (file != null && file.exists() && file.isFile() && file.canRead()) {
-         String fileName = file.getAbsolutePath();
+   public static JsonElement load(VFile2 file) {
+      if (file != null && file.exists()) {
+         String fileName = file.getPath();
 
          try {
             JsonParser parser = new JsonParser();
-            return parser.parse(new FileReader(file));
+            return parser.parse(file.getAllChars());
          } catch (Exception var3) {
             System.err.println("Can't open " + fileName + ": " + var3.getMessage());
          }

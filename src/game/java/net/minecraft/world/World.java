@@ -97,7 +97,7 @@ public abstract class World implements IBlockAccess, net.minecraftforge.common.c
     public final EaglercraftRandom rand = new EaglercraftRandom();
     public final WorldProvider provider;
     protected PathWorldListener pathListener = new PathWorldListener();
-    protected List<IWorldEventListener> eventListeners;
+    public List<IWorldEventListener> eventListeners;
     protected IChunkProvider chunkProvider;
     protected final ISaveHandler saveHandler;
     protected WorldInfo worldInfo;

@@ -3,7 +3,7 @@ package com.ferreusveritas.dynamictrees.tileentity;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -59,7 +59,7 @@ public class TileEntitySpecies extends TileEntity {
       return new SPacketUpdateTileEntity(this.pos, 1, syncData);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       this.read(pkt.getNbtCompound());
    }
 

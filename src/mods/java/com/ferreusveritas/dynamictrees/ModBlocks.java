@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.api.treedata.ILeavesProperties;
 import com.ferreusveritas.dynamictrees.blocks.BlockBonsaiPot;
@@ -33,14 +34,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-@EventBusSubscriber(
-   modid = "dynamictrees"
-)
 public class ModBlocks {
    public static BlockRooty blockRootyDirt;
    public static BlockRooty blockRootySand;
@@ -81,7 +77,10 @@ public class ModBlocks {
       leaves.put("cactus", new LeavesProperties((IBlockState)null, ItemStack.EMPTY, TreeRegistry.findCellKit("bare")));
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, ModBlocks::register);
+   }
+
    public static void register(Register<Block> event) {
       IForgeRegistry<Block> registry = event.getRegistry();
       ArrayList<Block> treeBlocks = new ArrayList();
@@ -92,10 +91,10 @@ public class ModBlocks {
       treeBlocks.addAll(LeavesPaging.getLeavesMapForModId("dynamictrees").values());
       registry.registerAll(new Block[]{blockRootyDirt, blockRootySand, blockRootyDirtSpecies, blockRootyDirtFake, blockDynamicSapling, blockBonsaiPot, blockFruitCocoa, blockApple, blockTrunkShell});
       if (ModConfigs.enableAltLeavesSnow) {
-         registry.register((IForgeRegistryEntry)blockLeavesSnow.get());
+         registry.register((Block)blockLeavesSnow.get());
       }
 
-      registry.registerAll((IForgeRegistryEntry[])treeBlocks.toArray(new Block[0]));
+      registry.registerAll(treeBlocks.toArray(new Block[0]));
       DirtHelper.registerSoil(Blocks.DIRT, "dirtlike");
       DirtHelper.registerSoil(Blocks.GRASS, "dirtlike");
       DirtHelper.registerSoil(Blocks.MYCELIUM, "dirtlike");

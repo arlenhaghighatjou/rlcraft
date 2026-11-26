@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.blocks.BlockDynamicSapling;
 import com.ferreusveritas.dynamictrees.trees.Species;
@@ -9,14 +10,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class VanillaSaplingEventHandler {
    public VanillaSaplingEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlaceEvent.class, this::onPlayerPlaceBlock);
+      bus.register(SaplingGrowTreeEvent.class, this::onSaplingGrowTree);
+   }
+
    public void onPlayerPlaceBlock(PlaceEvent event) {
       IBlockState blockState = event.getPlacedBlock();
       if (TreeRegistry.saplingReplacers.containsKey(blockState)) {
@@ -31,7 +35,6 @@ public class VanillaSaplingEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onSaplingGrowTree(SaplingGrowTreeEvent event) {
       World world = event.getWorld();
       BlockPos pos = event.getPos();

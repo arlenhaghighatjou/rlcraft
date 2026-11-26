@@ -25,7 +25,7 @@ public class ExtendedBlockStateWater extends BlockStateContainer {
 
    public ExtendedBlockStateWater(Block blockIn, IProperty<?>[] properties, IUnlistedProperty<?>[] unlistedProperties) {
       super(blockIn, properties, buildUnlistedMap(unlistedProperties));
-      Builder<IUnlistedProperty<?>> builder = ImmutableSet.builder();
+      ImmutableSet.Builder<IUnlistedProperty<?>> builder = ImmutableSet.builder();
 
       for(IUnlistedProperty<?> property : unlistedProperties) {
          builder.add(property);
@@ -77,7 +77,7 @@ public class ExtendedBlockStateWater extends BlockStateContainer {
          Optional<?> oldValue = (Optional)this.unlistedProperties.get(property);
          if (oldValue == null) {
             throw new IllegalArgumentException("Cannot set unlisted property " + property + " as it does not exist in " + this.getBlock().getBlockState());
-         } else if (Objects.equals(oldValue.orElse((Object)null), value)) {
+         } else if (Objects.equals(oldValue.orElse(null), value)) {
             return this;
          } else if (!property.isValid(value)) {
             throw new IllegalArgumentException("Cannot set unlisted property " + property + " to " + value + " on block " + Block.REGISTRY.getNameForObject(this.getBlock()) + ", it is not an allowed value");
@@ -118,7 +118,7 @@ public class ExtendedBlockStateWater extends BlockStateContainer {
          if (value == null) {
             throw new IllegalArgumentException("Cannot get unlisted property " + property + " as it does not exist in " + this.getBlock().getBlockState());
          } else {
-            return (V)property.getType().cast(value.orElse((Object)null));
+            return (V)property.getType().cast(value.orElse(null));
          }
       }
 

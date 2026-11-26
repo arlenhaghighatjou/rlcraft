@@ -1,5 +1,7 @@
 package com.ferreusveritas.dynamictrees.event;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.client.ThickRingTextureAtlasSprite;
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,7 +12,6 @@ import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,7 +28,10 @@ public class TextureGenerationHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Pre.class, TextureGenerationHandler::onTextureStitchEvent);
+   }
+
    public static void onTextureStitchEvent(Pre event) {
       IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
 
@@ -35,7 +39,7 @@ public class TextureGenerationHandler {
          if (entry.getKey() instanceof TextureGenerationHandler.DualResourceLocation) {
             dualStitch(event, (TextureGenerationHandler.DualResourceLocation)entry.getKey(), (ResourceLocation)entry.getValue());
          } else {
-            ResourceLocation textureLocation = new ResourceLocation(((ResourceLocation)entry.getValue()).getResourceDomain(), String.format("%s/%s%s", event.getMap().getBasePath(), ((ResourceLocation)entry.getValue()).getResourcePath(), ".png"));
+            ResourceLocation textureLocation = new ResourceLocation(((ResourceLocation)entry.getValue()).getResourceDomain(), HString.format("%s/%s%s", event.getMap().getBasePath(), ((ResourceLocation)entry.getValue()).getResourcePath(), ".png"));
 
             IResource resource;
             try {

@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.items.Seed;
 import com.ferreusveritas.dynamictrees.trees.Species;
@@ -12,23 +13,19 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(
-   modid = "dynamictrees"
-)
 public class ModRecipes {
    public ModRecipes() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, IRecipe.class, EventPriority.LOWEST, false, ModRecipes::register);
+   }
+
    public static void register(Register<IRecipe> event) {
       IForgeRegistry<IRecipe> registry = event.getRegistry();
       ModItems.dendroPotion.registerRecipes(registry);

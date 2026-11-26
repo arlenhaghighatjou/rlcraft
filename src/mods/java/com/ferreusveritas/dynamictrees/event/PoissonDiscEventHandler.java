@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.systems.poissondisc.PoissonDiscProviderUniversal;
 import com.ferreusveritas.dynamictrees.worldgen.TreeGenerator;
 import net.minecraft.nbt.NBTTagByteArray;
@@ -7,13 +8,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.world.ChunkDataEvent.Load;
 import net.minecraftforge.event.world.ChunkDataEvent.Save;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class PoissonDiscEventHandler {
    public PoissonDiscEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Unload.class, this::onWorldUnload);
+      bus.register(Load.class, this::onChunkDataLoad);
+      bus.register(Save.class, this::onChunkDataSave);
+   }
+
    public void onWorldUnload(Unload event) {
       World world = event.getWorld();
       if (!world.isRemote) {
@@ -22,7 +27,6 @@ public class PoissonDiscEventHandler {
 
    }
 
-   @SubscribeEvent
    public void onChunkDataLoad(Load event) {
       World world = event.getWorld();
       if (!world.isRemote) {
@@ -33,7 +37,6 @@ public class PoissonDiscEventHandler {
 
    }
 
-   @SubscribeEvent
    public void onChunkDataSave(Save event) {
       World world = event.getWorld();
       PoissonDiscProviderUniversal cp = TreeGenerator.getTreeGenerator().getCircleProvider();

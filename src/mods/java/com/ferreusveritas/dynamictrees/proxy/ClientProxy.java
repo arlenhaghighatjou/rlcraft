@@ -77,7 +77,7 @@ public class ClientProxy extends CommonProxy {
    public void init(FMLInitializationEvent event) {
       super.init(event);
       this.registerColorHandlers();
-      MinecraftForge.EVENT_BUS.register(BlockBreakAnimationClientHandler.instance);
+      BlockBreakAnimationClientHandler.instance.register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit() {
@@ -91,7 +91,7 @@ public class ClientProxy extends CommonProxy {
          return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
       };
 
-      for(TreeFamily family : (List)Species.REGISTRY.getValuesCollection().stream().map((s) -> {
+      for(TreeFamily family : (List<TreeFamily>)Species.REGISTRY.getValuesCollection().stream().map((s) -> {
          return s.getFamily();
       }).distinct().collect(Collectors.toList())) {
          family.woodColor = 16773550;
@@ -208,8 +208,8 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void registerClientEventHandlers() {
-      MinecraftForge.EVENT_BUS.register(new ModelBakeEventListener());
-      MinecraftForge.EVENT_BUS.register(TextureGenerationHandler.class);
+      (new ModelBakeEventListener()).register(MinecraftForge.EVENT_BUS);
+      TextureGenerationHandler.register(MinecraftForge.EVENT_BUS);
    }
 
    public void registerEntityRenderers() {

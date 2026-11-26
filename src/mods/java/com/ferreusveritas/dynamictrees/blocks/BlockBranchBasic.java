@@ -233,11 +233,11 @@ public class BlockBranchBasic extends BlockBranch {
 
          for(EnumFacing dir : EnumFacing.VALUES) {
             if (!dir.equals(originDir) && !dir.equals(targetDir)) {
-               BlockPos deltaPos = pos.offset(dir);
-               IBlockState blockState = world.getBlockState(deltaPos);
-               ITreePart treepart = TreeHelper.getTreePart(blockState);
-               if (this.isSameTree(treepart)) {
-                  int branchRadius = treepart.getRadius(blockState);
+               BlockPos sidePos = pos.offset(dir);
+               IBlockState blockState = world.getBlockState(sidePos);
+               ITreePart sideTreepart = TreeHelper.getTreePart(blockState);
+               if (this.isSameTree(sideTreepart)) {
+                  int branchRadius = sideTreepart.getRadius(blockState);
                   areaAccum += (float)(branchRadius * branchRadius);
                }
             }

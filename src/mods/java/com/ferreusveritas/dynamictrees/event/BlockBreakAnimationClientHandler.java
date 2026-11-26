@@ -1,11 +1,12 @@
 package com.ferreusveritas.dynamictrees.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.ferreusveritas.dynamictrees.blocks.BlockBranch;
 import com.ferreusveritas.dynamictrees.blocks.BlockBranchThick;
 import com.ferreusveritas.dynamictrees.models.ICustomDamageModel;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,6 @@ import net.minecraft.client.renderer.DestroyBlockProgress;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BakedQuadRetextured;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -52,9 +51,7 @@ import net.minecraftforge.client.resource.VanillaResourceType;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -64,18 +61,23 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
    private static final Map<Integer, DestroyBlockProgress> damagedBranches = new ConcurrentHashMap();
    private int tickCounter = 0;
    private final EaglerTextureAtlasSprite[] destroyBlockIcons = new EaglerTextureAtlasSprite[10];
-   static Method preRenderMethod = ReflectionHelper.findMethod(RenderGlobal.class, "preRenderDamagedBlocks", "preRenderDamagedBlocks", new Class[0]);
-   static Method postRenderMethod = ReflectionHelper.findMethod(RenderGlobal.class, "postRenderDamagedBlocks", "postRenderDamagedBlocks", new Class[0]);
 
    private BlockBreakAnimationClientHandler(Minecraft mc) {
       ((IReloadableResourceManager)mc.getResourceManager()).registerReloadListener(this);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, this::onPlayerJoinWorldEvent);
+      bus.register(ClientTickEvent.class, this::clientTick);
+      bus.register(Unload.class, this::worldUnload);
+      bus.register(Load.class, this::worldLoad);
+      bus.register(RenderWorldLastEvent.class, this::renderBlockBreakAnim);
+   }
+
    public void onPlayerJoinWorldEvent(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityPlayerSP && Minecraft.getMinecraft().player != null && Minecraft.getMinecraft().player.getEntityId() == event.getEntity().getEntityId()) {
          event.getWorld().removeEventListener(Minecraft.getMinecraft().renderGlobal);
-         List<IWorldEventListener> listeners = (List)ReflectionHelper.getPrivateValue(World.class, event.getWorld(), new String[]{"eventListeners", "eventListeners"});
+         List<IWorldEventListener> listeners = event.getWorld().eventListeners;
          if (listeners.stream().noneMatch((el) -> {
             return el instanceof BlockBreakAnimationClientHandler.RenderGlobalWrapper;
          })) {
@@ -85,7 +87,6 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
 
    }
 
-   @SubscribeEvent
    public void clientTick(ClientTickEvent event) {
       ++this.tickCounter;
       if (this.tickCounter % 20 == 0) {
@@ -94,26 +95,23 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
 
    }
 
-   @SubscribeEvent
    public void worldUnload(Unload event) {
       damagedBranches.clear();
    }
 
-   @SubscribeEvent
    public void worldLoad(Load event) {
       damagedBranches.clear();
    }
 
-   @SubscribeEvent
    public void renderBlockBreakAnim(RenderWorldLastEvent event) {
       Minecraft mc = Minecraft.getMinecraft();
       TextureManager textureManager = mc.getTextureManager();
       GlStateManager.enableBlend();
-      GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE, SourceFactor.ONE, DestFactor.ZERO);
+      GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
       textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
       this.drawBlockDamageTexture(mc, textureManager, Tessellator.getInstance(), Tessellator.getInstance().getBuffer(), mc.getRenderViewEntity(), event.getPartialTicks());
       textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
-      GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+      GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
       GlStateManager.disableBlend();
    }
 
@@ -147,21 +145,11 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
    }
 
    private void preRenderDamagedBlocks() {
-      try {
-         preRenderMethod.invoke(Minecraft.getMinecraft().renderGlobal);
-      } catch (Exception var2) {
-         ;
-      }
-
+      Minecraft.getMinecraft().renderGlobal.preRenderDamagedBlocks();
    }
 
    private void postRenderDamagedBlocks() {
-      try {
-         postRenderMethod.invoke(Minecraft.getMinecraft().renderGlobal);
-      } catch (Exception var2) {
-         ;
-      }
-
+      Minecraft.getMinecraft().renderGlobal.postRenderDamagedBlocks();
    }
 
    private void drawBlockDamageTexture(Minecraft mc, TextureManager renderEngine, Tessellator tessellatorIn, WorldRenderer bufferBuilderIn, Entity entityIn, float partialTicks) {
@@ -173,7 +161,7 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
          this.preRenderDamagedBlocks();
          bufferBuilderIn.begin(7, DefaultVertexFormats.BLOCK);
          bufferBuilderIn.setTranslation(-posX, -posY, -posZ);
-         bufferBuilderIn.noColor();
+         bufferBuilderIn.markDirty();
          Iterator<Entry<Integer, DestroyBlockProgress>> iter = damagedBranches.entrySet().iterator();
 
          while(iter.hasNext()) {
@@ -247,11 +235,6 @@ public class BlockBreakAnimationClientHandler implements ISelectiveResourceReloa
          }
       }
 
-   }
-
-   static {
-      preRenderMethod.setAccessible(true);
-      postRenderMethod.setAccessible(true);
    }
 
    private static class RenderGlobalWrapper implements IWorldEventListener {

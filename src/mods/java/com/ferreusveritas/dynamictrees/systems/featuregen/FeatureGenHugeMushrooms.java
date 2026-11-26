@@ -43,7 +43,7 @@ public class FeatureGenHugeMushrooms implements IPostGenFeature {
       boolean worldGen = safeBounds != SafeChunkBounds.ANY;
       if (!endPoints.isEmpty() && worldGen) {
          BlockPos lowest = (BlockPos)Collections.min(endPoints, (a, b) -> {
-            return (boolean)(a.getY() - b.getY());
+            return a.getY() - b.getY();
          });
          EaglercraftRandom rand = world.rand;
          int success = 0;

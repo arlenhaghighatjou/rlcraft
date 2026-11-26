@@ -1919,7 +1919,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         }
     }
 
-    private void preRenderDamagedBlocks()
+    public void preRenderDamagedBlocks()
     {
         GlStateManager.tryBlendFuncSeparate(GL_DST_COLOR, GL_SRC_COLOR, GL_ONE, GL_ZERO);
         GlStateManager.enableBlend();
@@ -1932,7 +1932,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
         GlStateManager.pushMatrix();
     }
 
-    private void postRenderDamagedBlocks()
+    public void postRenderDamagedBlocks()
     {
         GlStateManager.disableAlpha();
         GlStateManager.doPolygonOffset(0.0F, 0.0F);

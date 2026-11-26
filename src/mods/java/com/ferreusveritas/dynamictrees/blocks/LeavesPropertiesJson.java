@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -248,6 +248,7 @@ public class LeavesPropertiesJson extends LeavesProperties {
          }
       }
 
+      int c = color;
       return (s, w, p, t) -> {
          return c;
       };

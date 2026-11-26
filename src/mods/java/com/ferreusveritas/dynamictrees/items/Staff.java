@@ -9,7 +9,7 @@ import com.ferreusveritas.dynamictrees.trees.Species;
 import com.ferreusveritas.dynamictrees.util.SafeChunkBounds;
 import com.ferreusveritas.dynamictrees.worldgen.JoCode;
 import com.google.common.collect.Multimap;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.List;
 import java.util.Optional;
 import net.minecraft.block.state.IBlockState;

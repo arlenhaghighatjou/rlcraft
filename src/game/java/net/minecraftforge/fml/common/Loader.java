@@ -258,6 +258,7 @@ public class Loader
         mods.add(new FMLModContainer<>("antiqueatlasoverlay", "antiqueatlasoverlay", "1.2", "required-after:antiqueatlas;after:forge@[13.20.0.2262,)", "[1.12.2]", "antiqueatlas", kenkron.antiqueatlasoverlay.AntiqueAtlasOverlayMod::new, kenkron.antiqueatlasoverlay.AntiqueAtlasOverlayMod::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("srparasites", "Scape and Run Parasites", "1.9.11", "", "[1.12.2]", "srparasites", com.dhanantry.scapeandrunparasites.SRPMain::new, com.dhanantry.scapeandrunparasites.SRPMain::handleModStateEvent));
         mods.add(new FMLModContainer<>("lycanitesmobs", "Lycanites Mobs", "2.0.8.9 - MC 1.12.2", "after:thaumcraft", "[1.12,1.13)", "lycanitesmobs", com.lycanitesmobs.LycanitesMobs::new, com.lycanitesmobs.LycanitesMobs::handleModStateEvent).useMetadata(false));
+        mods.add(new FMLModContainer<>("dynamictrees", "Dynamic Trees", "1.12.2-0.9.29", "required-after:forge@[14.23.5.2859,);before:rustic@(1.0.14,);before:dynamictreesbop@[1.12.2-1.4.3,);before:dynamictreestc@[1.12.2-1.4.2,);before:@[1.12.2-2.0.3,)@[1.12.2-2.0.3,);before:dttraverse@[1.12.2-2.0,);before:dynamictreeshnc@(1.1,);after:reccomplex", "[1.12.2]", "dynamictrees", com.ferreusveritas.dynamictrees.DynamicTrees::new, com.ferreusveritas.dynamictrees.DynamicTrees::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

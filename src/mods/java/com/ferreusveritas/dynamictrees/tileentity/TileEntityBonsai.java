@@ -7,7 +7,7 @@ import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -84,7 +84,7 @@ public class TileEntityBonsai extends TileEntity {
       return new SPacketUpdateTileEntity(this.pos, 1, syncData);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       this.read(pkt.getNbtCompound());
    }
 

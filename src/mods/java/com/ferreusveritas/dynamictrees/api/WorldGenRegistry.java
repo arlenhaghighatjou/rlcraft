@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees.api;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.ferreusveritas.dynamictrees.ModConfigs;
 import com.ferreusveritas.dynamictrees.api.events.PopulateDataBaseEvent;
 import com.ferreusveritas.dynamictrees.api.worldgen.IBiomeDataBasePopulator;
@@ -10,10 +11,6 @@ import com.ferreusveritas.dynamictrees.worldgen.MultiDimensionalPopulator;
 import com.ferreusveritas.dynamictrees.worldgen.TreeGenerator;
 import com.ferreusveritas.dynamictrees.worldgen.json.IJsonBiomeApplier;
 import com.ferreusveritas.dynamictrees.worldgen.json.IJsonBiomeSelector;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -43,7 +40,7 @@ public class WorldGenRegistry {
    }
 
    private static void loadCustomDefaultPopulator(WorldGenRegistry.BiomeDataBasePopulatorRegistryEvent event) {
-      File file = new File(ModConfigs.configDirectory.getAbsolutePath() + "/dynamictrees/worldgen.json");
+      VFile2 file = new VFile2(ModConfigs.configDirectory, "dynamictrees/worldgen.json");
       if (!file.exists()) {
          writeBlankJsonArrayToFile(file);
       } else {
@@ -53,7 +50,7 @@ public class WorldGenRegistry {
    }
 
    private static void loadMultiDimensionalPopulator(IBiomeDataBasePopulator populator) {
-      File file = new File(ModConfigs.configDirectory.getAbsolutePath() + "/dynamictrees/dimensions.json");
+      VFile2 file = new VFile2(ModConfigs.configDirectory, "dynamictrees/dimensions.json");
       if (!file.exists()) {
          writeBlankJsonArrayToFile(file);
       } else {
@@ -62,16 +59,8 @@ public class WorldGenRegistry {
 
    }
 
-   private static void writeBlankJsonArrayToFile(File file) {
-      try {
-         (new File(ModConfigs.configDirectory.getAbsolutePath() + "/dynamictrees")).mkdirs();
-         BufferedWriter writer = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8);
-         writer.write("[]");
-         writer.close();
-      } catch (Exception var2) {
-         var2.printStackTrace();
-      }
-
+   private static void writeBlankJsonArrayToFile(VFile2 file) {
+      file.setAllChars("[]");
    }
 
    public static void populateDataBase() {

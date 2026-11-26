@@ -13,7 +13,7 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 @SideOnly(Side.CLIENT)
 public abstract class ModelLoaderGeneric implements ICustomModelLoader {

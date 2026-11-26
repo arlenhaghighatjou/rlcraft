@@ -8,7 +8,7 @@ public interface LazyValue<T> {
 
    static <T> LazyValue<T> of(T value) {
       return () -> {
-         return (LazyValue<T>)value;
+         return value;
       };
    }
 

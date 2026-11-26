@@ -197,7 +197,7 @@ public class BiomeDataBasePopulatorJson implements IBiomeDataBasePopulator {
    }
 
    private static void readTypeSelector(String typeMatch, List<Type> typesWhitelist, List<Type> typesBlacklist) {
-      for(String match : (List)Arrays.stream(typeMatch.split(",")).collect(Collectors.toList())) {
+      for(String match : (List<String>)Arrays.stream(typeMatch.split(",")).collect(Collectors.toList())) {
          if (match.charAt(0) == '!') {
             typesBlacklist.add(Type.getType(match.substring(1), new Type[0]));
          } else {
@@ -227,11 +227,11 @@ public class BiomeDataBasePopulatorJson implements IBiomeDataBasePopulator {
 
       return (biome) -> {
          String regName = String.valueOf(biome.getRegistryName());
-         Stream var10000 = namesWhitelist.stream();
+         Stream<String> var10000 = namesWhitelist.stream();
          regName.getClass();
          boolean var5;
          if (var10000.anyMatch(regName::matches)) {
-            Stream var4 = namesBlacklist.stream();
+            Stream<String> var4 = namesBlacklist.stream();
             regName.getClass();
             if (var4.noneMatch(regName::matches)) {
                var5 = true;

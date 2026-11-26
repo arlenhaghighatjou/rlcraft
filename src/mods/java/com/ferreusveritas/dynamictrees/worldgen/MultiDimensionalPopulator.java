@@ -1,12 +1,12 @@
 package com.ferreusveritas.dynamictrees.worldgen;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.ferreusveritas.dynamictrees.ModConfigs;
 import com.ferreusveritas.dynamictrees.api.worldgen.IBiomeDataBasePopulator;
 import com.ferreusveritas.dynamictrees.util.JsonHelper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import java.io.File;
 import net.minecraft.util.ResourceLocation;
 
 public class MultiDimensionalPopulator {
@@ -38,7 +38,7 @@ public class MultiDimensionalPopulator {
 
                   for(JsonElement filename : files) {
                      if (filename.isJsonPrimitive()) {
-                        File file = new File(ModConfigs.configDirectory.getAbsolutePath() + "/" + filename.getAsString());
+                        VFile2 file = new VFile2(ModConfigs.configDirectory, filename.getAsString());
                         (new BiomeDataBasePopulatorJson(JsonHelper.load(file))).populate(database);
                      }
                   }

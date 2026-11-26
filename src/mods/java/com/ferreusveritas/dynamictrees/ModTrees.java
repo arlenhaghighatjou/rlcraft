@@ -1,5 +1,6 @@
 package com.ferreusveritas.dynamictrees;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
 import com.ferreusveritas.dynamictrees.systems.DirtHelper;
 import com.ferreusveritas.dynamictrees.trees.Mushroom;
@@ -23,13 +24,8 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.NewRegistry;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
-@EventBusSubscriber(
-   modid = "dynamictrees"
-)
 public class ModTrees {
    public static final String NULL = "null";
    public static final String OAK = "oak";
@@ -64,7 +60,10 @@ public class ModTrees {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(NewRegistry.class, ModTrees::newRegistry);
+   }
+
    public static void newRegistry(NewRegistry event) {
       Species.newRegistry(event);
    }
