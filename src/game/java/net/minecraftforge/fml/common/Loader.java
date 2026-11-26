@@ -237,6 +237,7 @@ public class Loader
         mods.add(new FMLModContainer<>("grapplemod", "grapplemod", "1.12.2-v12.3", "", "", "grapplemod", com.yyon.grapplinghook.grapplemod::new, com.yyon.grapplinghook.grapplemod::handleModStateEvent));
         mods.add(new FMLModContainer<>("betterbiomeblend", "betterbiomeblend", "1.0", "", "[1.12.2]", "betterbiomeblend", fionathemortal.betterbiomeblend.BetterBiomeBlend::new, fionathemortal.betterbiomeblend.BetterBiomeBlend::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("potioncore", "Potion Core", "1.9_for_1.12.2", "required-after:forge@[14.23.0.2524,);", "[1.12.2]", "potioncore", com.tmtravlr.potioncore.PotionCore::new, com.tmtravlr.potioncore.PotionCore::handleModStateEvent));
+        mods.add(new FMLModContainer<>("qualitytools", "Quality Tools", "1.0.7_for_1.12.2", "required-after:potioncore;after:baubles", "[1.12.2]", "qualitytools", com.tmtravlr.qualitytools.QualityToolsMod::new, com.tmtravlr.qualitytools.QualityToolsMod::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

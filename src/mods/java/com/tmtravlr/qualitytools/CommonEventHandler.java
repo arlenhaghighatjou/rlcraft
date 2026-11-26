@@ -1,5 +1,6 @@
 package com.tmtravlr.qualitytools;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.tmtravlr.qualitytools.baubles.BaublesHandler;
@@ -26,28 +27,29 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.FMLLog;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(
-   modid = "qualitytools"
-)
 public class CommonEventHandler {
    private static boolean notified;
 
    public CommonEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, CommonEventHandler::onRegisterBlocks);
+      bus.registerGeneric(Register.class, Item.class, CommonEventHandler::onRegisterItems);
+      bus.register(LivingUpdateEvent.class, CommonEventHandler::onLivingUpdate);
+      bus.register(EntityJoinWorldEvent.class, CommonEventHandler::onEntityJoinWorld);
+      bus.register(PlayerLoggedInEvent.class, CommonEventHandler::onPlayerLogin);
+   }
+
    public static void onRegisterBlocks(Register<Block> event) {
       IForgeRegistry<Block> registry = event.getRegistry();
       registry.register(BlockReforgingStation.INSTANCE);
       TileEntity.register("qualitytools.reforging_station", TileEntityReforgingStation.class);
    }
 
-   @SubscribeEvent
    public static void onRegisterItems(Register<Item> event) {
       IForgeRegistry<Item> registry = event.getRegistry();
       registry.register(ItemEmeraldBauble.EMERALD_RING);
@@ -55,7 +57,6 @@ public class CommonEventHandler {
       registry.register(BlockReforgingStation.ITEM_INSTANCE);
    }
 
-   @SubscribeEvent
    public static void onLivingUpdate(LivingUpdateEvent event) {
       if (!event.getEntityLiving().world.isRemote) {
          if (event.getEntityLiving().ticksExisted % 13 == 0 && event.getEntityLiving() instanceof EntityPlayer) {
@@ -139,7 +140,6 @@ public class CommonEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
       if (!event.getWorld().isRemote && event.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase entity = (EntityLivingBase)event.getEntity();
@@ -156,7 +156,6 @@ public class CommonEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onPlayerLogin(PlayerLoggedInEvent event) {
       if (event.player instanceof EntityPlayerMP) {
          ConfigLoader.sendReforgingMaterialsToClient((EntityPlayerMP)event.player);

@@ -1,5 +1,6 @@
 package com.tmtravlr.qualitytools;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -8,19 +9,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "qualitytools"
-)
 public class ClientEventHandler {
    public ClientEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ItemTooltipEvent.class, ClientEventHandler::onItemTooltip);
+   }
+
    public static void onItemTooltip(ItemTooltipEvent event) {
       NBTTagCompound tag = QualityToolsHelper.getQualityTag(event.getItemStack());
       if (!tag.hasNoTags()) {

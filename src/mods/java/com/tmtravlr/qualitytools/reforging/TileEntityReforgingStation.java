@@ -18,7 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
@@ -154,7 +154,7 @@ public class TileEntityReforgingStation extends TileEntityLockable implements IS
       return this.writeToNBT(new NBTTagCompound());
    }
 
-   public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager manager, SPacketUpdateTileEntity packet) {
       this.readFromNBT(packet.getNbtCompound());
    }
 
