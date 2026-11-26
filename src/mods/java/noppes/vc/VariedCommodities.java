@@ -1,5 +1,6 @@
 package noppes.vc;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.world.World;
 import java.util.function.Function;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
@@ -14,7 +15,6 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
@@ -177,7 +177,7 @@ public class VariedCommodities {
 
    private void dealMissingMapping(HashMap<String, ResourceLocation> maps) {
       try {
-         BufferedReader br = new BufferedReader(new InputStreamReader(MinecraftServer.class.getResourceAsStream("/assets/variedcommodities/mappingfix.cfg")));
+         BufferedReader br = new BufferedReader(new InputStreamReader(EagRuntime.getResourceStream("/variedcommodities/assets/variedcommodities/mappingfix.cfg")));
 
          String line;
          while((line = br.readLine()) != null) {

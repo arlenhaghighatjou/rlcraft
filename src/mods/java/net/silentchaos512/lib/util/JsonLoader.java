@@ -1,5 +1,8 @@
 package net.silentchaos512.lib.util;
 
+import net.minecraftforge.fml.common.ModContainer;
+import net.minecraftforge.fml.common.Loader;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -33,7 +36,16 @@ public class JsonLoader {
          filePath = filePath + ".json";
       }
 
-      InputStream resourceAsStream = JsonLoader.class.getClassLoader().getResourceAsStream(filePath);
+      String resourcePath = filePath;
+      if (resourcePath.startsWith("assets/")) {
+         int end = resourcePath.indexOf('/', 7);
+         ModContainer mod = end == -1 ? null : Loader.instance().getIndexedModList().get(resourcePath.substring(7, end));
+         if (mod != null) {
+            resourcePath = mod.getAssetsPrefix() + resourcePath.substring(7);
+         }
+      }
+
+      InputStream resourceAsStream = EagRuntime.getResourceStream("/" + resourcePath);
       if (resourceAsStream != null) {
          BufferedReader reader = new BufferedReader(new InputStreamReader(resourceAsStream, "UTF-8"));
          JsonElement jsonElement = (JsonElement)GSON.fromJson(reader, JsonElement.class);
