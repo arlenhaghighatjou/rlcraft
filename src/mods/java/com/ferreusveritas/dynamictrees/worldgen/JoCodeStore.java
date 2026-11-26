@@ -1,5 +1,7 @@
 package com.ferreusveritas.dynamictrees.worldgen;
 
+import com.ferreusveritas.dynamictrees.util.JsonHelper;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import com.ferreusveritas.dynamictrees.trees.Species;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -35,7 +37,7 @@ public class JoCodeStore {
    public void addCodesFromFile(Species species, String filename) {
       try {
          Logger.getLogger("dynamictrees").log(Level.CONFIG, "Loading Tree Codes for species \"" + species + "\" from file: " + filename);
-         InputStream stream = this.getClass().getClassLoader().getResourceAsStream(filename);
+         InputStream stream = EagRuntime.getResourceStream("/" + JsonHelper.resourcePath(filename));
          if (stream == null) {
             throw new FileNotFoundException(filename);
          }

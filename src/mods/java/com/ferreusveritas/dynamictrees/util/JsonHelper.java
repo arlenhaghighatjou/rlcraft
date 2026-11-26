@@ -19,8 +19,7 @@ public class JsonHelper {
    }
 
    public static JsonElement load(ResourceLocation jsonLocation) {
-      ModContainer mod = Loader.instance().getIndexedModList().get(jsonLocation.getResourceDomain());
-      String filename = (mod != null ? mod.getAssetsPrefix() : "assets/") + jsonLocation.getResourceDomain() + "/" + jsonLocation.getResourcePath();
+      String filename = resourcePath("assets/" + jsonLocation.getResourceDomain() + "/" + jsonLocation.getResourcePath());
       InputStream in = EagRuntime.getResourceStream("/" + filename);
       if (in == null) {
          Logger.getLogger("dynamictrees").log(Level.SEVERE, "Could not open resource " + filename);
@@ -29,6 +28,20 @@ public class JsonHelper {
          BufferedReader reader = new BufferedReader(new InputStreamReader(in));
          return (JsonElement)(new Gson()).fromJson(reader, JsonElement.class);
       }
+   }
+
+   public static String resourcePath(String path) {
+      if (path.startsWith("assets/")) {
+         int end = path.indexOf('/', 7);
+         if (end != -1) {
+            ModContainer mod = Loader.instance().getIndexedModList().get(path.substring(7, end));
+            if (mod != null) {
+               return mod.getAssetsPrefix() + path.substring(7);
+            }
+         }
+      }
+
+      return path;
    }
 
    public static JsonElement load(VFile2 file) {
