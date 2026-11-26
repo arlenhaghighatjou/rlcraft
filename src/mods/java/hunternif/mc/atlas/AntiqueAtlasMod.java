@@ -1,5 +1,10 @@
 package hunternif.mc.atlas;
 
+import hunternif.mc.atlas.marker.GlobalMarkersData;
+import hunternif.mc.atlas.marker.MarkersData;
+import hunternif.mc.atlas.ext.ExtBiomeData;
+import hunternif.mc.atlas.core.AtlasData;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -66,6 +71,10 @@ public class AntiqueAtlasMod {
    }
 
    public void preInit(FMLPreInitializationEvent event) {
+      MapStorage.storageProviders.put(AtlasData.class, AtlasData::new);
+      MapStorage.storageProviders.put(ExtBiomeData.class, ExtBiomeData::new);
+      MapStorage.storageProviders.put(MarkersData.class, MarkersData::new);
+      MapStorage.storageProviders.put(GlobalMarkersData.class, GlobalMarkersData::new);
       proxy.preInit(event);
    }
 
