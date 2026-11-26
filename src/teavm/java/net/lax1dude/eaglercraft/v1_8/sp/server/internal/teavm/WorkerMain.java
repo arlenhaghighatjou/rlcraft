@@ -53,6 +53,7 @@ public class WorkerMain {
 			ServerAssets.unpack(TeaVMUtils.wrapByteArrayBuffer(startAssets));
 			__println(systemOut, false, "WorkerMain: [INFO] initializing server runtime");
 			ServerPlatformSingleplayer.initializeContext();
+			ServerAssets.installFiles();
 			FMLServerHandler.load();
 			EaglerIntegratedServerWorker.enableLoggingRedirector(true);
 			__println(systemOut, false, "WorkerMain: [INFO] starting worker thread");

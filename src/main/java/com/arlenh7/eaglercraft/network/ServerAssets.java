@@ -10,10 +10,13 @@ import com.arlenh7.eaglercraft.forge.ModAssets;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
 import net.lax1dude.eaglercraft.v1_8.EaglerOutputStream;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 
 public final class ServerAssets
 {
 	private static final String[] DIRECTORIES = { "/recipes/", "/advancements/", "/loot_tables/", "/structures/" };
+	private static final List<String> filePaths = new ArrayList<>();
+	private static final List<byte[]> fileData = new ArrayList<>();
 
 	private ServerAssets()
 	{
@@ -51,6 +54,16 @@ public final class ServerAssets
 				output.writeInt(file.length);
 				output.write(file);
 			}
+			List<String> configs = new VFile2("config").listFilenames(true);
+			output.writeInt(configs.size());
+			for (int i = 0, l = configs.size(); i < l; ++i)
+			{
+				String path = configs.get(i);
+				byte[] file = new VFile2(path).getAllBytes();
+				output.writeUTF(path);
+				output.writeInt(file.length);
+				output.write(file);
+			}
 		}
 		catch (IOException ex)
 		{
@@ -70,6 +83,23 @@ public final class ServerAssets
 				input.readFully(file);
 				EagRuntime.putResource(path, file);
 			}
+			for (int i = 0, l = input.readInt(); i < l; ++i)
+			{
+				filePaths.add(input.readUTF());
+				byte[] file = new byte[input.readInt()];
+				input.readFully(file);
+				fileData.add(file);
+			}
 		}
+	}
+
+	public static void installFiles()
+	{
+		for (int i = 0, l = filePaths.size(); i < l; ++i)
+		{
+			new VFile2(filePaths.get(i)).setAllBytes(fileData.get(i));
+		}
+		filePaths.clear();
+		fileData.clear();
 	}
 }
