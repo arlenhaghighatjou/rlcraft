@@ -1708,21 +1708,20 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
             return true;
         }
 
-        switch (plantType)
+        if (plantType == net.minecraftforge.common.EnumPlantType.Desert) return this == net.minecraft.init.Blocks.SAND || this == net.minecraft.init.Blocks.HARDENED_CLAY || this == net.minecraft.init.Blocks.STAINED_HARDENED_CLAY;
+        if (plantType == net.minecraftforge.common.EnumPlantType.Nether) return this == net.minecraft.init.Blocks.SOUL_SAND;
+        if (plantType == net.minecraftforge.common.EnumPlantType.Crop)   return this == net.minecraft.init.Blocks.FARMLAND;
+        if (plantType == net.minecraftforge.common.EnumPlantType.Cave)   return state.isSideSolid(world, pos, EnumFacing.UP);
+        if (plantType == net.minecraftforge.common.EnumPlantType.Plains) return this == net.minecraft.init.Blocks.GRASS || this == net.minecraft.init.Blocks.DIRT || this == net.minecraft.init.Blocks.FARMLAND;
+        if (plantType == net.minecraftforge.common.EnumPlantType.Water)  return state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0;
+        if (plantType == net.minecraftforge.common.EnumPlantType.Beach)
         {
-            case Desert: return this == net.minecraft.init.Blocks.SAND || this == net.minecraft.init.Blocks.HARDENED_CLAY || this == net.minecraft.init.Blocks.STAINED_HARDENED_CLAY;
-            case Nether: return this == net.minecraft.init.Blocks.SOUL_SAND;
-            case Crop:   return this == net.minecraft.init.Blocks.FARMLAND;
-            case Cave:   return state.isSideSolid(world, pos, EnumFacing.UP);
-            case Plains: return this == net.minecraft.init.Blocks.GRASS || this == net.minecraft.init.Blocks.DIRT || this == net.minecraft.init.Blocks.FARMLAND;
-            case Water:  return state.getMaterial() == Material.WATER && state.getValue(BlockLiquid.LEVEL) == 0;
-            case Beach:
-                boolean isBeach = this == net.minecraft.init.Blocks.GRASS || this == net.minecraft.init.Blocks.DIRT || this == net.minecraft.init.Blocks.SAND;
-                boolean hasWater = (world.getBlockState(pos.east()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.west()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.north()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.south()).getMaterial() == Material.WATER);
-                return isBeach && hasWater;
+            boolean isBeach = this == net.minecraft.init.Blocks.GRASS || this == net.minecraft.init.Blocks.DIRT || this == net.minecraft.init.Blocks.SAND;
+            boolean hasWater = (world.getBlockState(pos.east()).getMaterial() == Material.WATER ||
+                                world.getBlockState(pos.west()).getMaterial() == Material.WATER ||
+                                world.getBlockState(pos.north()).getMaterial() == Material.WATER ||
+                                world.getBlockState(pos.south()).getMaterial() == Material.WATER);
+            return isBeach && hasWater;
         }
 
         return false;
