@@ -1,5 +1,7 @@
 package sereneseasons.core;
 
+import sereneseasons.season.SeasonSavedData;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -59,6 +61,7 @@ public class SereneSeasons {
 
    public void preInit(FMLPreInitializationEvent event) {
       configDirectory = new VFile2(event.getModConfigurationDirectory(), "sereneseasons");
+      MapStorage.storageProviders.put(SeasonSavedData.class, SeasonSavedData::new);
       ModConfig.preInit(configDirectory);
       ModBlocks.init();
       ModItems.init();

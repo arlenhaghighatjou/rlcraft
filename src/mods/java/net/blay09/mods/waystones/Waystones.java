@@ -1,5 +1,7 @@
 package net.blay09.mods.waystones;
 
+import net.blay09.mods.waystones.worldgen.NameGenerator;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
@@ -77,6 +79,8 @@ public class Waystones {
 
    public void preInit(FMLPreInitializationEvent event) {
       GameRegistry.registerTileEntity(TileWaystone.class, new ResourceLocation("waystones", "waystone"), TileWaystone::new);
+      MapStorage.storageProviders.put(GlobalWaystones.class, GlobalWaystones::new);
+      MapStorage.storageProviders.put(NameGenerator.class, NameGenerator::new);
       NetworkHandler.init();
       VillagerRegistry.instance().registerVillageCreationHandler(new VillageWaystoneCreationHandler());
       MapGenStructureIO.registerStructureComponent(ComponentVillageWaystone.class, "waystones:village_waystone");
