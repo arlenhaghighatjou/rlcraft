@@ -51,7 +51,9 @@ public class DisenchantingUtils {
    }
 
    public static ItemStack simulateDisenchantingInInventory(IDisenchantmentItemHandler inventory, boolean ignoreEnchantmentLoss, int startIndex, DisenchantingProperties properties, float power, EaglercraftRandom random) {
-      if (properties.hasPersistantInventory() && !inventory.getOutputStack().isEmpty()) {
+      if (properties == null || inventory == null) {
+         return ItemStack.EMPTY;
+      } else if (properties.hasPersistantInventory() && !inventory.getOutputStack().isEmpty()) {
          return ItemStack.EMPTY;
       } else {
          ItemStack source = inventory.getSourceStack();
