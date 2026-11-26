@@ -54,6 +54,7 @@ public class RegistryBuilder<T extends IForgeRegistryEntry<T>>
     public RegistryBuilder<T> setType(Class<T> type)
     {
         this.registryType = type;
+        IForgeRegistryEntry.Impl.registerType(type);
         return this;
     }
 

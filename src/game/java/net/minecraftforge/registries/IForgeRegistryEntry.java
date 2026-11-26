@@ -21,6 +21,9 @@ package net.minecraftforge.registries;
 
 import net.minecraft.util.ResourceLocation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 public interface IForgeRegistryEntry<V>
@@ -59,6 +62,16 @@ public interface IForgeRegistryEntry<V>
     @SuppressWarnings({ "serial", "unchecked" })
     public static class Impl<T  extends IForgeRegistryEntry<T>> implements IForgeRegistryEntry<T>
     {
+        private static final List<Class<?>> CUSTOM_TYPES = new ArrayList<>();
+
+        static void registerType(Class<?> type)
+        {
+            if (!CUSTOM_TYPES.contains(type))
+            {
+                CUSTOM_TYPES.add(type);
+            }
+        }
+
         private final Class<T> registryType = resolveRegistryType();
         public final IRegistryDelegate<T> delegate = new RegistryDelegate<T>((T)this, registryType);
         ResourceLocation registryName = null;
@@ -76,6 +89,11 @@ public interface IForgeRegistryEntry<V>
             if (this instanceof net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession) return (Class<T>)net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession.class;
             if (this instanceof net.minecraftforge.registries.DataSerializerEntry) return (Class<T>)net.minecraftforge.registries.DataSerializerEntry.class;
             if (this instanceof net.minecraftforge.fml.common.registry.EntityEntry) return (Class<T>)net.minecraftforge.fml.common.registry.EntityEntry.class;
+            for (int i = 0, l = CUSTOM_TYPES.size(); i < l; ++i)
+            {
+                Class<?> type = CUSTOM_TYPES.get(i);
+                if (type.isInstance(this)) return (Class<T>)type;
+            }
             throw new IllegalStateException("Unknown Forge registry entry type: " + getClass().getName());
         }
 
