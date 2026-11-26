@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.util;
 
-import net.minecraft.launchwrapper.Launch;
+import net.minecraftforge.fml.relauncher.FMLLaunchHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.LoaderState;
@@ -19,7 +19,7 @@ public final class GameUtil {
    }
 
    public static boolean isDeobfuscated() {
-      return ((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")).booleanValue();
+      return FMLLaunchHandler.isDeobfuscatedEnvironment();
    }
 
    public static boolean shouldCalculateTooltip() {

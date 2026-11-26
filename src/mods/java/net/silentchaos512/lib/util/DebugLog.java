@@ -22,7 +22,7 @@ public class DebugLog {
    }
 
    public void log(String msg, Object... params) {
-      String output = this.logger.getMessageFactory().newMessage(msg, params).getFormattedMessage();
+      String output = Logger.formatParams(msg, params);
       boolean isSameAsLastOutput = output.equals(this.lastOutput);
       this.logger.debug(output);
       this.spamDetection(isSameAsLastOutput);

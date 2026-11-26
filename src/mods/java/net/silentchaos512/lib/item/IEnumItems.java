@@ -69,14 +69,14 @@ public interface IEnumItems<E extends Enum<E>, I extends Item> extends IStringSe
       }
 
       public <E extends Enum<E>> void registerBlocksGenericEnum(Function<E, Block> block, Function<E, String> name, Class<E> enumClass) {
-         for(E e : (Enum[])enumClass.getEnumConstants()) {
+         for(E e : enumClass.getEnumConstants()) {
             this.registry.registerBlock((Block)block.apply(e), (String)name.apply(e));
          }
 
       }
 
       public <E extends Enum<E>> void registerItemsGenericEnum(Function<E, Item> item, Function<E, String> name, Class<E> enumClass) {
-         for(E e : (Enum[])enumClass.getEnumConstants()) {
+         for(E e : enumClass.getEnumConstants()) {
             this.registry.registerItem((Item)item.apply(e), (String)name.apply(e));
          }
 

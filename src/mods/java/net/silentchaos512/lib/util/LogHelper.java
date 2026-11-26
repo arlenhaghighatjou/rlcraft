@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.util;
 
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class LogHelper {
    public LogHelper(Logger providedLogger, int buildNumber) {
       this.logger = providedLogger;
       this.buildNumber = buildNumber;
-      this.addLogHelper(providedLogger.getName());
+      this.addLogHelper(providedLogger.loggerName);
    }
 
    private void addLogHelper(String modName) {
@@ -40,13 +41,13 @@ public class LogHelper {
    }
 
    public void catching(Throwable t) {
-      this.logger.catching(t);
+      this.logger.error(t);
    }
 
    public void debug(String msg, Object... params) {
       this.logger.debug(msg, params);
       if (this.buildNumber == 0) {
-         String newOutput = this.logger.getMessageFactory().newMessage(msg, params).getFormattedMessage();
+         String newOutput = Logger.formatParams(msg, params);
          if (!newOutput.equals(this.lastDebugOutput)) {
             this.info("[DEBUG] " + newOutput);
             this.lastDebugOutput = newOutput;
@@ -81,23 +82,23 @@ public class LogHelper {
 
    public void warn(Throwable t, String msg, Object... params) {
       this.logger.warn(msg, params);
-      this.logger.catching(t);
+      this.logger.error(t);
    }
 
    public void noticableWarning(boolean trace, List<String> lines) {
       this.error("********************************************************************************");
 
       for(String line : lines) {
-         for(String subline : wrapString(line, 78, false, new ArrayList())) {
+         for(String subline : wrapString(line, 78, false, new ArrayList<String>())) {
             this.error("* " + subline);
          }
       }
 
       if (trace) {
-         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+         String[] stackTrace = EagRuntime.getStackTraceElements(new Exception());
 
          for(int i = 2; i < 8 && i < stackTrace.length; ++i) {
-            this.warn("*  at {}{}", stackTrace[i].toString(), i == 7 ? "..." : "");
+            this.warn("*  at {}{}", stackTrace[i], i == 7 ? "..." : "");
          }
       }
 

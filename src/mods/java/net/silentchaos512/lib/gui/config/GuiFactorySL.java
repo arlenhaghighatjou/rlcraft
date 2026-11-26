@@ -15,6 +15,8 @@ public abstract class GuiFactorySL implements IModGuiFactory {
 
    public abstract Class<? extends GuiScreen> mainConfigGuiClass();
 
+   public abstract GuiScreen createMainConfigGui(GuiScreen parentScreen);
+
    public void initialize(Minecraft minecraftInstance) {
    }
 
@@ -23,12 +25,7 @@ public abstract class GuiFactorySL implements IModGuiFactory {
    }
 
    public GuiScreen createConfigGui(GuiScreen parentScreen) {
-      try {
-         return (GuiScreen)this.mainConfigGuiClass().getConstructor(GuiScreen.class).newInstance(parentScreen);
-      } catch (Exception var3) {
-         var3.printStackTrace();
-         return null;
-      }
+      return this.createMainConfigGui(parentScreen);
    }
 
    public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {

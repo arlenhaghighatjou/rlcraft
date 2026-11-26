@@ -1,7 +1,6 @@
 package net.silentchaos512.lib.guidebook.page;
 
-import java.awt.Desktop;
-import java.net.URI;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -35,14 +34,7 @@ public class PageLinkButton extends GuidePage {
    @SideOnly(Side.CLIENT)
    public void actionPerformed(GuiGuideBase gui, GuiButton button) {
       if (button.id == this.buttonId) {
-         if (Desktop.isDesktopSupported()) {
-            try {
-               Desktop.getDesktop().browse(new URI(this.link));
-            } catch (Exception var4) {
-               SilentLib.LOGGER.warn("Couldn't open website from Link Button page!");
-               var4.printStackTrace();
-            }
-         }
+         EagRuntime.openLink(this.link);
       } else {
          super.actionPerformed(gui, button);
       }

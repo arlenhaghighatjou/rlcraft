@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.network.internal;
 
+import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -9,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.silentchaos512.lib.item.ILeftClickItem;
 import net.silentchaos512.lib.network.MessageSL;
 
-public final class MessageLeftClick extends MessageSL {
+public final class MessageLeftClick extends MessageSL<MessageLeftClick> {
    public int type;
    public boolean mainHand;
 
@@ -21,6 +22,16 @@ public final class MessageLeftClick extends MessageSL {
    public MessageLeftClick(MessageLeftClick.Type type, EnumHand hand) {
       this.type = type.ordinal();
       this.mainHand = hand == EnumHand.MAIN_HAND;
+   }
+
+   public void fromBytes(ByteBuf buf) {
+      this.mainHand = buf.readBoolean();
+      this.type = buf.readInt();
+   }
+
+   public void toBytes(ByteBuf buf) {
+      buf.writeBoolean(this.mainHand);
+      buf.writeInt(this.type);
    }
 
    public IMessage handleMessage(MessageContext context) {

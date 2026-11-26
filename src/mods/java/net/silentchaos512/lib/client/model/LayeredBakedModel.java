@@ -32,7 +32,7 @@ public abstract class LayeredBakedModel implements ILayeredBakedModel {
                UnmodifiableIterator var7 = this.quads.iterator();
 
                while(var7.hasNext()) {
-                  for(BakedQuad quad : (List)var7.next()) {
+                  for(BakedQuad quad : (List<BakedQuad>)var7.next()) {
                      builder.add(quad);
                   }
                }

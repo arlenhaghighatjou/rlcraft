@@ -1,8 +1,7 @@
 package net.silentchaos512.lib.guidebook.gui;
 
-import java.awt.Desktop;
+import net.lax1dude.eaglercraft.v1_8.EagRuntime;
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -75,15 +74,8 @@ public class GuiPage extends GuiGuide {
    public void actionPerformed(GuiButton button) throws IOException {
       if (button == this.buttonViewOnline) {
          List<String> links = this.getWebLinks();
-         if (Desktop.isDesktopSupported()) {
-            for(String link : links) {
-               try {
-                  Desktop.getDesktop().browse(new URI(link));
-               } catch (Exception var6) {
-                  SilentLib.LOGGER.warn("Couldn't open website from guide book page!");
-                  var6.printStackTrace();
-               }
-            }
+         for(String link : links) {
+            EagRuntime.openLink(link);
          }
       } else {
          super.actionPerformed(button);

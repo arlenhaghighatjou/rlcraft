@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.client.render;
 
-import java.nio.ByteBuffer;
+import net.lax1dude.eaglercraft.v1_8.internal.buffer.ByteBuffer;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.lax1dude.eaglercraft.v1_8.opengl.VertexFormat;
@@ -71,11 +71,11 @@ public class BufferBuilderSL {
    }
 
    public void putColorRGBA(int index, int red, int green, int blue) {
-      this.buffer.putColorRGBA(index, red, green, blue);
+      this.buffer.putColorRGBA(index, red, green, blue, 255);
    }
 
    public void noColor() {
-      this.buffer.noColor();
+      this.buffer.markDirty();
    }
 
    public BufferBuilderSL color(float red, float green, float blue, float alpha) {

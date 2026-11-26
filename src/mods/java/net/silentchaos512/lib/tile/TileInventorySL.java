@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -100,7 +100,7 @@ public abstract class TileInventorySL extends TileEntitySL implements IInventory
       return new SPacketUpdateTileEntity(this.pos, 1, tags);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       super.onDataPacket(net, packet);
       ItemStackHelper.loadAllItems(packet.getNbtCompound(), this.inventory);
    }

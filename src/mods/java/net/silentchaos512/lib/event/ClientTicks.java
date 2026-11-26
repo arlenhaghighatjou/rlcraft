@@ -1,11 +1,10 @@
 package net.silentchaos512.lib.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
@@ -13,10 +12,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.silentchaos512.lib.SilentLib;
 import net.silentchaos512.lib.util.GameUtil;
 
-@EventBusSubscriber(
-   modid = "silentlib",
-   value = {Side.CLIENT}
-)
 public final class ClientTicks {
    /** @deprecated */
    @Deprecated
@@ -40,13 +35,17 @@ public final class ClientTicks {
 
       if (scheduledActions.size() >= 200) {
          SilentLib.LOGGER.warn("Too many client tick actions queued! Currently at {} items. Would have added '{}'.", Integer.valueOf(scheduledActions.size()), action);
-         SilentLib.LOGGER.catching(new IllegalStateException("ClientTicks queue overflow"));
+         SilentLib.LOGGER.error(new IllegalStateException("ClientTicks queue overflow"));
          scheduledActions.clear();
       }
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, ClientTicks::clientTickEnd);
+      bus.register(RenderTickEvent.class, ClientTicks::renderTick);
+   }
+
    public static void clientTickEnd(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          runScheduledActions();
@@ -54,7 +53,6 @@ public final class ClientTicks {
       }
    }
 
-   @SubscribeEvent
    public static void renderTick(RenderTickEvent event) {
       if (event.phase == Phase.START) {
          partialTicks = event.renderTickTime;

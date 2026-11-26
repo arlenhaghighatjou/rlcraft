@@ -243,6 +243,7 @@ public class Loader
         mods.add(new FMLModContainer<>("fishingmadebetter", "Fishing Made Better", "2.2.6", "after:advanced-fishing;after:aquaculture;after:levelup2", "", "fishingmadebetter", net.theawesomegem.fishingmadebetter.Primary::new, net.theawesomegem.fishingmadebetter.Primary::handleModStateEvent));
         mods.add(new FMLModContainer<>("dldungeonsjbg", "Doomlike Dungeons", "1.14.12", "", "[1.12]", "dldungeonsjbg", jaredbgreat.dldungeons.DoomlikeDungeons::new, jaredbgreat.dldungeons.DoomlikeDungeons::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("reskillable", "Reskillable", "1.12.2-1.13.0", "", "[1.12.2]", "reskillable", codersafterdark.reskillable.Reskillable::new, codersafterdark.reskillable.Reskillable::handleModStateEvent).guiFactory(codersafterdark.reskillable.client.gui.GuiFactory::new));
+        mods.add(new FMLModContainer<>("silentlib", "Silent Lib", "3.0.13", "required-after:forge@[14.23.3.2669,);", "[1.12.2]", "silentlib", net.silentchaos512.lib.SilentLib::new, net.silentchaos512.lib.SilentLib::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

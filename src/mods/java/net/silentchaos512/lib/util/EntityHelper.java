@@ -1,7 +1,8 @@
 package net.silentchaos512.lib.util;
 
+import java.util.ArrayDeque;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
 import java.util.List;
 import java.util.Queue;
 import java.util.function.Consumer;
@@ -9,16 +10,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-@EventBusSubscriber(
-   modid = "silentlib"
-)
 public final class EntityHelper {
-   private static volatile Queue<Entity> entitiesToSpawn = Queues.newArrayDeque();
+   private static volatile Queue<Entity> entitiesToSpawn = new ArrayDeque<>();
 
    private EntityHelper() {
       throw new IllegalAccessError("Utility class");
@@ -61,7 +57,10 @@ public final class EntityHelper {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, EntityHelper::onWorldTick);
+   }
+
    public static void onWorldTick(WorldTickEvent event) {
       if (event.phase == Phase.START) {
          handleSpawns();

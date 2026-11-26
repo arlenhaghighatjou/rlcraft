@@ -1,11 +1,12 @@
 package net.silentchaos512.lib;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -47,37 +48,51 @@ public final class SilentLib implements IModBase {
    /** @deprecated */
    @Deprecated
    public static I18nHelper i18n = new I18nHelper("silentlib", logHelper, false);
-   @Instance("silentlib")
    public static SilentLib instance;
-   @SidedProxy(
-      clientSide = "net.silentchaos512.lib.proxy.internal.SilentLibClientProxy",
-      serverSide = "net.silentchaos512.lib.proxy.internal.SilentLibServerProxy"
-   )
    public static SilentLibCommonProxy proxy;
 
    public SilentLib() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new net.silentchaos512.lib.proxy.internal.SilentLibClientProxy() : new net.silentchaos512.lib.proxy.internal.SilentLibServerProxy();
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            net.silentchaos512.lib.event.ClientTicks.register(MinecraftForge.EVENT_BUS);
+         }
+         net.silentchaos512.lib.event.Greetings.register(MinecraftForge.EVENT_BUS);
+         net.silentchaos512.lib.event.InitialSpawnItems.register(MinecraftForge.EVENT_BUS);
+         net.silentchaos512.lib.event.ServerTicks.register(MinecraftForge.EVENT_BUS);
+         net.silentchaos512.lib.util.EntityHelper.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.onServerStarting((FMLServerStartingEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       network = new NetworkHandlerSL("silentlib");
-      network.register(MessageLeftClick.class, Side.SERVER);
+      network.register(MessageLeftClick.class, MessageLeftClick::new, Side.SERVER);
       NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandlerLibF());
       LibTriggers.init();
       proxy.preInit(event);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init(event);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit(event);
    }
 
-   @EventHandler
    public void onServerStarting(FMLServerStartingEvent event) {
       event.registerServerCommand(new CommandDataDump());
    }

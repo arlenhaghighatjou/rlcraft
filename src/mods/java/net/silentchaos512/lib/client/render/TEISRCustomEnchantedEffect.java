@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.client.render;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.google.common.collect.ImmutableSet;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,8 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -111,7 +110,7 @@ public class TEISRCustomEnchantedEffect extends TileEntityItemStackRenderer {
       GlStateManager.depthMask(false);
       GlStateManager.depthFunc(514);
       GlStateManager.disableLighting();
-      GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_COLOR, RealOpenGLEnums.GL_ONE);
       textureManager.bindTexture(RES_ITEM_GLINT);
       GlStateManager.matrixMode(5890);
       GlStateManager.pushMatrix();
@@ -129,7 +128,7 @@ public class TEISRCustomEnchantedEffect extends TileEntityItemStackRenderer {
       this.renderModelExcluding(model, color, layerIndex, excludeFaces);
       GlStateManager.popMatrix();
       GlStateManager.matrixMode(5888);
-      GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
       GlStateManager.enableLighting();
       GlStateManager.depthFunc(515);
       GlStateManager.depthMask(true);

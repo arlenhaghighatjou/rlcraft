@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.registry;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,7 +56,6 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -109,7 +109,7 @@ public class SRegistry {
       this.logHelper = new LogHelper(mod.getName() + "/SRegistry", 1);
       this.logger = LogManager.getLogger(mod.getName() + "/SRegistry");
       this.recipes = new RecipeMaker(this.modId);
-      MinecraftForge.EVENT_BUS.register(new SRegistry.EventHandler(this));
+      (new SRegistry.EventHandler(this)).register(MinecraftForge.EVENT_BUS);
    }
 
    public RecipeMaker getRecipeMaker() {
@@ -483,65 +483,69 @@ public class SRegistry {
 
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+         bus.registerGeneric(Register.class, Item.class, this::registerItems);
+         bus.registerGeneric(Register.class, Potion.class, this::registerPotions);
+         bus.registerGeneric(Register.class, Biome.class, this::registerBiomes);
+         bus.registerGeneric(Register.class, SoundEvent.class, this::registerSoundEvents);
+         bus.registerGeneric(Register.class, PotionType.class, this::registerPotionTypes);
+         bus.registerGeneric(Register.class, Enchantment.class, this::registerEnchantments);
+         bus.registerGeneric(Register.class, VillagerProfession.class, this::registerVillagerProfessions);
+         bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntities);
+         bus.registerGeneric(Register.class, IRecipe.class, this::registerRecipes);
+         bus.register(ModelRegistryEvent.class, this::registerModels);
+         bus.register(net.minecraftforge.client.event.ColorHandlerEvent.Block.class, this::registerBlockColors);
+         bus.register(net.minecraftforge.client.event.ColorHandlerEvent.Item.class, this::registerItemColors);
+      }
+
       public void registerBlocks(Register<Block> event) {
          this.runRegistrationHandlerIfPresent(Block.class);
       }
 
-      @SubscribeEvent
       public void registerItems(Register<Item> event) {
          this.runRegistrationHandlerIfPresent(Item.class);
          this.sregistry.addOreDictEntries();
       }
 
-      @SubscribeEvent
       public void registerPotions(Register<Potion> event) {
          this.runRegistrationHandlerIfPresent(Potion.class);
       }
 
-      @SubscribeEvent
       public void registerBiomes(Register<Biome> event) {
          this.runRegistrationHandlerIfPresent(Biome.class);
       }
 
-      @SubscribeEvent
       public void registerSoundEvents(Register<SoundEvent> event) {
          this.runRegistrationHandlerIfPresent(SoundEvent.class);
       }
 
-      @SubscribeEvent
       public void registerPotionTypes(Register<PotionType> event) {
          this.runRegistrationHandlerIfPresent(PotionType.class);
       }
 
-      @SubscribeEvent
       public void registerEnchantments(Register<Enchantment> event) {
          this.runRegistrationHandlerIfPresent(Enchantment.class);
       }
 
-      @SubscribeEvent
       public void registerVillagerProfessions(Register<VillagerProfession> event) {
          this.runRegistrationHandlerIfPresent(VillagerProfession.class);
       }
 
-      @SubscribeEvent
       public void registerEntities(Register<EntityEntry> event) {
          this.runRegistrationHandlerIfPresent(EntityEntry.class);
       }
 
-      @SubscribeEvent
       public void registerRecipes(Register<IRecipe> event) {
          this.runRegistrationHandlerIfPresent(IRecipe.class);
          this.sregistry.addRecipes();
       }
 
-      @SubscribeEvent
       public void registerModels(ModelRegistryEvent event) {
          this.sregistry.registerModels();
       }
 
       @SideOnly(Side.CLIENT)
-      @SubscribeEvent
       public void registerBlockColors(net.minecraftforge.client.event.ColorHandlerEvent.Block event) {
          BlockColors blockColors = event.getBlockColors();
 
@@ -552,7 +556,6 @@ public class SRegistry {
       }
 
       @SideOnly(Side.CLIENT)
-      @SubscribeEvent
       public void registerItemColors(net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
          ItemColors itemColors = event.getItemColors();
 

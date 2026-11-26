@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 
@@ -37,7 +38,7 @@ public class DimensionalPosition {
    }
 
    public String toString() {
-      return String.format("(%d, %d, %d) in dimension %d", this.x, this.y, this.z, this.dim);
+      return HString.format("(%d, %d, %d) in dimension %d", this.x, this.y, this.z, this.dim);
    }
 
    public boolean equals(Object other) {

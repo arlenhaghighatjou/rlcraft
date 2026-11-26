@@ -9,7 +9,6 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -132,8 +131,8 @@ public class PageCrafting extends GuidePage {
          ShapedOreRecipe shaped = (ShapedOreRecipe)recipe;
 
          try {
-            width = ((Integer)ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 4)).intValue();
-            height = ((Integer)ReflectionHelper.getPrivateValue(ShapedOreRecipe.class, shaped, 5)).intValue();
+            width = shaped.getRecipeWidth();
+            height = shaped.getRecipeHeight();
          } catch (Exception var12) {
             SilentLib.LOGGER.warn("Something went wrong trying to get the Crafting Recipe in the booklet to display!");
             var12.printStackTrace();

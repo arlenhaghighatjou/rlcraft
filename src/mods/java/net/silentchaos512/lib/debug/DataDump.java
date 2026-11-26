@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.debug;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,10 +38,10 @@ public final class DataDump {
          try {
             ResourceLocation name = (ResourceLocation)Objects.requireNonNull(block.getRegistryName(), "Registry name is null! This indicates a broken mod and is a serious problem!");
             String translatedName = I18n.format(block.getUnlocalizedName() + ".name", new Object[0]);
-            lines.add(String.format("%-60s %-60s", name, translatedName));
+            lines.add(HString.format("%-60s %-60s", name, translatedName));
          } catch (Exception var5) {
             SilentLib.LOGGER.warn("*** Error on block: {} ***", block);
-            SilentLib.LOGGER.catching(var5);
+            SilentLib.LOGGER.error(var5);
          }
       }
 
@@ -59,10 +60,10 @@ public final class DataDump {
             ResourceLocation name = (ResourceLocation)Objects.requireNonNull(ench.getRegistryName(), "Registry name is null! This indicates a broken mod and is a serious problem!");
             String translatedName = ench.getTranslatedName(1).replaceFirst(" I$", "");
             String type = ench.type == null ? "null" : ench.type.name();
-            SilentLib.LOGGER.info(String.format("%-30s %-40s type=%-10s", translatedName, name, type));
+            SilentLib.LOGGER.info(HString.format("%-30s %-40s type=%-10s", translatedName, name, type));
          } catch (Exception var5) {
             SilentLib.LOGGER.warn("*** Error on enchantment: {} ***", ench);
-            SilentLib.LOGGER.catching(var5);
+            SilentLib.LOGGER.error(var5);
          }
       }
 
@@ -79,10 +80,10 @@ public final class DataDump {
             Class<? extends Entity> clazz = EntityList.getClass(entry.getRegistryName());
             String oldName = EntityList.getTranslationName(name);
             int id = EntityList.getID(clazz);
-            list.add(String.format("%-30s %4d   %-40s %-40s", oldName, id, name, clazz));
+            list.add(HString.format("%-30s %4d   %-40s %-40s", oldName, id, name, clazz));
          } catch (Exception var7) {
             SilentLib.LOGGER.warn("*** Error on entity: {} ***", entry.getEntityClass());
-            SilentLib.LOGGER.catching(var7);
+            SilentLib.LOGGER.error(var7);
          }
       }
 
@@ -101,10 +102,10 @@ public final class DataDump {
          try {
             ResourceLocation name = (ResourceLocation)Objects.requireNonNull(item.getRegistryName(), "Registry name is null! This indicates a broken mod and is a serious problem!");
             String translatedName = I18n.format(item.getUnlocalizedName() + ".name", new Object[0]);
-            lines.add(String.format("%-60s %-60s", name, translatedName));
+            lines.add(HString.format("%-60s %-60s", name, translatedName));
          } catch (Exception var5) {
             SilentLib.LOGGER.warn("*** Error on item: {} ***", item);
-            SilentLib.LOGGER.catching(var5);
+            SilentLib.LOGGER.error(var5);
          }
       }
 
@@ -120,10 +121,10 @@ public final class DataDump {
       for(Potion pot : Potion.REGISTRY) {
          try {
             ResourceLocation name = (ResourceLocation)Objects.requireNonNull(pot.getRegistryName(), "Registry name is null! This indicates a broken mod and is a serious problem!");
-            SilentLib.LOGGER.info(String.format("%-30s %-40s", pot.getName(), name));
+            SilentLib.LOGGER.info(HString.format("%-30s %-40s", pot.getName(), name));
          } catch (Exception var3) {
             SilentLib.LOGGER.warn("*** Error on potion: {} ***", pot);
-            SilentLib.LOGGER.catching(var3);
+            SilentLib.LOGGER.error(var3);
          }
       }
 
@@ -142,7 +143,7 @@ public final class DataDump {
                throw new IndexOutOfBoundsException("id < 0");
             }
 
-            SilentLib.LOGGER.info(String.format("%-6d %-40s", id, name));
+            SilentLib.LOGGER.info(HString.format("%-6d %-40s", id, name));
          } catch (Exception var4) {
             SilentLib.LOGGER.info("*** Error on recipe: {} ***", rec);
             throw var4;

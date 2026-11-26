@@ -1,12 +1,10 @@
 package net.silentchaos512.lib.recipe;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,40 +72,8 @@ public final class RecipeJsonHell {
 
    private static void createRecipeFile(JsonObject json, String fileName) {
       fileName = fileName.replaceAll(":", "_");
-      File directory = new File("recipes/" + Loader.instance().activeModContainer().getModId());
-      if (!directory.exists()) {
-         directory.mkdirs();
-      }
-
-      File output = new File(directory, fileName + ".json");
-
-      try {
-         FileWriter writer = new FileWriter(output);
-         Throwable var5 = null;
-
-         try {
-            GSON.toJson(json, writer);
-         } catch (Throwable var15) {
-            var5 = var15;
-            throw var15;
-         } finally {
-            if (writer != null) {
-               if (var5 != null) {
-                  try {
-                     writer.close();
-                  } catch (Throwable var14) {
-                     var5.addSuppressed(var14);
-                  }
-               } else {
-                  writer.close();
-               }
-            }
-
-         }
-      } catch (IOException var17) {
-         var17.printStackTrace();
-      }
-
+      VFile2 output = new VFile2("recipes/" + Loader.instance().activeModContainer().getModId(), fileName + ".json");
+      output.setAllChars(GSON.toJson(json));
    }
 
    public static final class ShapedSerializer implements IRecipeSerializer {

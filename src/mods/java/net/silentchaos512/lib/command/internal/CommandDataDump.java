@@ -1,5 +1,7 @@
 package net.silentchaos512.lib.command.internal;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import java.util.stream.Collectors;
 import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,7 +43,7 @@ public class CommandDataDump extends CommandBase {
          subcommands.append(sub.getName());
       }
 
-      return String.format("%sUsage: /%s <%s>", TextFormatting.RED, this.getName(), subcommands.toString());
+      return HString.format("%sUsage: /%s <%s>", TextFormatting.RED, this.getName(), subcommands.toString());
    }
 
    public void execute(MinecraftServer server, ICommandSender sender, String[] args) {
@@ -50,7 +52,7 @@ public class CommandDataDump extends CommandBase {
       } else {
          this.getSubCommand(args[0]).ifPresent((subCommand) -> {
             subCommand.execute();
-            String line = String.format("Printed %s list to log", subCommand.getName());
+            String line = HString.format("Printed %s list to log", subCommand.getName());
             sender.sendMessage(new TextComponentString(line));
          });
       }
@@ -67,7 +69,7 @@ public class CommandDataDump extends CommandBase {
    }
 
    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-      return (List<String>)(args.length == 1 ? getListOfStringsMatchingLastWord(args, (Collection)Arrays.stream(CommandDataDump.SubCommand.values()).map(CommandDataDump.SubCommand::getName).collect(ImmutableList.toImmutableList())) : ImmutableList.of());
+      return (List<String>)(args.length == 1 ? getListOfStringsMatchingLastWord(args, (Collection)Arrays.stream(CommandDataDump.SubCommand.values()).map(CommandDataDump.SubCommand::getName).collect(Collectors.toList())) : ImmutableList.of());
    }
 
    static enum SubCommand implements IStringSerializable {

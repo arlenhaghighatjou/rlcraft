@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Objects;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -9,7 +10,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.silentchaos512.lib.SilentLib;
 import net.silentchaos512.lib.advancements.LibTriggers;
@@ -23,7 +23,13 @@ public final class SilentLibCommonEvents {
    public SilentLibCommonEvents() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLoggedIn);
+      bus.register(RightClickBlock.class, this::onPlayerRightClickBlock);
+      bus.register(EntityInteract.class, this::onPlayerRightClickEntity);
+      bus.register(RightClickItem.class, this::onPlayerRightClickItem);
+   }
+
    public void onPlayerLoggedIn(PlayerLoggedInEvent event) {
       EntityPlayer player = event.player;
       NBTTagCompound guideData = PlayerHelper.getPersistedDataSubcompound(player, "silentlib_guide_books");
@@ -42,7 +48,6 @@ public final class SilentLibCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerRightClickBlock(RightClickBlock event) {
       if (event.getEntityPlayer() instanceof EntityPlayerMP) {
          LibTriggers.USE_ITEM.trigger((EntityPlayerMP)event.getEntityPlayer(), event.getItemStack(), UseItemTrigger.Target.BLOCK);
@@ -50,7 +55,6 @@ public final class SilentLibCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerRightClickEntity(EntityInteract event) {
       if (event.getEntityPlayer() instanceof EntityPlayerMP) {
          LibTriggers.USE_ITEM.trigger((EntityPlayerMP)event.getEntityPlayer(), event.getItemStack(), UseItemTrigger.Target.ENTITY);
@@ -58,7 +62,6 @@ public final class SilentLibCommonEvents {
 
    }
 
-   @SubscribeEvent
    public void onPlayerRightClickItem(RightClickItem event) {
       if (event.getEntityPlayer() instanceof EntityPlayerMP) {
          LibTriggers.USE_ITEM.trigger((EntityPlayerMP)event.getEntityPlayer(), event.getItemStack(), UseItemTrigger.Target.ITEM);

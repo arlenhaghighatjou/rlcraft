@@ -4,7 +4,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.client.settings.IKeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 
@@ -15,7 +15,10 @@ public abstract class KeyTrackerSL {
       this.modName = modName;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, this::onKeyInput);
+   }
+
    public abstract void onKeyInput(KeyInputEvent var1);
 
    protected KeyBinding createBinding(String name, IKeyConflictContext keyConflictContext, KeyModifier keyModifier, int keyCode) {

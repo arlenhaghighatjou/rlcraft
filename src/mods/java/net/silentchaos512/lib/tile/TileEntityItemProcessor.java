@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.tile;
 
+import net.minecraft.nbt.NBTTagCompound;
 import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import javax.annotation.Nullable;
@@ -27,6 +28,15 @@ public abstract class TileEntityItemProcessor extends TileSidedInventorySL imple
    private NonNullList<ItemStack> outputs;
    private Collection<ItemStack> overflow;
    private int timer;
+
+   protected void readSyncVars(NBTTagCompound tags) {
+      this.progress = tags.getInteger("Progress");
+   }
+
+   protected NBTTagCompound writeSyncVars(NBTTagCompound tags, SyncVariable.Type syncType) {
+      tags.setInteger("Progress", this.progress);
+      return tags;
+   }
 
    public TileEntityItemProcessor(int inputCount, int fuelCount, int outputCount) {
       this(inputCount, fuelCount, outputCount, new FurnaceFuelBurner(FurnaceFuelBurner.BurnCondition.STANDARD));

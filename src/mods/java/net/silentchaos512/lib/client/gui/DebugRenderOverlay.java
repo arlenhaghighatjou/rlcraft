@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnegative;
@@ -11,7 +12,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -25,11 +25,11 @@ public abstract class DebugRenderOverlay extends Gui {
    private int ticksPassed = 0;
 
    protected DebugRenderOverlay() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    protected DebugRenderOverlay(int startX, int startY) {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       this.startX = startX;
       this.startY = startY;
    }
@@ -70,7 +70,11 @@ public abstract class DebugRenderOverlay extends Gui {
       return this.startY;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::renderTick);
+      bus.register(ClientTickEvent.class, this::clientTick);
+   }
+
    public void renderTick(Post event) {
       Minecraft mc = Minecraft.getMinecraft();
       if (!this.isHidden() && !this.debugText.isEmpty() && !mc.isGamePaused() && !mc.gameSettings.showDebugInfo && event.getType() == ElementType.ALL) {
@@ -92,7 +96,6 @@ public abstract class DebugRenderOverlay extends Gui {
       }
    }
 
-   @SubscribeEvent
    public void clientTick(ClientTickEvent event) {
       if (event.phase != Phase.START) {
          if (this.getUpdateFrequency() == 0 || ++this.ticksPassed % this.getUpdateFrequency() == 0) {

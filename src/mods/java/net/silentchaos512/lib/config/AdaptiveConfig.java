@@ -1,8 +1,9 @@
 package net.silentchaos512.lib.config;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public abstract class AdaptiveConfig extends ConfigBase {
       this.currentBuild = currentBuild;
    }
 
-   public void init(File file) {
+   public void init(VFile2 file) {
       this.config = new Configuration(file);
       int lastBuild = this.config.get("zzlastversion", "last_build", this.currentBuild).getInt(this.currentBuild);
       this.adaptor = new AdaptiveConfig.Adaptor(this.adaptorEnabled, lastBuild, this.currentBuild);
@@ -84,7 +85,7 @@ public abstract class AdaptiveConfig extends ConfigBase {
    }
 
    protected String formatDouble(double val) {
-      return String.format("%.4f", val).replaceFirst("0+$", "").replaceFirst("\\.$", ".0");
+      return HString.format("%.4f", val).replaceFirst("0+$", "").replaceFirst("\\.$", ".0");
    }
 
    public <T> void addAdaptorMapping(int version, String key, T val) {
@@ -104,7 +105,7 @@ public abstract class AdaptiveConfig extends ConfigBase {
       public AdaptableValue(int version, T value) {
          this.version = version;
          this.value = value;
-         this.valueType = value.getClass();
+         this.valueType = (Class<? extends T>)value.getClass();
       }
    }
 
@@ -127,7 +128,7 @@ public abstract class AdaptiveConfig extends ConfigBase {
             if (this.adaptableValues.containsKey(name)) {
                AdaptiveConfig.AdaptableValue<T> bestValue = null;
 
-               for(AdaptiveConfig.AdaptableValue<T> value : (List)this.adaptableValues.get(name)) {
+               for(AdaptiveConfig.AdaptableValue<T> value : (List<AdaptiveConfig.AdaptableValue<T>>)(List)this.adaptableValues.get(name)) {
                   if (value.version < this.lastBuild && (bestValue == null || value.version > bestValue.version)) {
                      bestValue = value;
                   }

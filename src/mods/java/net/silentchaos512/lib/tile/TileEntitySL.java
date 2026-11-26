@@ -2,7 +2,7 @@ package net.silentchaos512.lib.tile;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
@@ -41,15 +41,14 @@ public class TileEntitySL extends TileEntity {
       return tags;
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       this.readSyncVars(packet.getNbtCompound());
    }
 
    protected void readSyncVars(NBTTagCompound tags) {
-      SyncVariable.Helper.readSyncVars(this, tags);
    }
 
    protected NBTTagCompound writeSyncVars(NBTTagCompound tags, SyncVariable.Type syncType) {
-      return SyncVariable.Helper.writeSyncVars(this, tags, syncType);
+      return tags;
    }
 }

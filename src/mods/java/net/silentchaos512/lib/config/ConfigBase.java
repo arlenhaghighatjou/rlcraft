@@ -1,7 +1,9 @@
 package net.silentchaos512.lib.config;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.primitives.UnsignedInts;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
@@ -18,7 +20,6 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEve
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.silentchaos512.lib.registry.IPhasedInitializer;
 import net.silentchaos512.lib.registry.SRegistry;
 
@@ -30,7 +31,7 @@ public abstract class ConfigBase implements IPhasedInitializer {
 
    public ConfigBase(String modId) {
       this.modId = modId;
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    public abstract void load();
@@ -110,7 +111,7 @@ public abstract class ConfigBase implements IPhasedInitializer {
    }
 
    public int loadColorCode(String key, String category, int defaultValue, boolean includeAlpha, String comment) throws NumberFormatException {
-      String str = this.config.getString(key, category, String.format(includeAlpha ? "%08x" : "%06x", defaultValue), comment);
+      String str = this.config.getString(key, category, HString.format(includeAlpha ? "%08x" : "%06x", defaultValue), comment);
       int result = UnsignedInts.parseUnsignedInt(str, 16);
       if (includeAlpha && (result & -16777216) == 0) {
          result |= -16777216;
@@ -129,7 +130,7 @@ public abstract class ConfigBase implements IPhasedInitializer {
 
    public <T extends Enum<T>> T loadEnum(String key, String category, T defaultValue, String comment, boolean appendValidValuesToComment, Set<T> allowedValues) {
       String[] validValues = (String[])allowedValues.stream().map(Enum::name).toArray((x$0) -> {
-         return (T)(new String[x$0]);
+         return new String[x$0];
       });
       if (appendValidValuesToComment) {
          comment = comment + "\nValid values: " + Arrays.toString(validValues);
@@ -146,7 +147,7 @@ public abstract class ConfigBase implements IPhasedInitializer {
       return defaultValue;
    }
 
-   public void init(File file) {
+   public void init(VFile2 file) {
       this.config = new Configuration(file);
       this.load();
    }
@@ -158,7 +159,10 @@ public abstract class ConfigBase implements IPhasedInitializer {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onConfigChanged(OnConfigChangedEvent event) {
       if (event.getModID().equalsIgnoreCase(this.modId)) {
          this.load();

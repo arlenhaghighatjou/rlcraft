@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.draft;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +15,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
-import net.silentchaos512.lib.tile.SyncVariable;
 
 public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerData> {
    private final String nbtRootKey;
@@ -27,7 +26,7 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
 
    protected PlayerDataHandler(ResourceLocation nbtRootKey) {
       this.nbtRootKey = nbtRootKey.toString().replace(':', '_');
-      MinecraftForge.EVENT_BUS.register(new PlayerDataHandler.EventHandler(this));
+      (new PlayerDataHandler.EventHandler(this)).register(MinecraftForge.EVENT_BUS);
    }
 
    public abstract <T extends PlayerDataHandler> T instance();
@@ -106,7 +105,12 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
          this.handler = handler;
       }
 
-      @SubscribeEvent
+      public void register(EventBus bus) {
+         bus.register(ServerTickEvent.class, this::onServerTick);
+         bus.register(LivingUpdateEvent.class, this::onPlayerTick);
+         bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      }
+
       public void onServerTick(ServerTickEvent event) {
          if (event.phase == Phase.END) {
             this.handler.cleanup();
@@ -114,7 +118,6 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
 
       }
 
-      @SubscribeEvent
       public void onPlayerTick(LivingUpdateEvent event) {
          if (event.getEntityLiving() instanceof EntityPlayer) {
             this.handler.get((EntityPlayer)event.getEntityLiving()).tick();
@@ -122,7 +125,6 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
 
       }
 
-      @SubscribeEvent
       public void onPlayerLogin(PlayerLoggedInEvent event) {
          if (event.player instanceof EntityPlayerMP) {
             EntityPlayerMP var2 = (EntityPlayerMP)event.player;
@@ -165,7 +167,6 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
             if (player != null) {
                NBTTagCompound tags = PlayerDataHandler.this.getDataCompoundForPlayer(player);
                this.writeToNBT(tags);
-               SyncVariable.Helper.writeSyncVars(this, tags, SyncVariable.Type.WRITE);
             }
          }
 
@@ -179,7 +180,6 @@ public abstract class PlayerDataHandler<Data extends PlayerDataHandler.PlayerDat
             if (player != null) {
                NBTTagCompound tags = PlayerDataHandler.this.getDataCompoundForPlayer(player);
                this.readFromNBT(tags);
-               SyncVariable.Helper.readSyncVars(this, tags);
             }
          }
 

@@ -4,7 +4,6 @@ import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.IChunkGenerator;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
 public abstract class WorldGeneratorSL implements IWorldGenerator {
@@ -22,9 +21,6 @@ public abstract class WorldGeneratorSL implements IWorldGenerator {
       this.allowRetrogen = allowRetrogren;
       this.retrogenKey = retrogenKey;
       this.retrogenVersion = retrogenVersion > 0 ? retrogenVersion : 1;
-      if (allowRetrogren) {
-         MinecraftForge.EVENT_BUS.register(this);
-      }
 
    }
 

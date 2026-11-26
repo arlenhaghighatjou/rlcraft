@@ -10,6 +10,6 @@ public final class SilentLibClientProxy extends SilentLibCommonProxy {
 
    public void preInit(FMLPreInitializationEvent event) {
       super.preInit(event);
-      MinecraftForge.EVENT_BUS.register(new SilentLibClientEvents());
+      (new SilentLibClientEvents()).register(MinecraftForge.EVENT_BUS);
    }
 }

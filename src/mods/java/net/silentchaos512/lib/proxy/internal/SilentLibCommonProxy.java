@@ -11,7 +11,7 @@ public class SilentLibCommonProxy {
    }
 
    public void preInit(FMLPreInitializationEvent event) {
-      MinecraftForge.EVENT_BUS.register(new SilentLibCommonEvents());
+      (new SilentLibCommonEvents()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void init(FMLInitializationEvent event) {

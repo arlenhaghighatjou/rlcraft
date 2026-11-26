@@ -1,5 +1,6 @@
 package net.silentchaos512.lib.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -9,15 +10,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.silentchaos512.lib.SilentLib;
 import net.silentchaos512.lib.util.PlayerHelper;
 
-@EventBusSubscriber(
-   modid = "silentlib"
-)
 @ParametersAreNonnullByDefault
 public final class InitialSpawnItems {
    private static final Map<ResourceLocation, Supplier<ItemStack>> SPAWN_ITEMS = new HashMap();
@@ -30,7 +26,10 @@ public final class InitialSpawnItems {
       SPAWN_ITEMS.put(key, stack);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, InitialSpawnItems::onPlayerLoggedIn);
+   }
+
    public static void onPlayerLoggedIn(PlayerLoggedInEvent event) {
       EntityPlayer player = event.player;
       NBTTagCompound givenItems = PlayerHelper.getPersistedDataSubcompound(player, "silentlib.SpawnItemsGiven");

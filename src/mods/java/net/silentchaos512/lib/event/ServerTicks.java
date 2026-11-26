@@ -1,16 +1,12 @@
 package net.silentchaos512.lib.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayDeque;
 import java.util.Queue;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.silentchaos512.lib.SilentLib;
 
-@EventBusSubscriber(
-   modid = "silentlib"
-)
 public final class ServerTicks {
    private static final int QUEUE_OVERFLOW_LIMIT = 30;
    private static volatile Queue<Runnable> scheduledActions = new ArrayDeque();
@@ -26,7 +22,10 @@ public final class ServerTicks {
 
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ServerTickEvent.class, ServerTicks::serverTicks);
+   }
+
    public static void serverTicks(ServerTickEvent event) {
       if (event.phase == Phase.START) {
          runScheduledActions();

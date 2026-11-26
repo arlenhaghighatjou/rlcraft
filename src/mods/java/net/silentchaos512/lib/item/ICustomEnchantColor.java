@@ -1,6 +1,6 @@
 package net.silentchaos512.lib.item;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
