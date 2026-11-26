@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.item.attachment.reel;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.resources.I18n;
@@ -40,7 +41,7 @@ public abstract class ItemReel extends Item {
 
    @SideOnly(Side.CLIENT)
    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-      tooltip.add(I18n.format("tooltip.fishingmadebetter.reel.range", new Object[0]) + ": " + String.format("%sm", this.reelRange));
-      tooltip.add(I18n.format("tooltip.fishingmadebetter.reel.speed", new Object[0]) + ": " + String.format("%sm/s", this.reelSpeed));
+      tooltip.add(I18n.format("tooltip.fishingmadebetter.reel.range", new Object[0]) + ": " + HString.format("%sm", this.reelRange));
+      tooltip.add(I18n.format("tooltip.fishingmadebetter.reel.speed", new Object[0]) + ": " + HString.format("%sm/s", this.reelSpeed));
    }
 }

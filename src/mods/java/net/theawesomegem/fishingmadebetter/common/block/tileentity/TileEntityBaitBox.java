@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.block.tileentity;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +105,7 @@ public class TileEntityBaitBox extends TileEntity implements ITickable {
             player.sendMessage(new TextComponentTranslation("notif.fishingmadebetter.baitbox.empty", new Object[0]));
          } else {
             for(Entry<String, Integer> baitEntry : baitAmountMap.entrySet()) {
-               player.sendMessage(new TextComponentString(String.format("%s: %d", baitEntry.getKey(), baitEntry.getValue())));
+               player.sendMessage(new TextComponentString(HString.format("%s: %d", baitEntry.getKey(), baitEntry.getValue())));
             }
          }
 

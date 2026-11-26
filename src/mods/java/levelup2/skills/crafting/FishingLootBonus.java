@@ -1,5 +1,6 @@
 package levelup2.skills.crafting;
 
+import java.util.function.Consumer;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import levelup2.skills.BaseSkill;
 import levelup2.skills.SkillRegistry;
@@ -44,8 +45,10 @@ public class FishingLootBonus extends BaseSkill {
       return new ItemStack(Items.FISHING_ROD);
    }
 
+   public final Consumer<RightClickItem> fishInteractHandler = this::onFishInteract;
+
    public void register(EventBus bus) {
-      bus.register(RightClickItem.class, EventPriority.LOW, false, this::onFishInteract);
+      bus.register(RightClickItem.class, EventPriority.LOW, false, this.fishInteractHandler);
    }
 
    public void onFishInteract(RightClickItem evt) {

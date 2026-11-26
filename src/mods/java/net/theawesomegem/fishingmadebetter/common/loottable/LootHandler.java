@@ -1,12 +1,12 @@
 package net.theawesomegem.fishingmadebetter.common.loottable;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntryTable;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.theawesomegem.fishingmadebetter.proxy.CommonProxy;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
@@ -26,7 +26,10 @@ public class LootHandler {
       LootTableList.register(FMB_COMBINED);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LootTableLoadEvent.class, this::lootTableLoad);
+   }
+
    public void lootTableLoad(LootTableLoadEvent event) {
       if (Loader.isModLoaded("aquaculture")) {
          if (event.getName().equals(FMB_JUNK)) {

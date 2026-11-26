@@ -1,5 +1,7 @@
 package net.theawesomegem.fishingmadebetter.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -10,7 +12,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.theawesomegem.fishingmadebetter.common.capability.fishing.FishingCapabilityProvider;
 import net.theawesomegem.fishingmadebetter.common.capability.fishing.IFishingData;
 import net.theawesomegem.fishingmadebetter.common.configuration.ConfigurationManager;
@@ -35,7 +36,10 @@ public class GuiReelingOverlay extends Gui {
       this.fontRenderer = minecraft.fontRenderer;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onRenderGameOverlay);
+   }
+
    public void onRenderGameOverlay(Post e) {
       if (!e.isCanceled() && e.getType() == ElementType.ALL && ConfigurationManager.client.reelingHud) {
          EntityPlayer player = this.mc.player;
@@ -46,7 +50,7 @@ public class GuiReelingOverlay extends Gui {
                int scaledHeight = e.getResolution().getScaledHeight();
                double distance = (double)(fishingData.getFishDeepLevel() - fishingData.getFishDistance()) / 10.0D;
                this.fontColor = this.getIntFromColor(fishingData.getLineBreak());
-               this.fontRenderer.drawStringWithShadow(I18n.format("fishingmadebetter.reelingoverlay.distance", new Object[0]) + String.format(": %sm", distance), (float)this.getBarPosX(scaledWidth) + 67.0F - 30.0F, (float)(this.getBarPosY(scaledHeight) + 30 + 2), this.fontColor);
+               this.fontRenderer.drawStringWithShadow(I18n.format("fishingmadebetter.reelingoverlay.distance", new Object[0]) + HString.format(": %sm", distance), (float)this.getBarPosX(scaledWidth) + 67.0F - 30.0F, (float)(this.getBarPosY(scaledHeight) + 30 + 2), this.fontColor);
                int posX = this.getBarPosX(scaledWidth);
                int posY = this.getBarPosY(scaledHeight);
                posX = posX + ConfigurationManager.client.reelingMeterXOffset;

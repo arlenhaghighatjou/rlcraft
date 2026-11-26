@@ -14,8 +14,8 @@ public class PrimaryPacketHandler {
    }
 
    public static void registerPackets() {
-      INSTANCE.registerMessage(PacketKeybindS.KeybindMessageHandler.class, PacketKeybindS.class, 1, Side.SERVER);
-      INSTANCE.registerMessage(PacketReelingC.ReelingMessageHandler.class, PacketReelingC.class, 2, Side.CLIENT);
-      INSTANCE.registerMessage(PacketFishingHandshakeS.HandshakeMessageHandler.class, PacketFishingHandshakeS.class, 3, Side.SERVER);
+      INSTANCE.registerMessage(new PacketKeybindS.KeybindMessageHandler(), PacketKeybindS.class, PacketKeybindS::new, 1, Side.SERVER);
+      INSTANCE.registerMessage(new PacketReelingC.ReelingMessageHandler(), PacketReelingC.class, PacketReelingC::new, 2, Side.CLIENT);
+      INSTANCE.registerMessage(new PacketFishingHandshakeS.HandshakeMessageHandler(), PacketFishingHandshakeS.class, PacketFishingHandshakeS::new, 3, Side.SERVER);
    }
 }

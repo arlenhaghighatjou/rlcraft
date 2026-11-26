@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.command;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ public class FishingCommand extends CommandTreeBase {
    }
 
    public String getUsage(ICommandSender sender) {
-      return String.format("commands.%s.%s.usage", "fishingmadebetter", this.getName());
+      return HString.format("commands.%s.%s.usage", "fishingmadebetter", this.getName());
    }
 
    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

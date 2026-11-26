@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.item.attachment.hook;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.resources.I18n;
@@ -57,15 +58,15 @@ public abstract class ItemHook extends Item {
       }
 
       if (this.treasureModifier != 0) {
-         tooltip.add(I18n.format("item.fishingmadebetter.hook_magnetic.tooltip", new Object[0]) + ": +" + String.format("%s%%", this.treasureModifier));
+         tooltip.add(I18n.format("item.fishingmadebetter.hook_magnetic.tooltip", new Object[0]) + ": +" + HString.format("%s%%", this.treasureModifier));
       }
 
       if (this.biteRateModifier != 0) {
-         tooltip.add(I18n.format("item.fishingmadebetter.hook_shiny.tooltip", new Object[0]) + ": +" + String.format("%s%%", this.biteRateModifier));
+         tooltip.add(I18n.format("item.fishingmadebetter.hook_shiny.tooltip", new Object[0]) + ": +" + HString.format("%s%%", this.biteRateModifier));
       }
 
       if (this.weightModifier != 0) {
-         tooltip.add(I18n.format("item.fishingmadebetter.hook_fatty.tooltip", new Object[0]) + ": +" + String.format("%s%%", this.weightModifier));
+         tooltip.add(I18n.format("item.fishingmadebetter.hook_fatty.tooltip", new Object[0]) + ": +" + HString.format("%s%%", this.weightModifier));
       }
 
    }

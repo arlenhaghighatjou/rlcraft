@@ -1,12 +1,11 @@
 package net.theawesomegem.fishingmadebetter.client.registry;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.theawesomegem.fishingmadebetter.client.BakedModelRod;
 import net.theawesomegem.fishingmadebetter.common.block.BlockManager;
@@ -20,12 +19,15 @@ public class ClientRegistryManager {
    public ClientRegistryManager() {
    }
 
-   @EventBusSubscriber({Side.CLIENT})
    public static class RegistryHandler {
       public RegistryHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(ModelRegistryEvent.class, RegistryHandler::onRegisterModel);
+         bus.register(ModelBakeEvent.class, RegistryHandler::onModelBake);
+      }
+
       public static void onRegisterModel(ModelRegistryEvent e) {
          BlockManager.registerModels();
          ItemManager.registerModels();
@@ -64,7 +66,6 @@ public class ClientRegistryManager {
 
       }
 
-      @SubscribeEvent
       public static void onModelBake(ModelBakeEvent e) {
          ItemBetterFishingRod[] rodList = ItemManager.rodList();
          ItemReel[] reelList = ItemManager.reelAttachmentList();

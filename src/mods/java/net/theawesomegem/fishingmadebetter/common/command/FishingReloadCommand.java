@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter.common.command;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -19,7 +20,7 @@ public class FishingReloadCommand extends CommandBase {
    }
 
    public String getUsage(ICommandSender sender) {
-      return String.format("commands.%s.%s.%s.usage", "fishingmadebetter", this.parentCommandName, this.getName());
+      return HString.format("commands.%s.%s.%s.usage", "fishingmadebetter", this.parentCommandName, this.getName());
    }
 
    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {

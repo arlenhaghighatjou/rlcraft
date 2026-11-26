@@ -1,14 +1,13 @@
 package net.theawesomegem.fishingmadebetter.common.capability.fishing;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import javax.annotation.Nullable;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 public class FishingCapabilityProvider implements ICapabilityProvider {
-   @CapabilityInject(IFishingData.class)
-   public static final Capability<IFishingData> FISHING_DATA_CAP = null;
+   public static Capability<IFishingData> FISHING_DATA_CAP = null;
    private IFishingData instance;
 
    public FishingCapabilityProvider() {
@@ -22,5 +21,9 @@ public class FishingCapabilityProvider implements ICapabilityProvider {
    @Nullable
    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
       return (T)(capability == FISHING_DATA_CAP ? FISHING_DATA_CAP.cast(this.instance) : null);
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IFishingData.class, capability -> FISHING_DATA_CAP = capability);
    }
 }

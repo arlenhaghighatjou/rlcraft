@@ -13,7 +13,7 @@ public class EntityManager {
    }
 
    public static void register() {
-      EntityRegistry.registerModEntity(EntityFMBLavaFishHookResource, EntityFMBLavaFishHook.class, "FMBLavaFishHook", 0, "fishingmadebetter", 100, 1, true);
-      EntityRegistry.registerModEntity(EntityFMBVoidFishHookResource, EntityFMBVoidFishHook.class, "FMBVoidFishHook", 1, "fishingmadebetter", 100, 1, true);
+      EntityRegistry.registerModEntity(EntityFMBLavaFishHookResource, EntityFMBLavaFishHook.class, "FMBLavaFishHook", 0, "fishingmadebetter", 100, 1, true, EntityFMBLavaFishHook::new);
+      EntityRegistry.registerModEntity(EntityFMBVoidFishHookResource, EntityFMBVoidFishHook.class, "FMBVoidFishHook", 1, "fishingmadebetter", 100, 1, true, EntityFMBVoidFishHook::new);
    }
 }

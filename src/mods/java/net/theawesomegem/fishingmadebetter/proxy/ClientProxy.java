@@ -34,8 +34,8 @@ public class ClientProxy extends CommonProxy {
 
    protected void registerEvents() {
       super.registerEvents();
-      MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
-      MinecraftForge.EVENT_BUS.register(new GuiReelingOverlay(Minecraft.getMinecraft()));
+      (new KeyBindingHandler()).register(MinecraftForge.EVENT_BUS);
+      (new GuiReelingOverlay(Minecraft.getMinecraft())).register(MinecraftForge.EVENT_BUS);
    }
 
    public IThreadListener getListener(MessageContext ctx) {

@@ -22,7 +22,7 @@ public class BlockManager {
 
    public static void registerBlocks(IForgeRegistry<Block> registry) {
       BLOCK_BAIT_BOX = registerAsBlock("baitbox", new BlockBaitBox(), registry);
-      GameRegistry.registerTileEntity(TileEntityBaitBox.class, new ResourceLocation("fishingmadebetter", "baitbox"));
+      GameRegistry.registerTileEntity(TileEntityBaitBox.class, new ResourceLocation("fishingmadebetter", "baitbox"), TileEntityBaitBox::new);
    }
 
    public static void registerItemBlocks(IForgeRegistry<Item> registry) {

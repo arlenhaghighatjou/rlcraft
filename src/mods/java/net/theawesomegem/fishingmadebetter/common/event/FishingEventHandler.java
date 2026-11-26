@@ -1,6 +1,7 @@
 package net.theawesomegem.fishingmadebetter.common.event;
 
-import java.lang.reflect.Field;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,8 +42,6 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.world.ChunkEvent.Load;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.theawesomegem.fishingmadebetter.BetterFishUtil;
@@ -77,15 +76,18 @@ import net.theawesomegem.fishingmadebetter.util.RandomUtil;
 import net.theawesomegem.fishingmadebetter.util.TimeUtil;
 
 public class FishingEventHandler {
-   static final Field currentStateField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "currentState");
-   static final Field biteIntervalField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCatchable");
-   static final Field delayBeforeBiteField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCatchableDelay");
-   static final Field delayBeforeSwimmingToHookField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCaughtDelay");
 
    public FishingEventHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemFishedEvent.class, this::onPlayerFish);
+      bus.register(PlayerTickEvent.class, this::onPlayerTickClient);
+      bus.register(PlayerTickEvent.class, this::onPlayerTick);
+      bus.register(Load.class, this::onChunkLoad);
+      bus.register(ItemTossEvent.class, this::onItemToss);
+   }
+
    public void onPlayerFish(ItemFishedEvent e) {
       EntityPlayer player = e.getEntityPlayer();
       if (player != null && player.isEntityAlive()) {
@@ -173,7 +175,6 @@ public class FishingEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerTickClient(PlayerTickEvent e) {
       EntityPlayer player = e.player;
       if (player.world.isRemote && e.phase != Phase.END) {
@@ -187,7 +188,6 @@ public class FishingEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerTick(PlayerTickEvent e) {
       EntityPlayer player = e.player;
       if (!player.world.isRemote && e.phase != Phase.END) {
@@ -351,7 +351,6 @@ public class FishingEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onChunkLoad(Load e) {
       if (!e.getWorld().isRemote) {
          Chunk chunk = e.getChunk();
@@ -360,7 +359,6 @@ public class FishingEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onItemToss(ItemTossEvent event) {
       ItemStack stack = event.getEntityItem().getItem();
       if (stack.getItem() instanceof ItemBetterFishingRod) {
@@ -407,9 +405,9 @@ public class FishingEventHandler {
          ItemStack itemStack = playerInventory.getStackInSlot(i);
          if (!itemStack.isEmpty() && BetterFishUtil.isBetterFish(itemStack)) {
             List<String> tooltipList = new ArrayList();
-            tooltipList.add(String.format("Weight: %d", BetterFishUtil.getFishWeight(itemStack)));
+            tooltipList.add(HString.format("Weight: %d", BetterFishUtil.getFishWeight(itemStack)));
             if (((FishData)CustomConfigurationHandler.fishDataMap.get(BetterFishUtil.getFishId(itemStack))).allowScaling) {
-               tooltipList.add(String.format("Scale: %s", BetterFishUtil.doesFishHasScale(itemStack) ? "Attached" : "Detached"));
+               tooltipList.add(HString.format("Scale: %s", BetterFishUtil.doesFishHasScale(itemStack) ? "Attached" : "Detached"));
             }
 
             tooltipList.add(TextFormatting.BLUE + "" + TextFormatting.BOLD + (BetterFishUtil.isDead(itemStack, currentTime) ? "Dead" : "Alive") + TextFormatting.RESET);
@@ -463,8 +461,8 @@ public class FishingEventHandler {
             FishData fishData = (FishData)CustomConfigurationHandler.fishDataMap.get(populationData.getFishType());
             if (fishData != null) {
                if (creative) {
-                  player.sendMessage(new TextComponentString(String.format("%s %s in %s at Y%s-%s", populationData.getQuantity(), fishData.fishId, fishData.liquid.toString(), fishData.minYLevel, fishData.maxYLevel)));
-                  player.sendMessage(new TextComponentString(String.format("MinLine %sm, Time %s, MaxLight %s, Rain %s, Thunder %s", fishData.minDeepLevel, fishData.time.toString(), fishData.maxLightLevel, fishData.rainRequired, fishData.thunderRequired)));
+                  player.sendMessage(new TextComponentString(HString.format("%s %s in %s at Y%s-%s", populationData.getQuantity(), fishData.fishId, fishData.liquid.toString(), fishData.minYLevel, fishData.maxYLevel)));
+                  player.sendMessage(new TextComponentString(HString.format("MinLine %sm, Time %s, MaxLight %s, Rain %s, Thunder %s", fishData.minDeepLevel, fishData.time.toString(), fishData.maxLightLevel, fishData.rainRequired, fishData.thunderRequired)));
                } else if (fishData.trackable && (fishData.liquid.equals(FishData.FishingLiquid.ANY) || item.getLiquidEnum().equals(fishData.liquid)) && (double)fishData.minYLevel <= player.posY) {
                   fishFound = true;
                   if ((double)fishData.maxYLevel < player.posY) {
@@ -561,7 +559,7 @@ public class FishingEventHandler {
          itemStack.setTagCompound(tagCompound);
          itemStack.setStackDisplayName(TextFormatting.RESET + fishCaughtData.fishId);
          List<String> tooltipList = new ArrayList();
-         tooltipList.add(String.format("Weight: %d", fishCaughtData.weight));
+         tooltipList.add(HString.format("Weight: %d", fishCaughtData.weight));
          if (itemStack.getTagCompound().hasKey("FishScale")) {
             tooltipList.add("Scale: Attached");
          }
@@ -814,83 +812,23 @@ public class FishingEventHandler {
    }
 
    private void setLureSpeed(EntityFishHook hook, int ticks) {
-      if (delayBeforeSwimmingToHookField != null) {
-         try {
-            delayBeforeSwimmingToHookField.setAccessible(true);
-            delayBeforeSwimmingToHookField.setInt(hook, ticks);
-            delayBeforeSwimmingToHookField.setAccessible(false);
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            delayBeforeSwimmingToHookField.setAccessible(false);
-            var4.printStackTrace();
-         }
-
-      }
+      hook.ticksCaughtDelay = ticks;
    }
 
    private int getDelayBeforeSwimmingToHook(EntityFishHook hook) {
-      if (delayBeforeSwimmingToHookField == null) {
-         return -1;
-      } else {
-         try {
-            delayBeforeSwimmingToHookField.setAccessible(true);
-            int delay = delayBeforeSwimmingToHookField.getInt(hook);
-            delayBeforeSwimmingToHookField.setAccessible(false);
-            return delay;
-         } catch (IllegalAccessException | IllegalArgumentException var3) {
-            delayBeforeSwimmingToHookField.setAccessible(false);
-            var3.printStackTrace();
-            return -1;
-         }
-      }
+      return hook.ticksCaughtDelay;
    }
 
    private int getDelayBeforeBite(EntityFishHook hook) {
-      if (delayBeforeBiteField == null) {
-         return -1;
-      } else {
-         try {
-            delayBeforeBiteField.setAccessible(true);
-            int delay = delayBeforeBiteField.getInt(hook);
-            delayBeforeBiteField.setAccessible(false);
-            return delay;
-         } catch (IllegalAccessException | IllegalArgumentException var3) {
-            delayBeforeBiteField.setAccessible(false);
-            var3.printStackTrace();
-            return -1;
-         }
-      }
+      return hook.ticksCatchableDelay;
    }
 
    private void setBiteInterval(EntityFishHook hook, int time) {
-      if (biteIntervalField != null) {
-         try {
-            biteIntervalField.setAccessible(true);
-            biteIntervalField.setInt(hook, time);
-            biteIntervalField.setAccessible(false);
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            biteIntervalField.setAccessible(false);
-            var4.printStackTrace();
-         }
-
-      }
+      hook.ticksCatchable = time;
    }
 
    private FishingEventHandler.HookState getHookState(EntityFishHook hook) {
-      if (currentStateField == null) {
-         return null;
-      } else {
-         try {
-            currentStateField.setAccessible(true);
-            Enum hookEnum = (Enum)currentStateField.get(hook);
-            int hookStateOrdinal = hookEnum.ordinal();
-            currentStateField.setAccessible(false);
-            return FishingEventHandler.HookState.values()[hookStateOrdinal];
-         } catch (IllegalAccessException var4) {
-            currentStateField.setAccessible(false);
-            var4.printStackTrace();
-            return null;
-         }
-      }
+      return FishingEventHandler.HookState.values()[hook.currentState.ordinal()];
    }
 
    static enum HookState {

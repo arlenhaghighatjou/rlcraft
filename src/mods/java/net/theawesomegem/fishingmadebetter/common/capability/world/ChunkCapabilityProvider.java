@@ -1,15 +1,14 @@
 package net.theawesomegem.fishingmadebetter.common.capability.world;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class ChunkCapabilityProvider implements ICapabilitySerializable<NBTBase> {
-   @CapabilityInject(IChunkFishingData.class)
-   public static final Capability<IChunkFishingData> CHUNK_FISHING_DATA_CAP = null;
+   public static Capability<IChunkFishingData> CHUNK_FISHING_DATA_CAP = null;
    private final IChunkFishingData chunkFishingData = new ChunkFishingData();
 
    public ChunkCapabilityProvider() {
@@ -30,5 +29,9 @@ public class ChunkCapabilityProvider implements ICapabilitySerializable<NBTBase>
    @Nullable
    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
       return (T)(capability == CHUNK_FISHING_DATA_CAP ? CHUNK_FISHING_DATA_CAP.cast(this.chunkFishingData) : null);
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IChunkFishingData.class, capability -> CHUNK_FISHING_DATA_CAP = capability);
    }
 }

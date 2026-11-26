@@ -1,6 +1,6 @@
 package net.theawesomegem.fishingmadebetter.client.event;
 
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,7 +16,10 @@ public class KeyBindingHandler {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::onTick);
+   }
+
    public void onTick(ClientTickEvent event) {
       if (!event.phase.equals(Phase.START)) {
          if (KeybindManager.reelIn.isKeyDown()) {

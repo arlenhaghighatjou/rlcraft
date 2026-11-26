@@ -1,6 +1,5 @@
 package net.theawesomegem.fishingmadebetter.common.entity;
 
-import java.lang.reflect.Field;
 import java.util.List;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.MaterialLiquid;
@@ -25,7 +24,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.theawesomegem.fishingmadebetter.common.item.fishingrod.ItemBetterFishingRod;
@@ -36,15 +34,6 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
    private float fishApproachingAngle;
    private int lureSpeed;
    private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.createKey(EntityFishHook.class, DataSerializers.VARINT);
-   static final Field currentStateField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "currentState");
-   static final Field inGroundField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "inGround");
-   static final Field ticksCatchableField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCatchable");
-   static final Field ticksCatchableDelayField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCatchableDelay");
-   static final Field ticksCaughtDelayField = ObfuscationReflectionHelper.findField(EntityFishHook.class, "ticksCaughtDelay");
-   static final Class stateEnumField = EntityFishHook.class.getDeclaredClasses()[0];
-   static final Object objFlying = stateEnumField.getEnumConstants()[0];
-   static final Object objHooked = stateEnumField.getEnumConstants()[1];
-   static final Object objBobbing = stateEnumField.getEnumConstants()[2];
 
    @SideOnly(Side.CLIENT)
    public EntityFMBCustomFishHook(World worldIn, EntityPlayer p_i47290_2_, double x, double y, double z) {
@@ -125,7 +114,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
                this.motionX = 0.0D;
                this.motionY = 0.0D;
                this.motionZ = 0.0D;
-               this.setHookState(this, (Enum)objHooked);
+               this.setHookState(this, EntityFishHook.State.HOOKED_IN_ENTITY);
                return;
             }
 
@@ -133,12 +122,12 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
                this.motionX *= 0.3D;
                this.motionY *= 0.2D;
                this.motionZ *= 0.3D;
-               this.setHookState(this, (Enum)objBobbing);
+               this.setHookState(this, EntityFishHook.State.BOBBING);
                return;
             }
 
             if (!this.world.isRemote) {
-               this.checkCollision();
+               this.checkHookCollision();
             }
 
             if (!this.getInGround(this).booleanValue() && !this.onGround && !this.collidedHorizontally) {
@@ -154,7 +143,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
                if (this.caughtEntity != null) {
                   if (this.caughtEntity.isDead) {
                      this.caughtEntity = null;
-                     this.setHookState(this, (Enum)objFlying);
+                     this.setHookState(this, EntityFishHook.State.FLYING);
                   } else {
                      this.posX = this.caughtEntity.posX;
                      double d2 = (double)this.caughtEntity.height;
@@ -187,7 +176,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
          }
 
          this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-         this.updateRotation();
+         this.updateHookRotation();
          this.motionX *= 0.92D;
          this.motionY *= 0.92D;
          this.motionZ *= 0.92D;
@@ -292,7 +281,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
       }
    }
 
-   private void updateRotation() {
+   private void updateHookRotation() {
       float f = MathHelper.sqrt(this.motionX * this.motionX + this.motionZ * this.motionZ);
       this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * 57.29577951308232D);
 
@@ -316,7 +305,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
       this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
    }
 
-   private void checkCollision() {
+   private void checkHookCollision() {
       Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
       Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
       RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d, vec3d1, false, true, false);
@@ -351,7 +340,7 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
       if (raytraceresult != null && raytraceresult.typeOfHit != Type.MISS) {
          if (raytraceresult.typeOfHit == Type.ENTITY) {
             this.caughtEntity = raytraceresult.entityHit;
-            this.setHookedEntity();
+            this.updateHookedEntity();
          } else {
             this.setInGround(this, Boolean.valueOf(true));
          }
@@ -359,162 +348,48 @@ public class EntityFMBCustomFishHook extends EntityFishHook {
 
    }
 
-   private void setHookedEntity() {
+   private void updateHookedEntity() {
       this.getDataManager().set(DATA_HOOKED_ENTITY, Integer.valueOf(this.caughtEntity.getEntityId() + 1));
    }
 
    private EntityFMBCustomFishHook.State getHookState(EntityFishHook hook) {
-      if (currentStateField == null) {
-         return null;
-      } else {
-         try {
-            currentStateField.setAccessible(true);
-            Enum hookEnum = (Enum)currentStateField.get(hook);
-            int hookStateOrdinal = hookEnum.ordinal();
-            currentStateField.setAccessible(false);
-            return EntityFMBCustomFishHook.State.values()[hookStateOrdinal];
-         } catch (IllegalAccessException var4) {
-            currentStateField.setAccessible(false);
-            var4.printStackTrace();
-            return null;
-         }
-      }
+      return EntityFMBCustomFishHook.State.values()[hook.currentState.ordinal()];
    }
 
-   private void setHookState(EntityFishHook hook, Enum state) {
-      if (currentStateField != null) {
-         try {
-            currentStateField.setAccessible(true);
-            currentStateField.set(hook, state);
-            currentStateField.setAccessible(false);
-         } catch (IllegalAccessException var4) {
-            currentStateField.setAccessible(false);
-            var4.printStackTrace();
-         }
-      }
+   private void setHookState(EntityFishHook hook, EntityFishHook.State state) {
+      hook.currentState = state;
    }
 
    private Boolean getInGround(EntityFishHook hook) {
-      if (inGroundField == null) {
-         return null;
-      } else {
-         try {
-            inGroundField.setAccessible(true);
-            boolean inGround = inGroundField.getBoolean(hook);
-            inGroundField.setAccessible(false);
-            return inGround;
-         } catch (IllegalAccessException var3) {
-            inGroundField.setAccessible(false);
-            var3.printStackTrace();
-            return null;
-         }
-      }
+      return hook.inGround;
    }
 
    private void setInGround(EntityFishHook hook, Boolean value) {
-      if (inGroundField != null) {
-         try {
-            inGroundField.setAccessible(true);
-            inGroundField.setBoolean(hook, value.booleanValue());
-            inGroundField.setAccessible(false);
-         } catch (IllegalAccessException var4) {
-            inGroundField.setAccessible(false);
-            var4.printStackTrace();
-         }
-      }
+      hook.inGround = value.booleanValue();
    }
 
    private void setTicksCatchable(EntityFishHook hook, int ticks) {
-      if (ticksCatchableField != null) {
-         try {
-            ticksCatchableField.setAccessible(true);
-            ticksCatchableField.setInt(hook, ticks);
-            ticksCatchableField.setAccessible(false);
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            ticksCatchableField.setAccessible(false);
-            var4.printStackTrace();
-         }
-
-      }
+      hook.ticksCatchable = ticks;
    }
 
    private int getTicksCatchable(EntityFishHook hook) {
-      if (ticksCatchableField == null) {
-         return 0;
-      } else {
-         try {
-            ticksCatchableField.setAccessible(true);
-            int ticks = ticksCatchableField.getInt(hook);
-            ticksCatchableField.setAccessible(false);
-            return ticks;
-         } catch (IllegalAccessException | IllegalArgumentException var3) {
-            ticksCatchableField.setAccessible(false);
-            var3.printStackTrace();
-            return 0;
-         }
-      }
+      return hook.ticksCatchable;
    }
 
    private void setTicksCatchableDelay(EntityFishHook hook, int ticks) {
-      if (ticksCatchableDelayField != null) {
-         try {
-            ticksCatchableDelayField.setAccessible(true);
-            ticksCatchableDelayField.setInt(hook, ticks);
-            ticksCatchableDelayField.setAccessible(false);
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            ticksCatchableDelayField.setAccessible(false);
-            var4.printStackTrace();
-         }
-
-      }
+      hook.ticksCatchableDelay = ticks;
    }
 
    private int getTicksCatchableDelay(EntityFishHook hook) {
-      if (ticksCatchableDelayField == null) {
-         return 0;
-      } else {
-         try {
-            ticksCatchableDelayField.setAccessible(true);
-            int ticks = ticksCatchableDelayField.getInt(hook);
-            ticksCatchableDelayField.setAccessible(false);
-            return ticks;
-         } catch (IllegalAccessException | IllegalArgumentException var3) {
-            ticksCatchableDelayField.setAccessible(false);
-            var3.printStackTrace();
-            return 0;
-         }
-      }
+      return hook.ticksCatchableDelay;
    }
 
    private void setTicksCaughtDelay(EntityFishHook hook, int ticks) {
-      if (ticksCaughtDelayField != null) {
-         try {
-            ticksCaughtDelayField.setAccessible(true);
-            ticksCaughtDelayField.setInt(hook, ticks);
-            ticksCaughtDelayField.setAccessible(false);
-         } catch (IllegalAccessException | IllegalArgumentException var4) {
-            ticksCaughtDelayField.setAccessible(false);
-            var4.printStackTrace();
-         }
-
-      }
+      hook.ticksCaughtDelay = ticks;
    }
 
    private int getTicksCaughtDelay(EntityFishHook hook) {
-      if (ticksCaughtDelayField == null) {
-         return 0;
-      } else {
-         try {
-            ticksCaughtDelayField.setAccessible(true);
-            int ticks = ticksCaughtDelayField.getInt(hook);
-            ticksCaughtDelayField.setAccessible(false);
-            return ticks;
-         } catch (IllegalAccessException | IllegalArgumentException var3) {
-            ticksCaughtDelayField.setAccessible(false);
-            var3.printStackTrace();
-            return 0;
-         }
-      }
+      return hook.ticksCaughtDelay;
    }
 
    static enum State {

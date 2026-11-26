@@ -1,15 +1,13 @@
 package net.theawesomegem.fishingmadebetter.common.configuration;
 
-import com.google.common.io.Files;
+import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,24 +24,14 @@ import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 public class CustomConfigurationHandler {
    public static Map<String, FishData> fishDataMap = new HashMap();
    public static Map<String, ArrayList<Integer>> possibleBaitMap = new HashMap();
-   private static File fishDataFolder = null;
+   private static VFile2 fishDataFolder = null;
 
    public CustomConfigurationHandler() {
    }
 
-   public static void preInit(File file) {
-      File modFolder = new File(file, "fishingmadebetter");
-      if ((!modFolder.exists() || !modFolder.isDirectory()) && !modFolder.mkdir()) {
-         CommonProxy.Logger.log(Level.FATAL, "Could not create the folder for configuration.");
-      }
-
-      if (modFolder.exists()) {
-         fishDataFolder = new File(modFolder, "fishdata");
-         if ((!fishDataFolder.exists() || !fishDataFolder.isDirectory()) && !fishDataFolder.mkdir()) {
-            CommonProxy.Logger.log(Level.FATAL, "Could not create the folder for fish data.");
-         }
-
-      }
+   public static void preInit(VFile2 file) {
+      VFile2 modFolder = new VFile2(file, "fishingmadebetter");
+      fishDataFolder = new VFile2(modFolder, "fishdata");
    }
 
    public static void postInit() {
@@ -51,18 +39,18 @@ public class CustomConfigurationHandler {
    }
 
    public static boolean loadFishes() {
-      if (fishDataFolder != null && fishDataFolder.exists()) {
-         File[] configFiles = fishDataFolder.listFiles();
-         if (configFiles.length < 1) {
+      if (fishDataFolder != null) {
+         List<VFile2> configFiles = fishDataFolder.listFiles(false);
+         if (configFiles.size() < 1) {
             initDefaultFishes(fishDataFolder);
-            configFiles = fishDataFolder.listFiles();
+            configFiles = fishDataFolder.listFiles(false);
             CommonProxy.Logger.log(Level.INFO, "Initializing default fishes since no file(s) were found in the fishdata folder.");
          }
 
          int fileCount = 0;
          fishDataMap.clear();
 
-         for(File configFile : configFiles) {
+         for(VFile2 configFile : configFiles) {
             if (configFile.exists() && configFile.getName().endsWith(".json")) {
                CommonProxy.Logger.log(Level.INFO, "Loading: " + configFile.getName());
                loadConfig(configFile);
@@ -70,7 +58,7 @@ public class CustomConfigurationHandler {
             }
          }
 
-         CommonProxy.Logger.log(Level.INFO, String.format("Loaded %d file(s).", fileCount));
+         CommonProxy.Logger.log(Level.INFO, HString.format("Loaded %d file(s).", fileCount));
          initBaitMap();
          return true;
       } else {
@@ -98,60 +86,28 @@ public class CustomConfigurationHandler {
 
    }
 
-   private static void initDefaultFishes(File fishDataFolder) {
+   private static void initDefaultFishes(VFile2 fishDataFolder) {
       Map<String, Map<String, FishData>> defaultFishDataMap = DefaultFishes.getDefaultFishMap();
 
       for(Entry<String, Map<String, FishData>> defaultFishEntry : defaultFishDataMap.entrySet()) {
          JsonObject fishDataJson = new JsonObject();
          Gson gson = (new GsonBuilder()).setPrettyPrinting().create();
 
-         for(FishData fishData : ((Map)defaultFishEntry.getValue()).values()) {
-            JsonElement element = gson.toJsonTree(fishData);
+         for(FishData fishData : defaultFishEntry.getValue().values()) {
+            JsonElement element = fishData.toJson();
             fishDataJson.add(fishData.fishId, element);
          }
 
          String fishDataString = gson.toJson(fishDataJson);
-         File file = new File(fishDataFolder, String.format("%s.json", defaultFishEntry.getKey()));
-
-         boolean fileCreated;
-         try {
-            fileCreated = file.createNewFile();
-         } catch (Exception var12) {
-            var12.printStackTrace();
-            continue;
-         }
-
-         if (!fileCreated) {
-            CommonProxy.Logger.log(Level.FATAL, "Could not create the fish data file.");
-         } else {
-            try {
-               boolean writeable = file.setWritable(true);
-               if (!writeable) {
-                  CommonProxy.Logger.log(Level.FATAL, "Cannot write/save the fish data file inside the fishdata folder. Insufficient permission.");
-               } else {
-                  PrintWriter writer = new PrintWriter(file);
-                  writer.write(fishDataString);
-                  writer.flush();
-                  writer.close();
-               }
-            } catch (IOException var11) {
-               var11.printStackTrace();
-            }
-         }
+         (new VFile2(fishDataFolder, HString.format("%s.json", defaultFishEntry.getKey()))).setAllChars(fishDataString);
       }
 
    }
 
-   private static void loadConfig(File configFile) {
-      if (configFile != null && configFile.exists()) {
+   private static void loadConfig(VFile2 configFile) {
+      String fishDataString = configFile != null ? configFile.getAllChars() : null;
+      if (fishDataString != null) {
          try {
-            boolean readable = configFile.setReadable(true);
-            if (!readable) {
-               CommonProxy.Logger.log(Level.FATAL, String.format("Cannot read file %s. No permission to read the file.", configFile.getName()));
-               return;
-            }
-
-            String fishDataString = Files.toString(configFile, Charset.defaultCharset());
             loadFishData((new JsonParser()).parse(fishDataString));
          } catch (Exception var3) {
             var3.printStackTrace();
@@ -164,12 +120,11 @@ public class CustomConfigurationHandler {
 
    private static void loadFishData(JsonElement jsonElement) {
       JsonObject fishDataJson = jsonElement.getAsJsonObject();
-      Gson gson = new Gson();
       Map<String, FishData> tmpFishMap = new HashMap();
 
       for(Entry<String, JsonElement> fishDataEntry : fishDataJson.entrySet()) {
          JsonElement fishDataElement = (JsonElement)fishDataEntry.getValue();
-         FishData fishData = (FishData)gson.fromJson(fishDataElement, FishData.class);
+         FishData fishData = FishData.fromJson(fishDataElement);
          if (!TextUtils.isEmpty(fishData.itemId)) {
             Item item = Item.getByNameOrId(fishData.itemId);
             if (item == null) {

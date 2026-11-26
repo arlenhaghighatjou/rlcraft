@@ -1,5 +1,6 @@
 package net.theawesomegem.fishingmadebetter;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -55,8 +56,8 @@ public class BetterFishUtil {
       itemStack.setTagCompound(tagCompound);
       if (!value) {
          List<String> tooltipList = new ArrayList();
-         tooltipList.add(String.format("Weight: %d", getFishWeight(itemStack)));
-         tooltipList.add(String.format("Scale: %s", "Detached"));
+         tooltipList.add(HString.format("Weight: %d", getFishWeight(itemStack)));
+         tooltipList.add(HString.format("Scale: %s", "Detached"));
          tooltipList.add(TextFormatting.BLUE + "" + TextFormatting.BOLD + "Dead" + TextFormatting.RESET);
          itemStack = ItemStackUtil.appendToolTip(itemStack, tooltipList);
          setFishCaughtTime(itemStack, 0);

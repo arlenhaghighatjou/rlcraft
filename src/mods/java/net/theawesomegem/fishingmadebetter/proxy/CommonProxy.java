@@ -52,7 +52,9 @@ import net.theawesomegem.fishingmadebetter.common.recipe.RecipeFishBucket;
 import net.theawesomegem.fishingmadebetter.common.recipe.RecipeFishScale;
 import net.theawesomegem.fishingmadebetter.common.recipe.RecipeFishSliceRaw;
 import net.theawesomegem.fishingmadebetter.common.recipe.RecipeRodAttachment;
-import net.theawesomegem.fishingmadebetter.util.HandlerUtil;
+import levelup2.api.IPlayerSkill;
+import levelup2.skills.SkillRegistry;
+import levelup2.skills.crafting.FishingLootBonus;
 import net.theawesomegem.fishingmadebetter.util.RebornCraftingHelper;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -80,11 +82,10 @@ public class CommonProxy {
       CustomConfigurationHandler.postInit();
       LootHandler.registerLootTable();
       if (Loader.isModLoaded("levelup2") && ConfigurationManager.server.levelUpPatch) {
-         try {
-            HandlerUtil.findAndRemoveHandlerFromEventBus("levelup2.skills.crafting.FishingLootBonus", "onFishInteract");
-            HandlerUtil.findAndRemoveHandlerFromEventBus("levelup2.event.CraftingSkillHandler", "onFishInteract");
-         } catch (Exception var3) {
-            System.out.println(var3);
+         IPlayerSkill skill = SkillRegistry.getSkillFromName("levelup:fishbonus");
+         if (skill instanceof FishingLootBonus) {
+            MinecraftForge.EVENT_BUS.unregister(((FishingLootBonus)skill).fishInteractHandler);
+            CommonProxy.Logger.log(Level.INFO, "Found and removed levelup2.skills.crafting.FishingLootBonus IEventListener onFishInteract from the event bus");
          }
       }
 
@@ -108,9 +109,9 @@ public class CommonProxy {
    }
 
    protected void registerEvents() {
-      MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
-      MinecraftForge.EVENT_BUS.register(new FishingEventHandler());
-      MinecraftForge.EVENT_BUS.register(new LootHandler());
+      (new CapabilityHandler()).register(MinecraftForge.EVENT_BUS);
+      (new FishingEventHandler()).register(MinecraftForge.EVENT_BUS);
+      (new LootHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    protected void registerRecipes() {

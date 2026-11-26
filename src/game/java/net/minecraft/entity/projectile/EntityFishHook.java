@@ -36,13 +36,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityFishHook extends Entity
 {
     private static final DataParameter<Integer> DATA_HOOKED_ENTITY = EntityDataManager.<Integer>createKey(EntityFishHook.class, DataSerializers.VARINT);
-    private boolean inGround;
+    public boolean inGround;
     private int ticksInGround;
     public EntityPlayer angler;
     private int ticksInAir;
     public int ticksCatchable;
-    private int ticksCaughtDelay;
-    private int ticksCatchableDelay;
+    public int ticksCaughtDelay;
+    public int ticksCatchableDelay;
     private float fishApproachAngle;
     public Entity caughtEntity;
     public EntityFishHook.State currentState = EntityFishHook.State.FLYING;
