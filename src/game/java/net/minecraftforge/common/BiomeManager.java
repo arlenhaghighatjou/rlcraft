@@ -31,7 +31,6 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeProvider;
 import net.minecraft.world.gen.structure.MapGenVillage;
-import net.minecraftforge.common.util.EnumHelper;
 
 import javax.annotation.Nullable;
 
@@ -175,20 +174,67 @@ public class BiomeManager
         return false;
     }
 
-    public static enum BiomeType
+    public static final class BiomeType
     {
-        DESERT, WARM, COOL, ICY;
+        private static final List<BiomeType> VALUES = new ArrayList<BiomeType>();
+        public static final BiomeType DESERT = new BiomeType("DESERT");
+        public static final BiomeType WARM = new BiomeType("WARM");
+        public static final BiomeType COOL = new BiomeType("COOL");
+        public static final BiomeType ICY = new BiomeType("ICY");
+
+        private final String name;
+        private final int ordinal;
+
+        private BiomeType(String name)
+        {
+            this.name = name;
+            this.ordinal = VALUES.size();
+            VALUES.add(this);
+        }
+
+        public static BiomeType valueOf(String name)
+        {
+            java.util.Objects.requireNonNull(name, "name");
+            for (int i = 0, l = VALUES.size(); i < l; ++i)
+            {
+                BiomeType t = VALUES.get(i);
+                if (t.name.equals(name)) return t;
+            }
+            throw new IllegalArgumentException("No enum constant net.minecraftforge.common.BiomeManager.BiomeType." + name);
+        }
+
+        public static BiomeType[] values()
+        {
+            return VALUES.toArray(new BiomeType[VALUES.size()]);
+        }
+
+        public String name()
+        {
+            return this.name;
+        }
+
+        public int ordinal()
+        {
+            return this.ordinal;
+        }
+
+        @Override
+        public String toString()
+        {
+            return this.name;
+        }
 
         public static BiomeType getType(String name)
         {
             name = name.toUpperCase();
 
-            for (BiomeType t : values())
+            for (int i = 0, l = VALUES.size(); i < l; ++i)
             {
-                if (t.name().equals(name)) return t;
+                BiomeType t = VALUES.get(i);
+                if (t.name.equals(name)) return t;
             }
 
-            BiomeType ret = EnumHelper.addEnum(BiomeType.class, name, new Class[0], new Object[0]);
+            BiomeType ret = new BiomeType(name);
 
             if (ret.ordinal() >= biomes.length)
             {
