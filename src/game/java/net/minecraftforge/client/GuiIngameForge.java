@@ -22,7 +22,6 @@ package net.minecraftforge.client;
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.*;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 

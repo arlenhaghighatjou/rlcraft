@@ -21,7 +21,7 @@ package net.minecraftforge.fluids;
 
 import javax.annotation.Nullable;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Locale;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

@@ -21,7 +21,7 @@ package net.minecraftforge.fml.client;
 
 import static net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums.*;
 
-import java.awt.Dimension;
+import com.arlenh7.eaglercraft.awt.Dimension;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import java.io.IOException;
 import java.io.InputStream;
