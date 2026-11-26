@@ -2,6 +2,7 @@ package com.bloodnbonesgaming.lib.command;
 
 import com.google.common.collect.UnmodifiableIterator;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -213,7 +214,13 @@ public class BNBCommand implements ICommand {
       string = string.concat(", meta:" + block.getMetaFromState(state));
       Map<String, String> stateMap = this.buildStateMap(state);
       if (!stateMap.isEmpty()) {
-         String stateString = this.gson.toJson(stateMap);
+         JsonObject stateJson = new JsonObject();
+
+         for(Entry<String, String> entry : stateMap.entrySet()) {
+            stateJson.addProperty((String)entry.getKey(), (String)entry.getValue());
+         }
+
+         String stateString = this.gson.toJson(stateJson);
          string = string.concat(", state:" + stateString);
       }
 
