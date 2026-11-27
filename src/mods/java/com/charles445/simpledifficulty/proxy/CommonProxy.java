@@ -49,12 +49,12 @@ public abstract class CommonProxy implements IProxy {
       ModConfig.sendLocalClientConfigToAPI();
       CapabilityManager.INSTANCE.register(ITemperatureCapability.class, new TemperatureStorage(), TemperatureCapability::new);
       CapabilityManager.INSTANCE.register(IThirstCapability.class, new ThirstStorage(), ThirstCapability::new);
-      MinecraftForge.EVENT_BUS.register(new BlockHandler());
-      MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
-      MinecraftForge.EVENT_BUS.register(new ConfigHandler());
-      MinecraftForge.EVENT_BUS.register(new MiscHandler());
-      MinecraftForge.EVENT_BUS.register(new TemperatureHandler());
-      MinecraftForge.EVENT_BUS.register(new ThirstHandler());
+      (new BlockHandler()).register(MinecraftForge.EVENT_BUS);
+      (new CapabilityHandler()).register(MinecraftForge.EVENT_BUS);
+      (new ConfigHandler()).register(MinecraftForge.EVENT_BUS);
+      (new MiscHandler()).register(MinecraftForge.EVENT_BUS);
+      (new TemperatureHandler()).register(MinecraftForge.EVENT_BUS);
+      (new ThirstHandler()).register(MinecraftForge.EVENT_BUS);
       TemperatureRegistry.registerModifier(new ModifierDefault());
       TemperatureRegistry.registerModifier(new ModifierAltitude());
       TemperatureRegistry.registerModifier(new ModifierArmor());

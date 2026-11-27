@@ -15,7 +15,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -237,7 +237,7 @@ public class TileEntitySpit extends TileEntity implements ITickable {
       return new SPacketUpdateTileEntity(this.pos, 0, this.getUpdateTag());
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       super.onDataPacket(net, pkt);
       this.readFromNBT(pkt.getNbtCompound());
       this.updateClients();

@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.config.JsonConfigInternal;
 import com.charles445.simpledifficulty.config.ModConfig;
@@ -8,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,7 +17,12 @@ public class ConfigHandler {
    public ConfigHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      bus.register(Unload.class, this::onWorldEventUnload);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerJoin);
+   }
+
    public void onPlayerLogin(PlayerLoggedInEvent event) {
       EntityPlayer player = event.player;
       World world = player.world;
@@ -26,7 +31,6 @@ public class ConfigHandler {
       }
    }
 
-   @SubscribeEvent
    public void onWorldEventUnload(Unload event) {
       if (event.getWorld().isRemote) {
          Boolean connectedToServer = SimpleDifficulty.proxy.isClientConnectedToServer();
@@ -43,7 +47,6 @@ public class ConfigHandler {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public void onPlayerJoin(PlayerLoggedInEvent event) {
       for(String s : JsonConfigInternal.jsonErrors) {

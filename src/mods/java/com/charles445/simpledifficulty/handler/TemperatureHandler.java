@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDCapabilities;
 import com.charles445.simpledifficulty.api.config.JsonConfig;
 import com.charles445.simpledifficulty.api.config.QuickConfig;
@@ -8,13 +9,15 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Finish;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TemperatureHandler {
    public TemperatureHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Finish.class, this::onLivingEntityUseItemFinish);
+   }
+
    public void onLivingEntityUseItemFinish(Finish event) {
       if (QuickConfig.isTemperatureEnabled()) {
          if (event.getEntityLiving() instanceof EntityPlayer) {

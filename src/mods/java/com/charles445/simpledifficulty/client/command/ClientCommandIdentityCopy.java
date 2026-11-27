@@ -1,9 +1,6 @@
 package com.charles445.simpledifficulty.client.command;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -50,9 +47,7 @@ public class ClientCommandIdentityCopy extends ClientCommandBase {
             sbResult.append("\"");
             sbResult.append("\n");
             sbResult.append("      },");
-            StringSelection selection = new StringSelection(sbResult.toString());
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(selection, (ClipboardOwner)null);
+            GuiScreen.setClipboardString(sbResult.toString());
             sender.sendMessage(new TextComponentString("Copied identity JSON to clipboard!"));
          } else {
             sender.sendMessage(new TextComponentString("World was not remote, skipping identity copy execution!"));

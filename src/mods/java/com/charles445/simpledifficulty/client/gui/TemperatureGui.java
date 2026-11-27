@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDCapabilities;
 import com.charles445.simpledifficulty.api.SDItems;
 import com.charles445.simpledifficulty.api.config.QuickConfig;
@@ -21,7 +22,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -66,7 +66,11 @@ public class TemperatureGui {
    public TemperatureGui() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Pre.class, this::onPreRenderGameOverlay);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+   }
+
    public void onPreRenderGameOverlay(Pre event) {
       if (event.getType() == ElementType.ALL && QuickConfig.isTemperatureEnabled() && this.mc.playerController.gameIsSurvivalOrAdventure()) {
          this.rand.setSeed((long)(this.updateCounter * 445));
@@ -258,7 +262,6 @@ public class TemperatureGui {
       return shakeFrequency;
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       if (event.phase == Phase.END && !this.mc.isGamePaused()) {
          ++this.updateCounter;

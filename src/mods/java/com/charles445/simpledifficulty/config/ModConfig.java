@@ -1,5 +1,7 @@
 package com.charles445.simpledifficulty.config;
 
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.api.config.ClientConfig;
 import com.charles445.simpledifficulty.api.config.ClientOptions;
@@ -20,8 +22,6 @@ import net.minecraftforge.common.config.Config.RangeInt;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -502,14 +502,14 @@ public class ModConfig {
       }
    }
 
-   @EventBusSubscriber(
-      modid = "simpledifficulty"
-   )
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       @SideOnly(Side.CLIENT)
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("simpledifficulty")) {
@@ -524,5 +524,61 @@ public class ModConfig {
          }
 
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("simpledifficulty", "", "general", null,
+         ConfigEntry.category("Client",
+            ConfigEntry.value("AlternateTemperature", boolean.class, () -> ModConfig.client.alternateTemp, v -> ModConfig.client.alternateTemp = (Boolean)v).comment("Whether the alternate temperature display is enabled").langKey("simpledifficulty.general.client.alternatetemp"),
+            ConfigEntry.value("DrawThirstSaturation", boolean.class, () -> ModConfig.client.drawThirstSaturation, v -> ModConfig.client.drawThirstSaturation = (Boolean)v).comment("Whether to draw thirst saturation on the HUD").langKey("simpledifficulty.general.client.drawthirstsaturation"),
+            ConfigEntry.value("Client DebugMode", boolean.class, () -> ModConfig.client.clientdebug, v -> ModConfig.client.clientdebug = (Boolean)v).comment("Debug mode for clients").langKey("simpledifficulty.general.client.clientdebug"),
+            ConfigEntry.value("TemperatureReadout", boolean.class, () -> ModConfig.client.temperatureReadout, v -> ModConfig.client.temperatureReadout = (Boolean)v).comment("Debug temperature readout").langKey("simpledifficulty.general.client.temperaturereadout"),
+            ConfigEntry.value("ClassicHUDTemperature", boolean.class, () -> ModConfig.client.classicHUDTemperature, v -> ModConfig.client.classicHUDTemperature = (Boolean)v).comment("Enables the classic temperature icon").langKey("simpledifficulty.general.client.classichudtemperature"),
+            ConfigEntry.value("ClassicHUDThirst", boolean.class, () -> ModConfig.client.classicHUDThirst, v -> ModConfig.client.classicHUDThirst = (Boolean)v).comment("Enables the classic thirst bar").langKey("simpledifficulty.general.client.classichudthirst"),
+            ConfigEntry.value("HeaterParticles", boolean.class, () -> ModConfig.client.heaterParticles, v -> ModConfig.client.heaterParticles = (Boolean)v).comment("Enables chiller and heater particles").langKey("simpledifficulty.general.client.heaterparticles")).comment("Client configuration").langKey("simpledifficulty.general.client"),
+         ConfigEntry.category("Server",
+            ConfigEntry.category("Compatibility",
+               ConfigEntry.category("Built-In Compatibility Toggles",
+                  ConfigEntry.value("EnableArmorUnderwear", boolean.class, () -> ModConfig.server.compatibility.toggles.armorUnderwear, v -> ModConfig.server.compatibility.toggles.armorUnderwear = (Boolean)v).comment("Enable Armor Underwear - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.armorunderwear"),
+                  ConfigEntry.value("EnableBaubles", boolean.class, () -> ModConfig.server.compatibility.toggles.baubles, v -> ModConfig.server.compatibility.toggles.baubles = (Boolean)v).comment("Enable Baubles - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.baubles"),
+                  ConfigEntry.value("EnableHarvestFestival", boolean.class, () -> ModConfig.server.compatibility.toggles.harvestFestival, v -> ModConfig.server.compatibility.toggles.harvestFestival = (Boolean)v).comment("Enable Harvest Festival - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.harvestfestival"),
+                  ConfigEntry.value("EnableInspirations", boolean.class, () -> ModConfig.server.compatibility.toggles.inspirations, v -> ModConfig.server.compatibility.toggles.inspirations = (Boolean)v).comment("Enable Inspirations - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.inspirations"),
+                  ConfigEntry.value("EnableOreExcavation", boolean.class, () -> ModConfig.server.compatibility.toggles.oreExcavation, v -> ModConfig.server.compatibility.toggles.oreExcavation = (Boolean)v).comment("Enable OreExcavation - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.oreexcavation"),
+                  ConfigEntry.value("EnableSereneSeasons", boolean.class, () -> ModConfig.server.compatibility.toggles.sereneSeasons, v -> ModConfig.server.compatibility.toggles.sereneSeasons = (Boolean)v).comment("Enable Serene Seasons - Built-In Compatibility").langKey("simpledifficulty.general.server.compatibility.built-in compatibility toggles.sereneseasons")).comment("Built-In Compatibility Toggles - Turn compatibility for mods on or off").langKey("simpledifficulty.general.server.compatibility.toggles"),
+               ConfigEntry.category("Armor Underwear",
+                  ConfigEntry.value("GoopakTemperatureModifier", double.class, () -> ModConfig.server.compatibility.auw.goopakTemperatureModifier, v -> ModConfig.server.compatibility.auw.goopakTemperatureModifier = (Double)v).comment("Goopak Temperature Modifier - Effect of a Goopak on temperature (won't change tooltip)").langKey("simpledifficulty.general.server.compatibility.armor underwear.goopaktemperaturemodifier").range(0.0, Double.MAX_VALUE),
+                  ConfigEntry.value("GoopakMaximumActive", int.class, () -> ModConfig.server.compatibility.auw.goopakMaximumActive, v -> ModConfig.server.compatibility.auw.goopakMaximumActive = (Integer)v).comment("Goopak Maximum Active - How many Goopaks can stack their effects at once").langKey("simpledifficulty.general.server.compatibility.armor underwear.goopakmaximumactive").range(1, Integer.MAX_VALUE),
+                  ConfigEntry.value("OzzyBaseRange", double.class, () -> ModConfig.server.compatibility.auw.ozzyBaseRange, v -> ModConfig.server.compatibility.auw.ozzyBaseRange = (Double)v).comment("Ozzy Base Range - The base temperature range of an Ozzy Liner").langKey("simpledifficulty.general.server.compatibility.armor underwear.ozzybaserange").range(0.0, Double.MAX_VALUE),
+                  ConfigEntry.value("OzzyExtraRange", double.class, () -> ModConfig.server.compatibility.auw.ozzyExtraRange, v -> ModConfig.server.compatibility.auw.ozzyExtraRange = (Double)v).comment("Ozzy Extra Range - The added temperature range when upgrading an Ozzy Liner").langKey("simpledifficulty.general.server.compatibility.armor underwear.ozzyextrarange").range(0.0, Double.MAX_VALUE),
+                  ConfigEntry.value("LinerMultiplier", double.class, () -> ModConfig.server.compatibility.auw.linerMultiplier, v -> ModConfig.server.compatibility.auw.linerMultiplier = (Double)v).comment("Liner Multiplier - Multiplier for the effect of normal liners").langKey("simpledifficulty.general.server.compatibility.armor underwear.linermultiplier").range(0.0, Double.MAX_VALUE)).comment("Armor Underwear Configurations").langKey("simpledifficulty.general.server.compatibility.auw"),
+               ConfigEntry.category("Harvest Festival",
+                  ConfigEntry.value("SeasonWinter", int.class, () -> ModConfig.server.compatibility.harvestfestival.seasonWinter, v -> ModConfig.server.compatibility.harvestfestival.seasonWinter = (Integer)v).comment("Season Winter - Temperature change during the Harvest Festival season").langKey("simpledifficulty.general.server.compatibility.harvest festival.seasonwinter"),
+                  ConfigEntry.value("SeasonSpring", int.class, () -> ModConfig.server.compatibility.harvestfestival.seasonSpring, v -> ModConfig.server.compatibility.harvestfestival.seasonSpring = (Integer)v).comment("Season Spring - Temperature change during the Harvest Festival season").langKey("simpledifficulty.general.server.compatibility.harvest festival.seasonspring"),
+                  ConfigEntry.value("SeasonSummer", int.class, () -> ModConfig.server.compatibility.harvestfestival.seasonSummer, v -> ModConfig.server.compatibility.harvestfestival.seasonSummer = (Integer)v).comment("Season Summer - Temperature change during the Harvest Festival season").langKey("simpledifficulty.general.server.compatibility.harvest festival.seasonsummer"),
+                  ConfigEntry.value("SeasonAutumn", int.class, () -> ModConfig.server.compatibility.harvestfestival.seasonAutumn, v -> ModConfig.server.compatibility.harvestfestival.seasonAutumn = (Integer)v).comment("Season Autumn - Temperature change during the Harvest Festival season").langKey("simpledifficulty.general.server.compatibility.harvest festival.seasonautumn")).comment("Harvest Festival Configurations").langKey("simpledifficulty.general.server.compatibility.harvestfestival"),
+               ConfigEntry.category("Serene Seasons",
+                  ConfigEntry.value("SeasonEarlyWinter", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonEarlyWinter, v -> ModConfig.server.compatibility.sereneseasons.seasonEarlyWinter = (Integer)v).comment("Season Early Winter - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonearlywinter").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonMidWinter", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonMidWinter, v -> ModConfig.server.compatibility.sereneseasons.seasonMidWinter = (Integer)v).comment("Season Mid Winter - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonmidwinter").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonLateWinter", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonLateWinter, v -> ModConfig.server.compatibility.sereneseasons.seasonLateWinter = (Integer)v).comment("Season Late Winter - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonlatewinter").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonEarlySpring", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonEarlySpring, v -> ModConfig.server.compatibility.sereneseasons.seasonEarlySpring = (Integer)v).comment("Season Early Spring - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonearlyspring").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonMidSpring", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonMidSpring, v -> ModConfig.server.compatibility.sereneseasons.seasonMidSpring = (Integer)v).comment("Season Mid Spring - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonmidspring").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonLateSpring", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonLateSpring, v -> ModConfig.server.compatibility.sereneseasons.seasonLateSpring = (Integer)v).comment("Season Late Spring - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonlatespring").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonEarlySummer", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonEarlySummer, v -> ModConfig.server.compatibility.sereneseasons.seasonEarlySummer = (Integer)v).comment("Season Early Summer - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonearlysummer").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonMidSummer", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonMidSummer, v -> ModConfig.server.compatibility.sereneseasons.seasonMidSummer = (Integer)v).comment("Season Mid Summer - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonmidsummer").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonLateSummer", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonLateSummer, v -> ModConfig.server.compatibility.sereneseasons.seasonLateSummer = (Integer)v).comment("Season Late Summer - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonlatesummer").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonEarlyAutumn", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonEarlyAutumn, v -> ModConfig.server.compatibility.sereneseasons.seasonEarlyAutumn = (Integer)v).comment("Season Early Autumn - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonearlyautumn").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonMidAutumn", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonMidAutumn, v -> ModConfig.server.compatibility.sereneseasons.seasonMidAutumn = (Integer)v).comment("Season Mid Autumn - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonmidautumn").range(Integer.MIN_VALUE, Integer.MAX_VALUE),
+                  ConfigEntry.value("SeasonLateAutumn", int.class, () -> ModConfig.server.compatibility.sereneseasons.seasonLateAutumn, v -> ModConfig.server.compatibility.sereneseasons.seasonLateAutumn = (Integer)v).comment("Season Late Autumn - Temperature change during the Serene Seasons season").langKey("simpledifficulty.general.server.compatibility.serene seasons.seasonlateautumn").range(Integer.MIN_VALUE, Integer.MAX_VALUE)).comment("Serene Seasons Configurations").langKey("simpledifficulty.general.server.compatibility.sereneseasons")).comment("Built-in mod compatibility options").langKey("simpledifficulty.general.server.compatibility"),
+            ConfigEntry.value("ThirstEnabled", boolean.class, () -> ModConfig.server.thirstEnabled, v -> ModConfig.server.thirstEnabled = (Boolean)v).comment("Whether thirst is enabled.").langKey("simpledifficulty.general.server.thirstenabled"),
+            ConfigEntry.value("ThirstDrinkBlocks", boolean.class, () -> ModConfig.server.thirstDrinkBlocks, v -> ModConfig.server.thirstDrinkBlocks = (Boolean)v).comment("Whether the player is allowed to drink from normal water blocks.").langKey("simpledifficulty.general.server.thirstdrinkblocks"),
+            ConfigEntry.value("ThirstDrinkRain", boolean.class, () -> ModConfig.server.thirstDrinkRain, v -> ModConfig.server.thirstDrinkRain = (Boolean)v).comment("Whether the player is allowed to drink from the rain.").langKey("simpledifficulty.general.server.thirstdrinkrain"),
+            ConfigEntry.value("PeacefulDanger", boolean.class, () -> ModConfig.server.peacefulDanger, v -> ModConfig.server.peacefulDanger = (Boolean)v).comment("Whether the mod should be dangerous on Peaceful difficulty.").langKey("simpledifficulty.general.server.peacefuldanger"),
+            ConfigEntry.value("TemperatureEnabled", boolean.class, () -> ModConfig.server.temperatureEnabled, v -> ModConfig.server.temperatureEnabled = (Boolean)v).comment("Whether temperature is enabled.").langKey("simpledifficulty.general.server.temperatureenabled"),
+            ConfigEntry.value("TemperatureTileEntities", boolean.class, () -> ModConfig.server.temperatureTEEnabled, v -> ModConfig.server.temperatureTEEnabled = (Boolean)v).comment("Whether temperature tile entities are enabled.").langKey("simpledifficulty.general.server.temperatureteenabled"),
+            ConfigEntry.value("CanteenDoses", int.class, () -> ModConfig.server.canteenDoses, v -> ModConfig.server.canteenDoses = (Integer)v).comment("Maximum number of doses in a canteen").langKey("simpledifficulty.general.server.canteendoses").range(1, Integer.MAX_VALUE),
+            ConfigEntry.value("StrictHeaters", boolean.class, () -> ModConfig.server.strictHeaters, v -> ModConfig.server.strictHeaters = (Boolean)v).comment("Whether heaters and chillers only work indoors").langKey("simpledifficulty.general.server.strictheaters"),
+            ConfigEntry.value("IronCanteenDoses", int.class, () -> ModConfig.server.ironCanteenDoses, v -> ModConfig.server.ironCanteenDoses = (Integer)v).comment("Maximum number of doses in an iron canteen").langKey("simpledifficulty.general.server.ironcanteendoses").range(1, Integer.MAX_VALUE),
+            ConfigEntry.value("Infinite Purified Water", boolean.class, () -> ModConfig.server.infinitePurifiedWater, v -> ModConfig.server.infinitePurifiedWater = (Boolean)v).comment("Whether purified water blocks are infinite").langKey("simpledifficulty.general.server.infinitepurifiedwater"),
+            ConfigEntry.value("DebugMode", boolean.class, () -> ModConfig.server.debug, v -> ModConfig.server.debug = (Boolean)v).comment("Spams chat with debug messages, do not enable this unless you are testing!").langKey("simpledifficulty.general.server.debug")).comment("Server configuration").langKey("simpledifficulty.general.server"));
    }
 }

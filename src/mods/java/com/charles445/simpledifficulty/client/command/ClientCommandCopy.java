@@ -1,9 +1,6 @@
 package com.charles445.simpledifficulty.client.command;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
@@ -35,9 +32,7 @@ public class ClientCommandCopy extends ClientCommandBase {
 
       if (sender.getEntityWorld().isRemote) {
          String result = sb.toString().trim();
-         StringSelection selection = new StringSelection(result);
-         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-         clipboard.setContents(selection, (ClipboardOwner)null);
+         GuiScreen.setClipboardString(result);
          sender.sendMessage(new TextComponentString("Copied to clipboard!"));
       } else {
          sender.sendMessage(new TextComponentString("World was not remote, skipping copy execution!"));

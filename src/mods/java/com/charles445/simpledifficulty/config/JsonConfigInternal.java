@@ -1,5 +1,7 @@
 package com.charles445.simpledifficulty.config;
 
+import com.google.gson.JsonParser;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.api.SDBlocks;
 import com.charles445.simpledifficulty.api.SDItems;
@@ -21,9 +23,6 @@ import com.charles445.simpledifficulty.config.json.MaterialTemperature;
 import com.charles445.simpledifficulty.item.ItemJuice;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.io.File;
-import java.io.FileReader;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,7 +33,6 @@ import javax.annotation.Nullable;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import org.apache.commons.io.FileUtils;
 
 public class JsonConfigInternal {
    public static MaterialTemperature materialTemperature = new MaterialTemperature();
@@ -45,7 +43,7 @@ public class JsonConfigInternal {
    public JsonConfigInternal() {
    }
 
-   public static void preInit(File jsonDirectory) {
+   public static void preInit(VFile2 jsonDirectory) {
       SimpleDifficulty.logger.info("Extra Items Initialization");
       makeExtraItem("frost_rod", "Frost Rod - For recipes");
       makeExtraItem("frost_powder", "Frost Powder - For recipes");
@@ -53,7 +51,7 @@ public class JsonConfigInternal {
       extraItems = (Map)processJson(JsonFileName.extraItems, extraItems, jsonDirectory, false);
    }
 
-   public static void postInit(File jsonDirectory) {
+   public static void postInit(VFile2 jsonDirectory) {
       JsonConfig.registerArmorTemperature(new ItemStack(SDItems.wool_helmet), 2.0F);
       JsonConfig.registerArmorTemperature(new ItemStack(SDItems.wool_chestplate), 2.0F);
       JsonConfig.registerArmorTemperature(new ItemStack(SDItems.wool_leggings), 2.0F);
@@ -90,7 +88,7 @@ public class JsonConfigInternal {
       JsonConfig.heldItemTemperatures.clear();
    }
 
-   public static void processAllJson(File jsonDirectory) {
+   public static void processAllJson(VFile2 jsonDirectory) {
       String jsonFileName = JsonFileName.armorTemperatures.get();
       Map<String, List<JsonTemperatureIdentity>> jsonArmorTemperatures = null;
 
@@ -135,7 +133,7 @@ public class JsonConfigInternal {
 
       if (jsonArmorTemperatures != null) {
          for(Entry<String, List<JsonTemperatureIdentity>> entry : jsonArmorTemperatures.entrySet()) {
-            for(JsonTemperatureIdentity jtm : (List)entry.getValue()) {
+            for(JsonTemperatureIdentity jtm : (List<JsonTemperatureIdentity>)entry.getValue()) {
                if (jtm.identity != null) {
                   jtm.identity.tryPopulateCompound();
                }
@@ -155,7 +153,7 @@ public class JsonConfigInternal {
       Map<String, List<JsonPropertyTemperature>> jsonBlockTemperatures = (Map)processJson(JsonFileName.blockTemperatures, JsonConfig.blockTemperatures, jsonDirectory, true);
       if (jsonBlockTemperatures != null) {
          for(Entry<String, List<JsonPropertyTemperature>> entry : jsonBlockTemperatures.entrySet()) {
-            for(JsonPropertyTemperature propTemp : (List)entry.getValue()) {
+            for(JsonPropertyTemperature propTemp : (List<JsonPropertyTemperature>)entry.getValue()) {
                JsonConfig.registerBlockTemperature((String)entry.getKey(), propTemp.temperature, propTemp.getAsPropertyArray());
             }
          }
@@ -198,7 +196,7 @@ public class JsonConfigInternal {
                migrateMap = (Map)processUncaughtJson(JsonFileName.consumableTemperature_MIGRATE, migrateMap, jsonDirectory, true);
 
                for(Entry<String, List<JsonConsumableTemperatureMigrate>> registryEntry : migrateMap.entrySet()) {
-                  for(JsonConsumableTemperatureMigrate jctm : (List)registryEntry.getValue()) {
+                  for(JsonConsumableTemperatureMigrate jctm : (List<JsonConsumableTemperatureMigrate>)registryEntry.getValue()) {
                      JsonConfig.registerConsumableTemperature(jctm.group, (String)registryEntry.getKey(), jctm.temperature, jctm.duration, new JsonItemIdentity(jctm.metadata));
                   }
                }
@@ -215,7 +213,7 @@ public class JsonConfigInternal {
             }
          } else {
             for(Entry<String, List<JsonConsumableTemperature>> entry : jsonConsumableTemperature.entrySet()) {
-               for(JsonConsumableTemperature jct : (List)entry.getValue()) {
+               for(JsonConsumableTemperature jct : (List<JsonConsumableTemperature>)entry.getValue()) {
                   if (jct.identity != null) {
                      jct.identity.tryPopulateCompound();
                   }
@@ -263,7 +261,7 @@ public class JsonConfigInternal {
                migrateMap = (Map)processUncaughtJson(JsonFileName.consumableThirst_MIGRATE, migrateMap, jsonDirectory, true);
 
                for(Entry<String, List<JsonConsumableThirstMigrate>> registryEntry : migrateMap.entrySet()) {
-                  for(JsonConsumableThirstMigrate jctm : (List)registryEntry.getValue()) {
+                  for(JsonConsumableThirstMigrate jctm : (List<JsonConsumableThirstMigrate>)registryEntry.getValue()) {
                      JsonConfig.registerConsumableThirst((String)registryEntry.getKey(), jctm.amount, jctm.saturation, jctm.thirstyChance, new JsonItemIdentity(jctm.metadata));
                   }
                }
@@ -280,7 +278,7 @@ public class JsonConfigInternal {
             }
          } else {
             for(Entry<String, List<JsonConsumableThirst>> entry : jsonConsumableThirst.entrySet()) {
-               for(JsonConsumableThirst jct : (List)entry.getValue()) {
+               for(JsonConsumableThirst jct : (List<JsonConsumableThirst>)entry.getValue()) {
                   if (jct.identity != null) {
                      jct.identity.tryPopulateCompound();
                   }
@@ -356,7 +354,7 @@ public class JsonConfigInternal {
                migrateMap = (Map)processUncaughtJson(JsonFileName.heldItemTemperatures_MIGRATE, migrateMap, jsonDirectory, true);
 
                for(Entry<String, List<JsonTemperatureMetadataMigrate>> registryEntry : migrateMap.entrySet()) {
-                  for(JsonTemperatureMetadataMigrate jctm : (List)registryEntry.getValue()) {
+                  for(JsonTemperatureMetadataMigrate jctm : (List<JsonTemperatureMetadataMigrate>)registryEntry.getValue()) {
                      JsonConfig.registerHeldItem((String)registryEntry.getKey(), jctm.temperature, new JsonItemIdentity(jctm.metadata));
                   }
                }
@@ -373,7 +371,7 @@ public class JsonConfigInternal {
             }
          } else {
             for(Entry<String, List<JsonTemperatureIdentity>> entry : jsonHeldItemTemperatures.entrySet()) {
-               for(JsonTemperatureIdentity jtm : (List)entry.getValue()) {
+               for(JsonTemperatureIdentity jtm : (List<JsonTemperatureIdentity>)entry.getValue()) {
                   if (jtm.identity != null) {
                      jtm.identity.tryPopulateCompound();
                   }
@@ -399,7 +397,7 @@ public class JsonConfigInternal {
    }
 
    public static String manuallyExportAll() {
-      File jsonDirectory = SimpleDifficulty.jsonDirectory;
+      VFile2 jsonDirectory = SimpleDifficulty.jsonDirectory;
 
       try {
          manuallyWriteToJson(JsonFileName.armorTemperatures, JsonConfig.armorTemperatures, jsonDirectory);
@@ -418,7 +416,7 @@ public class JsonConfigInternal {
    }
 
    @Nullable
-   public static <T> T processJson(JsonFileName jfn, T container, File jsonDirectory, boolean forMerging) {
+   public static <T> T processJson(JsonFileName jfn, T container, VFile2 jsonDirectory, boolean forMerging) {
       try {
          return (T)processUncaughtJson(jfn, container, jsonDirectory, forMerging);
       } catch (Exception var5) {
@@ -429,35 +427,28 @@ public class JsonConfigInternal {
    }
 
    @Nullable
-   public static <T> T processUncaughtJson(JsonFileName jfn, T container, File jsonDirectory, boolean forMerging) throws Exception {
+   public static <T> T processUncaughtJson(JsonFileName jfn, T container, VFile2 jsonDirectory, boolean forMerging) throws Exception {
       String jsonFileName = jfn.get();
-      Type type = JsonTypeToken.get(jfn);
-      File jsonFile = new File(jsonDirectory, jsonFileName);
+      VFile2 jsonFile = new VFile2(jsonDirectory, jsonFileName);
       if (jsonFile.exists()) {
-         Gson gson = buildNewGson();
-         return (T)gson.fromJson(new FileReader(jsonFile), type);
+         return (T)JsonConfigCodec.fromJson(jfn, (new JsonParser()).parse(jsonFile.getAllChars()));
       } else {
          Gson gson = buildNewGson();
-         FileUtils.write(jsonFile, gson.toJson(container, type), (String)null);
+         jsonFile.setAllChars(gson.toJson(JsonConfigCodec.toJson(jfn, container)));
          return (T)(forMerging ? null : container);
       }
    }
 
-   private static <T> void manuallyWriteToJson(JsonFileName jfn, T container, File jsonDirectory) throws Exception {
+   private static <T> void manuallyWriteToJson(JsonFileName jfn, T container, VFile2 jsonDirectory) throws Exception {
       String jsonFileName = jfn.get();
-      Type type = JsonTypeToken.get(jfn);
       Gson gson = buildNewGson();
-      File jsonFile = new File(jsonDirectory, jsonFileName);
-      if (jsonFile.exists() && !jsonFile.canWrite()) {
-         SimpleDifficulty.logger.warn(jfn.toString() + " is set to Read Only! Merged file will not be written.");
-      } else {
-         FileUtils.write(jsonFile, gson.toJson(container, type), (String)null);
-      }
+      VFile2 jsonFile = new VFile2(jsonDirectory, jsonFileName);
+      jsonFile.setAllChars(gson.toJson(JsonConfigCodec.toJson(jfn, container)));
 
    }
 
    private static Gson buildNewGson() {
-      return (new GsonBuilder()).setPrettyPrinting().excludeFieldsWithModifiers(new int[]{2}).create();
+      return (new GsonBuilder()).setPrettyPrinting().create();
    }
 
    private static ExtraItem makeExtraItem(String itemName, String description) {

@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDCapabilities;
 import com.charles445.simpledifficulty.api.SDPotions;
 import com.charles445.simpledifficulty.api.config.JsonConfig;
@@ -36,7 +37,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickEmpty;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ThirstHandler {
    private final boolean harvestcraftLoaded = Loader.isModLoaded("harvestcraft");
@@ -44,7 +44,16 @@ public class ThirstHandler {
    public ThirstHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Finish.class, this::onLivingEntityUseItemFinish);
+      bus.register(RightClickBlock.class, this::onRightClickBlock);
+      bus.register(RightClickEmpty.class, this::onRightClickEmpty);
+      bus.register(AttackEntityEvent.class, this::onAttackEntity);
+      bus.register(BreakEvent.class, this::onBlockBreak);
+      bus.register(LivingHurtEvent.class, this::onLivingHurt);
+      bus.register(LivingJumpEvent.class, this::onLivingJump);
+   }
+
    public void onLivingEntityUseItemFinish(Finish event) {
       if (QuickConfig.isThirstEnabled()) {
          if (event.getEntityLiving() instanceof EntityPlayer) {
@@ -89,7 +98,6 @@ public class ThirstHandler {
       }
    }
 
-   @SubscribeEvent
    public void onRightClickBlock(RightClickBlock event) {
       if (QuickConfig.isThirstEnabled()) {
          if (event.getWorld().isRemote) {
@@ -112,7 +120,6 @@ public class ThirstHandler {
       }
    }
 
-   @SubscribeEvent
    public void onRightClickEmpty(RightClickEmpty event) {
       if (QuickConfig.isThirstEnabled()) {
          if (event.getHand() == EnumHand.MAIN_HAND && this.clientCheckWater(event.getEntityPlayer())) {
@@ -137,7 +144,6 @@ public class ThirstHandler {
       SoundUtil.commonPlayPlayerSound(player, SoundEvents.ENTITY_GENERIC_DRINK);
    }
 
-   @SubscribeEvent
    public void onAttackEntity(AttackEntityEvent event) {
       if (QuickConfig.isThirstEnabled()) {
          World world = event.getEntity().world;
@@ -154,7 +160,6 @@ public class ThirstHandler {
       }
    }
 
-   @SubscribeEvent
    public void onBlockBreak(BreakEvent event) {
       if (QuickConfig.isThirstEnabled()) {
          World world = event.getWorld();
@@ -168,7 +173,6 @@ public class ThirstHandler {
       }
    }
 
-   @SubscribeEvent
    public void onLivingHurt(LivingHurtEvent event) {
       if (QuickConfig.isThirstEnabled()) {
          World world = event.getEntity().world;
@@ -184,7 +188,6 @@ public class ThirstHandler {
       }
    }
 
-   @SubscribeEvent
    public void onLivingJump(LivingJumpEvent event) {
       if (QuickConfig.isThirstEnabled()) {
          World world = event.getEntity().world;

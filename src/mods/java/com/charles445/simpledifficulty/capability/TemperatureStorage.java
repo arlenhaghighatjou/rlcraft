@@ -62,7 +62,8 @@ public class TemperatureStorage implements IStorage<ITemperatureCapability> {
          if (compound.hasKey("temporaryModifiers")) {
             instance.clearTemporaryModifiers();
 
-            for(NBTTagCompound tempComp : compound.getTagList("temporaryModifiers", 10)) {
+            for(NBTBase tempCompBase : compound.getTagList("temporaryModifiers", 10)) {
+               NBTTagCompound tempComp = (NBTTagCompound)tempCompBase;
                if (tempComp.hasKey("name") && tempComp.hasKey("temperature") && tempComp.hasKey("duration")) {
                   instance.setTemporaryModifier(tempComp.getString("name"), tempComp.getFloat("temperature"), tempComp.getInteger("duration"));
                }

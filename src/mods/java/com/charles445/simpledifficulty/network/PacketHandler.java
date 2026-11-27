@@ -11,10 +11,10 @@ public class PacketHandler {
    }
 
    public static void init() {
-      instance.registerMessage(MessageUpdateThirst.Handler.class, MessageUpdateThirst.class, 0, Side.CLIENT);
-      instance.registerMessage(MessageDrinkWater.Handler.class, MessageDrinkWater.class, 1, Side.SERVER);
-      instance.registerMessage(MessageConfigLAN.Handler.class, MessageConfigLAN.class, 2, Side.SERVER);
-      instance.registerMessage(MessageUpdateConfig.Handler.class, MessageUpdateConfig.class, 3, Side.CLIENT);
-      instance.registerMessage(MessageUpdateTemperature.Handler.class, MessageUpdateTemperature.class, 4, Side.CLIENT);
+      instance.registerMessage(new MessageUpdateThirst.Handler(), MessageUpdateThirst.class, MessageUpdateThirst::new, 0, Side.CLIENT);
+      instance.registerMessage(new MessageDrinkWater.Handler(), MessageDrinkWater.class, MessageDrinkWater::new, 1, Side.SERVER);
+      instance.registerMessage(new MessageConfigLAN.Handler(), MessageConfigLAN.class, MessageConfigLAN::new, 2, Side.SERVER);
+      instance.registerMessage(new MessageUpdateConfig.Handler(), MessageUpdateConfig.class, MessageUpdateConfig::new, 3, Side.CLIENT);
+      instance.registerMessage(new MessageUpdateTemperature.Handler(), MessageUpdateTemperature.class, MessageUpdateTemperature::new, 4, Side.CLIENT);
    }
 }

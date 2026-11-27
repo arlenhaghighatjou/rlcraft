@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.register;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDPotions;
 import com.charles445.simpledifficulty.config.ModConfig;
 import com.charles445.simpledifficulty.potion.PotionHyperthermia;
@@ -12,22 +13,21 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterPotions {
    public RegisterPotions() {
    }
 
-   @EventBusSubscriber(
-      modid = "simpledifficulty"
-   )
    public static class Registrar {
       public Registrar() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Potion.class, Registrar::register);
+         bus.registerGeneric(Register.class, PotionType.class, Registrar::registerTypes);
+      }
+
       public static void register(Register<Potion> event) {
          IForgeRegistry<Potion> registry = event.getRegistry();
          SDPotions.hyperthermia = registerAs("hyperthermia", new PotionHyperthermia(), registry);
@@ -38,7 +38,6 @@ public class RegisterPotions {
          SDPotions.heat_resist = registerAs("heat_resist", new PotionResistHeat(), registry);
       }
 
-      @SubscribeEvent
       public static void registerTypes(Register<PotionType> event) {
          IForgeRegistry<PotionType> registry = event.getRegistry();
          SDPotions.cold_resist_type = registerTypeAs("cold_resist_type", SDPotions.cold_resist, ModConfig.server.miscellaneous.resistancePotionDurationShort, registry);

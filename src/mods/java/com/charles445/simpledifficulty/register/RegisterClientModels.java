@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.register;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDBlocks;
 import com.charles445.simpledifficulty.api.SDFluids;
 import com.charles445.simpledifficulty.api.SDItems;
@@ -20,21 +21,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   value = {Side.CLIENT},
-   modid = "simpledifficulty"
-)
 public class RegisterClientModels {
    public static final RegisterClientModels instance = new RegisterClientModels();
 
    public RegisterClientModels() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, RegisterClientModels::onModelRegistryEvent);
+   }
+
    public static void onModelRegistryEvent(ModelRegistryEvent event) {
       for(String key : SDFluids.fluidBlocks.keySet()) {
          instance.registerFluidModel((BlockFluidBase)SDFluids.fluidBlocks.get(key));

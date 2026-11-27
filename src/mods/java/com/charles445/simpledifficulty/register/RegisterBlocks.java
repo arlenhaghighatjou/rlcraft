@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.register;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDBlocks;
 import com.charles445.simpledifficulty.block.BlockCampfire;
 import com.charles445.simpledifficulty.block.BlockRainCollector;
@@ -12,8 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -21,14 +20,15 @@ public class RegisterBlocks {
    public RegisterBlocks() {
    }
 
-   @EventBusSubscriber(
-      modid = "simpledifficulty"
-   )
    public static class Registrar {
       public Registrar() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Block.class, Registrar::registerBlocks);
+         bus.registerGeneric(Register.class, Item.class, Registrar::registerItemBlocks);
+      }
+
       public static void registerBlocks(Register<Block> event) {
          IForgeRegistry<Block> registry = event.getRegistry();
          SDBlocks.campfire = registerAs("campfire", new BlockCampfire(), registry);
@@ -36,11 +36,10 @@ public class RegisterBlocks {
          SDBlocks.heater = registerAs("heater", new BlockTemperature(1.0F), registry);
          SDBlocks.chiller = registerAs("chiller", new BlockTemperature(-1.0F), registry);
          SDBlocks.spit = registerAs("spit", new BlockSpit(), registry);
-         GameRegistry.registerTileEntity(TileEntitySpit.class, new ResourceLocation("simpledifficulty", "campfirespit"));
-         GameRegistry.registerTileEntity(TileEntityTemperature.class, new ResourceLocation("simpledifficulty", "temperatureChanged"));
+         GameRegistry.registerTileEntity(TileEntitySpit.class, new ResourceLocation("simpledifficulty", "campfirespit"), TileEntitySpit::new);
+         GameRegistry.registerTileEntity(TileEntityTemperature.class, new ResourceLocation("simpledifficulty", "temperatureChanged"), TileEntityTemperature::new);
       }
 
-      @SubscribeEvent
       public static void registerItemBlocks(Register<Item> event) {
          IForgeRegistry<Item> registry = event.getRegistry();
          registerItemBlock(SDBlocks.campfire, registry);

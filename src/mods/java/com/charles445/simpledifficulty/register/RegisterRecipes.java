@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.register;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDFluids;
 import com.charles445.simpledifficulty.api.SDItems;
 import com.charles445.simpledifficulty.api.SDPotions;
@@ -16,8 +17,6 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RegisterRecipes {
@@ -26,12 +25,14 @@ public class RegisterRecipes {
    public RegisterRecipes() {
    }
 
-   @EventBusSubscriber
    public static class Registrar {
       public Registrar() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, IRecipe.class, Registrar::registerRecipes);
+      }
+
       public static void registerRecipes(Register<IRecipe> event) {
          GameRegistry.addSmelting(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTIONITEM), PotionTypes.WATER), new ItemStack(SDItems.purifiedWaterBottle, 1), 0.0F);
          GameRegistry.addSmelting(Items.WATER_BUCKET, FluidUtil.getFilledBucket(new FluidStack(SDFluids.purifiedWater, 1000)), 0.0F);

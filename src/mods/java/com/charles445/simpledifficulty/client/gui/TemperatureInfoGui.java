@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.config.QuickConfig;
 import com.charles445.simpledifficulty.api.temperature.ITemperatureDynamicModifier;
 import com.charles445.simpledifficulty.api.temperature.ITemperatureModifier;
@@ -18,7 +19,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -42,7 +42,11 @@ public class TemperatureInfoGui {
       this.resultCumulative = 0;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onPostRenderGameOverlay);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+   }
+
    public void onPostRenderGameOverlay(Post event) {
       if (event.getType() == ElementType.TEXT && QuickConfig.isTemperatureEnabled() && ModConfig.client.temperatureReadout && !this.mc.gameSettings.showDebugInfo && (this.mc.player.getPermissionLevel() >= 2 || this.mc.isSingleplayer() || this.mc.player.isCreative())) {
          ScaledResolution resolution = event.getResolution();
@@ -51,7 +55,6 @@ public class TemperatureInfoGui {
 
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       if (event.phase == Phase.END) {
          ++this.updateCounter;

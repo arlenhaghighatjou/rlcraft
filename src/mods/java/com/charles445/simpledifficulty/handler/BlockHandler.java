@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDItems;
 import com.charles445.simpledifficulty.config.ModConfig;
 import net.minecraft.block.Block;
@@ -7,13 +8,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockHandler {
    public BlockHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, this::onHarvestDrops);
+   }
+
    public void onHarvestDrops(HarvestDropsEvent event) {
       World world = event.getWorld();
       if (!world.isRemote) {

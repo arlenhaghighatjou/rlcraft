@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.client.gui;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDCapabilities;
 import com.charles445.simpledifficulty.api.SDCompatibility;
 import com.charles445.simpledifficulty.api.SDPotions;
@@ -17,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 
@@ -35,7 +35,11 @@ public class ThirstGui {
    public ThirstGui() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Pre.class, this::onPreRenderGameOverlay);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+   }
+
    public void onPreRenderGameOverlay(Pre event) {
       if (event.getType() == ElementType.AIR && QuickConfig.isThirstEnabled() && SDCompatibility.defaultThirstDisplay) {
          this.rand.setSeed((long)(this.updateCounter * 445));
@@ -56,7 +60,6 @@ public class ThirstGui {
 
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       if (event.phase == Phase.END && !this.minecraftInstance.isGamePaused()) {
          ++this.updateCounter;

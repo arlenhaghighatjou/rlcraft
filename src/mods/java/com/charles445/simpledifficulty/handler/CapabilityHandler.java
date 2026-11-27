@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.handler;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.api.SDCapabilities;
 import com.charles445.simpledifficulty.api.config.QuickConfig;
 import com.charles445.simpledifficulty.api.temperature.ITemperatureCapability;
@@ -17,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -25,7 +25,11 @@ public class CapabilityHandler {
    public CapabilityHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(AttachCapabilitiesEvent.class, this::onAttachCapability);
+      bus.register(PlayerTickEvent.class, this::onPlayerTick);
+   }
+
    public void onAttachCapability(AttachCapabilitiesEvent event) {
       if (event.getObject() instanceof EntityPlayer) {
          event.addCapability(new ResourceLocation("simpledifficulty", "temperature"), new TemperatureProvider(SDCapabilities.TEMPERATURE));
@@ -34,7 +38,6 @@ public class CapabilityHandler {
 
    }
 
-   @SubscribeEvent
    public void onPlayerTick(PlayerTickEvent event) {
       EntityPlayer player = event.player;
       World world = player.world;

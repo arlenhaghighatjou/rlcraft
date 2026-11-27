@@ -26,10 +26,10 @@ public class ClientProxy extends CommonProxy {
 
    public void preInit() {
       super.preInit();
-      MinecraftForge.EVENT_BUS.register(new TemperatureGui());
-      MinecraftForge.EVENT_BUS.register(new TemperatureInfoGui());
-      MinecraftForge.EVENT_BUS.register(new ThirstGui());
-      MinecraftForge.EVENT_BUS.register(new TooltipHandler());
+      (new TemperatureGui()).register(MinecraftForge.EVENT_BUS);
+      (new TemperatureInfoGui()).register(MinecraftForge.EVENT_BUS);
+      (new ThirstGui()).register(MinecraftForge.EVENT_BUS);
+      (new TooltipHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void init() {

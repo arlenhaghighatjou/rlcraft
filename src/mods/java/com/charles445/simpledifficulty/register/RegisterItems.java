@@ -1,5 +1,6 @@
 package com.charles445.simpledifficulty.register;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.charles445.simpledifficulty.SimpleDifficulty;
 import com.charles445.simpledifficulty.api.SDItems;
 import com.charles445.simpledifficulty.config.JsonConfigInternal;
@@ -19,22 +20,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class RegisterItems {
    public RegisterItems() {
    }
 
-   @EventBusSubscriber(
-      modid = "simpledifficulty"
-   )
    public static class Registrar {
       public Registrar() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Item.class, Registrar::registerItems);
+      }
+
       public static void registerItems(Register<Item> event) {
          SimpleDifficulty.logger.info("Registering Items");
          SDItems.woolArmorMaterial = EnumHelper.addArmorMaterial("SDWOOL", "simpledifficulty:wool", 2, new int[]{1, 1, 1, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 0.0F);
