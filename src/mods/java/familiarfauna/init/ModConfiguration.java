@@ -1,10 +1,9 @@
 package familiarfauna.init;
 
 import com.google.common.collect.Lists;
-import com.google.gson.reflect.TypeToken;
 import familiarfauna.config.ConfigurationHandler;
 import familiarfauna.util.config.JsonUtil;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.List;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -19,26 +18,20 @@ public class ModConfiguration {
    public ModConfiguration() {
    }
 
-   public static void init(File configDirectory) {
-      ConfigurationHandler.init(new File(configDirectory, "config.cfg"));
-      MinecraftForge.EVENT_BUS.register(new ConfigurationHandler());
+   public static void init(VFile2 configDirectory) {
+      ConfigurationHandler.init(new VFile2(configDirectory, "config.cfg"));
+      (new ConfigurationHandler()).register(MinecraftForge.EVENT_BUS);
       List<String> butterflyBiomes = Lists.newArrayList(new String[]{"minecraft:plains", "minecraft:mutated_plains", "minecraft:forest", "minecraft:forest_hills", "minecraft:mutated_forest", "minecraft:jungle", "minecraft:jungle_hills", "minecraft:jungle_edge", "minecraft:mutated_jungle", "minecraft:mutated_jungle_edge", "biomesoplenty:cherry_blossom_grove", "biomesoplenty:eucalyptus_forest", "biomesoplenty:flower_field", "biomesoplenty:flower_island", "biomesoplenty:grassland", "biomesoplenty:grove", "biomesoplenty:lavender_fields", "biomesoplenty:meadow", "biomesoplenty:mystic_grove", "biomesoplenty:orchard", "biomesoplenty:rainforest", "biomesoplenty:sacred_springs", "biomesoplenty:tropical_island", "traverse:lush_hills", "traverse:meadow", "traverse:mini_jungle", "traverse:rocky_plains", "conquest:deciduous_forest", "conquest:japanese_forest", "conquest:forest_flower_plain", "conquest:mediterranean", "conquest:jungle_mod", "twilightforest:twilight_forest", "twilightforest:twilight_clearing", "twilightforest:firefly_forest", "twilightforest:enchanted_forest"});
-      butterflyBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "butterfly_biomes.json", butterflyBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      butterflyBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "butterfly_biomes.json", butterflyBiomes);
       List<String> deerBiomes = Lists.newArrayList(new String[]{"minecraft:birch_forest", "minecraft:birch_forest_hills", "minecraft:mutated_birch_forest", "minecraft:mutated_birch_forest_hills", "minecraft:forest", "minecraft:forest_hills", "minecraft:mutated_forest", "minecraft:taiga", "minecraft:taiga_hills", "minecraft:mutated_taiga", "minecraft:redwood_taiga", "minecraft:redwood_taiga_hills", "minecraft:mutated_redwood_taiga", "minecraft:mutated_redwood_taiga_hills", "minecraft:taiga_cold", "minecraft:taiga_cold_hills", "minecraft:mutated_taiga_cold", "minecraft:extreme_hills", "minecraft:smaller_extreme_hills", "minecraft:extreme_hills_with_trees", "minecraft:mutated_extreme_hills", "minecraft:mutated_extreme_hills_with_trees", "minecraft:roofed_forest", "minecraft:mutated_roofed_forest", "biomesoplenty:boreal_forest", "biomesoplenty:coniferous_forest", "biomesoplenty:dead_forest", "biomesoplenty:grove", "biomesoplenty:maple_woods", "biomesoplenty:meadow", "biomesoplenty:mountain_foothills", "biomesoplenty:mystic_grove", "biomesoplenty:redwood_forest", "biomesoplenty:redwood_forest_edge", "biomesoplenty:seasonal_forest", "biomesoplenty:shield", "biomesoplenty:snowy_coniferous_forest", "biomesoplenty:snowy_forest", "biomesoplenty:temperate_rainforest", "biomesoplenty:woodland", "traverse:autumnal_woods", "traverse:autumnal_wooded_hills", "traverse:birch_forested_hills", "traverse:foreseted_hills", "traverse:snowy_coniferous_forest", "traverse:temperate_rainforest", "traverse:woodlands", "conquest:boreal_forest", "conquest:birch_forest", "conquest:deciduous_forest", "conquest:japanese_forest", "conquest:oldgrowth_forest", "conquest:lorein_forest", "conquest:mountains", "conquest:mega_boreal_forest"});
-      deerBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "deer_biomes.json", deerBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      deerBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "deer_biomes.json", deerBiomes);
       List<String> dragonflyBiomes = Lists.newArrayList(new String[]{"minecraft:swampland", "minecraft:mutated_swampland", "biomesoplenty:bayou", "biomesoplenty:bog", "biomesoplenty:dead_swamp", "biomesoplenty:fen", "biomesoplenty:land_of_lakes", "biomesoplenty:lush_swamp", "biomesoplenty:marsh", "biomesoplenty:moor", "biomesoplenty:shield", "biomesoplenty:temperate_rainforest", "biomesoplenty:wetland", "traverse:green_swamp", "conquest:alder_swamp", "conquest:bog", "conquest:marsh", "conquest:moorland", "twilightforest:twilight_swamp", "twilightforest:fire_swamp", "twilightforest:twilight_stream"});
-      dragonflyBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "dragonfly_biomes.json", dragonflyBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      dragonflyBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "dragonfly_biomes.json", dragonflyBiomes);
       List<String> pixieBiomes = Lists.newArrayList(new String[]{"minecraft:mutated_forest", "biomesoplenty:mystic_grove", "twilightforest:enchanted_forest"});
-      pixieBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "pixie_biomes.json", pixieBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      pixieBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "pixie_biomes.json", pixieBiomes);
       List<String> snailBiomes = Lists.newArrayList(new String[]{"minecraft:swampland", "minecraft:mutated_swampland", "biomesoplenty:bayou", "biomesoplenty:bog", "biomesoplenty:dead_swamp", "biomesoplenty:fen", "biomesoplenty:lush_swamp", "biomesoplenty:marsh", "biomesoplenty:quagmire", "biomesoplenty:wetland", "traverse:green_swamp", "conquest:alder_swamp", "conquest:bog", "conquest:marsh", "twilightforest:twilight_swamp"});
-      snailBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "snail_biomes.json", snailBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      snailBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "snail_biomes.json", snailBiomes);
       List<String> turkeyBiomes = Lists.newArrayList(new String[]{"minecraft:birch_forest", "minecraft:birch_forest_hills", "minecraft:mutated_birch_forest", "minecraft:mutated_birch_forest_hills", "minecraft:forest", "minecraft:forest_hills", "minecraft:mutated_forest", "minecraft:taiga", "minecraft:taiga_hills", "minecraft:mutated_taiga", "minecraft:redwood_taiga", "minecraft:redwood_taiga_hills", "minecraft:mutated_redwood_taiga", "minecraft:mutated_redwood_taiga_hills", "minecraft:taiga_cold", "minecraft:taiga_cold_hills", "minecraft:mutated_taiga_cold", "minecraft:extreme_hills", "minecraft:smaller_extreme_hills", "minecraft:extreme_hills_with_trees", "minecraft:mutated_extreme_hills", "minecraft:mutated_extreme_hills_with_trees", "minecraft:roofed_forest", "minecraft:mutated_roofed_forest", "biomesoplenty:boreal_forest", "biomesoplenty:coniferous_forest", "biomesoplenty:dead_forest", "biomesoplenty:grove", "biomesoplenty:maple_woods", "biomesoplenty:mountain_foothills", "biomesoplenty:redwood_forest", "biomesoplenty:redwood_forest", "biomesoplenty:seasonal_forest", "biomesoplenty:shield", "biomesoplenty:snowy_coniferous_forest", "biomesoplenty:snowy_forest", "biomesoplenty:temperate_rainforest", "biomesoplenty:woodland", "traverse:autumnal_woods", "traverse:autumnal_wooded_hills", "traverse:birch_forested_hills", "traverse:foreseted_hills", "traverse:snowy_coniferous_forest", "traverse:temperate_rainforest", "traverse:woodlands", "conquest:boreal_forest", "conquest:birch_forest", "conquest:deciduous_forest", "conquest:oldgrowth_forest", "conquest:lorein_forest", "conquest:mountains", "conquest:mega_boreal_forest", "twilightforest:dense_twilight_forest", "twilightforest:snowy_forest", "twilightforest:twilight_highlands"});
-      turkeyBiomeList = (List)JsonUtil.getOrCreateConfigFile(configDirectory, "turkey_biomes.json", turkeyBiomes, (new TypeToken<List<String>>() {
-      }).getType());
+      turkeyBiomeList = JsonUtil.getOrCreateStringList(configDirectory, "turkey_biomes.json", turkeyBiomes);
    }
 }

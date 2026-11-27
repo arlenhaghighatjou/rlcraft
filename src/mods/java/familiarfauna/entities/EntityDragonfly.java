@@ -6,7 +6,7 @@ import familiarfauna.config.ConfigurationHandler;
 import familiarfauna.init.ModLootTable;
 import familiarfauna.item.ItemBugHabitat;
 import java.util.Arrays;
-import java.util.Collections;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
@@ -277,7 +277,7 @@ public class EntityDragonfly extends EntityAmbientCreature implements EntityFlyi
          if (!this.tryGoingRandomDirection(rand, 10.0D)) {
             if (!this.tryGoingRandomDirection(rand, 10.0D)) {
                List<EnumFacing> directions = Arrays.asList(EnumFacing.values());
-               Collections.shuffle(directions);
+               ThreadLocalRandom.current().shuffle(directions);
 
                for(EnumFacing facing : directions) {
                   if (this.tryGoingAlongAxis(rand, facing, 10.0D)) {

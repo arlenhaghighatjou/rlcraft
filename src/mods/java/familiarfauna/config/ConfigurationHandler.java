@@ -1,10 +1,10 @@
 package familiarfauna.config;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import familiarfauna.core.FamiliarFauna;
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ConfigurationHandler {
    public static Configuration config;
@@ -45,7 +45,7 @@ public class ConfigurationHandler {
    public ConfigurationHandler() {
    }
 
-   public static void init(File configFile) {
+   public static void init(VFile2 configFile) {
       if (config == null) {
          config = new Configuration(configFile);
          loadConfiguration();
@@ -92,7 +92,10 @@ public class ConfigurationHandler {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigurationChangedEvent);
+   }
+
    public void onConfigurationChangedEvent(OnConfigChangedEvent event) {
       if (event.getModID().equalsIgnoreCase("familiarfauna")) {
          loadConfiguration();

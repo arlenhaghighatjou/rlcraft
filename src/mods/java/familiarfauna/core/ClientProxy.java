@@ -20,15 +20,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
@@ -38,12 +34,12 @@ public class ClientProxy extends CommonProxy {
    }
 
    public void registerRenderers() {
-      registerEntityRenderer(EntityButterfly.class, RenderButterfly.class);
-      registerEntityRenderer(EntityDragonfly.class, RenderDragonfly.class);
-      registerEntityRenderer(EntityPixie.class, RenderPixie.class);
-      registerEntityRenderer(EntitySnail.class, RenderSnail.class);
-      registerEntityRenderer(EntityDeer.class, RenderDeer.class);
-      registerEntityRenderer(EntityTurkey.class, RenderTurkey.class);
+      RenderingRegistry.registerEntityRenderingHandler(EntityButterfly.class, RenderButterfly::new);
+      RenderingRegistry.registerEntityRenderingHandler(EntityDragonfly.class, RenderDragonfly::new);
+      RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, RenderPixie::new);
+      RenderingRegistry.registerEntityRenderingHandler(EntitySnail.class, RenderSnail::new);
+      RenderingRegistry.registerEntityRenderingHandler(EntityDeer.class, RenderDeer::new);
+      RenderingRegistry.registerEntityRenderingHandler(EntityTurkey.class, RenderTurkey::new);
    }
 
    public void registerItemVariantModel(Item item, String name, int metadata) {
@@ -72,29 +68,5 @@ public class ClientProxy extends CommonProxy {
          minecraft.effectRenderer.addEffect(entityFx);
       }
 
-   }
-
-   private static <E extends Entity> void registerEntityRenderer(Class<E> entityClass, Class<? extends Render<E>> renderClass) {
-      RenderingRegistry.registerEntityRenderingHandler(entityClass, new ClientProxy.EntityRenderFactory(renderClass));
-   }
-
-   private static class EntityRenderFactory<E extends Entity> implements IRenderFactory<E> {
-      private Class<? extends Render<E>> renderClass;
-
-      private EntityRenderFactory(Class<? extends Render<E>> renderClass) {
-         this.renderClass = renderClass;
-      }
-
-      public Render<E> createRenderFor(RenderManager manager) {
-         Render<E> renderer = null;
-
-         try {
-            renderer = (Render)this.renderClass.getConstructor(RenderManager.class).newInstance(manager);
-         } catch (Exception var4) {
-            var4.printStackTrace();
-         }
-
-         return renderer;
-      }
    }
 }

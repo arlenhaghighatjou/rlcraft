@@ -1,12 +1,11 @@
 package familiarfauna.entities.render;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import familiarfauna.entities.EntityPixie;
 import familiarfauna.entities.model.ModelPixie;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -40,7 +39,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
       super.doRender(entity, x, y, z, entityYaw, partialTicks);
       GlStateManager.enableBlend();
       GlStateManager.disableAlpha();
-      GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ONE);
       GlStateManager.disableLighting();
       GlStateManager.depthMask(true);
       OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 61680.0F, 0.0F);

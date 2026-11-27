@@ -12,7 +12,9 @@ import familiarfauna.entities.EntityTurkey;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.EntityList.EntityEggInfo;
@@ -37,31 +39,31 @@ public class ModEntities {
    }
 
    public static void init() {
-      registerFFEntityWithSpawnEgg(EntityButterfly.class, "familiarfauna.butterfly", 80, 3, true, 2631720, 15691551, EnumCreatureType.AMBIENT, ConfigurationHandler.butterflyWeight, ConfigurationHandler.butterflyMin, ConfigurationHandler.butterflyMax, ModConfiguration.butterflyBiomeList);
+      registerFFEntityWithSpawnEgg(EntityButterfly.class, EntityButterfly::new, "familiarfauna.butterfly", 80, 3, true, 2631720, 15691551, EnumCreatureType.AMBIENT, ConfigurationHandler.butterflyWeight, ConfigurationHandler.butterflyMin, ConfigurationHandler.butterflyMax, ModConfiguration.butterflyBiomeList);
       if (ConfigurationHandler.deerReplaceCows) {
          removeSpawn(EntityCow.class, EnumCreatureType.CREATURE, ModConfiguration.deerBiomeList);
       }
 
-      registerFFEntityWithSpawnEgg(EntityDeer.class, "familiarfauna.deer", 80, 3, true, 7754036, 16248806, EnumCreatureType.CREATURE, ConfigurationHandler.deerWeight, ConfigurationHandler.deerMin, ConfigurationHandler.deerMax, ModConfiguration.deerBiomeList);
-      registerFFEntityWithSpawnEgg(EntityDragonfly.class, "familiarfauna.dragonfly", 80, 3, true, 3424365, 5349836, EnumCreatureType.AMBIENT, ConfigurationHandler.dragonflyWeight, ConfigurationHandler.dragonflyMin, ConfigurationHandler.dragonflyMax, ModConfiguration.dragonflyBiomeList);
-      registerFFEntityWithSpawnEgg(EntityPixie.class, "familiarfauna.pixie", 80, 3, true, 16751081, 16777215, EnumCreatureType.AMBIENT, ConfigurationHandler.pixieWeight, ConfigurationHandler.pixieMin, ConfigurationHandler.pixieMax, ModConfiguration.pixieBiomeList);
-      registerFFEntityWithSpawnEgg(EntitySnail.class, "familiarfauna.snail", 80, 3, true, 10917052, 13476462, EnumCreatureType.AMBIENT, ConfigurationHandler.snailWeight, ConfigurationHandler.snailMin, ConfigurationHandler.snailMax, ModConfiguration.snailBiomeList);
+      registerFFEntityWithSpawnEgg(EntityDeer.class, EntityDeer::new, "familiarfauna.deer", 80, 3, true, 7754036, 16248806, EnumCreatureType.CREATURE, ConfigurationHandler.deerWeight, ConfigurationHandler.deerMin, ConfigurationHandler.deerMax, ModConfiguration.deerBiomeList);
+      registerFFEntityWithSpawnEgg(EntityDragonfly.class, EntityDragonfly::new, "familiarfauna.dragonfly", 80, 3, true, 3424365, 5349836, EnumCreatureType.AMBIENT, ConfigurationHandler.dragonflyWeight, ConfigurationHandler.dragonflyMin, ConfigurationHandler.dragonflyMax, ModConfiguration.dragonflyBiomeList);
+      registerFFEntityWithSpawnEgg(EntityPixie.class, EntityPixie::new, "familiarfauna.pixie", 80, 3, true, 16751081, 16777215, EnumCreatureType.AMBIENT, ConfigurationHandler.pixieWeight, ConfigurationHandler.pixieMin, ConfigurationHandler.pixieMax, ModConfiguration.pixieBiomeList);
+      registerFFEntityWithSpawnEgg(EntitySnail.class, EntitySnail::new, "familiarfauna.snail", 80, 3, true, 10917052, 13476462, EnumCreatureType.AMBIENT, ConfigurationHandler.snailWeight, ConfigurationHandler.snailMin, ConfigurationHandler.snailMax, ModConfiguration.snailBiomeList);
       if (ConfigurationHandler.turkeyReplaceChickens) {
          removeSpawn(EntityChicken.class, EnumCreatureType.CREATURE, ModConfiguration.turkeyBiomeList);
       }
 
-      registerFFEntityWithSpawnEgg(EntityTurkey.class, "familiarfauna.turkey", 80, 3, true, 7031086, 14823729, EnumCreatureType.CREATURE, ConfigurationHandler.turkeyWeight, ConfigurationHandler.turkeyMin, ConfigurationHandler.turkeyMax, ModConfiguration.turkeyBiomeList);
+      registerFFEntityWithSpawnEgg(EntityTurkey.class, EntityTurkey::new, "familiarfauna.turkey", 80, 3, true, 7031086, 14823729, EnumCreatureType.CREATURE, ConfigurationHandler.turkeyWeight, ConfigurationHandler.turkeyMin, ConfigurationHandler.turkeyMax, ModConfiguration.turkeyBiomeList);
    }
 
-   public static int registerFFEntity(Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
+   public static <T extends Entity> int registerFFEntity(Class<T> entityClass, Function<World, T> factory, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
       int ffEntityId = nextFFEntityId++;
-      EntityRegistry.registerModEntity(new ResourceLocation("familiarfauna", entityName), entityClass, entityName, ffEntityId, FamiliarFauna.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+      EntityRegistry.registerModEntity(new ResourceLocation("familiarfauna", entityName), entityClass, entityName, ffEntityId, FamiliarFauna.instance, trackingRange, updateFrequency, sendsVelocityUpdates, factory);
       idToBEEntityName.put(Integer.valueOf(ffEntityId), entityName);
       return ffEntityId;
    }
 
-   public static int registerFFEntityWithSpawnEgg(Class<? extends EntityLiving> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, EnumCreatureType enumCreatureType, int spawnWeight, int spawnMin, int spawnMax, List<String> biomes) {
-      int ffEntityId = registerFFEntity(entityClass, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
+   public static <T extends EntityLiving> int registerFFEntityWithSpawnEgg(Class<T> entityClass, Function<World, T> factory, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggBackgroundColor, int eggForegroundColor, EnumCreatureType enumCreatureType, int spawnWeight, int spawnMin, int spawnMax, List<String> biomes) {
+      int ffEntityId = registerFFEntity(entityClass, factory, entityName, trackingRange, updateFrequency, sendsVelocityUpdates);
       EntityRegistry.registerEgg(new ResourceLocation("familiarfauna", entityName), eggBackgroundColor, eggForegroundColor);
       addSpawn(entityClass, spawnWeight, spawnMin, spawnMax, enumCreatureType, biomes);
       return ffEntityId;
@@ -73,13 +75,8 @@ public class ModEntities {
       EntityRegistration er = EntityRegistry.instance().lookupModSpawn(mc, tanEntityId);
       if (er != null) {
          Class<? extends Entity> clazz = er.getEntityClass();
-
-         try {
-            if (clazz != null) {
-               entity = (Entity)clazz.getConstructor(World.class).newInstance(worldIn);
-            }
-         } catch (Exception var7) {
-            var7.printStackTrace();
+         if (clazz != null) {
+            entity = EntityList.newEntity(clazz, worldIn);
          }
       }
 

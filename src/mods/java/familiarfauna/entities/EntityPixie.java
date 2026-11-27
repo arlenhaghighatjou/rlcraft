@@ -8,7 +8,7 @@ import familiarfauna.init.ModLootTable;
 import familiarfauna.item.ItemBugHabitat;
 import familiarfauna.particle.FFParticleTypes;
 import java.util.Arrays;
-import java.util.Collections;
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import javax.annotation.Nonnull;
@@ -293,7 +293,7 @@ public class EntityPixie extends EntityAmbientCreature implements EntityFlying {
          if (!this.tryGoingRandomDirection(rand, 6.0D)) {
             if (!this.tryGoingRandomDirection(rand, 2.0D)) {
                List<EnumFacing> directions = Arrays.asList(EnumFacing.values());
-               Collections.shuffle(directions);
+               ThreadLocalRandom.current().shuffle(directions);
 
                for(EnumFacing facing : directions) {
                   if (this.tryGoingAlongAxis(rand, facing, 1.0D)) {
