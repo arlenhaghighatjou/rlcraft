@@ -31,12 +31,12 @@ public class PngWriter {
 		row[0] = 0;
 
 		for(int x = 0; x < this.width; ++x) {
-			int argb = pixels[offset + x];
+			int abgr = pixels[offset + x];
 			int i = 1 + x * 4;
-			row[i] = (byte)(argb >>> 16);
-			row[i + 1] = (byte)(argb >>> 8);
-			row[i + 2] = (byte)argb;
-			row[i + 3] = (byte)(argb >>> 24);
+			row[i] = (byte)abgr;
+			row[i + 1] = (byte)(abgr >>> 8);
+			row[i + 2] = (byte)(abgr >>> 16);
+			row[i + 3] = (byte)(abgr >>> 24);
 		}
 
 		this.deflater.write(row);

@@ -37,7 +37,7 @@ public class GifDecoder {
 			int r = readByte();
 			int g = readByte();
 			int b = readByte();
-			table[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
+			table[i] = 0xFF000000 | (b << 16) | (g << 8) | r;
 		}
 		return table;
 	}
