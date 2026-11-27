@@ -20,20 +20,13 @@ import net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post;
 import net.minecraftforge.client.resource.IResourceType;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.client.resource.VanillaResourceType;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@EventBusSubscriber(
-   modid = "kiwi",
-   value = {Side.CLIENT}
-)
 public class AdvancedFontRenderer extends FontRenderer implements ISelectiveResourceReloadListener {
    public static final AdvancedFontRenderer INSTANCE = new AdvancedFontRenderer();
    private static final String COLOR_CODE = "0123456789abcdef";
    private static final String FORMATTING_CODE = "klmno";
 
-   @SubscribeEvent
    public static void onLanguageGuiOpening(Post event) {
       if (event.getGui() instanceof GuiLanguage && event.getButton() instanceof GuiOptionButton && ((GuiOptionButton)event.getButton()).getOption() == Options.FORCE_UNICODE_FONT) {
          Minecraft mc = Minecraft.getMinecraft();

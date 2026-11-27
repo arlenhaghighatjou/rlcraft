@@ -1,5 +1,7 @@
 package snownee.kiwi;
 
+import net.minecraftforge.common.config.ConfigManager;
+import net.minecraftforge.common.config.ConfigEntry;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraftforge.common.config.Config;
@@ -62,5 +64,16 @@ public class KiwiConfig {
 
       Modules() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("kiwi", "kiwi", "", "kiwi.config",
+         ConfigEntry.category("General",
+            ConfigEntry.value("OreDict Preference", String[].class, () -> KiwiConfig.GENERAL.orePreference, v -> KiwiConfig.GENERAL.orePreference = (String[])v).comment("A list of preferred Mod IDs that results of Cuisine processes should stem from").langKey("kiwi.config.general.oredict_preference"),
+            ConfigEntry.value("Tooltip Requires Shift", boolean.class, () -> KiwiConfig.GENERAL.tooltipRequiresShift, v -> KiwiConfig.GENERAL.tooltipRequiresShift = (Boolean)v).comment("Tooltips require pressing shift to be shown").langKey("kiwi.config.general.press_shift"),
+            ConfigEntry.value("Tooltip Wrap Width", int.class, () -> KiwiConfig.GENERAL.tooltipWrapWidth, v -> KiwiConfig.GENERAL.tooltipWrapWidth = (Integer)v).comment("Max line width shown in description of tooltips").langKey("kiwi.config.general.tip_width").range(50, Integer.MAX_VALUE),
+            ConfigEntry.value("Replace Default Font Renderer", boolean.class, () -> KiwiConfig.GENERAL.replaceDefaultFontRenderer, v -> KiwiConfig.GENERAL.replaceDefaultFontRenderer = (Boolean)v).comment("Use \u00a7x (almost) everywhere. Fix MC-109260. Do NOT enable this unless you know what you are doing").langKey("kiwi.general.replacedefaultfontrenderer").requiresMcRestart()).comment("General settings of Kiwi.").langKey("kiwi.config.general"),
+         ConfigEntry.category("Modules",
+            ConfigEntry.map("Optional Modules", KiwiConfig.MODULES.modules, Boolean.class).comment("You can set the value to false to force disable the optional module").langKey("kiwi.config.modules.optional_modules").requiresMcRestart()).comment("Toggle optional modules of Kiwi.").langKey("kiwi.config.modules"));
    }
 }

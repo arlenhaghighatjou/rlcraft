@@ -181,7 +181,7 @@ public class FontRenderer implements IResourceManagerReloadListener
         }
     }
 
-    private float renderChar(char ch, boolean italic)
+    protected float renderChar(char ch, boolean italic)
     {
         if (ch == 160) return 4.0F; // forge: display nbsp as space. MC-2595
         if (ch == ' ')

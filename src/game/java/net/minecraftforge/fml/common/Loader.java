@@ -279,6 +279,7 @@ public class Loader
         mods.add(new FMLModContainer<>("wearablebackpacks", "Wearable Backpacks RLCraft Edition", "3.2.6", "required-after:forge@[14.23.5.2855,);required-after:baubles@[1.5.2,)", "", "wearablebackpacks", net.mcft.copy.backpacks.WearableBackpacks::new, net.mcft.copy.backpacks.WearableBackpacks::handleModStateEvent));
         mods.add(new FMLModContainer<>("mantle", "Mantle", "1.12-1.3.3.55", "required-after:forge@[14.21.1.2387,)", "[1.12,1.13)", "mantle", slimeknights.mantle.Mantle::new, slimeknights.mantle.Mantle::handleModStateEvent));
         mods.add(new FMLModContainer<>("inspirations", "Inspirations", "1.12.2-0.2.9", "required-after:forge@[14.23.1.2571,];required-after:mantle;after:toughasnails@[3.1.0,]", "[1.12, 1.13)", "inspirations", knightminer.inspirations.Inspirations::new, knightminer.inspirations.Inspirations::handleModStateEvent));
+        mods.add(new FMLModContainer<>("kiwi", "Kiwi", "0.5.3.32", "", "[1.12, 1.13)", "kiwi", snownee.kiwi.Kiwi::new, snownee.kiwi.Kiwi::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

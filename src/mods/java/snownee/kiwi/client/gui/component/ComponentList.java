@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
-import org.lwjgl.opengl.GL11;
+import com.arlenh7.eaglercraft.opengl.DepthClip;
 import snownee.kiwi.client.gui.GuiControl;
 
 public abstract class ComponentList extends Component {
@@ -184,12 +184,9 @@ public abstract class ComponentList extends Component {
       this.applyScrollLimits();
       Tessellator tess = Tessellator.getInstance();
       WorldRenderer worldr = tess.getBuffer();
-      worldr.setTranslation((double)offsetX, (double)offsetY, 0.0D);
       ScaledResolution res = new ScaledResolution(this.parent.mc);
-      double scaleW = (double)this.parent.mc.displayWidth / res.getScaledWidth_double();
-      double scaleH = (double)this.parent.mc.displayHeight / res.getScaledHeight_double();
-      GL11.glEnable(3089);
-      GL11.glScissor((int)((double)this.offsetX * scaleW), (int)((double)this.parent.mc.displayHeight - (double)(offsetY + this.top + this.height) * scaleH), (int)((double)this.width * scaleW), (int)((double)this.height * scaleH));
+      DepthClip.begin(this.offsetX, offsetY + this.top, this.width, this.height, res.getScaledWidth(), res.getScaledHeight(), 950.0D, worldr);
+      worldr.setTranslation((double)offsetX, (double)offsetY, 0.0D);
       if (this.drawBackground) {
          if (this.parent.mc.world != null) {
             this.drawGradientRect(this.left, this.top, this.left + this.width, this.top + this.height, -1059201571, -1059201571);
@@ -283,7 +280,7 @@ public abstract class ComponentList extends Component {
       GlStateManager.shadeModel(7424);
       GlStateManager.enableAlpha();
       GlStateManager.disableBlend();
-      GL11.glDisable(3089);
+      DepthClip.end();
    }
 
    protected void drawGradientRect(int left, int top, int right, int bottom, int color1, int color2) {

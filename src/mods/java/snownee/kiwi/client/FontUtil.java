@@ -1,9 +1,7 @@
 package snownee.kiwi.client;
 
+import net.lax1dude.eaglercraft.v1_8.EaglerBidiReorder;
 import com.google.common.collect.Lists;
-import com.ibm.icu.text.ArabicShaping;
-import com.ibm.icu.text.ArabicShapingException;
-import com.ibm.icu.text.Bidi;
 import java.util.List;
 import net.minecraft.client.gui.FontRenderer;
 
@@ -49,12 +47,6 @@ public class FontUtil {
    }
 
    private static String bidiReorder(String text) {
-      try {
-         Bidi bidi = new Bidi((new ArabicShaping(8)).shape(text), 127);
-         bidi.setReorderingMode(0);
-         return bidi.writeReordered(2);
-      } catch (ArabicShapingException var2) {
-         return text;
-      }
+      return EaglerBidiReorder.bidiReorder(text);
    }
 }

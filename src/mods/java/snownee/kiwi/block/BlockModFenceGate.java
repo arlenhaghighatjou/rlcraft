@@ -28,7 +28,7 @@ public class BlockModFenceGate extends BlockFenceGate implements IModBlock {
    @SideOnly(Side.CLIENT)
    public void mapModel() {
       ModelLoader.setCustomStateMapper(this, (new Builder()).ignore(new IProperty[]{BlockFenceGate.POWERED}).build());
-      super.mapModel();
+      IModBlock.super.mapModel();
    }
 
    public Block cast() {

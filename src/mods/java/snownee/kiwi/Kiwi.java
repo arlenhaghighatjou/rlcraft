@@ -1,9 +1,11 @@
 package snownee.kiwi;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Supplier;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 import net.minecraft.client.Minecraft;
@@ -13,10 +15,7 @@ import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.InstanceFactory;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.discovery.ASMDataTable.ASMData;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -43,37 +42,50 @@ public class Kiwi {
    public Kiwi() {
    }
 
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         net.minecraftforge.common.crafting.CraftingHelper.register(new net.minecraft.util.ResourceLocation("kiwi", "no_containers"), new snownee.kiwi.crafting.RecipeNoContainers.Factory());
+         net.minecraftforge.common.crafting.CraftingHelper.register(new net.minecraft.util.ResourceLocation("kiwi", "is_loaded"), new snownee.kiwi.crafting.ConditionModuleLoaded());
+         snownee.kiwi.KiwiConfig.register();
+         snownee.kiwi.KiwiManager.register(MinecraftForge.EVENT_BUS);
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            MinecraftForge.EVENT_BUS.register(net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post.class, snownee.kiwi.client.AdvancedFontRenderer::onLanguageGuiOpening);
+         }
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            snownee.kiwi.client.ModelRendering.register(MinecraftForge.EVENT_BUS);
+         }
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    @InstanceFactory
    public static Kiwi getInstance() {
       return INSTANCE;
    }
 
-   @EventHandler
-   public void preInit(FMLPreInitializationEvent event) throws IllegalArgumentException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+   public void preInit(FMLPreInitializationEvent event) {
       logger = event.getModLog();
-      ASMDataTable table = event.getAsmData();
-      Set<ASMData> allModules = table.getAll(KiwiModule.class.getName());
-      logger.info("Processing " + allModules.size() + " KiwiModule annotations");
+      logger.info("Processing " + KiwiModules.MODULES.size() + " KiwiModule annotations");
       Map<String, ModContainer> map = Loader.instance().getIndexedModList();
 
-      for(ASMData data : allModules) {
-         String modid = (String)data.getAnnotationInfo().get("modid");
-         String name = (String)data.getAnnotationInfo().get("name");
+      for(KiwiModules.Info data : KiwiModules.MODULES) {
+         String modid = data.modid;
+         String name = data.name;
          if (name == null) {
             name = modid;
          }
 
-         Boolean optional = (Boolean)data.getAnnotationInfo().get("optional");
-         if (optional == Boolean.TRUE) {
+         if (data.optional) {
             Boolean enabled = (Boolean)KiwiConfig.MODULES.modules.get(modid + ":" + name);
             if (enabled == null) {
-               Boolean disabledByDefault = (Boolean)data.getAnnotationInfo().get("disabledByDefault");
-               if (disabledByDefault == null) {
-                  disabledByDefault = false;
-               }
-
-               KiwiConfig.MODULES.modules.put(modid + ":" + name, Boolean.valueOf(!disabledByDefault.booleanValue()));
-               if (disabledByDefault.booleanValue()) {
+               KiwiConfig.MODULES.modules.put(modid + ":" + name, Boolean.valueOf(!data.disabledByDefault));
+               if (data.disabledByDefault) {
                   continue;
                }
             } else if (enabled == Boolean.FALSE) {
@@ -81,12 +93,12 @@ public class Kiwi {
             }
          }
 
-         String dependency = (String)data.getAnnotationInfo().get("dependency");
+         String dependency = data.dependency;
          if (dependency == null || Loader.isModLoaded(dependency)) {
-            Class<?> asmClass = Class.forName(data.getClassName());
             Loader.instance().setActiveModContainer((ModContainer)map.get(modid));
-            IModule instance = (IModule)asmClass.asSubclass(IModule.class).newInstance();
+            IModule instance = (IModule)data.factory.get();
             KiwiManager.addInstance(new ResourceLocation(modid, name), instance);
+            KiwiModules.ENTRIES.put(instance, data.entries);
             Loader.instance().setActiveModContainer((ModContainer)null);
          }
       }
@@ -99,10 +111,8 @@ public class Kiwi {
          String modid = ((ResourceLocation)entry.getKey()).getResourceDomain();
          String name = ((ResourceLocation)entry.getKey()).getResourcePath();
 
-         for(Field field : ((IModule)entry.getValue()).getClass().getFields()) {
-            int mods = field.getModifiers();
-            if (Modifier.isPublic(mods) && Modifier.isStatic(mods) && Modifier.isFinal(mods)) {
-               Object o = field.get((Object)null);
+         for(Object o : (Object[])((Supplier)KiwiModules.ENTRIES.get(entry.getValue())).get()) {
+            {
                if (o != null) {
                   if (o instanceof IModBlock) {
                      KiwiManager.BLOCKS.put((IModBlock)o, modid);
@@ -124,7 +134,6 @@ public class Kiwi {
       KiwiManager.MODULES.values().forEach(IModule::preInit);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       if (KiwiConfig.GENERAL.replaceDefaultFontRenderer && event.getSide() == Side.CLIENT) {
          replaceFontRenderer();
@@ -134,7 +143,6 @@ public class Kiwi {
       KiwiManager.MODULES.values().forEach(IModule::init);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       Loader.instance().setActiveModContainer((ModContainer)null);
       KiwiManager.MODULES.values().forEach(IModule::postInit);

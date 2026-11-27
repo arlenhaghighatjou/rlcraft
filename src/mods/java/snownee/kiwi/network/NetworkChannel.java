@@ -1,5 +1,6 @@
 package snownee.kiwi.network;
 
+import java.util.function.Supplier;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
@@ -27,12 +28,17 @@ import snownee.kiwi.Kiwi;
 public final class NetworkChannel {
    public static final NetworkChannel INSTANCE = new NetworkChannel();
    private final Object2IntMap<Class<? extends PacketMod>> mapping = new Object2IntArrayMap();
-   private final Int2ObjectMap<Class<? extends PacketMod>> mappingReverse = new Int2ObjectArrayMap();
+   private final Int2ObjectMap<Supplier<? extends PacketMod>> mappingReverse = new Int2ObjectArrayMap();
    private int nextIndex = 0;
    private final FMLEventChannel channel;
 
    private NetworkChannel() {
-      (this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("kiwi")).register(this);
+      this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("kiwi");
+      this.channel.register(ServerCustomPacketEvent.class, this::onServerPacketIncoming);
+      if (FMLCommonHandler.instance().getSide().isClient()) {
+         this.channel.register(ClientCustomPacketEvent.class, this::onClientPacketIncoming);
+      }
+
    }
 
    @SubscribeEvent
@@ -74,9 +80,9 @@ public final class NetworkChannel {
       this.channel.sendToServer(new FMLProxyPacket(new PacketBuffer(this.unpack(packet)), "kiwi"));
    }
 
-   public void register(Class<? extends PacketMod> klass) {
+   public <T extends PacketMod> void register(Class<T> klass, Supplier<T> factory) {
       this.mapping.put(klass, this.nextIndex);
-      this.mappingReverse.put(this.nextIndex, klass);
+      this.mappingReverse.put(this.nextIndex, factory);
       ++this.nextIndex;
    }
 
@@ -86,7 +92,7 @@ public final class NetworkChannel {
 
    private PacketMod getByIndex(int index) {
       try {
-         return (PacketMod)((Class)this.mappingReverse.get(index)).newInstance();
+         return (PacketMod)((Supplier)this.mappingReverse.get(index)).get();
       } catch (Exception var3) {
          return null;
       }
@@ -110,7 +116,7 @@ public final class NetworkChannel {
          try {
             packet.handleClient(player);
          } catch (Exception var3) {
-            Kiwi.logger.catching(var3);
+            Kiwi.logger.error(var3);
          }
 
       });
@@ -121,7 +127,7 @@ public final class NetworkChannel {
          try {
             packet.handleServer(player);
          } catch (Exception var3) {
-            Kiwi.logger.catching(var3);
+            Kiwi.logger.error(var3);
          }
 
       });
@@ -134,7 +140,7 @@ public final class NetworkChannel {
       try {
          packet.writeDataTo(buffer);
       } catch (Exception var4) {
-         Kiwi.logger.catching(var4);
+         Kiwi.logger.error(var4);
       }
 
       return buffer;

@@ -1,5 +1,7 @@
 package snownee.kiwi.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
 
@@ -11,7 +13,7 @@ public class Util {
    }
 
    public static String color(int color) {
-      return String.format("\u00a7x%06x", color & 16777215);
+      return HString.format("\u00a7x%06x", color & 16777215);
    }
 
    public static String formatComma(long number) {

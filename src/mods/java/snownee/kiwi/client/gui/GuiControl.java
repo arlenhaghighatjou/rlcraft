@@ -99,7 +99,7 @@ public class GuiControl implements IMessageHandler {
 
       for(Component component : this.components) {
          if (clazz.isInstance(component)) {
-            list.add(component);
+            list.add((T)component);
          }
       }
 

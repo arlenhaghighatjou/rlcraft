@@ -3,7 +3,7 @@ package snownee.kiwi.tile;
 import javax.annotation.Nonnull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.chunk.Chunk;
@@ -16,7 +16,7 @@ public abstract class TileBase extends TileEntity {
       return new SPacketUpdateTileEntity(this.pos, -1, this.writePacketData(new NBTTagCompound()));
    }
 
-   public final void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet) {
+   public final void onDataPacket(INetworkManager manager, SPacketUpdateTileEntity packet) {
       this.readPacketData(packet.getNbtCompound());
    }
 
