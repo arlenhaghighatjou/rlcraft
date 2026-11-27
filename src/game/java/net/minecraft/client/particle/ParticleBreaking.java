@@ -44,6 +44,11 @@ public class ParticleBreaking extends Particle
 
     public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
+        if (!this.hasVanillaRenderer())
+        {
+            return false;
+        }
+
         int w = this.particleTexture.getIconWidth();
         int h = this.particleTexture.getIconHeight();
         int xOffset = MathHelper.floor((float)w * this.particleTextureJitterX * 4.0F * 0.0625F);

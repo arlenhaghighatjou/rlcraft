@@ -29,6 +29,11 @@ public class Barrier extends Particle
 
     public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
+        if (!this.hasVanillaRenderer())
+        {
+            return false;
+        }
+
         accelerator.drawParticle(this, this.particleTexture.getOriginX(), this.particleTexture.getOriginY(), this.getBrightnessForRender(partialTicks), Math.min(this.particleTexture.getIconWidth(), this.particleTexture.getIconHeight()), 0.5F, this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha);
         return true;
     }

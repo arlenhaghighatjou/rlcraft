@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Particle implements CullCheck
 {
     private boolean culled = true;
+    private final boolean vanillaRenderer = this.getClass().getName().startsWith("net.minecraft.");
     private static final AxisAlignedBB EMPTY_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
     protected World world;
     public double prevPosX;
@@ -217,7 +218,7 @@ public class Particle implements CullCheck
 
     public boolean renderAccelerated(IAcceleratedParticleEngine accelerator, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
     {
-        if (this.getFXLayer() != 0 || this.particleAngle != 0.0F)
+        if (!this.vanillaRenderer || this.getFXLayer() != 0 || this.particleAngle != 0.0F)
         {
             return false;
         }
@@ -378,6 +379,11 @@ public class Particle implements CullCheck
     public void setCulled(boolean culled)
     {
         this.culled = culled;
+    }
+
+    public boolean hasVanillaRenderer()
+    {
+        return this.vanillaRenderer;
     }
 
     public boolean isCulled()
