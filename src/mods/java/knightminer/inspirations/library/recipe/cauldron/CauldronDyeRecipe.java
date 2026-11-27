@@ -1,5 +1,6 @@
 package knightminer.inspirations.library.recipe.cauldron;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,6 @@ public class CauldronDyeRecipe extends CauldronRecipeMatchRecipe {
    }
 
    public String toString() {
-      return String.format("CauldronDyeRecipe: %s dyed %s", this.getResult().toString(), this.color.getName());
+      return HString.format("CauldronDyeRecipe: %s dyed %s", this.getResult().toString(), this.color.getName());
    }
 }

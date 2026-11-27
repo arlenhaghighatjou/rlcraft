@@ -1,6 +1,8 @@
 package knightminer.inspirations.tools;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.CommonProxy;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.PulseBase;
@@ -51,26 +53,30 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.registries.IForgeRegistry;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsTools",
-   description = "Adds various tools or tweaks to vanilla tools"
-)
 public class InspirationsTools extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsTools";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.tools.ToolsClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.tools.ToolsClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static Item redstoneCharger;
    public static Item woodenCrook;
    public static Item stoneCrook;
@@ -90,7 +96,6 @@ public class InspirationsTools extends PulseBase {
    public InspirationsTools() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
       if (Config.separateCrook) {
@@ -103,7 +108,14 @@ public class InspirationsTools extends PulseBase {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, EntityEntry.class, this::registerEntities);
+      bus.registerGeneric(Register.class, IRecipe.class, this::registerRecipes);
+      bus.registerGeneric(Register.class, Enchantment.class, this::registerEnchantments);
+   }
+
    public void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       if (Config.enableRedstoneCharge || Config.enableChargedArrow) {
@@ -112,7 +124,6 @@ public class InspirationsTools extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       arrow = (ItemArrow)registerItem(r, new ItemModArrow(), "arrow");
@@ -158,13 +169,11 @@ public class InspirationsTools extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerEntities(Register<EntityEntry> event) {
       IForgeRegistry<EntityEntry> r = event.getRegistry();
-      r.register(getEntityBuilder(EntityModArrow.class, "arrow", 0).tracker(64, 1, false).build());
+      r.register(getEntityBuilder(EntityModArrow.class, "arrow", 0).factory(EntityModArrow::new).tracker(64, 1, false).build());
    }
 
-   @SubscribeEvent
    public void registerRecipes(Register<IRecipe> event) {
       IForgeRegistry<IRecipe> r = event.getRegistry();
       if (Config.copyWaypointCompass) {
@@ -173,7 +182,6 @@ public class InspirationsTools extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerEnchantments(Register<Enchantment> event) {
       IForgeRegistry<Enchantment> r = event.getRegistry();
       if (Config.moreShieldEnchantments) {
@@ -203,7 +211,6 @@ public class InspirationsTools extends PulseBase {
 
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
       if (Config.separateCrook) {
@@ -217,10 +224,9 @@ public class InspirationsTools extends PulseBase {
       this.registerDispenserBehavior();
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
-      MinecraftForge.EVENT_BUS.register(ToolsEvents.class);
+      ToolsEvents.register(MinecraftForge.EVENT_BUS);
    }
 
    private void registerDispenserBehavior() {

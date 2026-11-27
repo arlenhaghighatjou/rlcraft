@@ -1,5 +1,6 @@
 package knightminer.inspirations.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
 import com.google.gson.JsonObject;
@@ -322,17 +323,17 @@ public class Config {
          return line + "->" + t;
       case 3:
          if (parts[2].equals("-1")) {
-            return String.format("%s:%s->%s", parts[0], parts[1], t);
+            return HString.format("%s:%s->%s", parts[0], parts[1], t);
          }
 
          return line + "->" + t;
       case 4:
          String power = "false".equals(parts[3]) ? f : t;
          if (parts[2].equals("-1")) {
-            return String.format("%s:%s->%s", parts[0], parts[1], power);
+            return HString.format("%s:%s->%s", parts[0], parts[1], power);
          }
 
-         return String.format("%s:%s:%s->%s", parts[0], parts[1], parts[2], power);
+         return HString.format("%s:%s:%s->%s", parts[0], parts[1], parts[2], power);
       default:
          return line;
       }
@@ -377,6 +378,7 @@ public class Config {
                      power = -1.0F;
                   }
 
+                  float enchPower = power;
                   RecipeUtil.forStackInString(parts[0], (stack) -> {
                      InspirationsRegistry.registerBook(stack, enchPower);
                   });

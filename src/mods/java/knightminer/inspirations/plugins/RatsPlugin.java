@@ -1,6 +1,7 @@
 package knightminer.inspirations.plugins;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.PulseBase;
@@ -10,25 +11,22 @@ import net.minecraft.block.Block;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "RatsPlugin",
-   description = "Supports the Rats milk cauldron as part of cauldron recipes. Note extended features such as recipes from dropping items in cauldrons will now work.",
-   modsRequired = "rats",
-   pulsesRequired = "InspirationsRecipes"
-)
 public class RatsPlugin extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "RatsPlugin";
    public static final String requiredModID = "rats";
-   @ObjectHolder("rats:cauldron_milk")
-   public static final Block milkCauldron = null;
+   public static Block milkCauldron = null;
 
    public RatsPlugin() {
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       if (Config.enableCauldronFluids) {
          Fluid milk = FluidRegistry.getFluid("milk");
@@ -41,5 +39,9 @@ public class RatsPlugin extends PulseBase {
          }
 
       }
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Block.class, new ResourceLocation("rats:cauldron_milk"), v -> milkCauldron = v);
    }
 }

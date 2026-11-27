@@ -25,7 +25,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
@@ -212,12 +212,12 @@ public class TileCauldron extends TileEntity {
             return level;
          }
 
-         cooldown = ((Boolean)currentState.getValue(BlockEnhancedCauldron.BOILING)).booleanValue();
+         boolean boiling = ((Boolean)currentState.getValue(BlockEnhancedCauldron.BOILING)).booleanValue();
          ItemStack stack = entityItem.getItem();
-         ICauldronRecipe recipe = InspirationsRegistry.getCauldronResult(stack, (boolean)cooldown, level, this.state);
+         ICauldronRecipe recipe = InspirationsRegistry.getCauldronResult(stack, boiling, level, this.state);
          if (recipe != null) {
             ICauldronRecipe.CauldronState state = this.state;
-            SoundEvent sound = recipe.getSound(stack, (boolean)cooldown, level, state);
+            SoundEvent sound = recipe.getSound(stack, boiling, level, state);
             if (sound != null) {
                this.world.playSound((EntityPlayer)null, this.pos, sound, SoundCategory.BLOCKS, recipe.getVolume(sound), 1.0F);
             }
@@ -226,20 +226,20 @@ public class TileCauldron extends TileEntity {
 
             ICauldronRecipe.CauldronState newState;
             while(true) {
-               newState = recipe.getState(stack, (boolean)cooldown, level, state);
+               newState = recipe.getState(stack, boiling, level, state);
                level = recipe.getLevel(level);
                if (level == 0) {
                   newState = ICauldronRecipe.CauldronState.WATER;
                }
 
-               ItemStack result = recipe.getResult(stack, (boolean)cooldown, level, state);
+               ItemStack result = recipe.getResult(stack, boiling, level, state);
                if (!result.isEmpty()) {
                   this.spawnItem(result, entityItem);
                }
 
                ItemStack container = recipe.getContainer(stack);
                int oldCount = stack.getCount();
-               stack = recipe.transformInput(stack, (boolean)cooldown, level, state);
+               stack = recipe.transformInput(stack, boiling, level, state);
                if (!container.isEmpty()) {
                   container.setCount(container.getCount() * (oldCount - stack.getCount()));
                   this.spawnItem(container, entityItem);
@@ -247,7 +247,7 @@ public class TileCauldron extends TileEntity {
 
                state = newState;
                ++matches;
-               if (!recipe.matches(stack, (boolean)cooldown, level, newState) || matches >= 10) {
+               if (!recipe.matches(stack, boiling, level, newState) || matches >= 10) {
                   break;
                }
             }
@@ -276,7 +276,7 @@ public class TileCauldron extends TileEntity {
             if (entity instanceof EntityLivingBase) {
                EntityLivingBase living = (EntityLivingBase)entity;
                List<PotionEffect> effects = this.state.getPotion().getEffects();
-               if (effects.stream().anyMatch((effectx) -> {
+               if (effects.stream().anyMatch((effect) -> {
                   return !living.isPotionActive(effect.getPotion());
                })) {
                   for(PotionEffect effect : effects) {
@@ -418,7 +418,7 @@ public class TileCauldron extends TileEntity {
       return new SPacketUpdateTileEntity(this.getPos(), this.getBlockMetadata(), this.state.writeToNBT());
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       ICauldronRecipe.CauldronState newState = ICauldronRecipe.CauldronState.fromNBT(pkt.getNbtCompound());
       if (!this.state.matches(newState)) {
          this.state = newState;

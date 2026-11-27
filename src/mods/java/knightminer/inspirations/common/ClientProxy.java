@@ -1,5 +1,6 @@
 package knightminer.inspirations.common;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import javax.annotation.Nonnull;
 import knightminer.inspirations.library.Util;
 import knightminer.inspirations.shared.client.TextureModel;
@@ -37,9 +38,12 @@ public class ClientProxy extends CommonProxy {
    public ClientProxy() {
    }
 
+   public void register(EventBus bus) {
+   }
+
    public void preInit() {
       super.preInit();
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    protected static ResourceLocation registerItemModel(Block block) {

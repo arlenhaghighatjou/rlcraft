@@ -746,6 +746,11 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
         return this.getDefaultState().isFullCube() && !this.hasTileEntity(silk_check_state.get());
     }
 
+    public ItemStack callGetSilkTouchDrop(IBlockState state)
+    {
+        return this.getSilkTouchDrop(state);
+    }
+
     protected ItemStack getSilkTouchDrop(IBlockState state)
     {
         Item item = Item.getItemFromBlock(this);

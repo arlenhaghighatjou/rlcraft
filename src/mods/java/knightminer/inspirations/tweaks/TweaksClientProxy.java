@@ -1,5 +1,6 @@
 package knightminer.inspirations.tweaks;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Maps;
 import java.util.LinkedHashMap;
 import knightminer.inspirations.common.ClientProxy;
@@ -43,7 +44,6 @@ import net.minecraftforge.client.event.ColorHandlerEvent.Block;
 import net.minecraftforge.client.event.ColorHandlerEvent.Item;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.event.world.WorldEvent.Unload;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TweaksClientProxy extends ClientProxy {
    private static final ResourceLocation CARPET_MODEL = Util.getResource("carpet");
@@ -56,7 +56,15 @@ public class TweaksClientProxy extends ClientProxy {
    public TweaksClientProxy() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(Block.class, this::registerBlockColors);
+      bus.register(Item.class, this::registerItemColors);
+      bus.register(ModelBakeEvent.class, this::onModelBake);
+      bus.register(Load.class, this::onWorldLoad);
+      bus.register(Unload.class, this::onWorldUnload);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       setModelStateMapper(InspirationsTweaks.carpet, new PropertyStateMapper(CARPET_MODEL, BlockCarpet.COLOR, new IProperty[]{BlockFittedCarpet.NORTHWEST, BlockFittedCarpet.NORTHEAST, BlockFittedCarpet.SOUTHWEST, BlockFittedCarpet.SOUTHEAST}));
       setModelStateMapper(InspirationsTweaks.flowerPot, new TweaksClientProxy.FlowerPotStateMapper());
@@ -87,7 +95,6 @@ public class TweaksClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void registerBlockColors(Block event) {
       BlockColors colors = event.getBlockColors();
       if (Config.betterFlowerPot) {
@@ -113,7 +120,6 @@ public class TweaksClientProxy extends ClientProxy {
       }, new net.minecraft.block.Block[]{InspirationsTweaks.sugarCaneCrop});
    }
 
-   @SubscribeEvent
    public void registerItemColors(Item event) {
       ItemColors itemColors = event.getItemColors();
       if (Config.coloredEnchantedRibbons) {
@@ -193,7 +199,6 @@ public class TweaksClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void onModelBake(ModelBakeEvent event) {
       if (InspirationsTweaks.flowerPot != null) {
          replaceTexturedModel(event, FLOWER_POT_MODEL, "plant", false);
@@ -201,7 +206,6 @@ public class TweaksClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void onWorldLoad(Load event) {
       if (Config.customPortalColor) {
          World world = event.getWorld();
@@ -213,7 +217,6 @@ public class TweaksClientProxy extends ClientProxy {
       }
    }
 
-   @SubscribeEvent
    public void onWorldUnload(Unload event) {
       if (Config.customPortalColor) {
          event.getWorld().removeEventListener(PortalColorHandler.INSTANCE);

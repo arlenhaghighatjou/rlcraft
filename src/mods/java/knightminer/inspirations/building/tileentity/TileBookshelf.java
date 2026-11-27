@@ -17,7 +17,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -160,7 +160,7 @@ public class TileBookshelf extends TileInventory implements IInventoryGui {
       return new SPacketUpdateTileEntity(this.getPos(), this.getBlockMetadata(), tag);
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       NBTTagCompound tag = pkt.getNbtCompound();
       NBTBase texture = tag.getTag("texture");
       if (texture != null) {

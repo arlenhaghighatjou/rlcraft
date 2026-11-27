@@ -1,5 +1,6 @@
 package knightminer.inspirations.library.recipe.cauldron;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.init.PotionTypes;
@@ -26,6 +27,6 @@ public class CauldronPotionRecipe extends CauldronRecipeMatchRecipe {
    }
 
    public String toString() {
-      return String.format("CauldronFluidRecipe: %s from %s", this.getResult().toString(), this.potion.getRegistryName());
+      return HString.format("CauldronFluidRecipe: %s from %s", this.getResult().toString(), this.potion.getRegistryName());
    }
 }

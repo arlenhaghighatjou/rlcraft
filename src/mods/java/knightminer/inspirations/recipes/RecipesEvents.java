@@ -1,5 +1,6 @@
 package knightminer.inspirations.recipes;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.network.InspirationsNetwork;
 import knightminer.inspirations.common.network.MilkablePacket;
@@ -20,16 +21,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class RecipesEvents {
    public RecipesEvents() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
+   public static void register(EventBus bus) {
+      bus.register(RightClickBlock.class, EventPriority.HIGH, false, RecipesEvents::clickCauldron);
+      bus.register(EntityInteract.class, RecipesEvents::milkSquid);
+   }
+
    public static void clickCauldron(RightClickBlock event) {
       if (Config.enableCauldronRecipes) {
          EntityPlayer player = event.getEntityPlayer();
@@ -52,7 +54,6 @@ public class RecipesEvents {
       }
    }
 
-   @SubscribeEvent
    public static void milkSquid(EntityInteract event) {
       if (Config.milkSquids) {
          Entity target = event.getTarget();

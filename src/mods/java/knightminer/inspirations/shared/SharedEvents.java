@@ -1,5 +1,6 @@
 package knightminer.inspirations.shared;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.network.InspirationsNetwork;
 import knightminer.inspirations.common.network.MilkablePacket;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,7 +9,6 @@ import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SharedEvents {
    public static final String TAG_MILKCOOLDOWN = "milk_cooldown";
@@ -16,7 +16,10 @@ public class SharedEvents {
    public SharedEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, SharedEvents::updateMilkCooldown);
+   }
+
    public static void updateMilkCooldown(LivingUpdateEvent event) {
       if (InspirationsShared.milkCooldownCow || InspirationsShared.milkCooldownSquid) {
          EntityLivingBase entity = event.getEntityLiving();

@@ -132,7 +132,7 @@ public class CauldronRecipeWrapper implements ICauldronRecipeWrapper {
    }
 
    public List<String> getTooltipStrings(int mouseX, int mouseY) {
-      List<String> tooltip = super.getTooltipStrings(mouseX, mouseY);
+      List<String> tooltip = ICauldronRecipeWrapper.super.getTooltipStrings(mouseX, mouseY);
       if (this.boiling && mouseX > 45 && mouseX <= 58 && mouseY > 36 && mouseY <= 48) {
          tooltip.add(Util.translate("gui.jei.cauldron.boiling"));
       }

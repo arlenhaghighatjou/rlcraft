@@ -124,7 +124,7 @@ public class RenderGlobal implements IWorldEventListener, IResourceManagerReload
     private Set<RenderChunk> chunksToUpdate = Sets.<RenderChunk>newLinkedHashSet();
     private List<RenderGlobal.ContainerLocalRenderInformation> renderInfos = Lists.<RenderGlobal.ContainerLocalRenderInformation>newArrayListWithCapacity(69696);
     private final Set<TileEntity> setTileEntities = Sets.<TileEntity>newHashSet();
-    private ViewFrustum viewFrustum;
+    public ViewFrustum viewFrustum;
     private int glSunList = -1;
     private int moonPhase = -1;
     private int glMoonList = -1;

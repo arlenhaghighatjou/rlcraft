@@ -1,5 +1,6 @@
 package knightminer.inspirations.library.recipe.cauldron;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import knightminer.inspirations.library.InspirationsRegistry;
@@ -43,6 +44,6 @@ public class CauldronFluidTransformRecipe extends CauldronFluidRecipe {
    }
 
    public String toString() {
-      return String.format("CauldronFluidTransformRecipe: %s from %s", this.result.getFluid().getName(), this.fluid == null ? "water" : this.fluid.getFluid().getName());
+      return HString.format("CauldronFluidTransformRecipe: %s from %s", this.result.getFluid().getName(), this.fluid == null ? "water" : this.fluid.getFluid().getName());
    }
 }

@@ -1,6 +1,6 @@
 package knightminer.inspirations.shared;
 
-import com.google.common.eventbus.Subscribe;
+import slimeknights.mantle.pulsar.pulse.IPulse;
 import javax.annotation.Nonnull;
 import knightminer.inspirations.building.InspirationsBuilding;
 import knightminer.inspirations.recipes.InspirationsRecipes;
@@ -13,20 +13,20 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.oredict.OreDictionary;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsShared",
-   description = "Blocks and items used by all modules",
-   forced = true
-)
-public class InspirationsOredict {
+public class InspirationsOredict implements IPulse {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLInitializationEvent) {
+         this.doTheOredict((FMLInitializationEvent)evt);
+      }
+
+   }
+
    private static final String[] DYES = new String[]{"White", "Orange", "Magenta", "LightBlue", "Yellow", "Lime", "Pink", "Gray", "LightGray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
 
    public InspirationsOredict() {
    }
 
-   @Subscribe
    public void doTheOredict(FMLInitializationEvent event) {
       this.ensureVanilla();
       registerBuilding();

@@ -1,6 +1,7 @@
 package knightminer.inspirations.library.client;
 
-import java.awt.Color;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -165,7 +166,7 @@ public final class ClientUtil {
             try {
                return getStackBlockColors(stack, world, pos, index);
             } catch (Exception var6) {
-               Inspirations.log.error(String.format("Caught exception getting block colors for %s", item.getRegistryName()), var6);
+               Inspirations.log.error(HString.format("Caught exception getting block colors for %s", item.getRegistryName()), var6);
                unsafe.add(item);
             }
          }

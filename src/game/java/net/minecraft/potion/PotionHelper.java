@@ -13,7 +13,7 @@ import net.minecraft.item.crafting.Ingredient;
 
 public class PotionHelper
 {
-    private static final List<PotionHelper.MixPredicate<PotionType>> POTION_TYPE_CONVERSIONS = Lists.<PotionHelper.MixPredicate<PotionType>>newArrayList();
+    public static final List<PotionHelper.MixPredicate<PotionType>> POTION_TYPE_CONVERSIONS = Lists.<PotionHelper.MixPredicate<PotionType>>newArrayList();
     private static final List<PotionHelper.MixPredicate<Item>> POTION_ITEM_CONVERSIONS = Lists.<PotionHelper.MixPredicate<Item>>newArrayList();
     private static final List<Ingredient> POTION_ITEMS = Lists.<Ingredient>newArrayList();
     private static final Predicate<ItemStack> IS_POTION_ITEM = new Predicate<ItemStack>()
@@ -227,11 +227,11 @@ public class PotionHelper
         POTION_TYPE_CONVERSIONS.add(new PotionHelper.MixPredicate(p_193356_0_, p_193356_1_, p_193356_2_));
     }
 
-    static class MixPredicate<T extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<T>>
+    public static class MixPredicate<T extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<T>>
         {
-            final net.minecraftforge.registries.IRegistryDelegate<T> input;
-            final Ingredient reagent;
-            final net.minecraftforge.registries.IRegistryDelegate<T> output;
+            public final net.minecraftforge.registries.IRegistryDelegate<T> input;
+            public final Ingredient reagent;
+            public final net.minecraftforge.registries.IRegistryDelegate<T> output;
 
             public MixPredicate(T p_i47570_1_, Ingredient p_i47570_2_, T p_i47570_3_)
             {

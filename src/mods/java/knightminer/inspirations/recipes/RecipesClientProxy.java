@@ -1,5 +1,7 @@
 package knightminer.inspirations.recipes;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Maps;
 import java.util.LinkedHashMap;
 import javax.annotation.Nonnull;
@@ -27,7 +29,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent.Block;
 import net.minecraftforge.client.event.ColorHandlerEvent.Item;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class RecipesClientProxy extends ClientProxy {
    private static final ResourceLocation POTION_MODEL = new ResourceLocation("bottle_drinkable");
@@ -36,7 +37,14 @@ public class RecipesClientProxy extends ClientProxy {
    public RecipesClientProxy() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(Block.class, this::registerBlockColors);
+      bus.register(Item.class, this::registerItemColors);
+      bus.register(ModelBakeEvent.class, this::onModelBake);
+      bus.register(Pre.class, this::registerTextures);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       setModelStateMapper(InspirationsRecipes.cauldron, new RecipesClientProxy.CauldronStateMapper(CAULDRON_MODEL));
       registerItemModel(InspirationsRecipes.potatoSoupItem);
@@ -46,7 +54,6 @@ public class RecipesClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void registerBlockColors(Block event) {
       BlockColors blockColors = event.getBlockColors();
       registerBlockColors(blockColors, (state, world, pos, tintIndex) -> {
@@ -61,7 +68,6 @@ public class RecipesClientProxy extends ClientProxy {
       }, new net.minecraft.block.Block[]{InspirationsRecipes.cauldron});
    }
 
-   @SubscribeEvent
    public void registerItemColors(Item event) {
       ItemColors itemColors = event.getItemColors();
       registerItemColors(itemColors, (stack, tintIndex) -> {
@@ -69,16 +75,15 @@ public class RecipesClientProxy extends ClientProxy {
       }, new net.minecraft.item.Item[]{InspirationsRecipes.dyedWaterBottle});
    }
 
-   @SubscribeEvent
    public void onModelBake(ModelBakeEvent event) {
       if (InspirationsRecipes.cauldron != null) {
          boolean boiling = false;
 
          while(true) {
-            replaceTexturedModel(event, new ModelResourceLocation(CAULDRON_MODEL, String.format("boiling=%s,contents=fluid,level=empty", boiling)), "water", false);
+            replaceTexturedModel(event, new ModelResourceLocation(CAULDRON_MODEL, HString.format("boiling=%s,contents=fluid,level=empty", boiling)), "water", false);
 
             for(int i = Config.enableBiggerCauldron ? 0 : 1; i <= 3; ++i) {
-               replaceTexturedModel(event, new ModelResourceLocation(CAULDRON_MODEL, String.format("boiling=%s,contents=fluid,level=%s", boiling, i)), "water", false);
+               replaceTexturedModel(event, new ModelResourceLocation(CAULDRON_MODEL, HString.format("boiling=%s,contents=fluid,level=%s", boiling, i)), "water", false);
             }
 
             boiling = !boiling;
@@ -90,7 +95,6 @@ public class RecipesClientProxy extends ClientProxy {
       }
    }
 
-   @SubscribeEvent
    public void registerTextures(Pre event) {
       TextureMap map = event.getMap();
       registerFluidTexture(map, InspirationsRecipes.milk);

@@ -6,9 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import javax.annotation.Nullable;
-import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.building.block.BlockBookshelf;
 import knightminer.inspirations.shared.client.TextureModel;
 import net.minecraft.block.state.IBlockState;
@@ -34,25 +32,26 @@ public class BookshelfModel extends TextureModel {
          Integer booksValue = (Integer)extendedState.getValue(BlockBookshelf.BOOKS);
          int books = booksValue != null ? booksValue.intValue() : 0;
 
-         try {
-            bakedModel = (IBakedModel)BOOK_CACHE.get(new BookshelfModel.BookshelfCacheKey(extendedState.getClean(), texture, books), () -> {
-               Builder<String, String> builder = ImmutableMap.builder();
-               if (texture != null) {
-                  builder.put("texture", texture);
-               }
+         BookshelfModel.BookshelfCacheKey key = new BookshelfModel.BookshelfCacheKey(extendedState.getClean(), texture, books);
+         IBakedModel cached = (IBakedModel)BOOK_CACHE.getIfPresent(key);
+         if (cached == null) {
+            Builder<String, String> builder = ImmutableMap.builder();
+            if (texture != null) {
+               builder.put("texture", texture);
+            }
 
-               for(int i = 0; i < 14; ++i) {
-                  if ((books & 1 << i) == 0) {
-                     builder.put("#book" + i, "");
-                     builder.put("#bookLabel" + i, "");
-                  }
+            for(int i = 0; i < 14; ++i) {
+               if ((books & 1 << i) == 0) {
+                  builder.put("#book" + i, "");
+                  builder.put("#bookLabel" + i, "");
                }
+            }
 
-               return this.getTexturedModel(builder.build());
-            });
-         } catch (ExecutionException var11) {
-            Inspirations.log.error(var11);
+            cached = this.getTexturedModel(builder.build());
+            BOOK_CACHE.put(key, cached);
          }
+
+         bakedModel = cached;
       }
 
       return bakedModel.getQuads(state, side, rand);

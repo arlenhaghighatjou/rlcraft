@@ -1,6 +1,8 @@
 package knightminer.inspirations.building;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.building.block.BlockBookshelf;
 import knightminer.inspirations.building.block.BlockEnlightenedBush;
 import knightminer.inspirations.building.block.BlockFlower;
@@ -25,26 +27,30 @@ import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.mantle.item.ItemMetaDynamic;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsBuilding",
-   description = "A collection of features to improve building"
-)
 public class InspirationsBuilding extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsBuilding";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.building.BuildingClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.building.BuildingClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static Block bookshelf;
    public static BlockRope rope;
    public static Block glassDoor;
@@ -60,17 +66,20 @@ public class InspirationsBuilding extends PulseBase {
    public InspirationsBuilding() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+   }
+
    public void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       if (Config.enableBookshelf) {
          bookshelf = registerBlock(r, new BlockBookshelf(), "bookshelf");
-         registerTE(TileBookshelf.class, "bookshelf");
+         registerTE(TileBookshelf.class, "bookshelf", TileBookshelf::new);
       }
 
       if (Config.enableRope) {
@@ -96,12 +105,11 @@ public class InspirationsBuilding extends PulseBase {
 
       if (Config.enableEnlightenedBush) {
          enlightenedBush = (BlockEnlightenedBush)registerBlock(r, new BlockEnlightenedBush(), "enlightened_bush");
-         registerTE(TileEnlightenedBush.class, "enlightened_bush");
+         registerTE(TileEnlightenedBush.class, "enlightened_bush", TileEnlightenedBush::new);
       }
 
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       books = (ItemMetaDynamic)registerItem(r, new ItemMetaDynamic(), "books");
@@ -151,7 +159,6 @@ public class InspirationsBuilding extends PulseBase {
 
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
       if (Config.enableFlowers && Config.enableCauldronDyeing) {
@@ -160,9 +167,8 @@ public class InspirationsBuilding extends PulseBase {
 
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
-      MinecraftForge.EVENT_BUS.register(BuildingEvents.class);
+      BuildingEvents.register(MinecraftForge.EVENT_BUS);
    }
 }

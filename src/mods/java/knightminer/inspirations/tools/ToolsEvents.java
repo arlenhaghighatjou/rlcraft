@@ -1,5 +1,6 @@
 package knightminer.inspirations.tools;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Iterator;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -43,7 +44,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -51,7 +51,16 @@ public class ToolsEvents {
    public ToolsEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(RightClickBlock.class, ToolsEvents::lockAndUnlock);
+      bus.register(BreakEvent.class, EventPriority.LOW, false, ToolsEvents::vineBreakEvent);
+      bus.register(HarvestDropsEvent.class, ToolsEvents::dropMelon);
+      bus.register(HarvestDropsEvent.class, ToolsEvents::dropExtraSapling);
+      bus.register(BreakSpeed.class, ToolsEvents::breakLeavesFast);
+      bus.register(RightClickBlock.class, ToolsEvents::setWaypoint);
+      bus.register(LivingAttackEvent.class, ToolsEvents::onShieldHit);
+   }
+
    public static void lockAndUnlock(RightClickBlock event) {
       if (Config.enableLock) {
          EntityPlayer player = event.getEntityPlayer();
@@ -105,9 +114,6 @@ public class ToolsEvents {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void vineBreakEvent(BreakEvent event) {
       if (Config.harvestHangingVines) {
          if (!event.isCanceled()) {
@@ -158,7 +164,6 @@ public class ToolsEvents {
       return false;
    }
 
-   @SubscribeEvent
    public static void dropMelon(HarvestDropsEvent event) {
       if (Config.shearsReclaimMelons && event.getState().getBlock() == Blocks.MELON_BLOCK) {
          EntityPlayer player = event.getHarvester();
@@ -187,7 +192,6 @@ public class ToolsEvents {
       }
    }
 
-   @SubscribeEvent
    public static void dropExtraSapling(HarvestDropsEvent event) {
       if (Config.enableCrook) {
          IBlockState state = event.getState();
@@ -229,7 +233,6 @@ public class ToolsEvents {
       }
    }
 
-   @SubscribeEvent
    public static void breakLeavesFast(BreakSpeed event) {
       if (Config.hoeCrook) {
          EntityPlayer player = event.getEntityPlayer();
@@ -246,7 +249,6 @@ public class ToolsEvents {
       }
    }
 
-   @SubscribeEvent
    public static void setWaypoint(RightClickBlock event) {
       ItemStack stack = event.getItemStack();
       Item item = stack.getItem();
@@ -278,7 +280,6 @@ public class ToolsEvents {
       }
    }
 
-   @SubscribeEvent
    public static void onShieldHit(LivingAttackEvent event) {
       if (Config.moreShieldEnchantments) {
          EntityLivingBase target = event.getEntityLiving();

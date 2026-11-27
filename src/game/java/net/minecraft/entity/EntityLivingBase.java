@@ -1120,7 +1120,7 @@ public abstract class EntityLivingBase extends Entity
         }
     }
 
-    private boolean canBlockDamageSource(DamageSource damageSourceIn)
+    public boolean canBlockDamageSource(DamageSource damageSourceIn)
     {
         Entity spartanWeaponryThisEntity = this.world.getEntityByID(this.getEntityId());
 

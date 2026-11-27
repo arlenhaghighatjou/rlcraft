@@ -1,5 +1,7 @@
 package knightminer.inspirations.utility;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Maps;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -33,7 +35,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class UtilityClientProxy extends ClientProxy {
    private static final ResourceLocation CARPETED_TRAPDOOR = Util.getResource("carpeted_trapdoor");
@@ -41,7 +42,11 @@ public class UtilityClientProxy extends ClientProxy {
    public UtilityClientProxy() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(net.minecraftforge.client.event.ColorHandlerEvent.Block.class, this::registerBlockColors);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       setModelStateMapper(InspirationsUtility.torchLever, new UtilityClientProxy.TorchLeverStateMapper());
       setModelStateMapper(InspirationsUtility.redstoneTorchLever, new UtilityClientProxy.RedstoneTorchLeverStateMapper(false));
@@ -66,14 +71,13 @@ public class UtilityClientProxy extends ClientProxy {
       if (blocks != null) {
          for(int i = 0; i < blocks.length; ++i) {
             EnumDyeColor color = EnumDyeColor.byMetadata(i);
-            registerItemModel(blocks[i], 0, CARPETED_TRAPDOOR, String.format("color=%s,facing=north,shape=bottom", color.getName()));
+            registerItemModel(blocks[i], 0, CARPETED_TRAPDOOR, HString.format("color=%s,facing=north,shape=bottom", color.getName()));
             setModelStateMapper(blocks[i], new UtilityClientProxy.CarpetedTrapdoorStateMapper(color));
          }
       }
 
    }
 
-   @SubscribeEvent
    public void registerBlockColors(net.minecraftforge.client.event.ColorHandlerEvent.Block event) {
       BlockColors blockColors = event.getBlockColors();
       registerBlockColors(blockColors, (state, world, pos, tintIndex) -> {

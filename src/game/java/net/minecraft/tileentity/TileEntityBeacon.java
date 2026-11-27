@@ -43,7 +43,7 @@ public class TileEntityBeacon extends TileEntityLockable implements ITickable, I
     private long beamRenderCounter;
     @SideOnly(Side.CLIENT)
     private float beamRenderScale;
-    private boolean isComplete;
+    public boolean isComplete;
     private int levels = -1;
     @Nullable
     private Potion primaryEffect;

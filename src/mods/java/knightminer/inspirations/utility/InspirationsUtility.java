@@ -1,6 +1,8 @@
 package knightminer.inspirations.utility;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.CommonProxy;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.PulseBase;
@@ -24,26 +26,30 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsUtility",
-   description = "Adds various utilities"
-)
 public class InspirationsUtility extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsUtility";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.utility.UtilityClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.utility.UtilityClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static Block torchLever;
    public static Block redstoneBarrel;
    public static BlockBricksButton bricksButton;
@@ -59,12 +65,15 @@ public class InspirationsUtility extends PulseBase {
    public InspirationsUtility() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+   }
+
    public void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       if (Config.enableTorchLever) {
@@ -99,17 +108,16 @@ public class InspirationsUtility extends PulseBase {
 
       if (Config.enableCollector) {
          collector = registerBlock(r, new BlockCollector(), "collector");
-         registerTE(TileCollector.class, "collector");
+         registerTE(TileCollector.class, "collector", TileCollector::new);
       }
 
       if (Config.enablePipe) {
          pipe = registerBlock(r, new BlockPipe(), "pipe");
-         registerTE(TilePipe.class, "pipe");
+         registerTE(TilePipe.class, "pipe", TilePipe::new);
       }
 
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       if (torchLever != null) {
@@ -144,16 +152,14 @@ public class InspirationsUtility extends PulseBase {
 
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
       this.registerDispenserBehavior();
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
-      MinecraftForge.EVENT_BUS.register(UtilityEvents.class);
+      UtilityEvents.register(MinecraftForge.EVENT_BUS);
    }
 
    private void registerDispenserBehavior() {

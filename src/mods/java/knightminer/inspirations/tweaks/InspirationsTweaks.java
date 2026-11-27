@@ -1,6 +1,8 @@
 package knightminer.inspirations.tweaks;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.Iterator;
 import knightminer.inspirations.common.CommonProxy;
 import knightminer.inspirations.common.Config;
@@ -41,26 +43,30 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.IForgeRegistry;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsTweaks",
-   description = "Various vanilla tweaks"
-)
 public class InspirationsTweaks extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsTweaks";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.tweaks.TweaksClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.tweaks.TweaksClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static Block carpet;
    public static Block flowerPot;
    public static BlockCrops cactusCrop;
@@ -92,12 +98,17 @@ public class InspirationsTweaks extends PulseBase {
    public InspirationsTweaks() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItem);
+      bus.registerGeneric(Register.class, PotionType.class, this::registerPotionTypes);
+      bus.register(LootTableLoadEvent.class, this::onLootTableLoad);
+   }
+
    public void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       if (Config.enableFittedCarpets) {
@@ -115,7 +126,6 @@ public class InspirationsTweaks extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerItem(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       if (Config.enableMoreSeeds) {
@@ -127,7 +137,6 @@ public class InspirationsTweaks extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerPotionTypes(Register<PotionType> event) {
       IForgeRegistry<PotionType> r = event.getRegistry();
       if (Config.brewMissingPotions) {
@@ -150,7 +159,6 @@ public class InspirationsTweaks extends PulseBase {
 
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
       if (Config.addGrassDrops) {
@@ -214,13 +222,11 @@ public class InspirationsTweaks extends PulseBase {
       this.registerDispenserBehavior();
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
-      MinecraftForge.EVENT_BUS.register(TweaksEvents.class);
+      TweaksEvents.register(MinecraftForge.EVENT_BUS);
    }
 
-   @SubscribeEvent
    public void onLootTableLoad(LootTableLoadEvent event) {
       if (Config.brewMissingPotions && SILVERFISH_TABLE.equals(event.getName())) {
          addToVanillaLoot(event, SILVERFISH_TABLE.getResourcePath());

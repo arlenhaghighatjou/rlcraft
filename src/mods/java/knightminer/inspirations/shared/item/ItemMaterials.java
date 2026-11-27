@@ -1,6 +1,6 @@
 package knightminer.inspirations.shared.item;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.IntFunction;
@@ -11,7 +11,7 @@ import net.minecraft.util.NonNullList;
 import slimeknights.mantle.item.ItemMetaDynamic;
 
 public class ItemMaterials extends ItemMetaDynamic {
-   protected TIntObjectHashMap<CreativeTabs> creativeTabs = new TIntObjectHashMap();
+   protected Int2ObjectOpenHashMap<CreativeTabs> creativeTabs = new Int2ObjectOpenHashMap();
    protected Set<CreativeTabs> allTabs = new HashSet();
 
    public ItemMaterials() {

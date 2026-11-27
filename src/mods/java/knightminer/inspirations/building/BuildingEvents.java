@@ -1,5 +1,6 @@
 package knightminer.inspirations.building;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import knightminer.inspirations.building.block.BlockFlower;
 import knightminer.inspirations.building.block.BlockRope;
@@ -23,14 +24,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 public class BuildingEvents {
    public BuildingEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, BuildingEvents::addFlowerDrop);
+      bus.register(RightClickBlock.class, BuildingEvents::toggleRopeLadder);
+   }
+
    public static void addFlowerDrop(HarvestDropsEvent event) {
       if (Config.enableFlowers && !event.isCanceled() && !event.getWorld().isRemote) {
          IBlockState state = event.getState();
@@ -60,7 +64,6 @@ public class BuildingEvents {
       }
    }
 
-   @SubscribeEvent
    public static void toggleRopeLadder(RightClickBlock event) {
       if (Config.enableRopeLadder) {
          World world = event.getWorld();

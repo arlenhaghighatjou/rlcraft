@@ -1,5 +1,6 @@
 package knightminer.inspirations.utility;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.utility.block.BlockCarpetedPressurePlate;
 import net.minecraft.advancements.CriteriaTriggers;
@@ -17,14 +18,17 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class UtilityEvents {
    public UtilityEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(RightClickBlock.class, UtilityEvents::placeCarpetOnPressurePlate);
+      bus.register(RightClickBlock.class, UtilityEvents::clickHopperWithPipe);
+   }
+
    public static void placeCarpetOnPressurePlate(RightClickBlock event) {
       if (Config.enableCarpetedPressurePlate) {
          ItemStack stack = event.getItemStack();
@@ -69,7 +73,6 @@ public class UtilityEvents {
       }
    }
 
-   @SubscribeEvent
    public static void clickHopperWithPipe(RightClickBlock event) {
       if (Config.enablePipe && event.getItemStack().getItem() == InspirationsUtility.pipeItem) {
          World world = event.getWorld();

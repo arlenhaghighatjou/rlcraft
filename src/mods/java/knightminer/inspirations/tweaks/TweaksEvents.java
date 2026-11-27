@@ -1,5 +1,6 @@
 package knightminer.inspirations.tweaks;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.List;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.network.InspirationsNetwork;
@@ -33,7 +34,6 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.EntityInteract;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -41,7 +41,15 @@ public class TweaksEvents {
    public TweaksEvents() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(EntityInteract.class, TweaksEvents::unsaddlePig);
+      bus.register(BonemealEvent.class, TweaksEvents::extraBonemeal);
+      bus.register(HarvestDropsEvent.class, TweaksEvents::dropHeartbeet);
+      bus.register(HarvestDropsEvent.class, TweaksEvents::dropCarrotsPotatos);
+      bus.register(LivingFallEvent.class, EventPriority.LOW, false, TweaksEvents::onFall);
+      bus.register(EntityInteract.class, TweaksEvents::milkCow);
+   }
+
    public static void unsaddlePig(EntityInteract event) {
       if (Config.enablePigDesaddle) {
          EntityPlayer player = event.getEntityPlayer();
@@ -62,7 +70,6 @@ public class TweaksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void extraBonemeal(BonemealEvent event) {
       if (Config.bonemealMushrooms || Config.bonemealDeadBush || Config.bonemealGrassSpread || Config.bonemealMyceliumSpread) {
          World world = event.getWorld();
@@ -160,7 +167,6 @@ public class TweaksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void dropHeartbeet(HarvestDropsEvent event) {
       if (Config.enableHeartbeet) {
          IBlockState state = event.getState();
@@ -193,7 +199,6 @@ public class TweaksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void dropCarrotsPotatos(HarvestDropsEvent event) {
       if (Config.nerfCarrotPotatoDrops) {
          IBlockState state = event.getState();
@@ -205,9 +210,6 @@ public class TweaksEvents {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void onFall(LivingFallEvent event) {
       if (Config.lilypadBreakFall) {
          if (event.getDistance() >= 4.0F) {
@@ -267,7 +269,6 @@ public class TweaksEvents {
       }
    }
 
-   @SubscribeEvent
    public static void milkCow(EntityInteract event) {
       if (Config.milkCooldown) {
          Entity target = event.getTarget();

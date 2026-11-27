@@ -33,5 +33,6 @@ public final class AnnotatedInstanceUtil {
       MOD_PLUGINS.add(org.jwaresoftware.mcmods.armorunder.integration.jei.ModJeiPlugin::new);
       MOD_PLUGINS.add(vazkii.arl.client.jei.JeiPlugin::new);
       MOD_PLUGINS.add(com.oblivioussp.spartanweaponry.compat.jei.SpartanWeaponryPlugin::new);
+      MOD_PLUGINS.add(knightminer.inspirations.plugins.jei.JEIPlugin::new);
    }
 }

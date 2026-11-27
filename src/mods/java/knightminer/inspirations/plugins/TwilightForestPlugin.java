@@ -1,6 +1,6 @@
 package knightminer.inspirations.plugins;
 
-import com.google.common.eventbus.Subscribe;
+import slimeknights.mantle.pulsar.pulse.IPulse;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.library.InspirationsRegistry;
@@ -8,22 +8,21 @@ import knightminer.inspirations.recipes.recipe.ArmorClearRecipe;
 import knightminer.inspirations.recipes.recipe.ArmorDyeingCauldronRecipe;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "TwilightForestPlugin",
-   description = "Supports dyeing Twilight Forest armor in the Inspirations cauldron.",
-   modsRequired = "twilightforest",
-   pulsesRequired = "InspirationsRecipes"
-)
-public class TwilightForestPlugin {
+public class TwilightForestPlugin implements IPulse {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "TwilightForestPlugin";
    public static final String requiredModID = "twilightforest";
 
    public TwilightForestPlugin() {
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       if (Config.enableCauldronRecipes) {
          try {

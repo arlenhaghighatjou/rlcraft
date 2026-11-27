@@ -1,7 +1,7 @@
 package knightminer.inspirations.plugins.jei.cauldron.ingredient;
 
 import com.google.common.collect.ImmutableList;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;

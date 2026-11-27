@@ -1,8 +1,10 @@
 package knightminer.inspirations.recipes;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.eventbus.Subscribe;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
@@ -74,26 +76,30 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 import slimeknights.mantle.util.RecipeMatch;
 
-@Pulse(
-   id = "InspirationsRecipes",
-   description = "Adds additional recipe types, including cauldrons and anvil smashing"
-)
 public class InspirationsRecipes extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsRecipes";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.recipes.RecipesClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.recipes.RecipesClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static Block anvil;
    public static BlockEnhancedCauldron cauldron;
    public static ItemDyedWaterBottle dyedWaterBottle;
@@ -107,7 +113,6 @@ public class InspirationsRecipes extends PulseBase {
    public InspirationsRecipes() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
       if (Config.cauldronStew) {
@@ -123,7 +128,12 @@ public class InspirationsRecipes extends PulseBase {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.registerGeneric(Register.class, IRecipe.class, this::registerRecipes);
+   }
+
    public void registerBlocks(Register<Block> event) {
       IForgeRegistry<Block> r = event.getRegistry();
       if (Config.enableAnvilSmashing) {
@@ -132,12 +142,11 @@ public class InspirationsRecipes extends PulseBase {
 
       if (Config.enableExtendedCauldron) {
          cauldron = (BlockEnhancedCauldron)register(r, new BlockEnhancedCauldron(), new ResourceLocation("cauldron"));
-         registerTE(TileCauldron.class, "cauldron");
+         registerTE(TileCauldron.class, "cauldron", TileCauldron::new);
       }
 
    }
 
-   @SubscribeEvent
    public void registerItems(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       if (Config.enableCauldronDyeing) {
@@ -150,7 +159,6 @@ public class InspirationsRecipes extends PulseBase {
 
    }
 
-   @SubscribeEvent
    public void registerRecipes(Register<IRecipe> event) {
       if (Config.patchVanillaDyeRecipes) {
          IForgeRegistry<IRecipe> r = event.getRegistry();
@@ -175,7 +183,6 @@ public class InspirationsRecipes extends PulseBase {
       }
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
       InspirationsRegistry.registerAnvilBreaking(Material.GLASS);
@@ -186,10 +193,9 @@ public class InspirationsRecipes extends PulseBase {
       this.registerDispenserBehavior();
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
-      MinecraftForge.EVENT_BUS.register(RecipesEvents.class);
+      RecipesEvents.register(MinecraftForge.EVENT_BUS);
       this.registerPostCauldronRecipes();
    }
 
@@ -353,7 +359,7 @@ public class InspirationsRecipes extends PulseBase {
 
    private static int[] toArray(Collection<Integer> list) {
       return list.contains(Integer.valueOf(32767)) ? new int[0] : list.stream().mapToInt((i) -> {
-         return (int[])i.intValue();
+         return i.intValue();
       }).toArray();
    }
 

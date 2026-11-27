@@ -44,7 +44,7 @@ public class DyeIngredientWrapper extends Ingredient {
       if (this.itemIds == null || this.lastSizeL != oreList.size()) {
          int dyedBottle = Item.REGISTRY.getIDForObject(InspirationsRecipes.dyedWaterBottle);
          this.itemIds = new IntArrayList(oreList);
-         this.itemIds.removeIf((i) -> {
+         this.itemIds.removeIf((java.util.function.Predicate<Integer>)(i) -> {
             return i.intValue() >> 16 == dyedBottle;
          });
       }

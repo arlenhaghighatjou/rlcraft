@@ -44,7 +44,7 @@ public class ItemModArrow extends ItemArrow {
 
    public static enum ArrowType {
       CHARGED(() -> {
-         return (void)Config.enableChargedArrow;
+         return Config.enableChargedArrow;
       });
 
       private int meta = this.ordinal();

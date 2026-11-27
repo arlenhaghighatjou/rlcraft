@@ -1,5 +1,6 @@
 package knightminer.inspirations.tools;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.ClientProxy;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.tools.client.RenderModArrow;
@@ -21,7 +22,6 @@ import net.minecraftforge.client.event.ColorHandlerEvent.Item;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ToolsClientProxy extends ClientProxy {
    public ToolsClientProxy() {
@@ -32,7 +32,12 @@ public class ToolsClientProxy extends ClientProxy {
       RenderingRegistry.registerEntityRenderingHandler(EntityModArrow.class, RenderModArrow::new);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(Item.class, this::registerItemColors);
+      bus.register(ItemTooltipEvent.class, ToolsClientProxy::fixShieldTooltip);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       setModelStateMapper(InspirationsTools.redstoneCharge, (new Builder()).ignore(new IProperty[]{BlockRedstoneCharge.FACING, BlockRedstoneCharge.QUICK}).build());
       registerItemModel(InspirationsTools.redstoneCharger);
@@ -52,7 +57,6 @@ public class ToolsClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void registerItemColors(Item event) {
       ItemColors itemColors = event.getItemColors();
       registerItemColors(itemColors, (stack, tintIndex) -> {
@@ -69,7 +73,6 @@ public class ToolsClientProxy extends ClientProxy {
       }, new net.minecraft.item.Item[]{InspirationsTools.waypointCompass});
    }
 
-   @SubscribeEvent
    public static void fixShieldTooltip(ItemTooltipEvent event) {
       if (Config.fixShieldTooltip) {
          ItemStack stack = event.getItemStack();

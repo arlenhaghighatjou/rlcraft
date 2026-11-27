@@ -1,6 +1,8 @@
 package knightminer.inspirations.shared;
 
-import com.google.common.eventbus.Subscribe;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.common.CommonProxy;
 import knightminer.inspirations.common.Config;
 import knightminer.inspirations.common.PulseBase;
@@ -14,27 +16,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import slimeknights.mantle.item.ItemEdible;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 
-@Pulse(
-   id = "InspirationsShared",
-   description = "Blocks and items used by all modules",
-   forced = true
-)
 public class InspirationsShared extends PulseBase {
+   public void handlePulseEvent(Object evt) {
+      if (evt instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)evt);
+      }
+
+      if (evt instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)evt);
+      }
+
+   }
+
    public static final String pulseID = "InspirationsShared";
-   @SidedProxy(
-      clientSide = "knightminer.inspirations.shared.SharedClientProxy",
-      serverSide = "knightminer.inspirations.common.CommonProxy"
-   )
-   public static CommonProxy proxy;
+   public static CommonProxy proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new knightminer.inspirations.shared.SharedClientProxy() : new knightminer.inspirations.common.CommonProxy();
    public static ItemMaterials materials;
    public static ItemEdible edibles;
    public static ItemStack lock;
@@ -56,12 +61,15 @@ public class InspirationsShared extends PulseBase {
    public InspirationsShared() {
    }
 
-   @Subscribe
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, this::registerItems);
+      bus.register(LootTableLoadEvent.class, this::onLootTableLoad);
+   }
+
    public void registerItems(Register<Item> event) {
       IForgeRegistry<Item> r = event.getRegistry();
       materials = (ItemMaterials)registerItem(r, new ItemMaterials(), "materials");
@@ -109,21 +117,18 @@ public class InspirationsShared extends PulseBase {
 
    }
 
-   @Subscribe
    public void init(FMLInitializationEvent event) {
       proxy.init();
    }
 
-   @Subscribe
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
       if (milkCooldownCow || milkCooldownSquid) {
-         MinecraftForge.EVENT_BUS.register(SharedEvents.class);
+         SharedEvents.register(MinecraftForge.EVENT_BUS);
       }
 
    }
 
-   @SubscribeEvent
    public void onLootTableLoad(LootTableLoadEvent event) {
       if (witherBoneDrop && WITHER_SKELETON_TABLE.equals(event.getName())) {
          addToVanillaLoot(event, "entities/wither_skeleton");

@@ -1,5 +1,7 @@
 package knightminer.inspirations.common;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import java.util.function.Supplier;
 import java.util.Locale;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.library.Util;
@@ -31,8 +33,9 @@ import slimeknights.mantle.block.EnumBlockSlab;
 import slimeknights.mantle.block.EnumBlock.IEnumMeta;
 import slimeknights.mantle.item.ItemBlockMeta;
 import slimeknights.mantle.item.ItemBlockSlab;
+import slimeknights.mantle.pulsar.pulse.IPulse;
 
-public class PulseBase {
+public class PulseBase implements IPulse {
    public PulseBase() {
    }
 
@@ -58,7 +61,7 @@ public class PulseBase {
 
    protected static <T extends Block> T registerBlock(IForgeRegistry<Block> registry, T block, String name) {
       if (!name.equals(name.toLowerCase(Locale.US))) {
-         throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Block: %s", name));
+         throw new IllegalArgumentException(HString.format("Unlocalized names need to be all lowercase! Block: %s", name));
       } else {
          String prefixedName = Util.prefix(name);
          block.setUnlocalizedName(prefixedName);
@@ -69,7 +72,7 @@ public class PulseBase {
 
    protected static <T extends Item> T registerItem(IForgeRegistry<Item> registry, T item, String name) {
       if (!name.equals(name.toLowerCase(Locale.US))) {
-         throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! Item: %s", name));
+         throw new IllegalArgumentException(HString.format("Unlocalized names need to be all lowercase! Item: %s", name));
       } else {
          item.setUnlocalizedName(Util.prefix(name));
          register(registry, item, name);
@@ -120,14 +123,14 @@ public class PulseBase {
    }
 
    protected static <T extends Entity> EntityEntryBuilder<T> getEntityBuilder(Class<T> clazz, String name, int id) {
-      return EntityEntryBuilder.create().entity(clazz).id(Util.getResource(name), id).name(Util.prefix(name));
+      return EntityEntryBuilder.<T>create().entity(clazz).id(Util.getResource(name), id).name(Util.prefix(name));
    }
 
-   protected static void registerTE(Class<? extends TileEntity> teClazz, String name) {
+   protected static <T extends TileEntity> void registerTE(Class<T> teClazz, String name, Supplier<T> factory) {
       if (!name.equals(name.toLowerCase(Locale.US))) {
-         throw new IllegalArgumentException(String.format("Unlocalized names need to be all lowercase! TE: %s", name));
+         throw new IllegalArgumentException(HString.format("Unlocalized names need to be all lowercase! TE: %s", name));
       } else {
-         GameRegistry.registerTileEntity(teClazz, Util.getResource(name));
+         GameRegistry.registerTileEntity(teClazz, Util.getResource(name), factory);
       }
    }
 

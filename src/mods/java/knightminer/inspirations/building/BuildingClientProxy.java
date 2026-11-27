@@ -1,5 +1,7 @@
 package knightminer.inspirations.building;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.building.block.BlockBookshelf;
 import knightminer.inspirations.building.block.BlockEnlightenedBush;
@@ -43,7 +45,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent.Item;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BuildingClientProxy extends ClientProxy {
    public static final Minecraft mc = Minecraft.getMinecraft();
@@ -66,7 +67,13 @@ public class BuildingClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(net.minecraftforge.client.event.ColorHandlerEvent.Block.class, this::registerBlockColors);
+      bus.register(Item.class, this::registerItemColors);
+      bus.register(ModelBakeEvent.class, this::onModelBake);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       setModelStateMapper(InspirationsBuilding.glassDoor, (new Builder()).ignore(new IProperty[]{BlockDoor.POWERED}).build());
       setModelStateMapper(InspirationsBuilding.flower, new BlockItemStateMapper(new IProperty[0]));
@@ -109,7 +116,6 @@ public class BuildingClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
    public void registerBlockColors(net.minecraftforge.client.event.ColorHandlerEvent.Block event) {
       BlockColors blockColors = event.getBlockColors();
       registerBlockColors(blockColors, (state, world, pos, tintIndex) -> {
@@ -158,7 +164,6 @@ public class BuildingClientProxy extends ClientProxy {
       }, new Block[]{InspirationsBuilding.enlightenedBush});
    }
 
-   @SubscribeEvent
    public void registerItemColors(Item event) {
       ItemColors itemColors = event.getItemColors();
       registerItemColors(itemColors, (stack, tintIndex) -> {
@@ -186,14 +191,13 @@ public class BuildingClientProxy extends ClientProxy {
       }, new Block[]{InspirationsBuilding.rope});
    }
 
-   @SubscribeEvent
    public void onModelBake(ModelBakeEvent event) {
       if (InspirationsBuilding.bookshelf != null) {
          ResourceLocation bookshelfLoc = InspirationsBuilding.bookshelf.getRegistryName();
 
          for(BlockBookshelf.BookshelfType type : BlockBookshelf.BookshelfType.values()) {
             for(EnumFacing facing : EnumFacing.HORIZONTALS) {
-               replaceBookshelfModel(event, new ModelResourceLocation(bookshelfLoc, String.format("facing=%s,type=%s", facing.getName(), type.getName())));
+               replaceBookshelfModel(event, new ModelResourceLocation(bookshelfLoc, HString.format("facing=%s,type=%s", facing.getName(), type.getName())));
             }
          }
       }
@@ -202,7 +206,7 @@ public class BuildingClientProxy extends ClientProxy {
          ResourceLocation location = InspirationsBuilding.enlightenedBush.getRegistryName();
 
          for(BlockEnlightenedBush.LightsType type : BlockEnlightenedBush.LightsType.values()) {
-            replaceTexturedModel(event, new ModelResourceLocation(location, String.format("lights=%s", type.getName())), "leaves", true);
+            replaceTexturedModel(event, new ModelResourceLocation(location, HString.format("lights=%s", type.getName())), "leaves", true);
          }
       }
 

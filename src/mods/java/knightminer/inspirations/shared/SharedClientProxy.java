@@ -1,5 +1,6 @@
 package knightminer.inspirations.shared;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import knightminer.inspirations.Inspirations;
 import knightminer.inspirations.common.ClientProxy;
 import knightminer.inspirations.library.Util;
@@ -11,7 +12,6 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SharedClientProxy extends ClientProxy {
    public SharedClientProxy() {
@@ -28,13 +28,16 @@ public class SharedClientProxy extends ClientProxy {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, this::registerModels);
+      bus.register(Pre.class, this::registerTextures);
+   }
+
    public void registerModels(ModelRegistryEvent event) {
       registerItemMetaDynamic(InspirationsShared.materials);
       registerItemMetaDynamic(InspirationsShared.edibles);
    }
 
-   @SubscribeEvent
    public void registerTextures(Pre event) {
       TextureMap map = event.getMap();
       map.registerSprite(Util.getResource("blocks/fluid_colorless"));

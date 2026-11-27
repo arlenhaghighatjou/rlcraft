@@ -1,5 +1,6 @@
 package knightminer.inspirations.library.recipe.cauldron;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -64,6 +65,6 @@ public class CauldronBrewingRecipe implements ISimpleCauldronRecipe {
    }
 
    public String toString() {
-      return String.format("CauldronBrewingRecipe: %s from %s", this.output.getPotion().getRegistryName(), this.input.getPotion().getRegistryName());
+      return HString.format("CauldronBrewingRecipe: %s from %s", this.output.getPotion().getRegistryName(), this.input.getPotion().getRegistryName());
    }
 }

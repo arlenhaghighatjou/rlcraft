@@ -1,5 +1,6 @@
 package knightminer.inspirations.library.recipe.cauldron;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import javax.annotation.ParametersAreNonnullByDefault;
 import knightminer.inspirations.library.InspirationsRegistry;
 import net.minecraft.init.SoundEvents;
@@ -50,6 +51,6 @@ public class FillCauldronRecipe extends CauldronFluidRecipe {
    }
 
    public String toString() {
-      return String.format("FillCauldronRecipe: filling with %s", this.fluid.getFluid().getName());
+      return HString.format("FillCauldronRecipe: filling with %s", this.fluid.getFluid().getName());
    }
 }

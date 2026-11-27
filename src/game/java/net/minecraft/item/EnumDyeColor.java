@@ -30,7 +30,7 @@ public enum EnumDyeColor implements IStringSerializable
     private final int dyeDamage;
     private final String name;
     private final String unlocalizedName;
-    private final int colorValue;
+    public final int colorValue;
     private final float[] colorComponentValues;
     private final TextFormatting chatColor;
 

@@ -19,9 +19,9 @@ public class InspirationsNetwork extends NetworkWrapper {
    }
 
    public void setup() {
-      this.registerPacketClient(InventorySlotSyncPacket.class);
-      this.registerPacketClient(MilkablePacket.class);
-      this.registerPacketClient(RenderBlockUpdatePacket.class);
+      this.registerPacketClient(InventorySlotSyncPacket.class, InventorySlotSyncPacket::new);
+      this.registerPacketClient(MilkablePacket.class, MilkablePacket::new);
+      this.registerPacketClient(RenderBlockUpdatePacket.class, RenderBlockUpdatePacket::new);
    }
 
    public static void sendToAll(AbstractPacket packet) {

@@ -1,5 +1,6 @@
 package knightminer.inspirations.library;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -32,11 +33,11 @@ public class Util {
    }
 
    public static String resource(String name) {
-      return String.format("%s:%s", "inspirations", name.toLowerCase(Locale.US));
+      return HString.format("%s:%s", "inspirations", name.toLowerCase(Locale.US));
    }
 
    public static String prefix(String name) {
-      return String.format("%s.%s", "inspirations", name.toLowerCase(Locale.US));
+      return HString.format("%s.%s", "inspirations", name.toLowerCase(Locale.US));
    }
 
    public static ResourceLocation getResource(String res) {
@@ -44,7 +45,7 @@ public class Util {
    }
 
    public static String translate(String key, Object... pars) {
-      return I18n.translateToLocal(I18n.translateToLocal(String.format(key, pars)).trim()).trim();
+      return I18n.translateToLocal(I18n.translateToLocal(HString.format(key, pars)).trim()).trim();
    }
 
    public static String translateFormatted(String key, Object... pars) {

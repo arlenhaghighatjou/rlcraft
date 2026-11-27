@@ -1,5 +1,6 @@
 package knightminer.inspirations.tools.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nonnull;
@@ -91,7 +92,7 @@ public class ItemWaypointCompass extends Item {
          }
 
          if (flag == TooltipFlags.ADVANCED) {
-            dimension = dimension + String.format(" (%d)", getDimension(stack));
+            dimension = dimension + HString.format(" (%d)", getDimension(stack));
             if (Config.waypointCompassAdvTooltip && !Minecraft.getMinecraft().isReducedDebug()) {
                BlockPos pos = getPos(stack);
                if (pos != null) {
