@@ -1,5 +1,6 @@
 package hunternif.mc.atlas.util;
 
+import com.arlenh7.eaglercraft.image.PngWriter;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import net.lax1dude.eaglercraft.v1_8.EagRuntime;
