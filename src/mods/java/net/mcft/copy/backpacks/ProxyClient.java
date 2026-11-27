@@ -16,7 +16,6 @@ import net.mcft.copy.backpacks.client.KeyBindingHandler;
 import net.mcft.copy.backpacks.client.RendererBackpack;
 import net.mcft.copy.backpacks.misc.util.MiscUtils;
 import net.mcft.copy.backpacks.misc.util.NbtUtils;
-import net.mcft.copy.backpacks.misc.util.ReflectUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -79,7 +78,7 @@ public class ProxyClient extends ProxyCommon {
 
       return ITEM_COLOR.colorMultiplier(stack, tintIndex);
    };
-   private static DataParameter<Byte> PLAYER_MODEL_FLAG = (DataParameter)ReflectUtils.get(EntityPlayer.class, "PLAYER_MODEL_FLAG", "PLAYER_MODEL_FLAG");
+   private static DataParameter<Byte> PLAYER_MODEL_FLAG = EntityPlayer.PLAYER_MODEL_FLAG;
    private boolean _disabledCape = false;
 
    public ProxyClient() {
@@ -87,7 +86,7 @@ public class ProxyClient extends ProxyCommon {
 
    public void preInit() {
       super.preInit();
-      MinecraftForge.EVENT_BUS.register(new KeyBindingHandler());
+      (new KeyBindingHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void init() {

@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.List;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -127,7 +128,7 @@ public class GuiLabel extends GuiElementBase {
 
    public void setShadowColor(int value) {
       if (value < -2) {
-         throw new IllegalArgumentException(String.format("'%d' is not a valid special shadow value", value));
+         throw new IllegalArgumentException(HString.format("'%d' is not a valid special shadow value", value));
       } else {
          this._shadowColor = value;
       }

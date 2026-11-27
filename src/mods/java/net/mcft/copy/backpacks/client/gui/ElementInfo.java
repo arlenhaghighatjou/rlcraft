@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.LinkedList;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -93,6 +94,6 @@ public final class ElementInfo {
          name = enclosingClass.getSimpleName() + "." + name;
       }
 
-      return String.format("(%d,%d : %d,%d) %s", this.globalX, this.globalY, this.width, this.height, name);
+      return HString.format("(%d,%d : %d,%d) %s", this.globalX, this.globalY, this.width, this.height, name);
    }
 }

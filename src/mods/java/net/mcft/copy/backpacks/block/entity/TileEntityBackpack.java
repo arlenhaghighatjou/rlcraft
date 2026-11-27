@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -101,7 +101,7 @@ public class TileEntityBackpack extends TileEntity implements ITickable, IBackpa
       return this.writeNBT(super.writeToNBT(new NBTTagCompound()), true);
    }
 
-   public final void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+   public final void onDataPacket(INetworkManager net, SPacketUpdateTileEntity pkt) {
       this.readNBT(pkt.getNbtCompound(), true);
    }
 

@@ -1,5 +1,7 @@
 package net.mcft.copy.backpacks.config;
 
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.mcft.copy.backpacks.WearableBackpacks;
 import net.mcft.copy.backpacks.misc.BackpackSize;
 import net.minecraft.init.MobEffects;
@@ -13,8 +15,6 @@ import net.minecraftforge.common.config.Config.RangeDouble;
 import net.minecraftforge.common.config.Config.RangeInt;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 @Config(
@@ -45,14 +45,14 @@ public class ModConfig {
       }
    }
 
-   @EventBusSubscriber(
-      modid = "wearablebackpacks"
-   )
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("wearablebackpacks")) {
             ModConfig.server.resetCache();
@@ -157,5 +157,25 @@ public class ModConfig {
 
          return this.backpackEffect;
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("wearablebackpacks", "", "general", null,
+         ConfigEntry.category("Server",
+            ConfigEntry.value("Equip Backpack as Bauble", boolean.class, () -> ModConfig.server.equipAsBauble, v -> ModConfig.server.equipAsBauble = (Boolean)v).comment("Whether or not the backpack should be equipped as a Bauble.").langKey("config.wearablebackpacks.server.equipAsBauble"),
+            ConfigEntry.value("Enable Equipped Interaction", boolean.class, () -> ModConfig.server.enableEquippedInteraction, v -> ModConfig.server.enableEquippedInteraction = (Boolean)v).comment("If enabled, allows equipped backpacks to be opened by other players by right clicking the target's back.").langKey("config.wearablebackpacks.general.enableEquippedInteraction"),
+            ConfigEntry.value("Enable Self Interaction", boolean.class, () -> ModConfig.server.enableSelfInteraction, v -> ModConfig.server.enableSelfInteraction = (Boolean)v).comment("If enabled, allows players to open their own equipped backpack without requiring it to be placed first using a keybind.").langKey("config.wearablebackpacks.general.enableSelfInteraction"),
+            ConfigEntry.value("Enable Machine Interaction", boolean.class, () -> ModConfig.server.enableMachineInteraction, v -> ModConfig.server.enableMachineInteraction = (Boolean)v).comment("If enabled, allows machines to interact with placed backpacks.").langKey("config.wearablebackpacks.general.enableMachineInteraction"),
+            ConfigEntry.value("Drop as Block on Death", boolean.class, () -> ModConfig.server.dropAsBlockOnDeath, v -> ModConfig.server.dropAsBlockOnDeath = (Boolean)v).comment("If enabled, places equipped backpacks as a block on death, instead of scattering the items all around.").langKey("config.wearablebackpacks.general.dropAsBlockOnDeath"),
+            ConfigEntry.value("Backpack Ignore Cancellation", boolean.class, () -> ModConfig.server.ignoreCancellation, v -> ModConfig.server.ignoreCancellation = (Boolean)v).comment("Should backpack placement and breaking attempt to ignore event cancellation? (Patches Lycanite's boss arena voiding backpacks)").langKey("config.wearablebackpacks.general.ignoreCancellation"),
+            ConfigEntry.value("Backpack Size Column", int.class, () -> ModConfig.server.backpackSizeColumn, v -> ModConfig.server.backpackSizeColumn = (Integer)v).comment("Column size of a normal backpack. Does not affect placed or equipped backpacks until turned back into an item.").langKey("config.wearablebackpacks.size.sizeColumn").range(1, 17),
+            ConfigEntry.value("Backpack Size Row", int.class, () -> ModConfig.server.backpackSizeRow, v -> ModConfig.server.backpackSizeRow = (Integer)v).comment("Row size of a normal backpack. Does not affect placed or equipped backpacks until turned back into an item.").langKey("config.wearablebackpacks.size.sizeRow").range(1, 6),
+            ConfigEntry.value("Natural Mobs Spawn With Backpacks", boolean.class, () -> ModConfig.server.spawnNaturally, v -> ModConfig.server.spawnNaturally = (Boolean)v).comment("Controls whether mobs spawned naturally can randomly be wearing backpacks.").langKey("config.wearablebackpacks.entity.spawnNaturally"),
+            ConfigEntry.value("Spawned Mobs Spawn With Backpacks", boolean.class, () -> ModConfig.server.spawnFromSpawners, v -> ModConfig.server.spawnFromSpawners = (Boolean)v).comment("Controls whether mobs spawned from spawners can randomly be wearing backpacks.").langKey("config.wearablebackpacks.entity.spawnFromSpawners"),
+            ConfigEntry.value("Apply Potion Effect", boolean.class, () -> ModConfig.server.doPotionEffect, v -> ModConfig.server.doPotionEffect = (Boolean)v).comment("Whether or not to apply a potion effect to the player while wearing a backpack.").langKey("config.wearablebackpacks.effect.doEffect"),
+            ConfigEntry.value("Potion Effect Amplifier", int.class, () -> ModConfig.server.potionEffectAmplifier, v -> ModConfig.server.potionEffectAmplifier = (Integer)v).comment("Amplifier of the potion effect to be applied to the player while wearing a backpack.").langKey("config.wearablebackpacks.effect.effectAmplifier").range(0, 10),
+            ConfigEntry.value("Potion Effect Name", String.class, () -> ModConfig.server.potionEffectName, v -> ModConfig.server.potionEffectName = (String)v).comment("The Resourcelocation of the potion effect to be applied on the player while wearing a backpack. (Ex. minecraft:weakness)").langKey("config.wearablebackpacks.effect.effectName")).comment("Server Config").langKey("wearablebackpacks.general.server"),
+         ConfigEntry.category("Client",
+            ConfigEntry.value("Enchant Effect Opacity", double.class, () -> ModConfig.client.enchantEffectOpacity, v -> ModConfig.client.enchantEffectOpacity = (Double)v).comment("Controls the opacity / visibility of the enchantment effect on equipped and placed backpacks, if present. Default: 80%.").langKey("config.wearablebackpacks.cosmetic.enchantEffectOpacity").range(0.0, 1.0)).comment("Client Config").langKey("wearablebackpacks.general.client"));
    }
 }

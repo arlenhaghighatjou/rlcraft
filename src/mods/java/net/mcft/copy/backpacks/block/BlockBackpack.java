@@ -178,7 +178,7 @@ public class BlockBackpack extends BlockContainer {
       player.addExhaustion(0.005F);
       this.harvesters.set(player);
       this.dropBackpack(worldIn, pos, te);
-      this.harvesters.set((Object)null);
+      this.harvesters.set((EntityPlayer)null);
    }
 
    public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {

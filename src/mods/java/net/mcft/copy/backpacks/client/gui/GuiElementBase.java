@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
@@ -9,8 +10,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -415,7 +414,7 @@ public abstract class GuiElementBase {
 
    public static void enableBlendAlphaStuffs() {
       GlStateManager.enableBlend();
-      GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ZERO, DestFactor.ONE);
+      GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ZERO, RealOpenGLEnums.GL_ONE);
       GlStateManager.disableTexture2D();
       GlStateManager.shadeModel(7425);
    }

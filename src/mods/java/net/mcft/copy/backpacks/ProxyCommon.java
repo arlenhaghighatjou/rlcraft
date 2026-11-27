@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +46,6 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBloc
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -57,9 +57,9 @@ public class ProxyCommon {
    }
 
    public void preInit() {
-      MinecraftForge.EVENT_BUS.register(this);
-      MinecraftForge.EVENT_BUS.register(WearableBackpacks.CONTENT);
-      MinecraftForge.EVENT_BUS.register(new DyeWashingHandler());
+      this.register(MinecraftForge.EVENT_BUS);
+      WearableBackpacks.CONTENT.register(MinecraftForge.EVENT_BUS);
+      (new DyeWashingHandler()).register(MinecraftForge.EVENT_BUS);
       CapabilityManager.INSTANCE.register(IBackpack.class, new BackpackCapability.Storage(), BackpackCapability::new);
    }
 
@@ -69,29 +69,40 @@ public class ProxyCommon {
    public void initBackpackLayers() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, this::onAttachCapabilitiesEntity);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      bus.register(PlayerChangedDimensionEvent.class, this::onPlayerChangedDimensionEvent);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawn);
+      bus.register(StartTracking.class, this::onPlayerStartTracking);
+      bus.register(CheckSpawn.class, this::onCheckSpawn);
+      bus.register(RightClickBlock.class, this::onPlayerInteractBlock);
+      bus.register(PlaceEvent.class, EventPriority.LOWEST, true, this::onBlockPlace);
+      bus.register(BreakEvent.class, EventPriority.LOWEST, true, this::onBlockBreak);
+      bus.register(EntityInteract.class, this::onEntityInteract);
+      bus.register(LivingUpdateEvent.class, this::onLivingUpdate);
+      bus.register(LivingDeathEvent.class, this::onLivingDeath);
+      bus.register(Clone.class, this::onPlayerClone);
+   }
+
    public void onAttachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event) {
       if (BackpackRegistry.canEntityWearBackpacks((Entity)event.getObject())) {
          event.addCapability(BackpackCapability.IDENTIFIER, new BackpackCapability.Provider((EntityLivingBase)event.getObject()));
       }
    }
 
-   @SubscribeEvent
    public void onPlayerLogin(PlayerLoggedInEvent event) {
       this.sendBackpackStack(event.player, event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerChangedDimensionEvent(PlayerChangedDimensionEvent event) {
       this.sendBackpackStack(event.player, event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerRespawn(PlayerRespawnEvent event) {
       this.sendBackpackStack(event.player, event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerStartTracking(StartTracking event) {
       this.sendBackpackStack(event.getTarget(), event.getEntityPlayer());
    }
@@ -104,7 +115,6 @@ public class ProxyCommon {
 
    }
 
-   @SubscribeEvent
    public void onCheckSpawn(CheckSpawn event) {
       if (event.isSpawner()) {
          if (!ModConfig.server.spawnFromSpawners) {
@@ -143,7 +153,6 @@ public class ProxyCommon {
       backpack.mayDespawn = true;
    }
 
-   @SubscribeEvent
    public void onPlayerInteractBlock(RightClickBlock event) {
       if (this.cancelOffHand) {
          this.cancelOffHand = false;
@@ -171,10 +180,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
    public void onBlockPlace(PlaceEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.getWorld().isRemote && event.getPlayer() != null && event.isCanceled() && ModConfig.server.ignoreCancellation) {
          TileEntity tileEntity = event.getWorld().getTileEntity(event.getPos());
@@ -190,10 +195,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
    public void onBlockBreak(BreakEvent event) {
       if (event.getState() != null && event.getWorld() != null && !event.getWorld().isRemote && event.getPlayer() != null && event.isCanceled() && ModConfig.server.ignoreCancellation) {
          TileEntity tileEntity = event.getWorld().getTileEntity(event.getPos());
@@ -207,7 +208,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent
    public void onEntityInteract(EntityInteract event) {
       if (ModConfig.server.enableEquippedInteraction && event.getTarget() instanceof EntityLivingBase) {
          EntityPlayer player = event.getEntityPlayer();
@@ -232,7 +232,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent
    public void onLivingUpdate(LivingUpdateEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       BackpackCapability backpack = (BackpackCapability)entity.getCapability(IBackpack.CAPABILITY, (EnumFacing)null);
@@ -260,7 +259,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent
    public void onLivingDeath(LivingDeathEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       World world = entity.world;
@@ -318,7 +316,6 @@ public class ProxyCommon {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerClone(Clone event) {
       IBackpack originalBackpack = BackpackHelper.getBackpack(event.getOriginal());
       if (originalBackpack != null) {

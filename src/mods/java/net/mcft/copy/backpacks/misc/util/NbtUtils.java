@@ -259,17 +259,17 @@ public final class NbtUtils {
       if (tag == null) {
          throw new IllegalArgumentException("tag is null");
       } else if (tag instanceof NBTTagByte) {
-         return (T)((NBTTagByte)tag).getByte();
+         return (T)Byte.valueOf(((NBTTagByte)tag).getByte());
       } else if (tag instanceof NBTTagShort) {
-         return (T)((NBTTagShort)tag).getShort();
+         return (T)Short.valueOf(((NBTTagShort)tag).getShort());
       } else if (tag instanceof NBTTagInt) {
-         return (T)((NBTTagInt)tag).getInt();
+         return (T)Integer.valueOf(((NBTTagInt)tag).getInt());
       } else if (tag instanceof NBTTagLong) {
-         return (T)((NBTTagLong)tag).getLong();
+         return (T)Long.valueOf(((NBTTagLong)tag).getLong());
       } else if (tag instanceof NBTTagFloat) {
-         return (T)((NBTTagFloat)tag).getFloat();
+         return (T)Float.valueOf(((NBTTagFloat)tag).getFloat());
       } else if (tag instanceof NBTTagDouble) {
-         return (T)((NBTTagDouble)tag).getDouble();
+         return (T)Double.valueOf(((NBTTagDouble)tag).getDouble());
       } else if (tag instanceof NBTTagString) {
          return (T)((NBTTagString)tag).getString();
       } else if (tag instanceof NBTTagByteArray) {
@@ -355,7 +355,7 @@ public final class NbtUtils {
    }
 
    public static <T extends NBTBase> Stream<T> stream(NBTTagList list) {
-      return StreamSupport.stream(iterate(list).spliterator(), false);
+      return StreamSupport.stream(NbtUtils.<T>iterate(list).spliterator(), false);
    }
 
    public static Stream<NbtUtils.CompoundEntry> stream(NBTTagCompound compound) {

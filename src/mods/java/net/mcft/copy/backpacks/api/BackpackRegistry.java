@@ -77,7 +77,7 @@ public final class BackpackRegistry {
    public static BackpackRegistry.BackpackEntityEntry getDefaultEntityEntry(String entityID) {
       return (BackpackRegistry.BackpackEntityEntry)_defaultEntities.stream().filter((e) -> {
          return e.entityID.equals(entityID);
-      }).findAny().orElse((Object)null);
+      }).findAny().orElse(null);
    }
 
    public static BackpackRegistry.BackpackEntityEntry getDefaultEntityEntry(Class<? extends EntityLivingBase> entityClass) {
@@ -135,12 +135,10 @@ public final class BackpackRegistry {
 
       public Class<? extends EntityLivingBase> getEntityClass() {
          return (Class)((Optional)BackpackRegistry._entityClassLookupCache.computeIfAbsent(this.entityID, (id) -> {
-            Optional var10000 = Optional.ofNullable(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id))).map(EntityEntry::getEntityClass);
-            EntityLivingBase.class.getClass();
-            return var10000.filter(EntityLivingBase.class::isAssignableFrom).map((c) -> {
+            return Optional.ofNullable(ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id))).map(EntityEntry::getEntityClass).filter(EntityLivingBase.class::isAssignableFrom).map((c) -> {
                return c.asSubclass(EntityLivingBase.class);
             });
-         })).orElse((Object)null);
+         })).orElse(null);
       }
 
       public List<BackpackRegistry.BackpackEntry> getEntries() {

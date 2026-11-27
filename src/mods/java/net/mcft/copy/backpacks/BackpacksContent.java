@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 import net.mcft.copy.backpacks.api.BackpackRegistry;
@@ -13,7 +14,6 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
@@ -25,13 +25,16 @@ public class BackpacksContent {
       BACKPACK = new ItemBackpack();
    }
 
-   @SubscribeEvent
-   public void onRegisterBlocks(Register<Block> event) {
-      event.getRegistry().register((new BlockBackpack()).setRegistryName("wearablebackpacks", "backpack"));
-      GameRegistry.registerTileEntity(TileEntityBackpack.class, new ResourceLocation("wearablebackpacks", "backpack"));
+   public void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, this::onRegisterBlocks);
+      bus.registerGeneric(Register.class, Item.class, this::onRegisterItems);
    }
 
-   @SubscribeEvent
+   public void onRegisterBlocks(Register<Block> event) {
+      event.getRegistry().register((new BlockBackpack()).setRegistryName("wearablebackpacks", "backpack"));
+      GameRegistry.registerTileEntity(TileEntityBackpack.class, new ResourceLocation("wearablebackpacks", "backpack"), TileEntityBackpack::new);
+   }
+
    public void onRegisterItems(Register<Item> event) {
       event.getRegistry().register(BACKPACK.setRegistryName("wearablebackpacks", "backpack"));
       String backpack = BACKPACK.getRegistryName().toString();
@@ -43,7 +46,7 @@ public class BackpacksContent {
          }
 
          for(Entry<String, ArrayList<String[]>> entry : EntityListConfig.getBackpackList().entrySet()) {
-            for(String[] subEntry : (ArrayList)entry.getValue()) {
+            for(String[] subEntry : (ArrayList<String[]>)entry.getValue()) {
                try {
                   boolean colored = Boolean.parseBoolean(subEntry[0]);
                   int chance = Integer.parseInt(subEntry[1]);

@@ -1,9 +1,6 @@
 package net.mcft.copy.backpacks.config;
 
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -19,9 +16,9 @@ import net.mcft.copy.backpacks.api.BackpackRegistry;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 
 public class EntityListConfig {
-   private static File configFolder = null;
-   private static File entityListFile = null;
-   private static File backpackListFile = null;
+   private static VFile2 configFolder = null;
+   private static VFile2 entityListFile = null;
+   private static VFile2 backpackListFile = null;
    private static final Map<String, BackpackRegistry.RenderOptions> entityList = new HashMap();
    private static final Map<String, ArrayList<String[]>> backpackList = new HashMap();
 
@@ -39,32 +36,22 @@ public class EntityListConfig {
    }
 
    private static boolean initDirectory() {
-      configFolder = new File("config", "wearablebackpacks");
-      if ((!configFolder.exists() || !configFolder.isDirectory()) && !configFolder.mkdir()) {
-         WearableBackpacks.LOG.log(Level.ERROR, "wearablebackpacks: Could not create the folder for configuration.");
-         return false;
-      } else {
-         return true;
-      }
+      configFolder = new VFile2("config", "wearablebackpacks");
+      return true;
    }
 
    private static boolean initEntityList() {
       if (configFolder == null && !initDirectory()) {
          return false;
       } else {
-         entityListFile = new File(configFolder, "wearablebackpacksentities.cfg");
+         entityListFile = new VFile2(configFolder, "wearablebackpacksentities.cfg");
 
          try {
             if (!entityListFile.exists()) {
-               if (!entityListFile.createNewFile()) {
-                  WearableBackpacks.LOG.log(Level.ERROR, "wearablebackpacks: Failed to create new entity list file.");
-                  return false;
-               }
-
-               Files.write(entityListFile.toPath(), "//List of Entity entries and their backpack render options, one entry per line.\n//String entityName, double Y, double Z, double rotation, double scale\n//Defaults:\nminecraft:zombie,0.0,2.5,0.0,0.8\nminecraft:skeleton,0.0,2.5,0.0,0.8\nminecraft:zombie_pigman,0.0,2.5,0.0,0.8\n".getBytes(StandardCharsets.UTF_8), new OpenOption[0]);
+               entityListFile.setAllChars("//List of Entity entries and their backpack render options, one entry per line.\n//String entityName, double Y, double Z, double rotation, double scale\n//Defaults:\nminecraft:zombie,0.0,2.5,0.0,0.8\nminecraft:skeleton,0.0,2.5,0.0,0.8\nminecraft:zombie_pigman,0.0,2.5,0.0,0.8\n");
             }
 
-            for(String entry : (List)Files.lines(entityListFile.toPath()).map(String::trim).filter((s) -> {
+            for(String entry : (List<String>)Arrays.stream(entityListFile.getAllChars().split("\\r\\n|\\r|\\n")).map(String::trim).filter((s) -> {
                return !s.startsWith("//");
             }).filter((s) -> {
                return !s.isEmpty();
@@ -87,19 +74,14 @@ public class EntityListConfig {
       if (configFolder == null && !initDirectory()) {
          return false;
       } else {
-         backpackListFile = new File(configFolder, "wearablebackpacksentitybackpacks.cfg");
+         backpackListFile = new VFile2(configFolder, "wearablebackpacksentitybackpacks.cfg");
 
          try {
             if (!backpackListFile.exists()) {
-               if (!backpackListFile.createNewFile()) {
-                  WearableBackpacks.LOG.log(Level.ERROR, "wearablebackpacks: Failed to create new entity backpack list file.");
-                  return false;
-               }
-
-               Files.write(backpackListFile.toPath(), "//List of Entities and their backpack entries, one entry per line.\n//Entities in this file must first be declared in wearablebackpacksentities.cfg.\n//Chance is 1 in X of appearing on entity.\n//String entityName, boolean colored, int chance, String loottable\n//Defaults:\nminecraft:zombie,false,800,wearablebackpacks:backpack/default\nminecraft:zombie,true,8000,wearablebackpacks:backpack/default\nminecraft:skeleton,false,1200,wearablebackpacks:backpack/default\nminecraft:skeleton,true,12000,wearablebackpacks:backpack/default\nminecraft:zombie_pigman,true,1000,wearablebackpacks:backpack/default\n".getBytes(StandardCharsets.UTF_8), new OpenOption[0]);
+               backpackListFile.setAllChars("//List of Entities and their backpack entries, one entry per line.\n//Entities in this file must first be declared in wearablebackpacksentities.cfg.\n//Chance is 1 in X of appearing on entity.\n//String entityName, boolean colored, int chance, String loottable\n//Defaults:\nminecraft:zombie,false,800,wearablebackpacks:backpack/default\nminecraft:zombie,true,8000,wearablebackpacks:backpack/default\nminecraft:skeleton,false,1200,wearablebackpacks:backpack/default\nminecraft:skeleton,true,12000,wearablebackpacks:backpack/default\nminecraft:zombie_pigman,true,1000,wearablebackpacks:backpack/default\n");
             }
 
-            for(String entry : (List)Files.lines(backpackListFile.toPath()).map(String::trim).filter((s) -> {
+            for(String entry : (List<String>)Arrays.stream(backpackListFile.getAllChars().split("\\r\\n|\\r|\\n")).map(String::trim).filter((s) -> {
                return !s.startsWith("//");
             }).filter((s) -> {
                return !s.isEmpty();

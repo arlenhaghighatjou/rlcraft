@@ -1,5 +1,6 @@
 package net.mcft.copy.backpacks.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import net.mcft.copy.backpacks.ProxyClient;
 import net.mcft.copy.backpacks.api.BackpackHelper;
 import net.mcft.copy.backpacks.api.BackpackRegistry;
@@ -14,8 +15,6 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
@@ -94,7 +93,7 @@ public final class RendererBackpack {
          GlStateManager.depthMask(false);
          GlStateManager.depthFunc(514);
          GlStateManager.enableBlend();
-         GlStateManager.blendFunc(SourceFactor.SRC_COLOR, DestFactor.ONE);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_COLOR, RealOpenGLEnums.GL_ONE);
 
          for(int i = 0; i < 2; ++i) {
             GlStateManager.matrixMode(5890);
@@ -109,7 +108,7 @@ public final class RendererBackpack {
          GlStateManager.matrixMode(5890);
          GlStateManager.loadIdentity();
          GlStateManager.matrixMode(5888);
-         GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.disableBlend();
          GlStateManager.depthFunc(515);
          GlStateManager.depthMask(true);

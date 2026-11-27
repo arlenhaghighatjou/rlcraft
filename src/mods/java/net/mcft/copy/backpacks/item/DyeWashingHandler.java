@@ -1,18 +1,21 @@
 package net.mcft.copy.backpacks.item;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.mcft.copy.backpacks.misc.util.NbtUtils;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DyeWashingHandler {
    public DyeWashingHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(RightClickBlock.class, this::onPlayerInteractBlock);
+   }
+
    public void onPlayerInteractBlock(RightClickBlock event) {
       if (!event.getWorld().isRemote && !event.getEntityPlayer().isSneaking()) {
          ItemStack stack = event.getItemStack();

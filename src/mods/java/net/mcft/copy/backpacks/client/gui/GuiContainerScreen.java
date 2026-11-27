@@ -72,13 +72,13 @@ public class GuiContainerScreen extends GuiScreen {
          this._lastMouseY = mouseY;
       }
 
-      GuiElementBase tooltipElement = (GuiElementBase)(new ElementInfo(this.container)).getElementsAt(mouseX, mouseY).map((infox) -> {
+      GuiElementBase tooltipElement = (GuiElementBase)(new ElementInfo(this.container)).getElementsAt(mouseX, mouseY).map((info) -> {
          return info.element;
       }).filter((element) -> {
          return element.hasTooltip();
       }).reduce((first, second) -> {
          return second;
-      }).orElse((Object)null);
+      }).orElse(null);
       if (tooltipElement != this._tooltipElement) {
          this._tooltipTime = Minecraft.getSystemTime();
       }

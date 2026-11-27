@@ -276,6 +276,7 @@ public class Loader
         mods.add(new FMLModContainer<>("spartandefiled", "Spartan Defiled", "1.0", "", "[1.12.2]", "spartandefiled", fr.samlegamer.spartandefiled.SpartanDefiled::new, fr.samlegamer.spartandefiled.SpartanDefiled::handleModStateEvent));
         mods.add(new FMLModContainer<>("reachfix", "reachfix", "1.0", "", "", "reachfix", meldexun.reachfix.ReachFix::new, meldexun.reachfix.ReachFix::handleModStateEvent));
         mods.add(new FMLModContainer<>("firstaid", "First Aid", "1.6.22", "required-after:forge@[14.23.5.2803,);", "[1.12.2,1.13)", "firstaid", ichttt.mods.firstaid.FirstAid::new, ichttt.mods.firstaid.FirstAid::handleModStateEvent).guiFactory(ichttt.mods.firstaid.client.config.GuiFactory::new));
+        mods.add(new FMLModContainer<>("wearablebackpacks", "Wearable Backpacks RLCraft Edition", "3.2.6", "required-after:forge@[14.23.5.2855,);required-after:baubles@[1.5.2,)", "", "wearablebackpacks", net.mcft.copy.backpacks.WearableBackpacks::new, net.mcft.copy.backpacks.WearableBackpacks::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

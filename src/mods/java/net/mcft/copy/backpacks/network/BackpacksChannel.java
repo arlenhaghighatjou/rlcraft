@@ -15,9 +15,9 @@ import net.minecraftforge.fml.relauncher.Side;
 public class BackpacksChannel extends SimpleNetworkWrapper {
    public BackpacksChannel() {
       super("wearablebackpacks");
-      this.registerMessage(MessageBackpackUpdate.Handler.class, MessageBackpackUpdate.class, 1, Side.CLIENT);
-      this.registerMessage(MessageOpenGui.Handler.class, MessageOpenGui.class, 2, Side.CLIENT);
-      this.registerMessage(MessageOpenBackpack.Handler.class, MessageOpenBackpack.class, 3, Side.SERVER);
+      this.registerMessage(new MessageBackpackUpdate.Handler(), MessageBackpackUpdate.class, MessageBackpackUpdate::new, 1, Side.CLIENT);
+      this.registerMessage(new MessageOpenGui.Handler(), MessageOpenGui.class, MessageOpenGui::new, 2, Side.CLIENT);
+      this.registerMessage(new MessageOpenBackpack.Handler(), MessageOpenBackpack.class, MessageOpenBackpack::new, 3, Side.SERVER);
    }
 
    public void sendTo(IMessage message, EntityPlayer player) {
