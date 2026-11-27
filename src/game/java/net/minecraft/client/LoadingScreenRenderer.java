@@ -15,11 +15,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class LoadingScreenRenderer implements IProgressUpdate
 {
-    private String message = "";
-    private final Minecraft mc;
-    private String currentlyDisplayedText = "";
-    private long systemTime = Minecraft.getSystemTime();
-    private boolean loadingSuccess;
+    public String message = "";
+    public final Minecraft mc;
+    public String currentlyDisplayedText = "";
+    public long systemTime = Minecraft.getSystemTime();
+    public boolean loadingSuccess;
 
     public LoadingScreenRenderer(Minecraft mcIn)
     {

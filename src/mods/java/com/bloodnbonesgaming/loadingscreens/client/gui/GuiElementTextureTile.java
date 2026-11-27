@@ -1,5 +1,6 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
+import com.bloodnbonesgaming.lib.util.script.ScriptCall;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -33,5 +34,14 @@ public class GuiElementTextureTile extends GuiElementTexture {
       bufferbuilder.pos((double)(x + width), (double)(y + 0), 0.0D).tex(xEndPos, yStartPos).endVertex();
       bufferbuilder.pos((double)(x + 0), (double)(y + 0), 0.0D).tex(xStartPos, yStartPos).endVertex();
       tessellator.draw();
+   }
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (method.equals("setTileSize") && args.length == 2 && ScriptCall.isNumber(args[0]) && ScriptCall.isNumber(args[1])) {
+         this.setTileSize(ScriptCall.toDouble(args[0]), ScriptCall.toDouble(args[1]));
+         return null;
+      }
+
+      return super.call(method, args);
    }
 }

@@ -7,10 +7,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiScreenWorking extends GuiScreen implements IProgressUpdate
 {
-    private String title = "";
-    private String stage = "";
-    private int progress;
-    private boolean doneWorking;
+    public String title = "";
+    public String stage = "";
+    public int progress;
+    public boolean doneWorking;
 
     public void displaySavingString(String message)
     {

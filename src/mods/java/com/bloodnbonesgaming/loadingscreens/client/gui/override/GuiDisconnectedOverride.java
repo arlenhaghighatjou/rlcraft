@@ -14,8 +14,8 @@ public class GuiDisconnectedOverride extends GuiDisconnected {
 
    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
       LoadingScreenHandler.getInstance().renderScreen(this.mc, this.width, this.height);
-      this.drawCenteredString(this.fontRenderer, this.reason, this.width / 2, this.height / 2 - this.textHeight / 2 - this.fontRenderer.FONT_HEIGHT * 2, 11184810);
-      int height = this.height / 2 - this.textHeight / 2;
+      this.drawCenteredString(this.fontRenderer, this.reason, this.width / 2, this.height / 2 - this.field_175353_i / 2 - this.fontRenderer.FONT_HEIGHT * 2, 11184810);
+      int height = this.height / 2 - this.field_175353_i / 2;
       if (this.multilineMessage != null) {
          for(String s : this.multilineMessage) {
             this.drawCenteredString(this.fontRenderer, s, this.width / 2, height, 16777215);

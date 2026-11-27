@@ -1,16 +1,14 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
+import com.bloodnbonesgaming.lib.util.script.ScriptCall;
 import com.bloodnbonesgaming.loadingscreens.IOHelper;
 import com.bloodnbonesgaming.loadingscreens.LoadingScreens;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
+import com.arlenh7.eaglercraft.image.GifDecoder;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Iterator;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
+import java.util.List;
+import net.lax1dude.eaglercraft.v1_8.EaglerInputStream;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.IResource;
@@ -71,124 +69,89 @@ public class GuiElementTextureAnimated extends GuiElementTextureStretch {
    }
 
    private boolean loadAndTransformGIF(Minecraft minecraft, ResourceLocation location) {
+      IResource resource = null;
+
       try {
-         IResource resource = minecraft.getResourceManager().getResource(location);
-         Throwable var4 = null;
-
-         boolean var73;
-         try {
-            InputStream input = resource.getInputStream();
-            Throwable var6 = null;
-
-            try {
-               ImageInputStream imageStream = ImageIO.createImageInputStream(input);
-               Throwable var8 = null;
-
-               try {
-                  Iterator<ImageReader> readers = ImageIO.getImageReaders(imageStream);
-                  if (!readers.hasNext()) {
-                     throw new IOException("No suitable reader found for image" + location);
-                  }
-
-                  ImageReader reader = (ImageReader)readers.next();
-                  reader.setInput(imageStream);
-                  int frames = reader.getNumImages(true);
-                  BufferedImage[] images = new BufferedImage[frames];
-
-                  for(int i = 0; i < frames; ++i) {
-                     images[i] = reader.read(i);
-                  }
-
-                  reader.dispose();
-                  int width = images[0].getWidth();
-                  int height = images[0].getHeight();
-                  if (height > width && height % width == 0) {
-                     frames = height / width;
-                     BufferedImage original = images[0];
-                     height = width;
-                     images = new BufferedImage[frames];
-
-                     for(int i = 0; i < frames; ++i) {
-                        images[i] = original.getSubimage(0, i * height, width, height);
-                     }
-                  }
-
-                  this.frames = frames;
-                  BufferedImage combined = this.combineBufferedImages(images);
-                  IOHelper.outputImage(combined, location.getResourcePath().substring(0, location.getResourcePath().length() - 4));
-                  this.gifTexture = new DynamicTexture(combined);
-                  var73 = true;
-               } catch (Throwable var63) {
-                  var8 = var63;
-                  throw var63;
-               } finally {
-                  if (imageStream != null) {
-                     if (var8 != null) {
-                        try {
-                           imageStream.close();
-                        } catch (Throwable var62) {
-                           var8.addSuppressed(var62);
-                        }
-                     } else {
-                        imageStream.close();
-                     }
-                  }
-
-               }
-            } catch (Throwable var65) {
-               var6 = var65;
-               throw var65;
-            } finally {
-               if (input != null) {
-                  if (var6 != null) {
-                     try {
-                        input.close();
-                     } catch (Throwable var61) {
-                        var6.addSuppressed(var61);
-                     }
-                  } else {
-                     input.close();
-                  }
-               }
-
-            }
-         } catch (Throwable var67) {
-            var4 = var67;
-            throw var67;
-         } finally {
-            if (resource != null) {
-               if (var4 != null) {
-                  try {
-                     resource.close();
-                  } catch (Throwable var60) {
-                     var4.addSuppressed(var60);
-                  }
-               } else {
-                  resource.close();
-               }
-            }
-
+         resource = minecraft.getResourceManager().getResource(location);
+         List<ImageData> frameList = GifDecoder.readFrames(EaglerInputStream.inputStreamToBytes(resource.getInputStream()));
+         if (frameList.isEmpty()) {
+            throw new IOException("No suitable reader found for image" + location);
          }
 
-         return var73;
+         int frames = frameList.size();
+         ImageData[] images = new ImageData[frames];
+
+         for(int i = 0; i < frames; ++i) {
+            images[i] = (ImageData)frameList.get(i);
+         }
+
+         int width = images[0].width;
+         int height = images[0].height;
+         if (height > width && height % width == 0) {
+            frames = height / width;
+            ImageData original = images[0];
+            height = width;
+            images = new ImageData[frames];
+
+            for(int i = 0; i < frames; ++i) {
+               images[i] = original.getSubImage(0, i * height, width, height);
+            }
+         }
+
+         this.frames = frames;
+         ImageData combined = this.combineBufferedImages(images);
+         IOHelper.outputImage(combined, location.getResourcePath().substring(0, location.getResourcePath().length() - 4));
+         this.gifTexture = new DynamicTexture(combined);
+         return true;
       } catch (Exception var69) {
          LoadingScreens.instance.getLog().error("Could not load animated texture for " + location.toString());
          var69.printStackTrace();
          return false;
+      } finally {
+         IOUtils.closeQuietly(resource);
       }
    }
 
-   private BufferedImage combineBufferedImages(BufferedImage[] images) {
-      int singleWidth = images[0].getWidth();
-      int singleHeight = images[0].getHeight();
+   private ImageData combineBufferedImages(ImageData[] images) {
+      int singleWidth = images[0].width;
+      int singleHeight = images[0].height;
       int totalHeight = singleHeight * images.length;
-      BufferedImage masterImage = new BufferedImage(singleWidth, totalHeight, 2);
-      Graphics2D graphics = masterImage.createGraphics();
+      ImageData masterImage = new ImageData(singleWidth, totalHeight, true);
 
       for(int i = 0; i < images.length; ++i) {
-         graphics.drawImage(images[i], 0, singleHeight * i, (ImageObserver)null);
+         ImageData image = images[i];
+         int copyWidth = Math.min(image.width, singleWidth);
+         int copyHeight = Math.min(image.height, singleHeight);
+
+         for(int y = 0; y < copyHeight; ++y) {
+            for(int x = 0; x < copyWidth; ++x) {
+               int src = image.pixels[y * image.width + x];
+               int alpha = src >>> 24;
+               if (alpha == 255) {
+                  masterImage.pixels[(singleHeight * i + y) * singleWidth + x] = src;
+               } else if (alpha != 0) {
+                  int index = (singleHeight * i + y) * singleWidth + x;
+                  int dst = masterImage.pixels[index];
+                  int dstAlpha = dst >>> 24;
+                  int outAlpha = alpha + dstAlpha * (255 - alpha) / 255;
+                  int r = (((src >> 16) & 255) * alpha + ((dst >> 16) & 255) * dstAlpha * (255 - alpha) / 255) / outAlpha;
+                  int g = (((src >> 8) & 255) * alpha + ((dst >> 8) & 255) * dstAlpha * (255 - alpha) / 255) / outAlpha;
+                  int b = ((src & 255) * alpha + (dst & 255) * dstAlpha * (255 - alpha) / 255) / outAlpha;
+                  masterImage.pixels[index] = outAlpha << 24 | r << 16 | g << 8 | b;
+               }
+            }
+         }
       }
 
       return masterImage;
+   }
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (method.equals("setUpdateTime") && args.length == 1 && ScriptCall.isNumber(args[0])) {
+         this.setUpdateTime(ScriptCall.toInt(args[0]));
+         return null;
+      }
+
+      return super.call(method, args);
    }
 }

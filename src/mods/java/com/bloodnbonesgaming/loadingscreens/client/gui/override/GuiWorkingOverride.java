@@ -10,9 +10,7 @@ public class GuiWorkingOverride extends GuiScreenWorking {
 
    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
       if (this.doneWorking) {
-         if (!this.mc.isConnectedToRealms()) {
-            this.mc.displayGuiScreen((GuiScreen)null);
-         }
+         this.mc.displayGuiScreen((GuiScreen)null);
       } else {
          LoadingScreenHandler.getInstance().renderScreen(this.mc, this.width, this.height);
          this.drawCenteredString(this.fontRenderer, this.title, this.width / 2, 70, 16777215);

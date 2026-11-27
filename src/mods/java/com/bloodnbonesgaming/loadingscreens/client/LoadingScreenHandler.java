@@ -1,6 +1,8 @@
 package com.bloodnbonesgaming.loadingscreens.client;
 
-import com.bloodnbonesgaming.lib.util.script.ScriptMethodDocumentation;
+import com.bloodnbonesgaming.lib.util.script.ScriptCall;
+import com.bloodnbonesgaming.lib.util.script.ScriptTarget;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.bloodnbonesgaming.lib.util.script.ScriptUtil;
 import com.bloodnbonesgaming.loadingscreens.client.gui.EnumGuiLocation;
 import com.bloodnbonesgaming.loadingscreens.client.gui.GuiElementBase;
@@ -10,7 +12,6 @@ import com.bloodnbonesgaming.loadingscreens.client.gui.GuiElementTextureAnimated
 import com.bloodnbonesgaming.loadingscreens.client.gui.GuiElementTextureStretch;
 import com.bloodnbonesgaming.loadingscreens.client.gui.GuiElementTextureTile;
 import com.bloodnbonesgaming.loadingscreens.client.gui.override.GuiWorkingOverride;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
-public class LoadingScreenHandler {
+public class LoadingScreenHandler implements ScriptTarget {
    private static LoadingScreenHandler instance;
    private List<GuiElementBase> elements = new ArrayList();
    private boolean setup = false;
@@ -58,20 +59,13 @@ public class LoadingScreenHandler {
 
    public static void load() {
       instance = new LoadingScreenHandler();
-      File file = new File("./config/loadingscreens/");
-      if (!file.exists()) {
-         file.mkdirs();
-      } else {
-         ScriptUtil.readScript(new File("./config/loadingscreens/LoadingScreens.txt"), instance, (Map)null);
+      VFile2 file = new VFile2("config/loadingscreens/LoadingScreens.txt");
+      if (file.exists()) {
+         ScriptUtil.readScript(file, instance, (Map)null);
       }
 
    }
 
-   @ScriptMethodDocumentation(
-      args = "String, String",
-      usage = "anchor point, texture location",
-      notes = "Adds a tiled texture. Documentation can be found in documentation/gui/guiElements/Tiled_Texture.txt"
-   )
    public GuiElementTextureTile addTiledTexture(String location, String texture) throws Exception {
       EnumGuiLocation eLocation = EnumGuiLocation.valueOf(location.toUpperCase());
       if (eLocation != null) {
@@ -83,11 +77,6 @@ public class LoadingScreenHandler {
       }
    }
 
-   @ScriptMethodDocumentation(
-      args = "String, String",
-      usage = "anchor point, texture location",
-      notes = "Adds a stretched texture. Documentation can be found in documentation/gui/guiElements/Stretched_Texture.txt"
-   )
    public GuiElementTextureStretch addStretchedTexture(String location, String texture) throws Exception {
       EnumGuiLocation eLocation = EnumGuiLocation.valueOf(location.toUpperCase());
       if (eLocation != null) {
@@ -99,11 +88,6 @@ public class LoadingScreenHandler {
       }
    }
 
-   @ScriptMethodDocumentation(
-      args = "String, String",
-      usage = "anchor point, texture location",
-      notes = "Adds an animated texture. Documentation can be found in documentation/gui/guiElements/Animated_Texture.txt"
-   )
    public GuiElementTextureAnimated addAnimatedTexture(String location, String texture) throws Exception {
       EnumGuiLocation eLocation = EnumGuiLocation.valueOf(location.toUpperCase());
       if (eLocation != null) {
@@ -120,11 +104,6 @@ public class LoadingScreenHandler {
       }
    }
 
-   @ScriptMethodDocumentation(
-      args = "String, String",
-      usage = "anchor point, text",
-      notes = "Adds a text string. Documentation can be found in documentation/gui/guiElements/Text.txt"
-   )
    public GuiElementText addText(String location, String text) throws Exception {
       EnumGuiLocation eLocation = EnumGuiLocation.valueOf(location.toUpperCase());
       if (eLocation != null) {
@@ -136,11 +115,6 @@ public class LoadingScreenHandler {
       }
    }
 
-   @ScriptMethodDocumentation(
-      args = "String, String",
-      usage = "anchor point, text",
-      notes = "Adds a text string. Documentation can be found in documentation/gui/guiElements/Text.txt"
-   )
    public GuiElementTextRandom addRandomText(String location) throws Exception {
       EnumGuiLocation eLocation = EnumGuiLocation.valueOf(location.toUpperCase());
       if (eLocation != null) {
@@ -150,5 +124,31 @@ public class LoadingScreenHandler {
       } else {
          throw new Exception(location + " is not a valid gui location!");
       }
+   }
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (args.length == 1 && method.equals("addRandomText") && ScriptCall.isString(args[0])) {
+         return this.addRandomText((String)args[0]);
+      }
+
+      if (args.length == 2 && ScriptCall.isString(args[0]) && ScriptCall.isString(args[1])) {
+         if (method.equals("addTiledTexture")) {
+            return this.addTiledTexture((String)args[0], (String)args[1]);
+         }
+
+         if (method.equals("addStretchedTexture")) {
+            return this.addStretchedTexture((String)args[0], (String)args[1]);
+         }
+
+         if (method.equals("addAnimatedTexture")) {
+            return this.addAnimatedTexture((String)args[0], (String)args[1]);
+         }
+
+         if (method.equals("addText")) {
+            return this.addText((String)args[0], (String)args[1]);
+         }
+      }
+
+      return NO_METHOD;
    }
 }

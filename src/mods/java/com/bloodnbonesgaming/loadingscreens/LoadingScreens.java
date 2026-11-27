@@ -1,14 +1,13 @@
 package com.bloodnbonesgaming.loadingscreens;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.bloodnbonesgaming.lib.BNBGamingMod;
 import com.bloodnbonesgaming.loadingscreens.client.LoadingScreenHandler;
 import com.bloodnbonesgaming.loadingscreens.proxy.CommonProxy;
-import java.io.IOException;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -27,53 +26,60 @@ import net.minecraftforge.fml.common.event.FMLServerStoppedEvent;
    acceptedMinecraftVersions = "[1.12,1.13)"
 )
 public class LoadingScreens extends BNBGamingMod {
-   @Instance("loadingscreens")
    public static LoadingScreens instance;
-   @SidedProxy(
-      clientSide = "com.bloodnbonesgaming.loadingscreens.proxy.ClientProxy",
-      serverSide = "com.bloodnbonesgaming.loadingscreens.proxy.ServerProxy"
-   )
    public static CommonProxy proxy;
-   public static boolean gamestages = false;
 
    public LoadingScreens() {
+      super("loadingscreens");
    }
 
-   @EventHandler
-   public void preInit(FMLPreInitializationEvent event) {
-      if (Loader.isModLoaded("gamestages")) {
-         gamestages = true;
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.bloodnbonesgaming.loadingscreens.proxy.ClientProxy() : new com.bloodnbonesgaming.loadingscreens.proxy.ServerProxy();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLLoadCompleteEvent) {
+         this.loadComplete((FMLLoadCompleteEvent)event);
+      } else if (event instanceof FMLServerAboutToStartEvent) {
+         this.serverAboutToSTart((FMLServerAboutToStartEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.serverStarting((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStartedEvent) {
+         this.serverStarted((FMLServerStartedEvent)event);
+      } else if (event instanceof FMLServerStoppedEvent) {
+         this.serverStopped((FMLServerStoppedEvent)event);
       }
 
+   }
+
+   public void preInit(FMLPreInitializationEvent event) {
       proxy.registerEventHandlers();
       LoadingScreenHandler.load();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
    }
 
-   @EventHandler
    public void loadComplete(FMLLoadCompleteEvent event) {
    }
 
-   @EventHandler
    public void serverAboutToSTart(FMLServerAboutToStartEvent event) {
    }
 
-   @EventHandler
-   public void serverStarting(FMLServerStartingEvent event) throws IOException {
+   public void serverStarting(FMLServerStartingEvent event) {
    }
 
-   @EventHandler
-   public void serverStarted(FMLServerStartedEvent event) throws IOException {
+   public void serverStarted(FMLServerStartedEvent event) {
    }
 
-   @EventHandler
    public void serverStopped(FMLServerStoppedEvent event) {
    }
 }

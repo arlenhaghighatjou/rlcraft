@@ -1,19 +1,16 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
-import com.bloodnbonesgaming.loadingscreens.GamestageHandler;
-import com.bloodnbonesgaming.loadingscreens.LoadingScreens;
+import com.bloodnbonesgaming.lib.util.script.ScriptCall;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumTypeAdapterFactory;
@@ -88,14 +85,6 @@ public class GuiElementTextRandom extends GuiElementBase {
 
    public void render(Minecraft minecraft, int guiWidth, int guiHeight) {
       List<String> strings = new ArrayList(this.strings);
-      if (LoadingScreens.gamestages) {
-         for(Entry<String, List<String>> entry : this.stagedStrings.entrySet()) {
-            if (GamestageHandler.hasGamestage(minecraft, (String)entry.getKey())) {
-               strings.addAll((Collection)entry.getValue());
-            }
-         }
-      }
-
       if (strings.size() > 0) {
          if (strings.size() > 1) {
             long i = Minecraft.getSystemTime();
@@ -117,5 +106,26 @@ public class GuiElementTextRandom extends GuiElementBase {
          }
       }
 
+   }
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (args.length == 1 && ScriptCall.isString(args[0])) {
+         if (method.equals("addText")) {
+            this.addText((String)args[0]);
+            return null;
+         }
+
+         if (method.equals("addTip")) {
+            this.addTip((String)args[0]);
+            return null;
+         }
+      }
+
+      if (method.equals("addStagedText") && args.length == 2 && ScriptCall.isString(args[0]) && ScriptCall.isString(args[1])) {
+         this.addStagedText((String)args[0], (String)args[1]);
+         return null;
+      }
+
+      return super.call(method, args);
    }
 }

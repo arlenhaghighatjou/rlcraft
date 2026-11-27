@@ -44,7 +44,7 @@ import net.minecraft.util.text.TextComponentString;
 public class GuiConnecting extends GuiScreen {
 	private static final Logger logger = LogManager.getLogger();
 	private IWebSocketClient webSocket;
-	private HandshakerHandler handshaker;
+	public HandshakerHandler handshaker;
 	private String currentAddress;
 	private String currentPassword;
 	private boolean allowPlaintext;

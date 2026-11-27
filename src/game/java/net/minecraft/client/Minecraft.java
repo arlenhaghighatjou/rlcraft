@@ -332,7 +332,7 @@ public class Minecraft implements IThreadListener
     private ModelManager modelManager;
     private BlockRendererDispatcher blockRenderDispatcher;
     private GuiToast toastGui;
-    volatile boolean running = true;
+    public volatile boolean running = true;
     public String debug = "";
     public boolean renderChunksMany = true;
     private long debugUpdateTime = getSystemTime();

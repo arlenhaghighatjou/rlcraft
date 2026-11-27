@@ -57,7 +57,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public int width;
     public int height;
     public List<GuiButton> buttonList = Lists.<GuiButton>newArrayList();
-    protected List<GuiLabel> labelList = Lists.<GuiLabel>newArrayList();
+    public List<GuiLabel> labelList = Lists.<GuiLabel>newArrayList();
     public boolean allowUserInput;
     protected FontRenderer fontRenderer;
     protected GuiButton selectedButton;

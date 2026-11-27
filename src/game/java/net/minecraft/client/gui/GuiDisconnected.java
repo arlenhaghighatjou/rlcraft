@@ -30,11 +30,11 @@ import net.minecraft.util.text.ITextComponent;
  * 
  */
 public class GuiDisconnected extends GuiScreen {
-	private String reason;
-	private ITextComponent message;
-	private List<String> multilineMessage;
-	private final GuiScreen parentScreen;
-	private int field_175353_i;
+	public String reason;
+	public ITextComponent message;
+	public List<String> multilineMessage;
+	public final GuiScreen parentScreen;
+	public int field_175353_i;
 
 	public GuiDisconnected(GuiScreen screen, String reasonLocalizationKey, ITextComponent chatComp) {
 		this.parentScreen = screen;

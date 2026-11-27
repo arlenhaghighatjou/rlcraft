@@ -1,14 +1,15 @@
 package com.bloodnbonesgaming.loadingscreens.client.gui;
 
+import com.bloodnbonesgaming.lib.util.script.ScriptCall;
 import com.bloodnbonesgaming.loadingscreens.LoadingScreens;
-import java.awt.image.BufferedImage;
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import java.io.IOException;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
 
 public abstract class GuiElementTexture extends GuiElementBase {
    protected final ResourceLocation texture;
@@ -29,9 +30,9 @@ public abstract class GuiElementTexture extends GuiElementBase {
 
       try {
          iresource = Minecraft.getMinecraft().getResourceManager().getResource(texture);
-         BufferedImage bufferedimage = TextureUtil.readBufferedImage(iresource.getInputStream());
-         width = bufferedimage.getWidth();
-         height = bufferedimage.getHeight();
+         ImageData bufferedimage = TextureUtil.readBufferedImage(iresource.getInputStream());
+         width = bufferedimage.width;
+         height = bufferedimage.height;
       } catch (IOException var10) {
          LoadingScreens.instance.getLog().error("Could not load texture for " + texture.toString());
       } finally {
@@ -97,4 +98,47 @@ public abstract class GuiElementTexture extends GuiElementBase {
    }
 
    abstract void drawTexture(int var1, int var2, int var3, int var4, int var5, int var6, double var7, double var9, double var11, double var13);
+
+   public Object call(String method, Object[] args) throws Exception {
+      if (args.length == 0 && method.equals("preserveAspectRatio")) {
+         this.preserveAspectRatio();
+         return null;
+      }
+
+      if (args.length == 1 && ScriptCall.isNumber(args[0])) {
+         if (method.equals("setAbsRenderWidth")) {
+            this.setAbsRenderWidth(ScriptCall.toInt(args[0]));
+            return null;
+         }
+
+         if (method.equals("setAbsRenderHeight")) {
+            this.setAbsRenderHeight(ScriptCall.toInt(args[0]));
+            return null;
+         }
+
+         if (method.equals("setRelRenderWidth")) {
+            this.setRelRenderWidth(ScriptCall.toDouble(args[0]));
+            return null;
+         }
+
+         if (method.equals("setRelRenderHeight")) {
+            this.setRelRenderHeight(ScriptCall.toDouble(args[0]));
+            return null;
+         }
+      }
+
+      if (args.length == 2 && ScriptCall.isNumber(args[0]) && ScriptCall.isNumber(args[1])) {
+         if (method.equals("setAbsRender")) {
+            this.setAbsRender(ScriptCall.toInt(args[0]), ScriptCall.toInt(args[1]));
+            return null;
+         }
+
+         if (method.equals("setRelRender")) {
+            this.setRelRender(ScriptCall.toDouble(args[0]), ScriptCall.toDouble(args[1]));
+            return null;
+         }
+      }
+
+      return super.call(method, args);
+   }
 }
