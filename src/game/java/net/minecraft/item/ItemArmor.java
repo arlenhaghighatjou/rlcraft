@@ -190,6 +190,7 @@ public class ItemArmor extends Item
 
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
+        if (this.materialTweakerOverridesRepair(toRepair, repair)) return this.materialTweakerRepairMatches(repair);
         ItemStack mat = this.material.getRepairItemStack();
         if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat,repair,false)) return true;
         return super.getIsRepairable(toRepair, repair);
@@ -259,6 +260,14 @@ public class ItemArmor extends Item
         private final float toughness;
         //Added by forge for custom Armor materials.
         public ItemStack repairMaterial = ItemStack.EMPTY;
+        private int materialTweakerMaxDamageFactor;
+        private int[] materialTweakerDamageReductionAmounts;
+        private int materialTweakerEnchantability;
+        private float materialTweakerToughness;
+        private boolean materialTweakerCheckedAttributes = false;
+        private boolean materialTweakerCheckedRepair = false;
+        private boolean materialTweakerReplacedAttributes = false;
+        private boolean materialTweakerReplacedRepair = false;
 
         private ArmorMaterial(String constantName, int ordinal, String nameIn, int maxDamageFactorIn, int[] damageReductionAmountArrayIn, int enchantabilityIn, SoundEvent soundEventIn, float toughnessIn)
         {
@@ -313,17 +322,74 @@ public class ItemArmor extends Item
 
         public int getDurability(EntityEquipmentSlot armorType)
         {
-            return ItemArmor.MAX_DAMAGE_ARRAY[armorType.getIndex()] * this.maxDamageFactor;
+            int durability = ItemArmor.MAX_DAMAGE_ARRAY[armorType.getIndex()] * this.maxDamageFactor;
+            if (this.materialTweakerAttributes()) return durability / this.maxDamageFactor * this.materialTweakerMaxDamageFactor;
+            return durability;
         }
 
         public int getDamageReductionAmount(EntityEquipmentSlot armorType)
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerDamageReductionAmounts[armorType.getIndex()];
             return this.damageReductionAmountArray[armorType.getIndex()];
         }
 
         public int getEnchantability()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerEnchantability;
             return this.enchantability;
+        }
+
+        private boolean materialTweakerAttributes()
+        {
+            if (!this.materialTweakerCheckedAttributes)
+            {
+                this.materialTweakerCheckedAttributes = true;
+
+                try
+                {
+                    materialtweaker.util.ArmorAttributeEntry attributeEntry = materialtweaker.handlers.CustomConfigHandler.getArmorAttributes(this.name());
+
+                    if (attributeEntry != null)
+                    {
+                        this.materialTweakerMaxDamageFactor = attributeEntry.durabilityFactor;
+                        this.materialTweakerDamageReductionAmounts = new int[] {attributeEntry.damageReductionFeet, attributeEntry.damageReductionLegs, attributeEntry.damageReductionChest, attributeEntry.damageReductionHead};
+                        this.materialTweakerEnchantability = attributeEntry.enchantability;
+                        this.materialTweakerToughness = attributeEntry.toughness;
+                        this.materialTweakerReplacedAttributes = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.ERROR, "materialtweaker: Caught exception while checking armor material attributes: " + e);
+                }
+            }
+
+            return this.materialTweakerReplacedAttributes;
+        }
+
+        private boolean materialTweakerRepair()
+        {
+            if (!this.materialTweakerCheckedRepair)
+            {
+                this.materialTweakerCheckedRepair = true;
+
+                try
+                {
+                    String[] repairEntry = materialtweaker.handlers.CustomConfigHandler.getArmorRepairs(this.name());
+
+                    if (repairEntry != null)
+                    {
+                        this.repairMaterial = new ItemStack(Item.getByNameOrId(repairEntry[0]), 1, repairEntry[1].equals("*") ? 32767 : Integer.parseInt(repairEntry[1]));
+                        this.materialTweakerReplacedRepair = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.ERROR, "materialtweaker: Caught exception while checking armor material repairs: " + e);
+                }
+            }
+
+            return this.materialTweakerReplacedRepair;
         }
 
         public SoundEvent getSoundEvent()
@@ -334,6 +400,7 @@ public class ItemArmor extends Item
         @Deprecated // Use getRepairItemStack below
         public Item getRepairItem()
         {
+            if (this.materialTweakerRepair()) return this.repairMaterial.getItem();
             if (this == LEATHER)
             {
                 return Items.LEATHER;
@@ -364,11 +431,13 @@ public class ItemArmor extends Item
 
         public float getToughness()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerToughness;
             return this.toughness;
         }
 
         public ArmorMaterial setRepairItem(ItemStack stack)
         {
+            if (this.materialTweakerRepair()) return this;
             if (!this.repairMaterial.isEmpty()) throw new RuntimeException("Repair material has already been set");
             if (this == LEATHER || this == CHAIN || this == GOLD || this == IRON || this == DIAMOND) throw new RuntimeException("Can not change vanilla armor repair materials");
             this.repairMaterial = stack;
@@ -377,6 +446,7 @@ public class ItemArmor extends Item
 
         public ItemStack getRepairItemStack()
         {
+            if (this.materialTweakerRepair()) return this.repairMaterial;
             if (!repairMaterial.isEmpty()) return repairMaterial;
             Item ret = this.getRepairItem();
             if (ret != null) repairMaterial = new ItemStack(ret,1,net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE);

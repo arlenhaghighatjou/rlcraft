@@ -74,6 +74,7 @@ public class ItemShield extends Item
 
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
+        if (this.materialTweakerOverridesRepair(toRepair, repair)) return this.materialTweakerRepairMatches(repair);
         return repair.getItem() == Item.getItemFromBlock(Blocks.PLANKS) ? true : super.getIsRepairable(toRepair, repair);
     }
 }

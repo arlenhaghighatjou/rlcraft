@@ -270,6 +270,7 @@ public class Loader
         mods.add(new FMLModContainer<>("familiarfauna", "FamiliarFauna", "1.0.11", "required-after:forge@[14.23.5.2768,);after:biomesoplenty;", "[1.12.2]", "familiarfauna", familiarfauna.core.FamiliarFauna::new, familiarfauna.core.FamiliarFauna::handleModStateEvent).guiFactory(familiarfauna.client.gui.GuiFFFactory::new));
         mods.add(new FMLModContainer<>("somanyenchantments", "Rin's So Many Enchantments?", "0.5.5", "", "[1.12.0, 1.12.2]", "somanyenchantments", com.Shultrea.Rin.Main_Sector.somanyenchantments::new, com.Shultrea.Rin.Main_Sector.somanyenchantments::handleModStateEvent));
         mods.add(new FMLModContainer<>("loadingscreens", "Loading Screens", "0.3.1", "required-after:bnbgaminglib@[2.14.0,);after:gamestages;", "[1.12,1.13)", "loadingscreens", com.bloodnbonesgaming.loadingscreens.LoadingScreens::new, com.bloodnbonesgaming.loadingscreens.LoadingScreens::handleModStateEvent).clientSideOnly());
+        mods.add(new FMLModContainer<>("materialtweaker", "MaterialTweaker", "1.1.1", "", "", "materialtweaker", materialtweaker.core.MaterialTweaker::new, materialtweaker.core.MaterialTweaker::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

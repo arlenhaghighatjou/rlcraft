@@ -1,13 +1,13 @@
 package materialtweaker.handlers;
 
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Comment;
 import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 @Config(
    modid = "materialtweaker"
@@ -20,14 +20,14 @@ public class ForgeConfigHandler {
    public ForgeConfigHandler() {
    }
 
-   @EventBusSubscriber(
-      modid = "materialtweaker"
-   )
-   private static class EventHandler {
+   public static class EventHandler {
       private EventHandler() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChanged);
+      }
+
       public static void onConfigChanged(OnConfigChangedEvent event) {
          if (event.getModID().equals("materialtweaker")) {
             ConfigManager.sync("materialtweaker", Type.INSTANCE);
@@ -43,5 +43,11 @@ public class ForgeConfigHandler {
 
       public ServerConfig() {
       }
+   }
+
+   public static void register() {
+      ConfigManager.register("materialtweaker", "", "general", null,
+         ConfigEntry.category("Server",
+            ConfigEntry.value("Print Material Info", boolean.class, () -> ForgeConfigHandler.server.printInfo, v -> ForgeConfigHandler.server.printInfo = (Boolean)v).comment("Print information about material attributes when they are registered.").langKey("materialtweaker.general.server.printinfo")).comment("Server Config").langKey("materialtweaker.general.server"));
    }
 }

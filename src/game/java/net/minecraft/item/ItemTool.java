@@ -96,6 +96,7 @@ public class ItemTool extends Item
 
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
+        if (this.materialTweakerOverridesRepair(toRepair, repair)) return this.materialTweakerRepairMatches(repair);
         ItemStack mat = this.toolMaterial.getRepairItemStack();
         if (!mat.isEmpty() && net.minecraftforge.oredict.OreDictionary.itemMatches(mat, repair, false)) return true;
         return super.getIsRepairable(toRepair, repair);

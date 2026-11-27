@@ -89,6 +89,17 @@ public class EnumHelper
     }
     public static ArmorMaterial addArmorMaterial(String name, String textureName, int durability, int[] reductionAmounts, int enchantability, SoundEvent soundOnEquip, float toughness)
     {
+        if (materialtweaker.handlers.ForgeConfigHandler.server.printInfo)
+        {
+            try
+            {
+                materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.INFO, "materialtweaker: Armor Material Registering, Name: " + name + " DurabilityFactor: " + durability + " ReductionAmounts: " + reductionAmounts[0] + " " + reductionAmounts[1] + " " + reductionAmounts[2] + " " + reductionAmounts[3] + " Enchantability: " + enchantability + " Toughness: " + toughness);
+            }
+            catch (Exception e)
+            {
+                materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.ERROR, "materialtweaker: Armor Material Attribute printing failed: " + e);
+            }
+        }
         return ArmorMaterial.register(name, textureName, durability, reductionAmounts, enchantability, soundOnEquip, toughness);
     }
     @Nullable
@@ -137,6 +148,17 @@ public class EnumHelper
     }
     public static ToolMaterial addToolMaterial(String name, int harvestLevel, int maxUses, float efficiency, float damage, int enchantability)
     {
+        if (materialtweaker.handlers.ForgeConfigHandler.server.printInfo)
+        {
+            try
+            {
+                materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.INFO, "materialtweaker: Tool Material Registering, Name: " + name + " HarvestLevel: " + harvestLevel + " MaxUses: " + maxUses + " Efficiency: " + efficiency + " Damage: " + damage + " Enchantability: " + enchantability);
+            }
+            catch (Exception e)
+            {
+                materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.ERROR, "materialtweaker: Tool Material Attribute printing failed: " + e);
+            }
+        }
         return ToolMaterial.register(name, harvestLevel, maxUses, efficiency, damage, enchantability);
     }
 

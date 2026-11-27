@@ -62,6 +62,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<Item>
 {
+    private boolean materialTweakerRepairChecked = false;
+    private boolean materialTweakerRepairOverride = false;
+    private boolean materialTweakerRepairStrict = false;
+    private ItemStack materialTweakerRepairStack;
     public static final RegistryNamespaced<ResourceLocation, Item> REGISTRY = net.minecraftforge.registries.GameData.getWrapper(Item.class);
     private static final Map<Block, Item> BLOCK_TO_ITEM = net.minecraftforge.registries.GameData.getBlockItemMap();
     private static final IItemPropertyGetter DAMAGED_GETTER = new IItemPropertyGetter()
@@ -441,7 +445,44 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
     public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
     {
+        if (this.materialTweakerOverridesRepair(toRepair, repair)) return this.materialTweakerRepairMatches(repair);
         return false;
+    }
+
+    public final boolean materialTweakerOverridesRepair(ItemStack toRepair, ItemStack repair)
+    {
+        if (toRepair.isEmpty() || repair.isEmpty())
+        {
+            return false;
+        }
+
+        if (!this.materialTweakerRepairChecked)
+        {
+            this.materialTweakerRepairChecked = true;
+
+            try
+            {
+                String[] entry = materialtweaker.handlers.CustomConfigHandler.getItemOverrideRepairs(this.getRegistryName().toString());
+
+                if (entry != null)
+                {
+                    this.materialTweakerRepairStack = new ItemStack(Item.getByNameOrId(entry[0]), 1, entry[1].equals("*") ? 32767 : Integer.parseInt(entry[1]));
+                    this.materialTweakerRepairStrict = !entry[1].equals("*");
+                    this.materialTweakerRepairOverride = true;
+                }
+            }
+            catch (Exception e)
+            {
+                materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "materialtweaker: Error in force overriding repair material: " + e);
+            }
+        }
+
+        return this.materialTweakerRepairOverride;
+    }
+
+    public final boolean materialTweakerRepairMatches(ItemStack repair)
+    {
+        return net.minecraftforge.oredict.OreDictionary.itemMatches(this.materialTweakerRepairStack, repair, this.materialTweakerRepairStrict);
     }
 
     @Deprecated // Use ItemStack sensitive version below.
@@ -1787,6 +1828,15 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
         private final int enchantability;
         //Added by forge for custom Tool materials.
         private ItemStack repairMaterial = ItemStack.EMPTY;
+        private int materialTweakerHarvestLevel;
+        private int materialTweakerMaxUses;
+        private float materialTweakerEfficiency;
+        private float materialTweakerAttackDamage;
+        private int materialTweakerEnchantability;
+        private boolean materialTweakerCheckedAttributes = false;
+        private boolean materialTweakerCheckedRepairs = false;
+        private boolean materialTweakerReplacedAttributes = false;
+        private boolean materialTweakerReplacedRepair = false;
 
         private ToolMaterial(String name, int ordinal, int harvestLevel, int maxUses, float efficiency, float damageVsEntity, int enchantability)
         {
@@ -1840,32 +1890,92 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
         public int getMaxUses()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerMaxUses;
             return this.maxUses;
         }
 
         public float getEfficiency()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerEfficiency;
             return this.efficiency;
         }
 
         public float getAttackDamage()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerAttackDamage;
             return this.attackDamage;
         }
 
         public int getHarvestLevel()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerHarvestLevel;
             return this.harvestLevel;
         }
 
         public int getEnchantability()
         {
+            if (this.materialTweakerAttributes()) return this.materialTweakerEnchantability;
             return this.enchantability;
+        }
+
+        private boolean materialTweakerAttributes()
+        {
+            if (!this.materialTweakerCheckedAttributes)
+            {
+                this.materialTweakerCheckedAttributes = true;
+
+                try
+                {
+                    materialtweaker.util.ToolAttributeEntry attributeEntry = materialtweaker.handlers.CustomConfigHandler.getToolAttributes(this.name());
+
+                    if (attributeEntry != null)
+                    {
+                        this.materialTweakerHarvestLevel = attributeEntry.harvestLevel;
+                        this.materialTweakerMaxUses = attributeEntry.maxUses;
+                        this.materialTweakerEfficiency = attributeEntry.efficiency;
+                        this.materialTweakerAttackDamage = attributeEntry.attackDamage;
+                        this.materialTweakerEnchantability = attributeEntry.enchantability;
+                        this.materialTweakerReplacedAttributes = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "materialtweaker: Caught exception while checking tool material attributes: " + e);
+                }
+            }
+
+            return this.materialTweakerReplacedAttributes;
+        }
+
+        private boolean materialTweakerRepair()
+        {
+            if (!this.materialTweakerCheckedRepairs)
+            {
+                this.materialTweakerCheckedRepairs = true;
+
+                try
+                {
+                    String[] repairEntry = materialtweaker.handlers.CustomConfigHandler.getToolRepairs(this.name());
+
+                    if (repairEntry != null)
+                    {
+                        this.repairMaterial = new ItemStack(Item.getByNameOrId(repairEntry[0]), 1, repairEntry[1].equals("*") ? 32767 : Integer.parseInt(repairEntry[1]));
+                        this.materialTweakerReplacedRepair = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    materialtweaker.core.MaterialTweaker.LOGGER.log(net.lax1dude.eaglercraft.v1_8.log4j.Level.WARN, "materialtweaker: Caught exception while checking tool material repairs: " + e);
+                }
+            }
+
+            return this.materialTweakerReplacedRepair;
         }
 
         @Deprecated // Use getRepairItemStack below
         public Item getRepairItem()
         {
+            if (this.materialTweakerRepair()) return this.repairMaterial.getItem();
             if (this == WOOD)
             {
                 return Item.getItemFromBlock(Blocks.PLANKS);
@@ -1890,6 +2000,7 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
         public ToolMaterial setRepairItem(ItemStack stack)
         {
+            if (this.materialTweakerRepair()) return this;
             if (!this.repairMaterial.isEmpty()) throw new RuntimeException("Repair material has already been set");
             if (this == WOOD || this == STONE || this == GOLD || this == IRON || this == DIAMOND) throw new RuntimeException("Can not change vanilla tool repair materials");
             this.repairMaterial = stack;
@@ -1898,6 +2009,7 @@ public class Item extends net.minecraftforge.registries.IForgeRegistryEntry.Impl
 
         public ItemStack getRepairItemStack()
         {
+            if (this.materialTweakerRepair()) return this.repairMaterial;
             if (!repairMaterial.isEmpty()) return repairMaterial;
             Item ret = this.getRepairItem();
             if (ret != null) repairMaterial = new ItemStack(ret, 1, net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE);
