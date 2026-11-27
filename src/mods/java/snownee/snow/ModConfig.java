@@ -1,5 +1,7 @@
 package snownee.snow;
 
+import net.minecraftforge.common.config.ConfigEntry;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -13,14 +15,9 @@ import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.common.config.Config.RequiresMcRestart;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 @Config(
-   modid = "snowrealmagic"
-)
-@EventBusSubscriber(
    modid = "snowrealmagic"
 )
 public final class ModConfig {
@@ -63,7 +60,10 @@ public final class ModConfig {
       throw new UnsupportedOperationException("No instance for you");
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, ModConfig::onConfigReload);
+   }
+
    public static void onConfigReload(OnConfigChangedEvent event) {
       if (event.getModID().equals("snowrealmagic")) {
          ConfigManager.sync("snowrealmagic", Type.INSTANCE);
@@ -72,10 +72,8 @@ public final class ModConfig {
    }
 
    public static void postInit() {
-      (new Thread(() -> {
-         filterBlocks(snowLoggableBlocksSet, snowLoggableBlocks);
-         filterBlocks(yOffsetBlocksSet, yOffsetBlocks);
-      })).start();
+      filterBlocks(snowLoggableBlocksSet, snowLoggableBlocks);
+      filterBlocks(yOffsetBlocksSet, yOffsetBlocks);
    }
 
    private static void filterBlocks(Set<ResourceLocation> set, String[] array) {
@@ -98,5 +96,23 @@ public final class ModConfig {
          }
       }
 
+   }
+
+   public static void register() {
+      ConfigManager.register("snowrealmagic", "", "general", null,
+         ConfigEntry.value("PlaceSnowInBlock", boolean.class, () -> ModConfig.placeSnowInBlock, v -> ModConfig.placeSnowInBlock = (Boolean)v).langKey("snowrealmagic.general.placesnowinblock").requiresMcRestart(),
+         ConfigEntry.value("ReplaceSnowWorldGen", boolean.class, () -> ModConfig.replaceSnowWorldGen, v -> ModConfig.replaceSnowWorldGen = (Boolean)v).langKey("snowrealmagic.general.replacesnowworldgen"),
+         ConfigEntry.value("SnowWorldGenPriority", int.class, () -> ModConfig.snowWorldGenPriority, v -> ModConfig.snowWorldGenPriority = (Integer)v).langKey("snowrealmagic.general.snowworldgenpriority"),
+         ConfigEntry.value("SnowGravity", boolean.class, () -> ModConfig.snowGravity, v -> ModConfig.snowGravity = (Boolean)v).langKey("snowrealmagic.general.snowgravity"),
+         ConfigEntry.value("SnowAlwaysReplaceable", boolean.class, () -> ModConfig.snowAlwaysReplaceable, v -> ModConfig.snowAlwaysReplaceable = (Boolean)v).langKey("snowrealmagic.general.snowalwaysreplaceable"),
+         ConfigEntry.value("SnowAccumulationDuringSnowstorm", boolean.class, () -> ModConfig.snowAccumulationDuringSnowstorm, v -> ModConfig.snowAccumulationDuringSnowstorm = (Boolean)v).langKey("snowrealmagic.general.snowaccumulationduringsnowstorm"),
+         ConfigEntry.value("SnowAccumulationDuringSnowfall", boolean.class, () -> ModConfig.snowAccumulationDuringSnowfall, v -> ModConfig.snowAccumulationDuringSnowfall = (Boolean)v).langKey("snowrealmagic.general.snowaccumulationduringsnowfall"),
+         ConfigEntry.value("ThinnerBoundingBox", boolean.class, () -> ModConfig.thinnerBoundingBox, v -> ModConfig.thinnerBoundingBox = (Boolean)v).langKey("snowrealmagic.general.thinnerboundingbox"),
+         ConfigEntry.value("ParticleThroughLeaves", boolean.class, () -> ModConfig.particleThroughLeaves, v -> ModConfig.particleThroughLeaves = (Boolean)v).langKey("snowrealmagic.general.particlethroughleaves"),
+         ConfigEntry.value("SnowMakingIce", boolean.class, () -> ModConfig.snowMakingIce, v -> ModConfig.snowMakingIce = (Boolean)v).langKey("snowrealmagic.general.snowmakingice"),
+         ConfigEntry.value("SnowOnIce", boolean.class, () -> ModConfig.snowOnIce, v -> ModConfig.snowOnIce = (Boolean)v).langKey("snowrealmagic.general.snowonice"),
+         ConfigEntry.value("SnowNeverMelt", boolean.class, () -> ModConfig.snowNeverMelt, v -> ModConfig.snowNeverMelt = (Boolean)v).langKey("snowrealmagic.general.snownevermelt"),
+         ConfigEntry.value("snowLoggableBlocksV2", String[].class, () -> ModConfig.snowLoggableBlocks, v -> ModConfig.snowLoggableBlocks = (String[])v).langKey("snowrealmagic.general.snowloggableblocks").requiresMcRestart(),
+         ConfigEntry.value("yOffsetBlocks", String[].class, () -> ModConfig.yOffsetBlocks, v -> ModConfig.yOffsetBlocks = (String[])v).requiresMcRestart());
    }
 }

@@ -51,6 +51,13 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
 
     public boolean renderBlock(IBlockState state, BlockPos pos, IBlockAccess blockAccess, WorldRenderer bufferBuilderIn)
     {
+        boolean rendered = this.renderBlockVanilla(state, pos, blockAccess, bufferBuilderIn);
+        snownee.snow.hooks.BlockRendererDispatcherHook.renderBlock(this, this.blockModelRenderer, state, pos, blockAccess, bufferBuilderIn);
+        return rendered;
+    }
+
+    private boolean renderBlockVanilla(IBlockState state, BlockPos pos, IBlockAccess blockAccess, WorldRenderer bufferBuilderIn)
+    {
         try
         {
             EnumBlockRenderType enumblockrendertype = state.getRenderType();

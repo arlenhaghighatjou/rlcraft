@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBlock extends Item
 {
-    protected final Block block;
+    protected Block block;
 
     public ItemBlock(Block block)
     {
@@ -165,6 +165,11 @@ public class ItemBlock extends Item
     private Block getBlockRaw()
     {
         return this.block;
+    }
+
+    public void setBlock(Block block)
+    {
+        this.block = block;
     }
 
     /**

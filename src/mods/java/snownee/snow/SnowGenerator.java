@@ -1,5 +1,6 @@
 package snownee.snow;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
@@ -14,16 +15,16 @@ import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class SnowGenerator implements IWorldGenerator {
    public SnowGenerator() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public static void register(EventBus bus) {
+      bus.register(Populate.class, EventPriority.LOWEST, false, SnowGenerator::blockVanilla);
+   }
+
    public static void blockVanilla(Populate event) {
       if (ModConfig.placeSnowInBlock && ModConfig.replaceSnowWorldGen && event.getType() == EventType.ICE) {
          event.setResult(Result.DENY);

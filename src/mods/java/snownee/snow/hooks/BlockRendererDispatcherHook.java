@@ -1,10 +1,10 @@
-package snownee.snow.mixin;
+package snownee.snow.hooks;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.BlockModelRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -17,30 +17,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.client.MinecraftForgeClient;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import snownee.snow.BufferBuilderDuck;
 import snownee.snow.ModConfig;
 import snownee.snow.SnowTile;
 
-@Mixin({BlockRendererDispatcher.class})
-public abstract class MixinBlockRendererDispatcher {
-   @Shadow
-   @Final
-   private BlockModelRenderer blockModelRenderer;
-
-   public MixinBlockRendererDispatcher() {
+public class BlockRendererDispatcherHook {
+   public BlockRendererDispatcherHook() {
    }
 
-   @Inject(
-      method = {"renderBlock"},
-      at = {@At("RETURN")}
-   )
-   private void srm_renderBlock(IBlockState blockStateIn, BlockPos pos, IBlockAccess world, WorldRenderer bufferBuilderIn, CallbackInfoReturnable<Boolean> info) {
+   public static void renderBlock(BlockRendererDispatcher dispatcher, BlockModelRenderer blockModelRenderer, IBlockState blockStateIn, BlockPos pos, IBlockAccess world, WorldRenderer bufferBuilderIn) {
       if (blockStateIn.getBlock() == Blocks.SNOW_LAYER && ((Integer)blockStateIn.getValue(BlockSnow.LAYERS)).intValue() < 8) {
          TileEntity tileEntity = world.getTileEntity(pos);
          if (tileEntity instanceof SnowTile) {
@@ -60,16 +44,16 @@ public abstract class MixinBlockRendererDispatcher {
                      }
                   }
 
-                  IBakedModel model = this.getModelForState(state);
+                  IBakedModel model = dispatcher.getModelForState(state);
                   state = state.getBlock().getExtendedState(state, world, pos);
                   boolean translate = ModConfig.yOffsetBlocksSet.contains(state.getBlock().getRegistryName());
                   if (translate) {
-                     ((BufferBuilderDuck)bufferBuilderIn).translateY(0.125D);
+                     bufferBuilderIn.translateY(0.125D);
                   }
 
-                  this.blockModelRenderer.renderModel(world, model, state, pos, bufferBuilderIn, true);
+                  blockModelRenderer.renderModel(world, model, state, pos, bufferBuilderIn, true);
                   if (translate) {
-                     ((BufferBuilderDuck)bufferBuilderIn).translateY(-0.125D);
+                     bufferBuilderIn.translateY(-0.125D);
                   }
                }
             } catch (Throwable var13) {
@@ -82,7 +66,4 @@ public abstract class MixinBlockRendererDispatcher {
       }
 
    }
-
-   @Shadow
-   public abstract IBakedModel getModelForState(IBlockState var1);
 }

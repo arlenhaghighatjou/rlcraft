@@ -527,6 +527,10 @@ public class WorldRenderer {
 		this.zOffset = z;
 	}
 
+	public void translateY(double y) {
+		this.yOffset += y;
+	}
+
 	public void finishDrawing() {
 		if (!this.isDrawing) {
 			throw new IllegalStateException("Not building!");

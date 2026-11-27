@@ -1,5 +1,8 @@
 package snownee.snow;
 
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.renderer.block.statemap.StateMap.Builder;
@@ -13,23 +16,16 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import snownee.snow.compat.FBPHack;
-import snownee.snow.mixin.ItemBlockAccessor;
 
 @Mod(
    modid = "snowrealmagic",
@@ -37,58 +33,69 @@ import snownee.snow.mixin.ItemBlockAccessor;
    version = "0.7.1",
    acceptedMinecraftVersions = "[1.12, 1.13)"
 )
-@EventBusSubscriber
 public class SnowRealMagic {
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         snownee.snow.ModConfig.register();
+         snownee.snow.ModConfig.register(MinecraftForge.EVENT_BUS);
+         snownee.snow.SnowRealMagic.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public static final String MODID = "snowrealmagic";
    public static final String NAME = "Snow! Real Magic!";
    public static Logger logger;
    public static Block BLOCK = Blocks.SNOW_LAYER;
 
    public SnowRealMagic() {
-      MinecraftForge.TERRAIN_GEN_BUS.register(SnowGenerator.class);
-      if (FMLCommonHandler.instance().getSide().isClient() && Loader.isModLoaded("fbp")) {
-         MinecraftForge.EVENT_BUS.register(new FBPHack());
-      }
+      SnowGenerator.register(MinecraftForge.TERRAIN_GEN_BUS);
 
    }
 
-   @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       logger = event.getModLog();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       GameRegistry.registerWorldGenerator(new SnowGenerator(), ModConfig.snowWorldGenPriority);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       ModConfig.postInit();
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, SnowRealMagic::onBlockRegister);
+      bus.registerGeneric(Register.class, EntityEntry.class, SnowRealMagic::onEntityRegister);
+      bus.register(ModelRegistryEvent.class, SnowRealMagic::onModelRegister);
+   }
+
    public static void onBlockRegister(Register<Block> event) {
       BLOCK = new ModSnowBlock();
       event.getRegistry().register(BLOCK);
       Item item = Item.getItemFromBlock(BLOCK);
       if (item instanceof ItemBlock) {
-         ((ItemBlockAccessor)item).setBlock(BLOCK);
+         ((ItemBlock)item).setBlock(BLOCK);
       }
 
       if (ModConfig.placeSnowInBlock) {
-         GameRegistry.registerTileEntity(SnowTile.class, new ResourceLocation("snowrealmagic", "snow"));
+         GameRegistry.registerTileEntity(SnowTile.class, new ResourceLocation("snowrealmagic", "snow"), SnowTile::new);
       }
 
    }
 
-   @SubscribeEvent
    public static void onEntityRegister(Register<EntityEntry> event) {
-      event.getRegistry().register(EntityEntryBuilder.create().entity(FallingSnowEntity.class).id(new ResourceLocation("snowrealmagic", "snow"), 0).name("snowrealmagic.snow").tracker(160, 20, true).build());
+      event.getRegistry().register(EntityEntryBuilder.<FallingSnowEntity>create().entity(FallingSnowEntity.class).factory(FallingSnowEntity::new).id(new ResourceLocation("snowrealmagic", "snow"), 0).name("snowrealmagic.snow").tracker(160, 20, true).build());
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void onModelRegister(ModelRegistryEvent event) {
       RenderingRegistry.registerEntityRenderingHandler(FallingSnowEntity.class, RenderFallingSnow::new);
       if (ModConfig.placeSnowInBlock) {

@@ -6,7 +6,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -69,7 +69,7 @@ public class SnowTile extends TileEntity {
       return new SPacketUpdateTileEntity(this.pos, -1, this.writeToNBT(new NBTTagCompound()));
    }
 
-   public final void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet) {
+   public final void onDataPacket(INetworkManager manager, SPacketUpdateTileEntity packet) {
       this.readFromNBT(packet.getNbtCompound());
    }
 

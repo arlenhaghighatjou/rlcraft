@@ -1,4 +1,4 @@
-package snownee.snow.mixin;
+package snownee.snow.hooks;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -6,7 +6,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSnow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -19,25 +18,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import snownee.snow.ModConfig;
 import snownee.snow.ModSnowBlock;
 
-@Mixin({ItemSnow.class})
-public abstract class MixinItemSnow extends ItemBlock {
-   public MixinItemSnow(Block block) {
-      super(block);
+public class ItemSnowHook {
+   public ItemSnowHook() {
    }
 
-   @Inject(
-      at = {@At("HEAD")},
-      method = {"onItemUse"},
-      cancellable = true
-   )
-   private void srm_onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ, CallbackInfoReturnable<EnumActionResult> ci) {
+   public static EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing) {
       ItemStack itemstack = player.getHeldItem(hand);
       if (player.canPlayerEdit(pos, facing, itemstack) && ModConfig.placeSnowInBlock) {
          IBlockState state = worldIn.getBlockState(pos);
@@ -55,13 +43,14 @@ public abstract class MixinItemSnow extends ItemBlock {
             }
 
             itemstack.shrink(1);
-            ci.setReturnValue(EnumActionResult.SUCCESS);
+            return EnumActionResult.SUCCESS;
          }
       }
 
+      return null;
    }
 
-   public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+   public static ActionResult<ItemStack> onItemRightClick(ItemSnow item, World worldIn, EntityPlayer playerIn, EnumHand handIn) {
       EnumActionResult actionResult = EnumActionResult.PASS;
       if (ModConfig.placeSnowInBlock) {
          float f = playerIn.rotationPitch;
@@ -80,7 +69,7 @@ public abstract class MixinItemSnow extends ItemBlock {
          Vec3d vec3d1 = vec3d.addVector((double)f6 * d3, (double)f5 * d3, (double)f7 * d3);
          RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d1, false, false, false);
          if (result != null && result.typeOfHit == Type.BLOCK && result.sideHit != EnumFacing.DOWN) {
-            actionResult = ((ItemSnow)this).onItemUse(playerIn, worldIn, result.getBlockPos(), handIn, result.sideHit, (float)result.hitVec.x, (float)result.hitVec.y, (float)result.hitVec.z);
+            actionResult = item.onItemUse(playerIn, worldIn, result.getBlockPos(), handIn, result.sideHit, (float)result.hitVec.x, (float)result.hitVec.y, (float)result.hitVec.z);
             if (actionResult == EnumActionResult.SUCCESS) {
                playerIn.swingArm(handIn);
             }
