@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.client.render.projectile;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import com.oblivioussp.spartanweaponry.entity.projectile.EntityBolt;
 import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -58,14 +59,14 @@ public class RenderBolt extends RenderArrow<EntityBolt> {
          GlStateManager.enableOutlineMode(this.getTeamColor(entity));
       }
 
-      GlStateManager.glNormal3f(0.05625F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(0.05625F, 0.0F, 0.0F);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(-7.0D, -2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, -2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.3125D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.3125D).endVertex();
       tessellator.draw();
-      GlStateManager.glNormal3f(-0.05625F, 0.0F, 0.0F);
+      EaglercraftGPU.glNormal3f(-0.05625F, 0.0F, 0.0F);
       vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
       vertexbuffer.pos(-7.0D, 2.0D, -2.0D).tex(0.0D, 0.15625D).endVertex();
       vertexbuffer.pos(-7.0D, 2.0D, 2.0D).tex(0.15625D, 0.15625D).endVertex();
@@ -75,7 +76,7 @@ public class RenderBolt extends RenderArrow<EntityBolt> {
 
       for(int j = 0; j < 4; ++j) {
          GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-         GlStateManager.glNormal3f(0.0F, 0.0F, 0.05625F);
+         EaglercraftGPU.glNormal3f(0.0F, 0.0F, 0.05625F);
          vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
          vertexbuffer.pos(-8.0D, -2.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
          vertexbuffer.pos(8.0D, -2.0D, 0.0D).tex(0.5D, 0.0D).endVertex();

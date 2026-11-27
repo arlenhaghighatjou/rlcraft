@@ -1,14 +1,12 @@
 package com.oblivioussp.spartanweaponry.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.util.SoundEventSW;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber
 public class SoundRegistry {
    public static final SoundEvent CROSSBOW_LOAD = new SoundEventSW(new ResourceLocation("spartanweaponry", "crossbow_load"));
    public static final SoundEvent CROSSBOW_FIRE = new SoundEventSW(new ResourceLocation("spartanweaponry", "crossbow_fire"));
@@ -21,7 +19,10 @@ public class SoundRegistry {
    public SoundRegistry() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, SoundEvent.class, SoundRegistry::registerSounds);
+   }
+
    public static void registerSounds(Register<SoundEvent> ev) {
       IForgeRegistry<SoundEvent> reg = ev.getRegistry();
       reg.registerAll(new SoundEvent[]{CROSSBOW_LOAD, CROSSBOW_FIRE, THROWING_WEAPON_THROW, THROWING_WEAPON_HIT, THROWING_WEAPON_RETURN, BOOMERANG_THROW, BOOMERANG_FLIGHT});

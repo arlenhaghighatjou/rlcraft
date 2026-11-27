@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.api.weaponproperty;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.api.SpartanWeaponryAPI;
 import java.util.List;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,7 @@ public class WeaponProperty {
    }
 
    public String toString() {
-      return String.format("WeaponProperty{Type: %s:%s - Level: %d - Magnitude: %f}", this.modId, this.type, this.level, this.magnitude);
+      return HString.format("WeaponProperty{Type: %s:%s - Level: %d - Magnitude: %f}", this.modId, this.type, this.level, this.magnitude);
    }
 
    public String getType() {

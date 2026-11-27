@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.client.gui;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.client.KeyBinds;
 import com.oblivioussp.spartanweaponry.util.ConfigHandler;
 import net.minecraft.client.Minecraft;
@@ -51,7 +52,7 @@ public class HudQuiverAmmo extends HudElement {
                }
             }
 
-            ammoStr = String.format("%d", totalAmmo);
+            ammoStr = HString.format("%d", totalAmmo);
             int offsetX = this.getAlignedX(align, ConfigHandler.quiverHudOffsetX, res);
             int offsetY = this.getAlignedY(align, ConfigHandler.quiverHudOffsetY, res);
             GlStateManager.enableBlend();

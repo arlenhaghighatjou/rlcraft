@@ -4,8 +4,6 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +17,6 @@ import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class AdvancementTrigger implements ICriterionTrigger {
    public static final AdvancementTrigger CRAFT_ITEM = new AdvancementTrigger("craft_item");
@@ -80,15 +77,13 @@ public class AdvancementTrigger implements ICriterionTrigger {
    public static void registerTriggers() {
       try {
          Log.info("Attempting to add new advancement triggers...");
-         Method method = ReflectionHelper.findMethod(CriteriaTriggers.class, "register", "register", new Class[]{ICriterionTrigger.class});
-         method.setAccessible(true);
 
          for(int i = 0; i < TRIGGER_ARRAY.length; ++i) {
-            method.invoke((Object)null, TRIGGER_ARRAY[i]);
+            CriteriaTriggers.register(TRIGGER_ARRAY[i]);
          }
 
          Log.info("New advancement triggers added successfully!");
-      } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException var2) {
+      } catch (IllegalArgumentException | SecurityException var2) {
          Log.error("Couldn't register advancement triggers due to an exception occuring. " + var2.getMessage());
       }
 

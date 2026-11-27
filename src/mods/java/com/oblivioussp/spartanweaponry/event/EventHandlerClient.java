@@ -1,5 +1,8 @@
 package com.oblivioussp.spartanweaponry.event;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.oblivioussp.spartanweaponry.ModSpartanWeaponry;
@@ -27,8 +30,6 @@ import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -57,14 +58,11 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Post;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber({Side.CLIENT})
 public class EventHandlerClient {
    private static ItemStack activeQuiverStack = ItemStack.EMPTY;
    protected static final ResourceLocation CROSSHAIR_TEXTURES = new ResourceLocation("spartanweaponry", "textures/gui/crosshairs.png");
@@ -73,7 +71,16 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(KeyInputEvent.class, EventHandlerClient::onKeyInputEvent);
+      bus.register(MouseEvent.class, EventPriority.NORMAL, true, EventHandlerClient::onMouseEvent);
+      bus.register(FOVUpdateEvent.class, EventHandlerClient::onFOVUpdate);
+      bus.register(ItemTooltipEvent.class, EventHandlerClient::onTooltip);
+      bus.register(RenderSpecificHandEvent.class, EventHandlerClient::onSpecificHandRender);
+      bus.register(Pre.class, EventPriority.HIGHEST, false, EventHandlerClient::onRenderGameOverlayPre);
+      bus.register(Post.class, EventHandlerClient::onRenderGameOverlay);
+   }
+
    public static void onKeyInputEvent(KeyInputEvent ev) {
       Minecraft mc = Minecraft.getMinecraft();
       EntityPlayer player = mc.player;
@@ -84,10 +91,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
    public static void onMouseEvent(MouseEvent ev) {
       if (!ModSpartanWeaponry.isRLCombatLoaded) {
          KeyBinding keyAttack = Minecraft.getMinecraft().gameSettings.keyBindAttack;
@@ -210,7 +213,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void onFOVUpdate(FOVUpdateEvent ev) {
       if (!ConfigHandler.disableFOVZoomIn) {
          EntityPlayer player = ev.getEntity();
@@ -243,7 +245,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void onTooltip(ItemTooltipEvent ev) {
       ItemStack stack = ev.getItemStack();
       if (stack.getItem() instanceof ItemThrowingWeapon) {
@@ -262,7 +263,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void onSpecificHandRender(RenderSpecificHandEvent ev) {
       EntityPlayer player = Minecraft.getMinecraft().player;
       if (player.getActiveHand() != ev.getHand()) {
@@ -277,9 +277,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public static void onRenderGameOverlayPre(Pre ev) {
       if (ev.getType() == ElementType.CROSSHAIRS) {
          Minecraft mc = Minecraft.getMinecraft();
@@ -341,9 +338,9 @@ public class EventHandlerClient {
             return;
          }
 
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.disableBlend();
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_ONE_MINUS_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_COLOR, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.enableBlend();
          GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
          mc.getTextureManager().bindTexture(CROSSHAIR_TEXTURES);
@@ -362,7 +359,7 @@ public class EventHandlerClient {
             mc.ingameGUI.drawTexturedModalRect(x + 2 + offset, y + 2 + offset, 18, 19, 4, 4);
          }
 
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.disableBlend();
       }
 
@@ -383,7 +380,7 @@ public class EventHandlerClient {
             return;
          }
 
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.ONE_MINUS_DST_COLOR, DestFactor.ONE_MINUS_SRC_COLOR, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_ONE_MINUS_DST_COLOR, RealOpenGLEnums.GL_ONE_MINUS_SRC_COLOR, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.enableBlend();
          GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
          mc.getTextureManager().bindTexture(CROSSHAIR_TEXTURES);
@@ -424,13 +421,13 @@ public class EventHandlerClient {
             GlStateManager.disableAlpha();
          }
 
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
          GlStateManager.disableBlend();
          if (equipStack.hasTagCompound() && equipStack.getTagCompound().hasKey("AmmoUsed")) {
             NBTTagCompound tag = equipStack.getTagCompound();
             int maxAmmo = throwingWeapon.getMaxAmmo(equipStack);
             int ammo = maxAmmo - tag.getInteger("AmmoUsed");
-            String text = String.format("%d/%d", ammo, maxAmmo);
+            String text = HString.format("%d/%d", ammo, maxAmmo);
             mc.fontRenderer.drawStringWithShadow(text, (float)(x - mc.fontRenderer.getStringWidth(text) / 2), (float)(y + 20), -1);
          }
       }
@@ -438,7 +435,6 @@ public class EventHandlerClient {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void onRenderGameOverlay(Post ev) {
       if (ev.getType() == ElementType.HOTBAR) {
          EntityPlayer player = Minecraft.getMinecraft().player;

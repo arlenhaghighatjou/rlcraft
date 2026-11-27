@@ -1,9 +1,11 @@
 package com.oblivioussp.spartanweaponry;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.oblivioussp.spartanweaponry.api.SpartanWeaponryAPI;
 import com.oblivioussp.spartanweaponry.client.gui.CreativeTabsSW;
 import com.oblivioussp.spartanweaponry.client.gui.GuiHandler;
-import com.oblivioussp.spartanweaponry.compat.rlcombat.EventHandlerRLCombat;
 import com.oblivioussp.spartanweaponry.compat.spartanhud.EventHandlerBaubleHUD;
 import com.oblivioussp.spartanweaponry.init.ItemRegistrySW;
 import com.oblivioussp.spartanweaponry.init.OreDictionarySW;
@@ -13,15 +15,11 @@ import com.oblivioussp.spartanweaponry.util.APIInternalMethodHandler;
 import com.oblivioussp.spartanweaponry.util.AdvancementTrigger;
 import com.oblivioussp.spartanweaponry.util.ConfigHandler;
 import com.oblivioussp.spartanweaponry.util.Log;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -55,19 +53,39 @@ public class ModSpartanWeaponry {
    public static boolean isRLCombatLoaded = false;
    public static boolean isTrinketsLoaded = false;
    public static boolean isSMELoaded = false;
-   public static boolean debugMode = ((Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment")).booleanValue();
-   @Instance("spartanweaponry")
+   public static boolean debugMode = false;
    public static ModSpartanWeaponry instance;
-   @SidedProxy(
-      clientSide = "com.oblivioussp.spartanweaponry.proxy.ClientProxy",
-      serverSide = "com.oblivioussp.spartanweaponry.proxy.ServerProxy"
-   )
    public static CommonProxy proxy;
 
    public ModSpartanWeaponry() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.oblivioussp.spartanweaponry.proxy.ClientProxy() : new com.oblivioussp.spartanweaponry.proxy.ServerProxy();
+         net.minecraftforge.common.crafting.CraftingHelper.register(new net.minecraft.util.ResourceLocation("spartanweaponry", "ore_dict_exists"), new com.oblivioussp.spartanweaponry.util.ConditionFactoryOreDict());
+         net.minecraftforge.common.crafting.CraftingHelper.register(new net.minecraft.util.ResourceLocation("spartanweaponry", "item_exists"), new com.oblivioussp.spartanweaponry.util.ConditionFactoryItemExists());
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            com.oblivioussp.spartanweaponry.event.EventHandlerClient.register(MinecraftForge.EVENT_BUS);
+         }
+         com.oblivioussp.spartanweaponry.event.EventHandlerCommon.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.EnchantmentRegistrySW.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.EntityRegistrySW.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.ItemRegistrySW.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.ModelRenderRegistry.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.RecipeRegistry.register(MinecraftForge.EVENT_BUS);
+         com.oblivioussp.spartanweaponry.init.SoundRegistry.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         ModSpartanWeaponry.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         ModSpartanWeaponry.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         ModSpartanWeaponry.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public static void preInit(FMLPreInitializationEvent ev) {
       Log.info("Starting up Spartan Weaponry!");
       if (debugMode) {
@@ -83,23 +101,17 @@ public class ModSpartanWeaponry {
       Log.info("API: Loaded internal method handler. API functionality should work now!");
       if (isSpartanHudBaublesLoaded && ev.getSide() == Side.CLIENT) {
          Log.debug("Spartan HUD: Baubles detected! Integrating event handler for that mod");
-         MinecraftForge.EVENT_BUS.register(new EventHandlerBaubleHUD());
-      }
-
-      if (isRLCombatLoaded) {
-         Log.debug("RLCombat detected! Integrating event handler for that mod");
-         MinecraftForge.EVENT_BUS.register(new EventHandlerRLCombat());
+         (new EventHandlerBaubleHUD()).register(MinecraftForge.EVENT_BUS);
       }
 
       ConfigHandler.init(ev.getModConfigurationDirectory());
-      MinecraftForge.EVENT_BUS.register(new ConfigHandler());
+      (new ConfigHandler()).register(MinecraftForge.EVENT_BUS);
       ItemRegistrySW.registerModdedMaterials();
       CreativeTabsSW.preInit();
       proxy.preInit(ev);
       Log.debug("Finished preInit phase!");
    }
 
-   @EventHandler
    public static void init(FMLInitializationEvent ev) {
       ConfigHandler.validateCrossbowEnchantmentWhitelist();
       OreDictionarySW.init();
@@ -111,7 +123,6 @@ public class ModSpartanWeaponry {
       Log.debug("Finished init phase!");
    }
 
-   @EventHandler
    public static void postInit(FMLPostInitializationEvent ev) {
       proxy.postInit(ev);
       Log.debug("Finished postInit phase!");

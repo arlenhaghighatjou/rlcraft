@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.ImmutableMap;
 import com.oblivioussp.spartanweaponry.enchantment.EnchantmentCrossbowRapidLoad;
 import com.oblivioussp.spartanweaponry.enchantment.EnchantmentCrossbowSharpshooter;
@@ -22,11 +23,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent.MissingMappings;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber
 public class EnchantmentRegistrySW {
    public static final Enchantment THROWING_RANGE = new EnchantmentThrowingRange(Rarity.UNCOMMON);
    public static final Enchantment THROWING_DAMAGE = new EnchantmentThrowingDamage(Rarity.COMMON);
@@ -39,12 +37,16 @@ public class EnchantmentRegistrySW {
    public static final Enchantment CROSSBOW_CHARGE = new EnchantmentCrossbowRapidLoad(Rarity.UNCOMMON);
    public static final Enchantment CROSSBOW_SPREADSHOT = new EnchantmentCrossbowSpreadshot(Rarity.RARE);
    public static final Enchantment CROSSBOW_SHARPSHOOTER = new EnchantmentCrossbowSharpshooter(Rarity.RARE);
-   public static final Map<ResourceLocation, Enchantment> REMAP_VALUES = ImmutableMap.builder().put(new ResourceLocation("spartanweaponry", "throwing_range"), THROWING_RANGE).put(new ResourceLocation("spartanweaponry", "throwing_damage"), THROWING_DAMAGE).put(new ResourceLocation("spartanweaponry", "throwing_fire"), THROWING_FIRE).put(new ResourceLocation("spartanweaponry", "throwing_luck"), THROWING_LUCK).put(new ResourceLocation("spartanweaponry", "throwing_charge"), THROWING_CHARGE).put(new ResourceLocation("spartanweaponry", "throwing_ammo"), THROWING_AMMO).build();
+   public static final Map<ResourceLocation, Enchantment> REMAP_VALUES = ImmutableMap.<ResourceLocation, Enchantment>builder().put(new ResourceLocation("spartanweaponry", "throwing_range"), THROWING_RANGE).put(new ResourceLocation("spartanweaponry", "throwing_damage"), THROWING_DAMAGE).put(new ResourceLocation("spartanweaponry", "throwing_fire"), THROWING_FIRE).put(new ResourceLocation("spartanweaponry", "throwing_luck"), THROWING_LUCK).put(new ResourceLocation("spartanweaponry", "throwing_charge"), THROWING_CHARGE).put(new ResourceLocation("spartanweaponry", "throwing_ammo"), THROWING_AMMO).build();
 
    public EnchantmentRegistrySW() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Enchantment.class, EnchantmentRegistrySW::register);
+      bus.registerGeneric(MissingMappings.class, Enchantment.class, EnchantmentRegistrySW::remapToNewValues);
+   }
+
    public static void register(Register<Enchantment> ev) {
       IForgeRegistry<Enchantment> reg = ev.getRegistry();
       Log.info("Registering Enchantments!");
@@ -61,7 +63,6 @@ public class EnchantmentRegistrySW {
       reg.register(CROSSBOW_SHARPSHOOTER);
    }
 
-   @SubscribeEvent
    public static void remapToNewValues(MissingMappings<Enchantment> ev) {
       List<Mapping<Enchantment>> missingMaps = ev.getMappings();
       Log.info("Found missing enchantment mappings! Attempting to correct " + missingMaps.size() + " values!");

@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.api.IWeaponCallback;
 import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
 import com.oblivioussp.spartanweaponry.entity.projectile.EntityBolt;
@@ -293,7 +294,7 @@ public class ItemCrossbow extends ItemSW implements IHudLoadState {
 
    public String getItemStackDisplayName(ItemStack stack) {
       if (this.displayName != null) {
-         String name = I18n.translateToLocalFormatted(String.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.material.getFullUnlocName())});
+         String name = I18n.translateToLocalFormatted(HString.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.material.getFullUnlocName())});
          return name;
       } else {
          return super.getItemStackDisplayName(stack);
@@ -332,7 +333,7 @@ public class ItemCrossbow extends ItemSW implements IHudLoadState {
 
       bolt = new ItemStack(stack.getTagCompound().getCompoundTag("ammoStack"));
       if (bolt != null && !bolt.isEmpty()) {
-         tooltip.add(StringHelper.translateFormattedString("crossbow.loaded_bolt", "tooltip", "spartanweaponry", String.format("[%s x%d]", TextFormatting.AQUA.toString() + bolt.getDisplayName() + TextFormatting.WHITE.toString(), bolt.getCount())));
+         tooltip.add(StringHelper.translateFormattedString("crossbow.loaded_bolt", "tooltip", "spartanweaponry", HString.format("[%s x%d]", TextFormatting.AQUA.toString() + bolt.getDisplayName() + TextFormatting.WHITE.toString(), bolt.getCount())));
          tooltip.add("");
       }
 
@@ -390,7 +391,7 @@ public class ItemCrossbow extends ItemSW implements IHudLoadState {
       }
 
       ItemStack stack = new ItemStack(item.getTagCompound().getCompoundTag("ammoStack"));
-      return !stack.isEmpty() ? String.format("%s (%s x%d)", displayName, stack.getDisplayName(), stack.getCount()) : displayName;
+      return !stack.isEmpty() ? HString.format("%s (%s x%d)", displayName, stack.getDisplayName(), stack.getCount()) : displayName;
    }
 
    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {

@@ -47,20 +47,20 @@ public abstract class EntityArrow extends Entity implements IProjectile
         }
     });
     private static final DataParameter<Byte> CRITICAL = EntityDataManager.<Byte>createKey(EntityArrow.class, DataSerializers.BYTE);
-    private int xTile;
-    private int yTile;
-    private int zTile;
-    private Block inTile;
-    private int inData;
+    protected int xTile;
+    protected int yTile;
+    protected int zTile;
+    protected Block inTile;
+    protected int inData;
     protected boolean inGround;
     protected int timeInGround;
     public EntityArrow.PickupStatus pickupStatus;
     public int arrowShake;
     public Entity shootingEntity;
-    private int ticksInGround;
-    private int ticksInAir;
+    protected int ticksInGround;
+    protected int ticksInAir;
     private double damage;
-    private int knockbackStrength;
+    protected int knockbackStrength;
 
     public EntityArrow(World worldIn)
     {
@@ -568,6 +568,11 @@ public abstract class EntityArrow extends Entity implements IProjectile
 
     public void onCollideWithPlayer(EntityPlayer entityIn)
     {
+        if (this.spartanWeaponryCollideWithPlayer(entityIn))
+        {
+            return;
+        }
+
         if (!this.world.isRemote && this.inGround && this.arrowShake <= 0)
         {
             boolean flag = this.pickupStatus == EntityArrow.PickupStatus.ALLOWED || this.pickupStatus == EntityArrow.PickupStatus.CREATIVE_ONLY && entityIn.capabilities.isCreativeMode;
@@ -586,6 +591,63 @@ public abstract class EntityArrow extends Entity implements IProjectile
     }
 
     protected abstract ItemStack getArrowStack();
+
+    private boolean spartanWeaponryCollideWithPlayer(EntityPlayer entityIn)
+    {
+        if (!this.world.isRemote && this.inGround && this.arrowShake <= 0)
+        {
+            com.oblivioussp.spartanweaponry.util.Log.debug("Player collision with arrow entity intercepted!");
+
+            if (this.pickupStatus == EntityArrow.PickupStatus.ALLOWED)
+            {
+                List<ItemStack> quivers = com.oblivioussp.spartanweaponry.util.QuiverHelper.findValidQuivers(entityIn);
+                ItemStack arrowStack = this.getArrowStack();
+                ItemStack mainHand = entityIn.getHeldItemMainhand();
+                ItemStack offHand = entityIn.getHeldItemOffhand();
+
+                if (offHand.getItem() == arrowStack.getItem() && offHand.getCount() < offHand.getMaxStackSize() || mainHand.getItem() == arrowStack.getItem() && mainHand.getCount() < mainHand.getMaxStackSize())
+                {
+                    return false;
+                }
+
+                if (!quivers.isEmpty())
+                {
+                    for (ItemStack quiver : quivers)
+                    {
+                        if (!arrowStack.isEmpty() && !quiver.isEmpty() && ((com.oblivioussp.spartanweaponry.item.ItemQuiverBase)quiver.getItem()).isAmmoValid(arrowStack, quiver))
+                        {
+                            if (!quiver.hasTagCompound())
+                            {
+                                quiver.setTagCompound(new NBTTagCompound());
+                            }
+
+                            if (quiver.getTagCompound().getBoolean("ammoCollect"))
+                            {
+                                net.minecraftforge.items.IItemHandler quiverHandler = quiver.getCapability(net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, (net.minecraft.util.EnumFacing)null);
+
+                                for (int i = 0; i < quiverHandler.getSlots(); ++i)
+                                {
+                                    arrowStack = quiverHandler.insertItem(i, arrowStack, false);
+                                }
+                            }
+                        }
+
+                        if (arrowStack.isEmpty())
+                        {
+                            com.oblivioussp.spartanweaponry.util.Log.debug("Picked up arrow on the ground and placed it in the quiver!");
+                            Entity thisEntity = this.world.getEntityByID(this.getEntityId());
+                            entityIn.onItemPickup(thisEntity, 1);
+                            this.setDead();
+                            this.world.playSound((EntityPlayer)null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_ITEM_PICKUP, net.minecraft.util.SoundCategory.PLAYERS, 0.2F, (this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 0.0F);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
     protected boolean canTriggerWalking()
     {

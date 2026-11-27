@@ -1,5 +1,7 @@
 package com.oblivioussp.spartanweaponry.init;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
 import com.oblivioussp.spartanweaponry.api.WeaponProperties;
 import com.oblivioussp.spartanweaponry.api.weaponproperty.WeaponProperty;
@@ -54,13 +56,8 @@ import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(
-   modid = "spartanweaponry"
-)
 public class ItemRegistrySW {
    public static ToolMaterialEx materialCopper;
    public static ToolMaterialEx materialTin;
@@ -217,7 +214,10 @@ public class ItemRegistrySW {
    public ItemRegistrySW() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, ItemRegistrySW::registerItems);
+   }
+
    public static void registerItems(Register<Item> ev) {
       IForgeRegistry<Item> registry = ev.getRegistry();
       material = new ItemMultiSW("material", new String[]{"handle", "pole", "explosive_charge"});
@@ -573,7 +573,7 @@ public class ItemRegistrySW {
    }
 
    protected static void registerModdedMaterialWeapons(IForgeRegistry<Item> registry) {
-      Log.info(String.format("Registering %d modded material based weapons", customMaterials.size()));
+      Log.info(HString.format("Registering %d modded material based weapons", customMaterials.size()));
       String matNames = "";
 
       for(ToolMaterialEx material : customMaterials) {

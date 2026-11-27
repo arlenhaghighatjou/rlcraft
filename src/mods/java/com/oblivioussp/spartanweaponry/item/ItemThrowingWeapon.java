@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.oblivioussp.spartanweaponry.api.IWeaponPropertyContainer;
@@ -409,7 +410,7 @@ public class ItemThrowingWeapon extends Item implements IWeaponPropertyContainer
 
    public String getItemStackDisplayName(ItemStack stack) {
       if (this.displayName != null) {
-         String name = I18n.translateToLocalFormatted(String.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.materialEx.getFullUnlocName())});
+         String name = I18n.translateToLocalFormatted(HString.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.materialEx.getFullUnlocName())});
          return name;
       } else {
          return super.getItemStackDisplayName(stack);

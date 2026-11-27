@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.util.StringHelper;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -38,7 +39,7 @@ public class ItemBoltTipped extends ItemBolt {
    }
 
    public String getItemStackDisplayName(ItemStack stack) {
-      String name = I18n.translateToLocalFormatted(String.format("item.%s:proj_tipped.%s", "spartanweaponry", PotionUtils.getPotionFromItem(stack).getNamePrefixed("")), new Object[]{StringHelper.translateString("bolt.name", "item")});
+      String name = I18n.translateToLocalFormatted(HString.format("item.%s:proj_tipped.%s", "spartanweaponry", PotionUtils.getPotionFromItem(stack).getNamePrefixed("")), new Object[]{StringHelper.translateString("bolt.name", "item")});
       return name;
    }
 }

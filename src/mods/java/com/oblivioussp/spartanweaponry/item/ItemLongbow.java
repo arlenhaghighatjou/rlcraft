@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.item;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.api.IWeaponCallback;
 import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
 import com.oblivioussp.spartanweaponry.client.gui.CreativeTabsSW;
@@ -227,7 +228,7 @@ public class ItemLongbow extends ItemBow implements IHudQuiverDisplay {
 
    public String getItemStackDisplayName(ItemStack stack) {
       if (this.displayName != null) {
-         String name = I18n.translateToLocalFormatted(String.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.material.getFullUnlocName())});
+         String name = I18n.translateToLocalFormatted(HString.format("item.%s:%s.name", "spartanweaponry", this.displayName), new Object[]{I18n.translateToLocal(this.material.getFullUnlocName())});
          return name;
       } else {
          return super.getItemStackDisplayName(stack);

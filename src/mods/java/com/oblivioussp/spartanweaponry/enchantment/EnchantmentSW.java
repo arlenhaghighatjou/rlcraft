@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.enchantment;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.base.Predicate;
 import com.oblivioussp.spartanweaponry.item.ItemCrossbow;
 import com.oblivioussp.spartanweaponry.item.ItemThrowingWeapon;
@@ -24,6 +25,6 @@ public class EnchantmentSW extends Enchantment {
    }
 
    public String getName() {
-      return String.format("enchantment.%s:%s", "spartanweaponry", this.name);
+      return HString.format("enchantment.%s:%s", "spartanweaponry", this.name);
    }
 }

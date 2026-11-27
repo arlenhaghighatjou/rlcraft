@@ -15,8 +15,8 @@ public class NetworkHandler {
 
    public static void init() {
       instance = NetworkRegistry.INSTANCE.newSimpleChannel("spartanweaponry".toLowerCase());
-      instance.registerMessage(PacketLongReachAttack.class, PacketLongReachAttack.class, getNextPacketId(), Side.SERVER);
-      instance.registerMessage(PacketKeyHandle.class, PacketKeyHandle.class, getNextPacketId(), Side.SERVER);
+      instance.registerMessage(new PacketLongReachAttack(), PacketLongReachAttack.class, PacketLongReachAttack::new, getNextPacketId(), Side.SERVER);
+      instance.registerMessage(new PacketKeyHandle(), PacketKeyHandle.class, PacketKeyHandle::new, getNextPacketId(), Side.SERVER);
    }
 
    public static int getNextPacketId() {

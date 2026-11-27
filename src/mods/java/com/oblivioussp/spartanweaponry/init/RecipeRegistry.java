@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.item.crafting.QuiverUpgradeRecipe;
 import com.oblivioussp.spartanweaponry.item.crafting.RecipeEnchantmentConverter;
 import com.oblivioussp.spartanweaponry.item.crafting.RecipeTippedProjectile;
@@ -9,19 +10,17 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber(
-   modid = "spartanweaponry"
-)
 public class RecipeRegistry {
    public RecipeRegistry() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, IRecipe.class, RecipeRegistry::addRecipes);
+   }
+
    public static void addRecipes(Register<IRecipe> ev) {
       IForgeRegistry<IRecipe> reg = ev.getRegistry();
       Log.info("Registering recipes for Tipped Bolts!");

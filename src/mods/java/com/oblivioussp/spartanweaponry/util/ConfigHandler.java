@@ -1,8 +1,10 @@
 package com.oblivioussp.spartanweaponry.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.api.WeaponProperties;
 import com.oblivioussp.spartanweaponry.client.gui.AlignmentHelper;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +12,6 @@ import java.util.function.Consumer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class ConfigHandler {
@@ -265,17 +266,16 @@ public class ConfigHandler {
    public ConfigHandler() {
    }
 
-   public static void init(File configDirectory) {
-      File configFile = new File(configDirectory, "spartanweaponry".toLowerCase() + ".cfg");
+   public static void init(VFile2 configDirectory) {
+      VFile2 configFile = new VFile2(configDirectory, "spartanweaponry".toLowerCase() + ".cfg");
       if (config == null) {
          config = new Configuration(configFile, "2.0");
          Log.info("Defined config version: " + config.getDefinedConfigVersion() + " - Loaded config version: " + config.getLoadedConfigVersion());
          if (!config.getDefinedConfigVersion().equalsIgnoreCase(config.getLoadedConfigVersion())) {
             String oldVersion = config.getLoadedConfigVersion() == null ? "1.0" : config.getLoadedConfigVersion();
             Log.warn("The loaded config file is from an old version of this mod (beta-1.2.x or older), and is no longer valid! This config will be moved to \"config/backup/spartanweaponry_" + oldVersion + ".cfg\" and a new one will be generated!");
-            File backupConfigDir = new File(configDirectory, "backup");
-            File backupConfig = new File(backupConfigDir, "spartanweaponry".toLowerCase() + "_" + oldVersion + ".cfg");
-            backupConfigDir.mkdirs();
+            VFile2 backupConfigDir = new VFile2(configDirectory, "backup");
+            VFile2 backupConfig = new VFile2(backupConfigDir, "spartanweaponry".toLowerCase() + "_" + oldVersion + ".cfg");
             config.getConfigFile().renameTo(backupConfig);
             config = new Configuration(configFile, "2.0");
          }
@@ -296,7 +296,10 @@ public class ConfigHandler {
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OnConfigChangedEvent.class, this::onConfigChangedEvent);
+   }
+
    public void onConfigChangedEvent(OnConfigChangedEvent ev) {
       if (ev.getModID().equalsIgnoreCase("spartanweaponry")) {
          loadConfig();
@@ -563,26 +566,26 @@ public class ConfigHandler {
    }
 
    public static void setCategoryLanguageKey(String category) {
-      config.getCategory(category).setLanguageKey(String.format("config.%s:%s.%s", "spartanweaponry", "category", category));
+      config.getCategory(category).setLanguageKey(HString.format("config.%s:%s.%s", "spartanweaponry", "category", category));
    }
 
    public static float getFloat(String name, String category, float defaultValue, float minValue, float maxValue, String comment) {
-      return config.getFloat(name, category, defaultValue, minValue, maxValue, comment, String.format("config.%s:%s", "spartanweaponry", name));
+      return config.getFloat(name, category, defaultValue, minValue, maxValue, comment, HString.format("config.%s:%s", "spartanweaponry", name));
    }
 
    public static int getInt(String name, String category, int defaultValue, int minValue, int maxValue, String comment) {
-      return config.getInt(name, category, defaultValue, minValue, maxValue, comment, String.format("config.%s:%s", "spartanweaponry", name));
+      return config.getInt(name, category, defaultValue, minValue, maxValue, comment, HString.format("config.%s:%s", "spartanweaponry", name));
    }
 
    public static boolean getBoolean(String name, String category, boolean defaultValue, String comment) {
-      return config.getBoolean(name, category, defaultValue, comment, String.format("config.%s:%s", "spartanweaponry", name));
+      return config.getBoolean(name, category, defaultValue, comment, HString.format("config.%s:%s", "spartanweaponry", name));
    }
 
    public static String getStringFromFixedValues(String name, String category, String defaultValue, String comment, String[] validValues) {
-      return config.getString(name, category, defaultValue, comment, validValues, String.format("config.%s:%s", "spartanweaponry", name));
+      return config.getString(name, category, defaultValue, comment, validValues, HString.format("config.%s:%s", "spartanweaponry", name));
    }
 
    public static String[] getStringList(String name, String category, String[] defaultValue, String comment) {
-      return config.getStringList(name, category, defaultValue, comment, (String[])null, String.format("config.%s:%s", "spartanweaponry", name));
+      return config.getStringList(name, category, defaultValue, comment, (String[])null, HString.format("config.%s:%s", "spartanweaponry", name));
    }
 }

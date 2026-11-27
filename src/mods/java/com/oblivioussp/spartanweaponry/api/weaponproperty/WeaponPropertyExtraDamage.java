@@ -68,42 +68,48 @@ public class WeaponPropertyExtraDamage extends WeaponPropertyWithCallback {
          }
 
          switch(var9) {
-         case 0:
-            if (victim.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty()) {
-               return ConfigHandler.damageBonusCheckArmorValue && victim.getEntityAttribute(SharedMonsterAttributes.ARMOR).getBaseValue() > (double)ConfigHandler.damageBonusMaxArmorValue ? baseDamage : baseDamage + bonusDamage;
-            }
-         case 1:
-            break;
-         case 2:
-            if (!attacker.isRiding()) {
-               return baseDamage;
-            }
-
-            if (ConfigHandler.damageBonusRidingCheckSpeed) {
-               if (!attacker.getEntityData().hasKey("spartanweaponry_RidingSpeed")) {
-                  Log.error("Cannot retrieve speed value for player riding attack bonus! Reverting to old behavior!");
-               } else {
-                  float velocity = attacker.getEntityData().getFloat("spartanweaponry_RidingSpeed");
-                  attacker.getEntityData().removeTag("spartanweaponry_RidingSpeed");
-                  bonusDamage *= MathHelper.clamp(velocity / ConfigHandler.damageBonusRidingSpeedMax, 0.0F, 1.0F);
-                  Log.info("velocity = " + velocity + " bonus damage = " + bonusDamage + " total damage = " + (baseDamage + bonusDamage));
+         case 0: {
+               if (victim.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty()) {
+                  return ConfigHandler.damageBonusCheckArmorValue && victim.getEntityAttribute(SharedMonsterAttributes.ARMOR).getBaseValue() > (double)ConfigHandler.damageBonusMaxArmorValue ? baseDamage : baseDamage + bonusDamage;
                }
-            }
+         }
+         case 1: {
+               break;
+         }
+         case 2: {
+               if (!attacker.isRiding()) {
+                  return baseDamage;
+               }
 
-            return attacker.isRiding() ? baseDamage + bonusDamage : baseDamage;
-         case 3:
-            boolean doBonusDamage = victim.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD;
-            return doBonusDamage ? baseDamage + bonusDamage : baseDamage;
-         case 4:
-            Entity immediateEntity = source.getImmediateSource();
-            float yaw = source.isProjectile() ? -immediateEntity.rotationYaw : immediateEntity.rotationYaw;
-            float victimYaw = victim.rotationYaw;
-            float difference = victimYaw - yaw;
-            difference = this.posMod(difference + 180.0F, 360.0F) - 180.0F;
-            boolean doBonusDamage = MathHelper.abs(difference) <= 30.0F;
-            return doBonusDamage ? baseDamage + bonusDamage : baseDamage;
-         default:
-            return baseDamage;
+               if (ConfigHandler.damageBonusRidingCheckSpeed) {
+                  if (!attacker.getEntityData().hasKey("spartanweaponry_RidingSpeed")) {
+                     Log.error("Cannot retrieve speed value for player riding attack bonus! Reverting to old behavior!");
+                  } else {
+                     float velocity = attacker.getEntityData().getFloat("spartanweaponry_RidingSpeed");
+                     attacker.getEntityData().removeTag("spartanweaponry_RidingSpeed");
+                     bonusDamage *= MathHelper.clamp(velocity / ConfigHandler.damageBonusRidingSpeedMax, 0.0F, 1.0F);
+                     Log.info("velocity = " + velocity + " bonus damage = " + bonusDamage + " total damage = " + (baseDamage + bonusDamage));
+                  }
+               }
+
+               return attacker.isRiding() ? baseDamage + bonusDamage : baseDamage;
+         }
+         case 3: {
+               boolean doBonusDamage = victim.getCreatureAttribute() == EnumCreatureAttribute.UNDEAD;
+               return doBonusDamage ? baseDamage + bonusDamage : baseDamage;
+         }
+         case 4: {
+               Entity immediateEntity = source.getImmediateSource();
+               float yaw = source.isProjectile() ? -immediateEntity.rotationYaw : immediateEntity.rotationYaw;
+               float victimYaw = victim.rotationYaw;
+               float difference = victimYaw - yaw;
+               difference = this.posMod(difference + 180.0F, 360.0F) - 180.0F;
+               boolean doBonusDamage = MathHelper.abs(difference) <= 30.0F;
+               return doBonusDamage ? baseDamage + bonusDamage : baseDamage;
+         }
+         default: {
+               return baseDamage;
+         }
          }
 
          if (victim.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty() && victim.getItemStackFromSlot(EntityEquipmentSlot.CHEST).isEmpty() && victim.getItemStackFromSlot(EntityEquipmentSlot.LEGS).isEmpty() && victim.getItemStackFromSlot(EntityEquipmentSlot.FEET).isEmpty()) {

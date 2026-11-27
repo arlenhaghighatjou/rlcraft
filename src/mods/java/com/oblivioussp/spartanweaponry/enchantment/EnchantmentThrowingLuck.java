@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.enchantment;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import net.minecraft.enchantment.EnchantmentLootBonus;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,6 +13,6 @@ public class EnchantmentThrowingLuck extends EnchantmentLootBonus {
    }
 
    public String getName() {
-      return String.format("enchantment.%s:%s", "spartanweaponry", this.name);
+      return HString.format("enchantment.%s:%s", "spartanweaponry", this.name);
    }
 }

@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.ModSpartanWeaponry;
 import com.oblivioussp.spartanweaponry.api.IWeaponPropertyContainer;
 import com.oblivioussp.spartanweaponry.api.weaponproperty.IPropertyCallback;
@@ -49,13 +50,10 @@ import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-@EventBusSubscriber
 public class EventHandlerCommon {
    public static EaglercraftRandom rand = new EaglercraftRandom();
    public static int tickCounter = 0;
@@ -63,7 +61,17 @@ public class EventHandlerCommon {
    public EventHandlerCommon() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventHandlerCommon::onLivingHurt);
+      bus.register(LivingAttackEvent.class, EventHandlerCommon::attackEvent);
+      bus.register(ItemCraftedEvent.class, EventHandlerCommon::onCraftEvent);
+      bus.register(LootingLevelEvent.class, EventHandlerCommon::onLootLevel);
+      bus.register(LivingEquipmentChangeEvent.class, EventHandlerCommon::onEquipmentChange);
+      bus.register(EntityItemPickupEvent.class, EventHandlerCommon::onPlayerPickupEvent);
+      bus.register(LootTableLoadEvent.class, EventHandlerCommon::onLootTableLoad);
+      bus.register(AnvilUpdateEvent.class, EventHandlerCommon::handleAnvilUpdate);
+   }
+
    public static void onLivingHurt(LivingHurtEvent ev) {
       DamageSource source = ev.getSource();
       float dmgDealt = ev.getAmount();
@@ -82,7 +90,7 @@ public class EventHandlerCommon {
                   IWeaponPropertyContainer container = (IWeaponPropertyContainer)stack.getItem();
                   float directDamage = container.getDirectAttackDamage();
 
-                  for(WeaponProperty prop : container.getAllWeaponProperties()) {
+                  for(WeaponProperty prop : (List<WeaponProperty>)container.getAllWeaponProperties()) {
                      IPropertyCallback callback = prop.getCallback();
                      if (callback != null) {
                         dmgDealt = callback.modifyDamageDealt(container.getMaterialEx(), dmgDealt, directDamage + 1.0F, source, attacker, victim);
@@ -105,7 +113,7 @@ public class EventHandlerCommon {
             if (!victimStack.isEmpty() && victimStack.getItem() instanceof IWeaponPropertyContainer) {
                IWeaponPropertyContainer container = (IWeaponPropertyContainer)victimStack.getItem();
 
-               for(WeaponProperty prop : container.getAllWeaponProperties()) {
+               for(WeaponProperty prop : (List<WeaponProperty>)container.getAllWeaponProperties()) {
                   IPropertyCallback callback = prop.getCallback();
                   if (callback != null) {
                      dmgDealt = callback.modifyDamageTaken(container.getMaterialEx(), dmgDealt, source, attacker, victim);
@@ -136,7 +144,6 @@ public class EventHandlerCommon {
       }
    }
 
-   @SubscribeEvent
    public static void attackEvent(LivingAttackEvent ev) {
       if (ev.getEntityLiving() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)ev.getEntityLiving();
@@ -194,7 +201,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void onCraftEvent(ItemCraftedEvent ev) {
       if (ev.player instanceof EntityPlayerMP) {
          AdvancementTrigger.CRAFT_ITEM.trigger((EntityPlayerMP)ev.player, ev.crafting.getItem());
@@ -202,7 +208,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void onLootLevel(LootingLevelEvent ev) {
       Entity e = ev.getDamageSource().getImmediateSource();
       if (e instanceof EntityThrownWeapon) {
@@ -213,7 +218,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void onEquipmentChange(LivingEquipmentChangeEvent ev) {
       if ((ev.getSlot() == EntityEquipmentSlot.MAINHAND || ev.getSlot() == EntityEquipmentSlot.OFFHAND) && ev.getEntityLiving() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)ev.getEntityLiving();
@@ -349,7 +353,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void onPlayerPickupEvent(EntityItemPickupEvent ev) {
       ItemStack pickedUpStack = ev.getItem().getItem().copy();
       int beforeCount = pickedUpStack.getCount();
@@ -433,7 +436,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void onLootTableLoad(LootTableLoadEvent ev) {
       if (ev.getName().toString().equals("minecraft:chests/village_blacksmith")) {
          LootEntry entry = new LootEntryTable(new ResourceLocation("spartanweaponry", "inject/village_blacksmith"), 1, 1, new LootCondition[0], "spartanweaponry_inject_entry");
@@ -443,7 +445,6 @@ public class EventHandlerCommon {
 
    }
 
-   @SubscribeEvent
    public static void handleAnvilUpdate(AnvilUpdateEvent ev) {
       ItemStack left = ev.getLeft();
       ItemStack right = ev.getRight();

@@ -1122,6 +1122,13 @@ public abstract class EntityLivingBase extends Entity
 
     private boolean canBlockDamageSource(DamageSource damageSourceIn)
     {
+        Entity spartanWeaponryThisEntity = this.world.getEntityByID(this.getEntityId());
+
+        if (spartanWeaponryThisEntity instanceof EntityLivingBase && ((EntityLivingBase)spartanWeaponryThisEntity).getActiveItemStack().getItem() instanceof com.oblivioussp.spartanweaponry.item.IBlockingWeapon)
+        {
+            return false;
+        }
+
         if (!damageSourceIn.isUnblockable() && this.isActiveItemStackBlocking())
         {
             Vec3d vec3d = damageSourceIn.getDamageLocation();
@@ -1361,6 +1368,20 @@ public abstract class EntityLivingBase extends Entity
 
     protected float applyArmorCalculations(DamageSource source, float damage)
     {
+        if (source instanceof com.oblivioussp.spartanweaponry.util.IDamageSourceArmorPiercing && !source.isUnblockable())
+        {
+            this.damageArmor(damage);
+            float percentage = MathHelper.clamp(((com.oblivioussp.spartanweaponry.util.IDamageSourceArmorPiercing)source).getPercentage(), 0.0F, 1.0F);
+            com.oblivioussp.spartanweaponry.util.Log.debug("Found armor piercing damage source! Reducing armor value of target by " + percentage * 100.0F + "%");
+            CombatRules.getDamageAfterAbsorb(damage, (float)this.getTotalArmorValue(), (float)this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+            float armorPiercingDamage = damage * percentage;
+            float regularDamage = damage - armorPiercingDamage;
+            float reducedDamage = CombatRules.getDamageAfterAbsorb(regularDamage, (float)this.getTotalArmorValue(), (float)this.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue());
+            float resultDamage = armorPiercingDamage + reducedDamage;
+            com.oblivioussp.spartanweaponry.util.Log.debug("Full damage: " + damage + " Armor value: " + (float)this.getTotalArmorValue() + " Damage ignoring armor (" + percentage * 100.0F + "% damage): " + armorPiercingDamage + " Damage not ignoring armor: " + regularDamage + " Reduced Damage: " + reducedDamage + " Result Damage: " + resultDamage);
+            return resultDamage;
+        }
+
         if (!source.isUnblockable())
         {
             this.damageArmor(damage);

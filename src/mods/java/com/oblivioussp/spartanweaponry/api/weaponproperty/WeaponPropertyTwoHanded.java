@@ -3,7 +3,6 @@ package com.oblivioussp.spartanweaponry.api.weaponproperty;
 import com.oblivioussp.spartanweaponry.ModSpartanWeaponry;
 import com.oblivioussp.spartanweaponry.api.SpartanWeaponryAPI;
 import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
-import com.oblivioussp.spartanweaponry.compat.trinkets.TrinketsHelper;
 import java.util.List;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.MobEffects;
@@ -36,7 +35,7 @@ public class WeaponPropertyTwoHanded extends WeaponPropertyWithCallback {
       ItemStack offHand = entity.getHeldItemOffhand();
       PotionEffect mfEffect = entity.getActivePotionEffect(MobEffects.MINING_FATIGUE);
       if ((ItemStack.areItemsEqualIgnoreDurability(stack, mainHand) || ItemStack.areItemsEqualIgnoreDurability(stack, offHand)) && !mainHand.isEmpty() && !offHand.isEmpty()) {
-         boolean isImmune = ModSpartanWeaponry.isTrinketsLoaded && TrinketsHelper.getEntityRace(entity) == "Titan";
+         boolean isImmune = false;
          int mfLevel = this.level == 2 ? 3 : 2;
          if (!isImmune && (mfEffect == null || mfEffect.getDuration() <= 1)) {
             entity.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE, 20, mfLevel, false, false));
@@ -51,7 +50,7 @@ public class WeaponPropertyTwoHanded extends WeaponPropertyWithCallback {
       float resultDamage = baseDamage;
       ItemStack mainHand = attacker.getHeldItemMainhand();
       ItemStack offHand = attacker.getHeldItemOffhand();
-      if (ModSpartanWeaponry.isTrinketsLoaded && TrinketsHelper.getEntityRace(attacker) == "Titan") {
+      if (false) {
          return baseDamage;
       } else {
          if (!mainHand.isEmpty() && !offHand.isEmpty()) {

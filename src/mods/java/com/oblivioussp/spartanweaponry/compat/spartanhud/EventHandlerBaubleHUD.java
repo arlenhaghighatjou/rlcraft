@@ -1,5 +1,7 @@
 package com.oblivioussp.spartanweaponry.compat.spartanhud;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanhudbaubles.client.event.RenderBaubleOnHUDEvent.Post;
 import com.oblivioussp.spartanhudbaubles.client.gui.AlignmentHelper.Alignment;
 import com.oblivioussp.spartanhudbaubles.client.gui.AlignmentHelper.HorizontalAlignment;
@@ -16,7 +18,6 @@ import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -25,7 +26,10 @@ public class EventHandlerBaubleHUD {
    public EventHandlerBaubleHUD() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Post.class, this::onRenderBaubleHUD);
+   }
+
    public void onRenderBaubleHUD(Post ev) {
       if (!ConfigHandler.disableSpartanHUDBaublesIntegration) {
          if (OreDictionarySW.matches("spartanweaponry:quivers", ev.getItemStack())) {
@@ -49,7 +53,7 @@ public class EventHandlerBaubleHUD {
                }
             }
 
-            ammoStr = String.format("%d", totalAmmo);
+            ammoStr = HString.format("%d", totalAmmo);
             GlStateManager.disableDepth();
             font.drawStringWithShadow(ammoStr, (float)(ev.getPositionX() + 17 - font.getStringWidth(ammoStr)), (float)(ev.getPositionY() + 10), totalAmmo == 0 ? 16736352 : 16760832);
             if (QuiverHelper.isInBaublesSlot(mc.player, EventHandlerClient.getActiveQuiverStack())) {

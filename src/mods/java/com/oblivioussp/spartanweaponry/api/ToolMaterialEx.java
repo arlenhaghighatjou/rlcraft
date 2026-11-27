@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.api;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.oblivioussp.spartanweaponry.api.weaponproperty.WeaponProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +92,7 @@ public class ToolMaterialEx {
    }
 
    public String getFullUnlocName() {
-      return String.format("material.%s:%s", this.modId, this.unlocName);
+      return HString.format("material.%s:%s", this.modId, this.unlocName);
    }
 
    public String getOreDictForRepairMaterial() {

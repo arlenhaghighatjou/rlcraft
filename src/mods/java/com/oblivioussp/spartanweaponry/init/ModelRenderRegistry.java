@@ -1,5 +1,6 @@
 package com.oblivioussp.spartanweaponry.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.ModSpartanWeaponry;
 import com.oblivioussp.spartanweaponry.api.ToolMaterialEx;
 import com.oblivioussp.spartanweaponry.item.ItemMultiSW;
@@ -15,14 +16,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber(
-   modid = "spartanweaponry"
-)
 public class ModelRenderRegistry {
    private static List<ModelRenderRegistry.ModelRegistryEntry> models = new ArrayList();
    private static List<ModelRenderRegistry.ColourHandlerEntry> colourHandlers = new ArrayList();
@@ -30,7 +26,10 @@ public class ModelRenderRegistry {
    public ModelRenderRegistry() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, ModelRenderRegistry::registerItemRenders);
+   }
+
    public static void registerItemRenders(ModelRegistryEvent ev) {
       registerMultiItemRender(ItemRegistrySW.material);
 
