@@ -28,6 +28,6 @@ public final class ConfigurationHandler {
    }
 
    public static void setExploreMode(boolean exploreMode) {
-      exploreMode = exploreMode;
+      ConfigurationHandler.exploreMode = exploreMode;
    }
 }

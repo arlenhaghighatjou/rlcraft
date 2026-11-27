@@ -79,7 +79,7 @@ public class ModConfig {
    }
 
    public static void setValuesOverridden(boolean valuesOverridden) {
-      valuesOverridden = valuesOverridden;
+      ModConfig.valuesOverridden = valuesOverridden;
    }
 
    public static enum EnumCostIncreaseSetting {
