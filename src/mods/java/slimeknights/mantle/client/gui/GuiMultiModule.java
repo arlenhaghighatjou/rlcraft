@@ -1,9 +1,8 @@
 package slimeknights.mantle.client.gui;
 
 import com.google.common.collect.Lists;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -26,7 +25,6 @@ import slimeknights.mantle.inventory.SlotWrapper;
    modid = "NotEnoughItems"
 )
 public class GuiMultiModule extends GuiContainer {
-   private static Field NEI_Manager;
    protected List<GuiModule> modules = Lists.newArrayList();
    public int cornerX;
    public int cornerY;
@@ -114,17 +112,9 @@ public class GuiMultiModule extends GuiContainer {
    public void setWorldAndResolution(Minecraft mc, int width, int height) {
       super.setWorldAndResolution(mc, width, height);
 
-      try {
-         for(GuiModule module : this.modules) {
-            module.setWorldAndResolution(mc, width, height);
-            if (NEI_Manager != null) {
-               NEI_Manager.set(module, NEI_Manager.get(this));
-            }
-
-            this.updateSubmodule(module);
-         }
-      } catch (IllegalAccessException var6) {
-         Mantle.logger.error(var6);
+      for(GuiModule module : this.modules) {
+         module.setWorldAndResolution(mc, width, height);
+         this.updateSubmodule(module);
       }
 
    }
@@ -269,14 +259,5 @@ public class GuiMultiModule extends GuiContainer {
 
    protected ContainerMultiModule getContainer() {
       return (ContainerMultiModule)this.inventorySlots;
-   }
-
-   static {
-      try {
-         NEI_Manager = GuiContainer.class.getDeclaredField("manager");
-      } catch (NoSuchFieldException var1) {
-         NEI_Manager = null;
-      }
-
    }
 }

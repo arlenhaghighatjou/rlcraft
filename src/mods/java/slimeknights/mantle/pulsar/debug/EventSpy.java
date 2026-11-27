@@ -1,6 +1,6 @@
 package slimeknights.mantle.pulsar.debug;
 
-import com.google.common.eventbus.Subscribe;
+import slimeknights.mantle.pulsar.pulse.IPulse;
 import net.minecraftforge.fml.common.Loader;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
@@ -11,13 +11,16 @@ import slimeknights.mantle.pulsar.pulse.Pulse;
    description = "we iz in ur buses, monitorin ur eventz",
    forced = true
 )
-public class EventSpy {
+public class EventSpy implements IPulse {
    private final Logger log = LogManager.getLogger("EventSpy/" + Loader.instance().activeModContainer().getModId());
 
    public EventSpy() {
    }
 
-   @Subscribe
+   public void handlePulseEvent(Object evt) {
+      this.receive(evt);
+   }
+
    public void receive(Object evt) {
       this.log.info("Received event: " + evt);
    }

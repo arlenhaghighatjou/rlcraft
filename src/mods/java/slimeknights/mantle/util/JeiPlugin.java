@@ -1,6 +1,6 @@
 package slimeknights.mantle.util;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

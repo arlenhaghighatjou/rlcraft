@@ -1,5 +1,6 @@
 package slimeknights.mantle.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -17,7 +18,6 @@ import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.Pre;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -45,9 +45,10 @@ public class ExtraHeartRenderHandler {
       Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, textureX, textureY, width, height);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(Pre.class, EventPriority.LOW, false, this::renderHealthbar);
+   }
+
    public void renderHealthbar(Pre event) {
       Entity renderViewEnity = this.mc.getRenderViewEntity();
       if (event.getType() == ElementType.HEALTH && !event.isCanceled() && renderViewEnity instanceof EntityPlayer) {

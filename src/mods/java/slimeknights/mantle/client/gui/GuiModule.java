@@ -1,6 +1,6 @@
 package slimeknights.mantle.client.gui;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.io.IOException;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;

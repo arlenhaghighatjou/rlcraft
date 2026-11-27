@@ -55,13 +55,13 @@ public class RecipeMatchRegistry {
       if (sum < minAmount) {
          return Optional.empty();
       } else {
-         match = Lists.newLinkedList();
+         List<ItemStack> foundStacks = Lists.newLinkedList();
 
          for(RecipeMatch.Match m : matches) {
-            match.addAll(m.stacks);
+            foundStacks.addAll(m.stacks);
          }
 
-         return Optional.of(new RecipeMatch.Match(match, sum));
+         return Optional.of(new RecipeMatch.Match(foundStacks, sum));
       }
    }
 
@@ -78,13 +78,13 @@ public class RecipeMatchRegistry {
          RecipeMatch.removeMatch(stacks, match);
       }
 
-      match = Lists.newLinkedList();
+      List<ItemStack> foundStacks = Lists.newLinkedList();
 
       for(RecipeMatch.Match m : matches) {
-         match.addAll(m.stacks);
+         foundStacks.addAll(m.stacks);
       }
 
-      return Optional.of(new RecipeMatch.Match(match, sum));
+      return Optional.of(new RecipeMatch.Match(foundStacks, sum));
    }
 
    public void addItem(String oredictItem, int amountNeeded, int amountMatched) {

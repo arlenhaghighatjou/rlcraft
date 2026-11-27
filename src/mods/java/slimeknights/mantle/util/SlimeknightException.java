@@ -1,4 +1,5 @@
 package slimeknights.mantle.util;
+import net.lax1dude.eaglercraft.v1_8.HString;
 
 public class SlimeknightException extends RuntimeException {
    public SlimeknightException() {
@@ -9,7 +10,7 @@ public class SlimeknightException extends RuntimeException {
    }
 
    public SlimeknightException(String message, Object... params) {
-      super(String.format(message, params));
+      super(HString.format(message, params));
    }
 
    public SlimeknightException(String message, Throwable cause) {

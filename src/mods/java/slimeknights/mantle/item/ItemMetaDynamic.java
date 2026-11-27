@@ -1,7 +1,8 @@
 package slimeknights.mantle.item;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-import gnu.trove.procedure.TIntObjectProcedure;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.Arrays;
 import javax.annotation.Nonnull;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -18,7 +19,7 @@ import slimeknights.mantle.util.LocUtils;
 public class ItemMetaDynamic extends ItemTooltip {
    private static int MAX = 131071;
    protected boolean[] availabilityMask = new boolean[1];
-   protected TIntObjectHashMap<String> names = new TIntObjectHashMap();
+   protected Int2ObjectOpenHashMap<String> names = new Int2ObjectOpenHashMap();
 
    public ItemMetaDynamic() {
       this.setHasSubtypes(true);
@@ -26,9 +27,9 @@ public class ItemMetaDynamic extends ItemTooltip {
 
    public ItemStack addMeta(int meta, String name) {
       if (meta > MAX) {
-         throw new IllegalArgumentException(String.format("Metadata for %s too high, highest supported value is %d. Meta was %d", name, MAX, meta));
+         throw new IllegalArgumentException(HString.format("Metadata for %s too high, highest supported value is %d. Meta was %d", name, MAX, meta));
       } else if (this.isValid(meta)) {
-         throw new IllegalArgumentException(String.format("Metadata for %s is already taken. Meta %d is %s", name, meta, this.names.get(meta)));
+         throw new IllegalArgumentException(HString.format("Metadata for %s is already taken. Meta %d is %s", name, meta, this.names.get(meta)));
       } else {
          while(meta >= this.availabilityMask.length) {
             this.availabilityMask = Arrays.copyOf(this.availabilityMask, this.availabilityMask.length * 2);
@@ -78,11 +79,8 @@ public class ItemMetaDynamic extends ItemTooltip {
    @SideOnly(Side.CLIENT)
    protected void registerItemModels(final Item item) {
       String resourceId = Loader.instance().activeModContainer().getModId().toLowerCase();
-      this.names.forEachEntry(new TIntObjectProcedure<String>() {
-         public boolean execute(int meta, String name) {
-            ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), name));
-            return true;
-         }
-      });
+      for(Int2ObjectMap.Entry<String> entry : this.names.int2ObjectEntrySet()) {
+         ModelLoader.setCustomModelResourceLocation(item, entry.getIntKey(), new ModelResourceLocation(item.getRegistryName(), (String)entry.getValue()));
+      }
    }
 }

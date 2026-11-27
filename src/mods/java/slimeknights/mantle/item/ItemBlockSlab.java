@@ -1,5 +1,6 @@
 package slimeknights.mantle.item;
 
+import java.util.Collection;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
@@ -93,7 +94,7 @@ public class ItemBlockSlab<T extends Enum<T> & EnumBlock.IEnumMeta & IStringSeri
       Item item = this;
       ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(this.block);
 
-      for(T o : this.mappingProperty.getAllowedValues()) {
+      for(T o : (Collection<T>)this.mappingProperty.getAllowedValues()) {
          int meta = this.block.getMetaFromState(this.block.getDefaultState().withProperty(this.mappingProperty, o));
          String name = this.mappingProperty.getName(o);
          ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(loc, "half=bottom," + this.mappingProperty.getName() + "=" + name));

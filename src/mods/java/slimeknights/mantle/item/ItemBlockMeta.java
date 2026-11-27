@@ -1,5 +1,6 @@
 package slimeknights.mantle.item;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nonnull;
@@ -59,7 +60,7 @@ public class ItemBlockMeta extends ItemColored {
       Item item = this;
       ResourceLocation loc = ForgeRegistries.BLOCKS.getKey(this.block);
 
-      for(Comparable o : this.mappingProperty.getAllowedValues()) {
+      for(Comparable o : (Collection<Comparable>)this.mappingProperty.getAllowedValues()) {
          int meta = this.block.getMetaFromState(this.block.getDefaultState().withProperty(this.mappingProperty, o));
          String name = this.mappingProperty.getName(o);
          ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(loc, this.mappingProperty.getName() + "=" + name));

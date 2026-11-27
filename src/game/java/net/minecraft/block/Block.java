@@ -64,7 +64,7 @@ public class Block extends net.minecraftforge.registries.IForgeRegistryEntry.Imp
     public static final AxisAlignedBB FULL_BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
     @Nullable
     public static final AxisAlignedBB NULL_AABB = null;
-    private CreativeTabs displayOnCreativeTab;
+    public CreativeTabs displayOnCreativeTab;
     protected boolean fullBlock;
     protected int lightOpacity;
     protected boolean translucent;

@@ -1,16 +1,11 @@
 package slimeknights.mantle.pulsar.internal;
 
+import com.google.gson.JsonParser;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +25,7 @@ public class Configuration implements IConfiguration {
    private Map<String, Configuration.ConfigEntry> modules;
 
    public Configuration(String confName, Logger logger) {
-      this.confPath = Loader.instance().getConfigDir().toString() + File.separator + confName + ".json";
+      this.confPath = confName + ".json";
       this.logger = logger;
    }
 
@@ -52,12 +47,16 @@ public class Configuration implements IConfiguration {
       this.writeModulesToJson();
    }
 
+   private VFile2 configFile() {
+      return new VFile2(Loader.instance().getConfigDir(), this.confPath);
+   }
+
    private void getModulesFromJson() {
-      File f = new File(this.confPath);
+      VFile2 f = this.configFile();
       if (!f.exists()) {
          this.logger.info("Couldn't find config file; will generate a new one later.");
          this.modules = new HashMap();
-      } else if (f.canRead() && f.canWrite()) {
+      } else {
          try {
             try {
                this.modules = this.parseV1Config(f);
@@ -75,55 +74,68 @@ public class Configuration implements IConfiguration {
             this.modules = new HashMap();
          }
 
+      }
+   }
+
+   private Map<String, Configuration.ConfigEntry> parseV0Config(VFile2 f) throws Exception {
+      JsonElement json = (new JsonParser()).parse(f.getAllChars());
+      if (json == null || json.isJsonNull()) {
+         throw new NullPointerException("Gson returned null.");
       } else {
-         throw new Configuration.FileNotReadWritableException("Could not read/write Pulsar config: " + this.confPath);
+         Map<String, Configuration.ConfigEntry> out = new HashMap();
+
+         for(Entry<String, JsonElement> e : json.getAsJsonObject().entrySet()) {
+            JsonElement v = (JsonElement)e.getValue();
+            out.put(e.getKey(), new Configuration.ConfigEntry(v.isJsonNull() ? null : Boolean.valueOf(v.getAsBoolean())));
+         }
+
+         return out;
       }
    }
 
-   private Map<String, Configuration.ConfigEntry> parseV0Config(File f) throws Exception {
-      try {
-         JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(f)));
-         Map<String, Boolean> m = (Map)gson.fromJson(reader, (new TypeToken<HashMap<String, Boolean>>() {
-         }).getType());
-         if (m == null) {
-            throw new NullPointerException("Gson returned null.");
-         } else {
-            Map<String, Configuration.ConfigEntry> out = new HashMap();
+   private Map<String, Configuration.ConfigEntry> parseV1Config(VFile2 f) throws Exception {
+      JsonObject root = (new JsonParser()).parse(f.getAllChars()).getAsJsonObject();
+      int version = root.has("CONFIG_VERSION") ? root.get("CONFIG_VERSION").getAsInt() : 0;
+      if (version > 1) {
+         throw new RuntimeException("Pulsar config is from a newer version! Remove it! " + f.getPath());
+      } else if (!root.has("modules") || root.get("modules").isJsonNull()) {
+         throw new IllegalArgumentException("Not a valid GsonConfig. Try v0 parsing.");
+      } else {
+         Map<String, Configuration.ConfigEntry> out = new HashMap();
 
-            for(Entry<String, Boolean> e : m.entrySet()) {
-               out.put(e.getKey(), new Configuration.ConfigEntry((Boolean)e.getValue()));
-            }
-
-            return out;
+         for(Entry<String, JsonElement> e : root.getAsJsonObject("modules").entrySet()) {
+            JsonObject entry = ((JsonElement)e.getValue()).getAsJsonObject();
+            Boolean enabled = entry.has("enabled") && !entry.get("enabled").isJsonNull() ? Boolean.valueOf(entry.get("enabled").getAsBoolean()) : null;
+            String description = entry.has("description") && !entry.get("description").isJsonNull() ? entry.get("description").getAsString() : null;
+            out.put(e.getKey(), new Configuration.ConfigEntry(enabled, description));
          }
-      } catch (FileNotFoundException var7) {
-         throw new RuntimeException("This shouldn't be possible... " + var7);
-      }
-   }
 
-   private Map<String, Configuration.ConfigEntry> parseV1Config(File f) throws Exception {
-      try {
-         JsonReader reader = new JsonReader(new InputStreamReader(new FileInputStream(f)));
-         Configuration.GsonConfig c = (Configuration.GsonConfig)gson.fromJson(reader, Configuration.GsonConfig.class);
-         if (c.getConfigVersion() > 1) {
-            throw new RuntimeException("Pulsar config is from a newer version! Remove it! " + f.getAbsolutePath());
-         } else if (c.getModules() == null) {
-            throw new IllegalArgumentException("Not a valid GsonConfig. Try v0 parsing.");
-         } else {
-            return c.getModules();
-         }
-      } catch (FileNotFoundException var4) {
-         throw new RuntimeException("This shouldn't be possible... " + var4);
+         return out;
       }
    }
 
    private void writeModulesToJson() {
       try {
-         JsonWriter writer = new JsonWriter(new OutputStreamWriter(new FileOutputStream(new File(this.confPath))));
-         writer.setIndent("  ");
-         Configuration.GsonConfig out = new Configuration.GsonConfig(1, this.modules);
-         gson.toJson(out, Configuration.GsonConfig.class, writer);
-         writer.close();
+         JsonObject modules = new JsonObject();
+
+         for(Entry<String, Configuration.ConfigEntry> e : this.modules.entrySet()) {
+            JsonObject entry = new JsonObject();
+            Configuration.ConfigEntry value = (Configuration.ConfigEntry)e.getValue();
+            if (value.getEnabled() != null) {
+               entry.addProperty("enabled", value.getEnabled());
+            }
+
+            if (value.getDescription() != null) {
+               entry.addProperty("description", value.getDescription());
+            }
+
+            modules.add((String)e.getKey(), entry);
+         }
+
+         JsonObject root = new JsonObject();
+         root.addProperty("CONFIG_VERSION", Integer.valueOf(1));
+         root.add("modules", modules);
+         this.configFile().setAllChars(gson.toJson(root));
       } catch (Exception var3) {
          this.logger.warn("Could not write config? " + this.confPath);
       }
@@ -160,24 +172,6 @@ public class Configuration implements IConfiguration {
    private static class FileNotReadWritableException extends RuntimeException {
       public FileNotReadWritableException(String message) {
          super(message);
-      }
-   }
-
-   private static class GsonConfig {
-      private int CONFIG_VERSION = 0;
-      private Map<String, Configuration.ConfigEntry> modules;
-
-      public GsonConfig(int version, Map<String, Configuration.ConfigEntry> modules) {
-         this.CONFIG_VERSION = version;
-         this.modules = modules;
-      }
-
-      public int getConfigVersion() {
-         return this.CONFIG_VERSION;
-      }
-
-      public Map<String, Configuration.ConfigEntry> getModules() {
-         return this.modules;
       }
    }
 }

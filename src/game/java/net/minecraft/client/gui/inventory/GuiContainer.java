@@ -28,8 +28,8 @@ import net.lax1dude.eaglercraft.v1_8.Touch;
 public abstract class GuiContainer extends GuiScreen
 {
     public static final ResourceLocation INVENTORY_BACKGROUND = new ResourceLocation("textures/gui/container/inventory.png");
-    protected int xSize = 176;
-    protected int ySize = 166;
+    public int xSize = 176;
+    public int ySize = 166;
     public Container inventorySlots;
     public int guiLeft;
     public int guiTop;
@@ -207,7 +207,7 @@ public abstract class GuiContainer extends GuiScreen
 
     protected abstract void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY);
 
-    private void drawSlot(Slot slotIn)
+    public void drawSlot(Slot slotIn)
     {
         int i = slotIn.xPos;
         int j = slotIn.yPos;
@@ -620,7 +620,7 @@ public abstract class GuiContainer extends GuiScreen
         this.dragSplitting = false;
     }
 
-    private boolean isMouseOverSlot(Slot slotIn, int mouseX, int mouseY)
+    public boolean isMouseOverSlot(Slot slotIn, int mouseX, int mouseY)
     {
         return this.isPointInRegion(slotIn.xPos, slotIn.yPos, 16, 16, mouseX, mouseY);
     }

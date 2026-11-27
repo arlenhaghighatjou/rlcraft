@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -136,7 +136,7 @@ public class MultiServantLogic extends MantleTileEntity implements IServantLogic
       return tag;
    }
 
-   public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
+   public void onDataPacket(INetworkManager net, SPacketUpdateTileEntity packet) {
       this.readCustomNBT(packet.getNbtCompound());
       this.world.notifyLightSet(this.pos);
       IBlockState state = this.world.getBlockState(this.pos);

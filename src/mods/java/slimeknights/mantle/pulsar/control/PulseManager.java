@@ -1,8 +1,7 @@
 package slimeknights.mantle.pulsar.control;
 
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
-import java.lang.reflect.Field;
+import slimeknights.mantle.pulsar.pulse.PulseInfo;
+import slimeknights.mantle.pulsar.pulse.IPulse;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,20 +11,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.FMLModContainer;
 import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 import slimeknights.mantle.pulsar.config.IConfiguration;
 import slimeknights.mantle.pulsar.flightpath.Flightpath;
 import slimeknights.mantle.pulsar.flightpath.IExceptionHandler;
-import slimeknights.mantle.pulsar.flightpath.lib.AnnotationLocator;
 import slimeknights.mantle.pulsar.internal.BusExceptionHandler;
 import slimeknights.mantle.pulsar.internal.Configuration;
 import slimeknights.mantle.pulsar.internal.CrashHandler;
-import slimeknights.mantle.pulsar.pulse.Pulse;
 import slimeknights.mantle.pulsar.pulse.PulseMeta;
 
 @ParametersAreNonnullByDefault
@@ -34,7 +29,7 @@ public class PulseManager {
    private final boolean useConfig;
    private static final Map<String, Map<Object, PulseMeta>> ALL_PULSES = new HashMap();
    private final Map<Object, PulseMeta> pulses = new LinkedHashMap();
-   private final Flightpath flightpath = new Flightpath(new AnnotationLocator(Subscribe.class));
+   private final Flightpath flightpath = new Flightpath();
    private boolean blockNewRegistrations = false;
    private boolean configLoaded = false;
    private IConfiguration conf;
@@ -59,14 +54,13 @@ public class PulseManager {
       this.flightpath.setExceptionHandler(new BusExceptionHandler(modId));
       FMLCommonHandler.instance().registerCrashCallable(new CrashHandler(modId, this));
       ALL_PULSES.put(modId, this.pulses);
-      this.attachToContainerEventBus(this);
    }
 
    public void setPulseExceptionHandler(IExceptionHandler handler) {
       this.flightpath.setExceptionHandler(handler);
    }
 
-   public void registerPulse(Object pulse) {
+   public void registerPulse(IPulse pulse, PulseInfo p) {
       if (this.blockNewRegistrations) {
          throw new RuntimeException("A mod tried to register a plugin after preinit! Pulse: " + pulse);
       } else {
@@ -85,7 +79,6 @@ public class PulseManager {
          boolean enabled;
          boolean defaultEnabled;
          try {
-            Pulse p = (Pulse)pulse.getClass().getAnnotation(Pulse.class);
             id = p.id();
             description = p.description();
             deps = p.modsRequired();
@@ -120,34 +113,12 @@ public class PulseManager {
          if (meta.isEnabled()) {
             this.pulses.put(pulse, meta);
             this.flightpath.register(pulse);
-            MinecraftForge.EVENT_BUS.register(pulse);
+            pulse.register(MinecraftForge.EVENT_BUS);
          }
 
       }
    }
 
-   private void attachToContainerEventBus(Object obj) {
-      ModContainer cnt = Loader.instance().activeModContainer();
-      this.log.debug("Attaching [" + obj + "] to event bus for container [" + cnt + "]");
-
-      try {
-         FMLModContainer mc = (FMLModContainer)cnt;
-         Field ebf = mc.getClass().getDeclaredField("eventBus");
-         boolean access = ebf.isAccessible();
-         ebf.setAccessible(true);
-         EventBus eb = (EventBus)ebf.get(mc);
-         ebf.setAccessible(access);
-         eb.register(obj);
-      } catch (NoSuchFieldException var7) {
-         throw new RuntimeException("Pulsar >> Incompatible FML mod container (missing eventBus field) - wrong Forge version?");
-      } catch (IllegalAccessException var8) {
-         throw new RuntimeException("Pulsar >> Security Manager blocked access to eventBus on mod container. Cannot continue.");
-      } catch (ClassCastException var9) {
-         throw new RuntimeException("Pulsar >> Something in the mod container had the wrong type? " + var9.getMessage());
-      }
-   }
-
-   @Subscribe
    public void propagateEvent(Object evt) {
       if (evt instanceof FMLPreInitializationEvent) {
          this.preInit((FMLPreInitializationEvent)evt);

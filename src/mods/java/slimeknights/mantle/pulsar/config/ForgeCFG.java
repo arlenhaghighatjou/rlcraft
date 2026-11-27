@@ -1,6 +1,6 @@
 package slimeknights.mantle.pulsar.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -15,12 +15,12 @@ public class ForgeCFG implements IConfiguration {
    private final String description;
 
    public ForgeCFG(String confName, String description) {
-      this.confPath = Loader.instance().getConfigDir().toString() + File.separator + confName + ".cfg";
+      this.confPath = confName + ".cfg";
       this.description = description.toLowerCase(Locale.US);
    }
 
    public void load() {
-      this.config = new Configuration(new File(this.confPath), "1");
+      this.config = new Configuration(new VFile2(Loader.instance().getConfigDir(), this.confPath), "1");
       this.config.load();
    }
 

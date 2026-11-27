@@ -1,8 +1,8 @@
 package slimeknights.mantle.item;
 
-import gnu.trove.map.hash.TIntFloatHashMap;
-import gnu.trove.map.hash.TIntIntHashMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import java.util.BitSet;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -25,9 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemEdible extends ItemFood {
    private ItemMetaDynamic dynamic;
-   protected TIntIntHashMap foodLevels;
-   protected TIntFloatHashMap saturations;
-   protected TIntObjectHashMap<PotionEffect[]> potionEffects;
+   protected Int2IntOpenHashMap foodLevels;
+   protected Int2FloatOpenHashMap saturations;
+   protected Int2ObjectOpenHashMap<PotionEffect[]> potionEffects;
    protected BitSet alwaysEdible;
    public boolean displayEffectsTooltip;
 
@@ -35,9 +35,9 @@ public class ItemEdible extends ItemFood {
       super(0, 0.0F, false);
       this.setHasSubtypes(true);
       this.dynamic = new ItemMetaDynamic();
-      this.foodLevels = new TIntIntHashMap();
-      this.saturations = new TIntFloatHashMap();
-      this.potionEffects = new TIntObjectHashMap();
+      this.foodLevels = new Int2IntOpenHashMap();
+      this.saturations = new Int2FloatOpenHashMap();
+      this.potionEffects = new Int2ObjectOpenHashMap();
       this.alwaysEdible = new BitSet();
       this.displayEffectsTooltip = true;
    }

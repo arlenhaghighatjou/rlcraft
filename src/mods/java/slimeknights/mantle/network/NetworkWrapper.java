@@ -1,5 +1,6 @@
 package slimeknights.mantle.network;
 
+import java.util.function.Supplier;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -17,21 +18,21 @@ public class NetworkWrapper {
       this.handler = new NetworkWrapper.AbstactPacketHandler();
    }
 
-   public void registerPacket(Class<? extends AbstractPacket> packetClazz) {
-      this.registerPacketClient(packetClazz);
-      this.registerPacketServer(packetClazz);
+   public <T extends AbstractPacket> void registerPacket(Class<T> packetClazz, Supplier<T> factory) {
+      this.registerPacketClient(packetClazz, factory);
+      this.registerPacketServer(packetClazz, factory);
    }
 
-   public void registerPacketClient(Class<? extends AbstractPacket> packetClazz) {
-      this.registerPacketImpl(packetClazz, Side.CLIENT);
+   public <T extends AbstractPacket> void registerPacketClient(Class<T> packetClazz, Supplier<T> factory) {
+      this.registerPacketImpl(packetClazz, factory, Side.CLIENT);
    }
 
-   public void registerPacketServer(Class<? extends AbstractPacket> packetClazz) {
-      this.registerPacketImpl(packetClazz, Side.SERVER);
+   public <T extends AbstractPacket> void registerPacketServer(Class<T> packetClazz, Supplier<T> factory) {
+      this.registerPacketImpl(packetClazz, factory, Side.SERVER);
    }
 
-   private void registerPacketImpl(Class<? extends AbstractPacket> packetClazz, Side side) {
-      this.network.registerMessage(this.handler, packetClazz, this.id++, side);
+   private <T extends AbstractPacket> void registerPacketImpl(Class<T> packetClazz, Supplier<T> factory, Side side) {
+      this.network.registerMessage((IMessageHandler<T, IMessage>)(IMessageHandler)this.handler, packetClazz, factory, this.id++, side);
    }
 
    public static class AbstactPacketHandler implements IMessageHandler<AbstractPacket, IMessage> {
