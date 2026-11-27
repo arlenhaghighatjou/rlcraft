@@ -37,13 +37,13 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
     private static final Logger LOGGER = LogManager.getLogger();
     public static final ResourceLocation LOCATION_MISSING_TEXTURE = new ResourceLocation("missingno");
     public static final ResourceLocation LOCATION_BLOCKS_TEXTURE = new ResourceLocation("textures/atlas/blocks.png");
-    private final List<EaglerTextureAtlasSprite> listAnimatedSprites;
-    private final Map<String, EaglerTextureAtlasSprite> mapRegisteredSprites;
-    private final Map<String, EaglerTextureAtlasSprite> mapUploadedSprites;
-    private final String basePath;
+    protected final List<EaglerTextureAtlasSprite> listAnimatedSprites;
+    protected final Map<String, EaglerTextureAtlasSprite> mapRegisteredSprites;
+    protected final Map<String, EaglerTextureAtlasSprite> mapUploadedSprites;
+    protected final String basePath;
     private final ITextureMapPopulator iconCreator;
     private int mipmapLevels;
-    private final EaglerTextureAtlasSprite missingImage;
+    protected final EaglerTextureAtlasSprite missingImage;
 	private boolean eaglerPBRMode;
 	public int eaglerPBRMaterialTexture = -1;
 	private static final int FRAMEBUFFER = 0x8D40;
@@ -51,8 +51,8 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
 	private static final int TEXTURE_2D = 0x0DE1;
 	private IFramebufferGL[] animationTargets;
 	private IFramebufferGL[] materialAnimationTargets;
-	private int width;
-	private int height;
+	protected int width;
+	protected int height;
 
     public TextureMap(String basePathIn)
     {
@@ -80,7 +80,7 @@ public class TextureMap extends AbstractTexture implements ITickableTextureObjec
         this.iconCreator = iconCreatorIn;
     }
 
-    private void initMissingImage()
+    protected void initMissingImage()
     {
         int[] aint = TextureUtil.missingTextureData;
         this.missingImage.setIconWidth(16);

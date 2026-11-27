@@ -1,6 +1,6 @@
 package mezz.jei.transfer;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collection;
 import java.util.Map;
 import mezz.jei.api.gui.IGuiIngredient;

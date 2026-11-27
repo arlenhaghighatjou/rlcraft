@@ -1216,4 +1216,9 @@ public class GuiContainerCreative extends InventoryEffectRenderer
     {
         this.searchField.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiContainerCreative.class ? this.searchField : super.getDeclaredTextField();
+    }
 }

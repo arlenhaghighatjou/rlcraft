@@ -25,16 +25,16 @@ public final class CraftingRecipeChecker {
    }
 
    public static List<IRecipe> getValidRecipes(IJeiHelpers jeiHelpers) {
-      CraftingRecipeChecker.CraftingRecipeValidator<ShapedOreRecipe> shapedOreRecipeValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapedOreRecipe>((recipex) -> {
+      CraftingRecipeChecker.CraftingRecipeValidator<ShapedOreRecipe> shapedOreRecipeValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapedOreRecipe>((recipe) -> {
          return new ShapedOreRecipeWrapper(jeiHelpers, recipe);
       });
-      CraftingRecipeChecker.CraftingRecipeValidator<ShapedRecipes> shapedRecipesValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapedRecipes>((recipex) -> {
+      CraftingRecipeChecker.CraftingRecipeValidator<ShapedRecipes> shapedRecipesValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapedRecipes>((recipe) -> {
          return new ShapedRecipesWrapper(jeiHelpers, recipe);
       });
-      CraftingRecipeChecker.CraftingRecipeValidator<ShapelessOreRecipe> shapelessOreRecipeValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapelessOreRecipe>((recipex) -> {
+      CraftingRecipeChecker.CraftingRecipeValidator<ShapelessOreRecipe> shapelessOreRecipeValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapelessOreRecipe>((recipe) -> {
          return new ShapelessRecipeWrapper<IRecipe>(jeiHelpers, recipe);
       });
-      CraftingRecipeChecker.CraftingRecipeValidator<ShapelessRecipes> shapelessRecipesValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapelessRecipes>((recipex) -> {
+      CraftingRecipeChecker.CraftingRecipeValidator<ShapelessRecipes> shapelessRecipesValidator = new CraftingRecipeChecker.CraftingRecipeValidator<ShapelessRecipes>((recipe) -> {
          return new ShapelessRecipeWrapper<IRecipe>(jeiHelpers, recipe);
       });
       StackHelper stackHelper = Internal.getStackHelper();

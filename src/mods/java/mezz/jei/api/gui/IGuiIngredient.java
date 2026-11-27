@@ -1,6 +1,6 @@
 package mezz.jei.api.gui;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;

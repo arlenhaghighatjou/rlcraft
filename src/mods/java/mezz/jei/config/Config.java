@@ -1,10 +1,10 @@
 package mezz.jei.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.awt.Color;
-import java.io.File;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -29,7 +29,7 @@ import mezz.jei.startup.IModIdHelper;
 import mezz.jei.util.GiveMode;
 import mezz.jei.util.Log;
 import mezz.jei.util.Translator;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigCategory;
@@ -57,7 +57,7 @@ public final class Config {
    @Nullable
    private static LocalizedConfiguration searchColorsConfig;
    @Nullable
-   private static File bookmarkFile;
+   private static VFile2 bookmarkFile;
    private static final ConfigValues defaultValues = new ConfigValues();
    private static final ConfigValues values = new ConfigValues();
    @Nullable
@@ -75,7 +75,7 @@ public final class Config {
    public static void toggleOverlayEnabled() {
       values.overlayEnabled = !values.overlayEnabled;
       if (worldConfig != null) {
-         NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+         INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
          String worldCategory = ServerInfo.getWorldUid(networkManager);
          Property property = worldConfig.get(worldCategory, "overlayEnabled", defaultValues.overlayEnabled);
          property.set(values.overlayEnabled);
@@ -94,7 +94,7 @@ public final class Config {
    public static void toggleBookmarkEnabled() {
       values.bookmarkOverlayEnabled = !values.bookmarkOverlayEnabled;
       if (worldConfig != null) {
-         NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+         INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
          String worldCategory = ServerInfo.getWorldUid(networkManager);
          Property property = worldConfig.get(worldCategory, "bookmarkOverlayEnabled", defaultValues.bookmarkOverlayEnabled);
          property.set(values.bookmarkOverlayEnabled);
@@ -118,7 +118,7 @@ public final class Config {
       if (values.cheatItemsEnabled != value) {
          values.cheatItemsEnabled = value;
          if (worldConfig != null) {
-            NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+            INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
             String worldCategory = ServerInfo.getWorldUid(networkManager);
             Property property = worldConfig.get(worldCategory, "cheatItemsEnabled", defaultValues.cheatItemsEnabled);
             property.set(values.cheatItemsEnabled);
@@ -141,7 +141,7 @@ public final class Config {
    public static void toggleEditModeEnabled() {
       values.editModeEnabled = !values.editModeEnabled;
       if (worldConfig != null) {
-         NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+         INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
          String worldCategory = ServerInfo.getWorldUid(networkManager);
          Property property = worldConfig.get(worldCategory, "editEnabled", defaultValues.editModeEnabled);
          property.set(values.editModeEnabled);
@@ -242,7 +242,7 @@ public final class Config {
 
    public static void saveFilterText() {
       if (worldConfig != null) {
-         NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+         INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
          String worldCategory = ServerInfo.getWorldUid(networkManager);
          Property property = worldConfig.get(worldCategory, "filterText", defaultValues.filterText);
          property.set(values.filterText);
@@ -264,29 +264,17 @@ public final class Config {
    }
 
    @Nullable
-   public static File getBookmarkFile() {
+   public static VFile2 getBookmarkFile() {
       return bookmarkFile;
    }
 
    public static void preInit(FMLPreInitializationEvent event) {
-      File jeiConfigurationDir = new File(event.getModConfigurationDirectory(), "jei");
-      if (!jeiConfigurationDir.exists()) {
-         try {
-            if (!jeiConfigurationDir.mkdir()) {
-               Log.get().error("Could not create config directory {}", jeiConfigurationDir);
-               return;
-            }
-         } catch (SecurityException var6) {
-            Log.get().error("Could not create config directory {}", jeiConfigurationDir, var6);
-            return;
-         }
-      }
-
-      File configFile = new File(jeiConfigurationDir, "jei.cfg");
-      File itemBlacklistConfigFile = new File(jeiConfigurationDir, "itemBlacklist.cfg");
-      File searchColorsConfigFile = new File(jeiConfigurationDir, "searchColors.cfg");
-      File worldConfigFile = new File(jeiConfigurationDir, "worldSettings.cfg");
-      bookmarkFile = new File(jeiConfigurationDir, "bookmarks.ini");
+      VFile2 jeiConfigurationDir = new VFile2(event.getModConfigurationDirectory(), "jei");
+      VFile2 configFile = new VFile2(jeiConfigurationDir, "jei.cfg");
+      VFile2 itemBlacklistConfigFile = new VFile2(jeiConfigurationDir, "itemBlacklist.cfg");
+      VFile2 searchColorsConfigFile = new VFile2(jeiConfigurationDir, "searchColors.cfg");
+      VFile2 worldConfigFile = new VFile2(jeiConfigurationDir, "worldSettings.cfg");
+      bookmarkFile = new VFile2(jeiConfigurationDir, "bookmarks.ini");
       worldConfig = new Configuration(worldConfigFile, "0.1.0");
       config = new LocalizedConfiguration("config.jei", configFile, "0.4.0");
       itemBlacklistConfig = new LocalizedConfiguration("config.jei", itemBlacklistConfigFile, "0.1.0");
@@ -306,7 +294,7 @@ public final class Config {
          needsReload = true;
       }
 
-      NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+      INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
       if (syncWorldConfig(networkManager)) {
          needsReload = true;
       }
@@ -445,7 +433,7 @@ public final class Config {
       }
    }
 
-   public static boolean syncWorldConfig(@Nullable NetworkManager networkManager) {
+   public static boolean syncWorldConfig(@Nullable INetworkManager networkManager) {
       if (worldConfig == null) {
          return false;
       } else {
@@ -540,7 +528,7 @@ public final class Config {
       if (blacklistType == IngredientBlacklistType.ITEM) {
          String uid = getIngredientUid(ingredient, IngredientBlacklistType.ITEM, ingredientHelper);
          List<IIngredientListElement<V>> elementsToBeBlacklisted = ingredientFilter.getMatches(element, (input) -> {
-            return (void)getIngredientUid(input, IngredientBlacklistType.WILDCARD);
+            return getIngredientUid(input, IngredientBlacklistType.WILDCARD);
          });
          if (areAllBlacklisted(elementsToBeBlacklisted, uid, IngredientBlacklistType.ITEM)) {
             if (addIngredientToConfigBlacklist(ingredientFilter, element, ingredient, IngredientBlacklistType.WILDCARD, ingredientHelper)) {
@@ -561,7 +549,7 @@ public final class Config {
       boolean updated = false;
       if (blacklistType == IngredientBlacklistType.WILDCARD) {
          for(IIngredientListElement<V> elementToBeBlacklisted : ingredientFilter.getMatches(element, (input) -> {
-            return (boolean)getIngredientUid(input, blacklistType);
+            return getIngredientUid(input, blacklistType);
          })) {
             String uid = getIngredientUid(elementToBeBlacklisted, IngredientBlacklistType.ITEM);
             updated |= itemBlacklist.remove(uid);
@@ -595,7 +583,7 @@ public final class Config {
          itemBlacklist.remove(modUid);
 
          for(IIngredientListElement<V> modMatch : ingredientFilter.getMatches(element, (input) -> {
-            return (void)getIngredientUid(input, IngredientBlacklistType.MOD_ID);
+            return getIngredientUid(input, IngredientBlacklistType.MOD_ID);
          })) {
             addIngredientToConfigBlacklist(ingredientFilter, modMatch, modMatch.getIngredient(), IngredientBlacklistType.ITEM, ingredientHelper);
          }
@@ -608,14 +596,14 @@ public final class Config {
             itemBlacklist.remove(modUid);
 
             for(IIngredientListElement<V> modMatch : ingredientFilter.getMatches(element, (input) -> {
-               return (void)getIngredientUid(input, IngredientBlacklistType.WILDCARD);
+               return getIngredientUid(input, IngredientBlacklistType.WILDCARD);
             })) {
                addIngredientToConfigBlacklist(ingredientFilter, modMatch, modMatch.getIngredient(), IngredientBlacklistType.ITEM, ingredientHelper);
             }
          }
       } else if (blacklistType == IngredientBlacklistType.WILDCARD) {
          for(IIngredientListElement<V> modMatch : ingredientFilter.getMatches(element, (input) -> {
-            return (void)getIngredientUid(input, IngredientBlacklistType.WILDCARD);
+            return getIngredientUid(input, IngredientBlacklistType.WILDCARD);
          })) {
             String uid = getIngredientUid(modMatch, IngredientBlacklistType.ITEM);
             updated |= itemBlacklist.remove(uid);

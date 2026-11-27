@@ -1,6 +1,6 @@
 package mezz.jei.plugins.jei;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -114,7 +114,7 @@ public class JEIInternalPlugin implements IModPlugin {
    }
 
    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-      jeiRuntime = jeiRuntime;
+      JEIInternalPlugin.jeiRuntime = jeiRuntime;
       if (Config.isDebugModeEnabled() && ingredientRegistry != null) {
          ingredientRegistry.addIngredientsAtRuntime(DebugIngredient.TYPE, DebugIngredientListFactory.create());
       }

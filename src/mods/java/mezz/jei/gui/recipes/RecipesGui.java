@@ -1,6 +1,6 @@
 package mezz.jei.gui.recipes;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -222,11 +222,11 @@ public class RecipesGui extends GuiScreen implements IRecipesGui, IShowsRecipeFo
 
          if (this.isMouseOver(mouseX, mouseY)) {
             for(RecipeLayout recipeLayouts : this.recipeLayouts) {
-               GuiIngredient<?> clicked = recipeLayouts.getGuiIngredientUnderMouse(mouseX, mouseY);
-               if (clicked != null) {
-                  Object displayedIngredient = clicked.getDisplayedIngredient();
+               GuiIngredient<?> guiIngredient = recipeLayouts.getGuiIngredientUnderMouse(mouseX, mouseY);
+               if (guiIngredient != null) {
+                  Object displayedIngredient = guiIngredient.getDisplayedIngredient();
                   if (displayedIngredient != null) {
-                     return ClickedIngredient.create(displayedIngredient, clicked.getRect());
+                     return ClickedIngredient.create(displayedIngredient, guiIngredient.getRect());
                   }
                }
             }

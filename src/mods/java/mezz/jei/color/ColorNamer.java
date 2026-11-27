@@ -2,7 +2,7 @@ package mezz.jei.color;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.UnmodifiableIterator;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;

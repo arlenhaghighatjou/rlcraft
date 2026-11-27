@@ -326,4 +326,9 @@ public class GuiChat extends GuiScreenVisualViewport implements ITabCompleter
                 return blockpos;
             }
         }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiChat.class ? this.inputField : super.getDeclaredTextField();
+    }
 }

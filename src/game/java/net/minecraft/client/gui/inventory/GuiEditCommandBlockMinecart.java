@@ -189,4 +189,9 @@ public class GuiEditCommandBlockMinecart extends GuiScreen implements ITabComple
     {
         this.tabCompleter.setCompletions(newCompletions);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiEditCommandBlockMinecart.class ? this.commandField : super.getDeclaredTextField();
+    }
 }

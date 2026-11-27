@@ -260,4 +260,9 @@ public class GuiFlatPresets extends GuiScreen
     {
         this.export.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiFlatPresets.class ? this.export : super.getDeclaredTextField();
+    }
 }

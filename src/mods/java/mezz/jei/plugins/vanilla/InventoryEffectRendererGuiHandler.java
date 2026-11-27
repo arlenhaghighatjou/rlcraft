@@ -1,7 +1,7 @@
 package mezz.jei.plugins.vanilla;
 
 import com.google.common.collect.Ordering;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

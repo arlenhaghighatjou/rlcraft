@@ -498,4 +498,9 @@ public class GuiCreateWorld extends GuiScreen
         this.worldNameField.fireInputEvent(event, param);
         this.worldSeedField.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiCreateWorld.class ? this.worldNameField : super.getDeclaredTextField();
+    }
 }

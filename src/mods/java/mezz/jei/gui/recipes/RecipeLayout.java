@@ -1,7 +1,7 @@
 package mezz.jei.gui.recipes;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -66,7 +66,7 @@ public class RecipeLayout implements IRecipeLayoutDrawable {
          recipeCategory.setRecipe(recipeLayout, recipeWrapper, ingredients);
          return recipeLayout;
       } catch (LinkageError | RuntimeException var8) {
-         Log.get().error("Error caught from Recipe Category: {}", recipeCategory.getClass().getCanonicalName(), var8);
+         Log.get().error("Error caught from Recipe Category: {}", recipeCategory.getClass().getName(), var8);
          return null;
       }
    }
@@ -85,9 +85,9 @@ public class RecipeLayout implements IRecipeLayoutDrawable {
       if (focus != null) {
          Object focusValue = focus.getValue();
          if (focusValue instanceof ItemStack) {
-            itemStackFocus = focus;
+            itemStackFocus = (IFocus<ItemStack>)focus;
          } else if (focusValue instanceof FluidStack) {
-            fluidStackFocus = focus;
+            fluidStackFocus = (IFocus<FluidStack>)focus;
          }
       }
 
@@ -250,7 +250,7 @@ public class RecipeLayout implements IRecipeLayoutDrawable {
          if (this.focus != null) {
             Object focusValue = this.focus.getValue();
             if (ingredientType.getIngredientClass().isInstance(focusValue)) {
-               focus = this.focus;
+               focus = (IFocus<T>)this.focus;
             }
          }
 

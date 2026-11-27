@@ -21,7 +21,7 @@ public class ProxyCommon {
    public void preInit(FMLPreInitializationEvent event) {
       PacketHandler packetHandler = new PacketHandler();
       this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("jei");
-      this.channel.register(packetHandler);
+      packetHandler.register(this.channel);
    }
 
    public void init(FMLInitializationEvent event) {

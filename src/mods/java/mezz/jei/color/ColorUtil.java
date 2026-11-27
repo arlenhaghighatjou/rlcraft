@@ -1,6 +1,6 @@
 package mezz.jei.color;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 
 public final class ColorUtil {
    private ColorUtil() {

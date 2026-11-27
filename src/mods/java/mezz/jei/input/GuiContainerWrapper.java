@@ -1,6 +1,6 @@
 package mezz.jei.input;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import javax.annotation.Nullable;
 import mezz.jei.gui.GuiScreenHelper;
 import net.minecraft.client.Minecraft;

@@ -1,8 +1,8 @@
 package mezz.jei.color;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.ImageData;
 import com.google.common.base.Preconditions;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +80,7 @@ public final class ColorGetter {
    }
 
    public static List<Color> getColors(EaglerTextureAtlasSprite textureAtlasSprite, int renderColor, int colorCount) {
-      BufferedImage bufferedImage = getBufferedImage(textureAtlasSprite);
+      ImageData bufferedImage = getBufferedImage(textureAtlasSprite);
       if (bufferedImage == null) {
          return Collections.emptyList();
       } else {
@@ -104,17 +104,17 @@ public final class ColorGetter {
    }
 
    @Nullable
-   private static BufferedImage getBufferedImage(EaglerTextureAtlasSprite textureAtlasSprite) {
+   private static ImageData getBufferedImage(EaglerTextureAtlasSprite textureAtlasSprite) {
       int iconWidth = textureAtlasSprite.getIconWidth();
       int iconHeight = textureAtlasSprite.getIconHeight();
       int frameCount = textureAtlasSprite.getFrameCount();
       if (iconWidth > 0 && iconHeight > 0 && frameCount > 0) {
-         BufferedImage bufferedImage = new BufferedImage(iconWidth, iconHeight * frameCount, 6);
+         ImageData bufferedImage = new ImageData(iconWidth, iconHeight * frameCount, true);
 
          for(int i = 0; i < frameCount; ++i) {
             int[][] frameTextureData = textureAtlasSprite.getFrameTextureData(i);
             int[] largestMipMapTextureData = frameTextureData[0];
-            bufferedImage.setRGB(0, i * iconHeight, iconWidth, iconHeight, largestMipMapTextureData, 0, iconWidth);
+            System.arraycopy(largestMipMapTextureData, 0, bufferedImage.pixels, i * iconHeight * iconWidth, iconWidth * iconHeight);
          }
 
          return bufferedImage;

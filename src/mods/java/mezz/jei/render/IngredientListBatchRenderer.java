@@ -95,7 +95,7 @@ public class IngredientListBatchRenderer {
          }
 
          if (!var11.isBuiltInRenderer() && !(itemStack.getItem() instanceof ISlowRenderItem)) {
-            ItemStackFastRenderer renderer = new ItemStackFastRenderer(element);
+            ItemStackFastRenderer renderer = new ItemStackFastRenderer((IIngredientListElement<ItemStack>)element);
             ingredientListSlot.setIngredientRenderer(renderer);
             if (var11.isGui3d()) {
                this.renderItems3d.add(renderer);

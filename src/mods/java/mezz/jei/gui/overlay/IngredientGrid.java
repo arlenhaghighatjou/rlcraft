@@ -1,6 +1,6 @@
 package mezz.jei.gui.overlay;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.Collection;
 import javax.annotation.Nullable;
 import mezz.jei.Internal;

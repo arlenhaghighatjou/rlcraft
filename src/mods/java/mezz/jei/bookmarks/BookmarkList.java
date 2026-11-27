@@ -1,9 +1,8 @@
 package mezz.jei.bookmarks;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import net.lax1dude.eaglercraft.v1_8.IOUtils;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -25,7 +24,6 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
-import org.apache.commons.io.IOUtils;
 
 public class BookmarkList implements IIngredientGridSource {
    private static final String MARKER_OTHER = "O:";
@@ -108,34 +106,15 @@ public class BookmarkList implements IIngredientGridSource {
          }
       }
 
-      File file = Config.getBookmarkFile();
+      VFile2 file = Config.getBookmarkFile();
       if (file != null) {
-         try {
-            FileWriter writer = new FileWriter(file);
-            Throwable var19 = null;
+         StringBuilder builder = new StringBuilder();
 
-            try {
-               IOUtils.writeLines(strings, "\n", writer);
-            } catch (Throwable var14) {
-               var19 = var14;
-               throw var14;
-            } finally {
-               if (writer != null) {
-                  if (var19 != null) {
-                     try {
-                        writer.close();
-                     } catch (Throwable var13) {
-                        var19.addSuppressed(var13);
-                     }
-                  } else {
-                     writer.close();
-                  }
-               }
-
-            }
-         } catch (IOException var16) {
-            Log.get().error("Failed to save bookmarks list to file {}", file, var16);
+         for(int i = 0; i < strings.size(); ++i) {
+            builder.append((String)strings.get(i)).append('\n');
          }
+
+         file.setAllChars(builder.toString());
       }
 
    }
@@ -146,34 +125,11 @@ public class BookmarkList implements IIngredientGridSource {
    }
 
    public void loadBookmarks() {
-      File file = Config.getBookmarkFile();
+      VFile2 file = Config.getBookmarkFile();
       if (file != null && file.exists()) {
-         List<String> ingredientJsonStrings;
-         try {
-            FileReader reader = new FileReader(file);
-            Throwable var4 = null;
-
-            try {
-               ingredientJsonStrings = IOUtils.readLines(reader);
-            } catch (Throwable var18) {
-               var4 = var18;
-               throw var18;
-            } finally {
-               if (reader != null) {
-                  if (var4 != null) {
-                     try {
-                        reader.close();
-                     } catch (Throwable var16) {
-                        var4.addSuppressed(var16);
-                     }
-                  } else {
-                     reader.close();
-                  }
-               }
-
-            }
-         } catch (IOException var20) {
-            Log.get().error("Failed to load bookmarks from file {}", file, var20);
+         List<String> ingredientJsonStrings = IOUtils.readLines(file.getInputStream(), StandardCharsets.UTF_8);
+         if (ingredientJsonStrings == null) {
+            Log.get().error("Failed to load bookmarks from file {}", file);
             return;
          }
 

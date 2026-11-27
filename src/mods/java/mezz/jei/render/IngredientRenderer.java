@@ -1,8 +1,8 @@
 package mezz.jei.render;
 
 import com.google.common.base.Joiner;
-import java.awt.Color;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

@@ -271,6 +271,7 @@ public class Loader
         mods.add(new FMLModContainer<>("somanyenchantments", "Rin's So Many Enchantments?", "0.5.5", "", "[1.12.0, 1.12.2]", "somanyenchantments", com.Shultrea.Rin.Main_Sector.somanyenchantments::new, com.Shultrea.Rin.Main_Sector.somanyenchantments::handleModStateEvent));
         mods.add(new FMLModContainer<>("loadingscreens", "Loading Screens", "0.3.1", "required-after:bnbgaminglib@[2.14.0,);after:gamestages;", "[1.12,1.13)", "loadingscreens", com.bloodnbonesgaming.loadingscreens.LoadingScreens::new, com.bloodnbonesgaming.loadingscreens.LoadingScreens::handleModStateEvent).clientSideOnly());
         mods.add(new FMLModContainer<>("materialtweaker", "MaterialTweaker", "1.1.1", "", "", "materialtweaker", materialtweaker.core.MaterialTweaker::new, materialtweaker.core.MaterialTweaker::handleModStateEvent));
+        mods.add(new FMLModContainer<>("jei", "Just Enough Items", "4.16.1.302", "required-after:forge@[14.23.5.2816,);", "[1.12.2,1.13)", "jei", mezz.jei.JustEnoughItems::new, mezz.jei.JustEnoughItems::handleModStateEvent).guiFactory(mezz.jei.config.JEIModGuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

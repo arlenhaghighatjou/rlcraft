@@ -1,6 +1,6 @@
 package mezz.jei.config;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import java.util.Arrays;
 import java.util.Locale;
 import mezz.jei.util.Translator;
@@ -13,7 +13,7 @@ public class LocalizedConfiguration extends Configuration {
    private final String defaultLocalized;
    private final String validLocalized;
 
-   public LocalizedConfiguration(String keyPrefix, File file, String configVersion) {
+   public LocalizedConfiguration(String keyPrefix, VFile2 file, String configVersion) {
       super(file, configVersion);
       this.keyPrefix = keyPrefix + '.';
       this.defaultLocalized = Translator.translateToLocal(this.keyPrefix + "default");

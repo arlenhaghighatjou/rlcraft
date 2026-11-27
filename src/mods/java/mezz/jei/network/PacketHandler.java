@@ -1,5 +1,6 @@
 package mezz.jei.network;
 
+import net.minecraftforge.fml.common.network.FMLEventChannel;
 import java.io.IOException;
 import java.util.EnumMap;
 import javax.annotation.Nullable;
@@ -15,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IThreadListener;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ServerCustomPacketEvent;
 
 public class PacketHandler {
@@ -30,7 +30,10 @@ public class PacketHandler {
       this.serverHandlers.put(PacketIdServer.CHEAT_PERMISSION_REQUEST, PacketRequestCheatPermission::readPacketData);
    }
 
-   @SubscribeEvent
+   public void register(FMLEventChannel channel) {
+      channel.register(ServerCustomPacketEvent.class, this::onPacket);
+   }
+
    public void onPacket(ServerCustomPacketEvent event) {
       PacketBuffer packetBuffer = new PacketBuffer(event.getPacket().payload());
       EntityPlayerMP player = ((NetHandlerPlayServer)event.getHandler()).player;
@@ -48,11 +51,9 @@ public class PacketHandler {
 
    private static void checkThreadAndEnqueue(IPacketJeiHandler packetHandler, PacketBuffer packetBuffer, EntityPlayer player, @Nullable IThreadListener threadListener) {
       if (threadListener != null && !threadListener.isCallingFromMinecraftThread()) {
-         packetBuffer.retain();
          threadListener.addScheduledTask(() -> {
             try {
                packetHandler.readPacketData(packetBuffer, player);
-               packetBuffer.release();
             } catch (IOException var4) {
                Log.get().error("Network Error", var4);
             }

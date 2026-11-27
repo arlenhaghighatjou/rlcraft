@@ -1,7 +1,7 @@
 package mezz.jei.gui.recipes;
 
 import com.google.common.collect.ImmutableList;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import mezz.jei.api.recipe.IRecipeCategory;

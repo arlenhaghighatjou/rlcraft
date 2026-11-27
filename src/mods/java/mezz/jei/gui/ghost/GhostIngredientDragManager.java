@@ -1,6 +1,6 @@
 package mezz.jei.gui.ghost;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

@@ -2,10 +2,10 @@ package mezz.jei.plugins.vanilla.anvil;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import net.lax1dude.eaglercraft.v1_8.cache.EaglerLoadingCache;
 
 public class AnvilRecipeDataCache {
-   private static final LoadingCache<AnvilRecipeWrapper, AnvilRecipeDisplayData> cachedDisplayData = CacheBuilder.newBuilder().maximumSize(25L).build(new CacheLoader<AnvilRecipeWrapper, AnvilRecipeDisplayData>() {
+   private static final EaglerLoadingCache<AnvilRecipeWrapper, AnvilRecipeDisplayData> cachedDisplayData = CacheBuilder.newBuilder().maximumSize(25L).build(new CacheLoader<AnvilRecipeWrapper, AnvilRecipeDisplayData>() {
       public AnvilRecipeDisplayData load(AnvilRecipeWrapper key) {
          return new AnvilRecipeDisplayData();
       }

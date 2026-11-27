@@ -158,4 +158,7 @@ public class GuiWorldEdit extends GuiScreen {
 		field_146583_f.fireInputEvent(event, param);
 	}
 
+	public GuiTextField getDeclaredTextField() {
+		return this.getClass() == GuiWorldEdit.class ? this.field_146583_f : super.getDeclaredTextField();
+	}
 }

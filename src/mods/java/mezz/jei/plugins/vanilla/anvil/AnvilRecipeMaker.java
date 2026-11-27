@@ -123,7 +123,7 @@ public final class AnvilRecipeMaker {
       for(Entry<ItemStack, List<ItemStack>> entry : items.entrySet()) {
          ItemStack repairMaterial = (ItemStack)entry.getKey();
 
-         for(ItemStack ingredient : (List)entry.getValue()) {
+         for(ItemStack ingredient : (List<ItemStack>)entry.getValue()) {
             ItemStack damaged1 = ingredient.copy();
             damaged1.setItemDamage(damaged1.getMaxDamage());
             ItemStack damaged2 = ingredient.copy();

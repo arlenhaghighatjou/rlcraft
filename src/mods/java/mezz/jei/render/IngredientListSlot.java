@@ -1,6 +1,6 @@
 package mezz.jei.render;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import javax.annotation.Nullable;
 
 public class IngredientListSlot {

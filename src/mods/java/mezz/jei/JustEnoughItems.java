@@ -1,11 +1,13 @@
 package mezz.jei;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.Map;
 import mezz.jei.config.ServerInfo;
 import mezz.jei.startup.ProxyCommon;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -21,13 +23,25 @@ import net.minecraftforge.fml.relauncher.Side;
    dependencies = "required-after:forge@[14.23.5.2816,);"
 )
 public class JustEnoughItems {
-   @SidedProxy(
-      clientSide = "mezz.jei.startup.ProxyCommonClient",
-      serverSide = "mezz.jei.startup.ProxyCommon"
-   )
    private static ProxyCommon proxy;
 
    public JustEnoughItems() {
+   }
+
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new mezz.jei.startup.ProxyCommonClient() : new mezz.jei.startup.ProxyCommon();
+         if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+            mezz.jei.input.MouseHelper.register(MinecraftForge.EVENT_BUS);
+         }
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLLoadCompleteEvent) {
+         this.loadComplete((FMLLoadCompleteEvent)event);
+      }
+
    }
 
    public static ProxyCommon getProxy() {
@@ -44,17 +58,14 @@ public class JustEnoughItems {
       return true;
    }
 
-   @EventHandler
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit(event);
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init(event);
    }
 
-   @EventHandler
    public void loadComplete(FMLLoadCompleteEvent event) {
       proxy.loadComplete(event);
    }

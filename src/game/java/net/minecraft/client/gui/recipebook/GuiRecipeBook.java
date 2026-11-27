@@ -41,11 +41,11 @@ import net.lax1dude.eaglercraft.v1_8.Keyboard;
 public class GuiRecipeBook extends Gui implements IRecipeUpdateListener
 {
     protected static final ResourceLocation RECIPE_BOOK = new ResourceLocation("textures/gui/recipe_book.png");
-    private int xOffset;
-    private int width;
-    private int height;
+    public int xOffset;
+    public int width;
+    public int height;
     private final GhostRecipe ghostRecipe = new GhostRecipe();
-    private final List<GuiButtonRecipeTab> recipeTabs = Lists.newArrayList(new GuiButtonRecipeTab(0, CreativeTabs.SEARCH), new GuiButtonRecipeTab(0, CreativeTabs.TOOLS), new GuiButtonRecipeTab(0, CreativeTabs.BUILDING_BLOCKS), new GuiButtonRecipeTab(0, CreativeTabs.MISC), new GuiButtonRecipeTab(0, CreativeTabs.REDSTONE));
+    public final List<GuiButtonRecipeTab> recipeTabs = Lists.newArrayList(new GuiButtonRecipeTab(0, CreativeTabs.SEARCH), new GuiButtonRecipeTab(0, CreativeTabs.TOOLS), new GuiButtonRecipeTab(0, CreativeTabs.BUILDING_BLOCKS), new GuiButtonRecipeTab(0, CreativeTabs.MISC), new GuiButtonRecipeTab(0, CreativeTabs.REDSTONE));
     private GuiButtonRecipeTab currentTab;
     private GuiButtonToggle toggleRecipesBtn;
     private InventoryCrafting craftingSlots;

@@ -1,6 +1,6 @@
 package mezz.jei.ingredients;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

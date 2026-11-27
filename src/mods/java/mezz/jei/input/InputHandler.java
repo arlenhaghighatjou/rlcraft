@@ -1,5 +1,6 @@
 package mezz.jei.input;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import java.util.ArrayList;
@@ -22,14 +23,12 @@ import mezz.jei.ingredients.IngredientFilter;
 import mezz.jei.ingredients.IngredientRegistry;
 import mezz.jei.recipes.RecipeRegistry;
 import mezz.jei.runtime.JeiRuntime;
-import mezz.jei.util.ReflectionUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Post;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent.Pre;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.lax1dude.eaglercraft.v1_8.Keyboard;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 
@@ -58,7 +57,12 @@ public class InputHandler {
       this.showsRecipeFocuses.add(new GuiContainerWrapper(guiScreenHelper));
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(Pre.class, this::onGuiKeyboardEvent);
+      bus.register(Post.class, this::onGuiKeyboardEvent);
+      bus.register(net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Pre.class, this::onGuiMouseEvent);
+   }
+
    public void onGuiKeyboardEvent(Pre event) {
       if (this.hasKeyboardFocus() && this.handleKeyEvent()) {
          event.setCanceled(true);
@@ -66,7 +70,6 @@ public class InputHandler {
 
    }
 
-   @SubscribeEvent
    public void onGuiKeyboardEvent(Post event) {
       if (!this.hasKeyboardFocus() && this.handleKeyEvent()) {
          event.setCanceled(true);
@@ -74,7 +77,6 @@ public class InputHandler {
 
    }
 
-   @SubscribeEvent
    public void onGuiMouseEvent(net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent.Pre event) {
       GuiScreen guiScreen = event.getGui();
       Minecraft minecraft = guiScreen.mc;
@@ -282,7 +284,7 @@ public class InputHandler {
       if (gui == null) {
          return false;
       } else {
-         GuiTextField textField = (GuiTextField)ReflectionUtil.getFieldWithClass(gui, GuiTextField.class);
+         GuiTextField textField = gui.getDeclaredTextField();
          return textField != null && textField.getVisible() && textField.isFocused();
       }
    }

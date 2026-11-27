@@ -1,5 +1,6 @@
 package mezz.jei.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.IllegalFormatException;
 import java.util.Locale;
 import net.minecraft.client.Minecraft;
@@ -19,7 +20,7 @@ public final class Translator {
       String s = translateToLocal(key);
 
       try {
-         return String.format(s, format);
+         return HString.format(s, format);
       } catch (IllegalFormatException var4) {
          Log.get().error("Format error: {}", s, var4);
          return "Format error: " + s;

@@ -78,7 +78,7 @@ public class StackHelper implements IStackHelper {
       StackHelper.MatchingItemsResult matchingItemResult = new StackHelper.MatchingItemsResult();
       int recipeSlotNumber = -1;
 
-      for(Integer key : new TreeSet(ingredientsMap.keySet())) {
+      for(Integer key : new TreeSet<Integer>(ingredientsMap.keySet())) {
          IGuiIngredient<ItemStack> ingredient = (IGuiIngredient)ingredientsMap.get(key);
          if (ingredient.isInput()) {
             ++recipeSlotNumber;
@@ -300,7 +300,7 @@ public class StackHelper implements IStackHelper {
          } else if (obj != null) {
             Log.get().error("Unknown object found: {}", obj);
          } else {
-            subtypesList.add((Object)null);
+            subtypesList.add((ItemStack)null);
          }
       }
 

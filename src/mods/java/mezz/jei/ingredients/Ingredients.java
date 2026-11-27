@@ -159,7 +159,7 @@ public class Ingredients implements IIngredients {
       for(Entry<IIngredientType, List<List>> entry : this.inputs.entrySet()) {
          List<Object> flatIngredients = new ArrayList();
 
-         for(List ingredients : (List)entry.getValue()) {
+         for(List ingredients : (List<List>)entry.getValue()) {
             flatIngredients.addAll(ingredients);
          }
 
@@ -175,7 +175,7 @@ public class Ingredients implements IIngredients {
       for(Entry<IIngredientType, List<List>> entry : this.outputs.entrySet()) {
          List<Object> flatIngredients = new ArrayList();
 
-         for(List ingredients : (List)entry.getValue()) {
+         for(List ingredients : (List<List>)entry.getValue()) {
             flatIngredients.addAll(ingredients);
          }
 

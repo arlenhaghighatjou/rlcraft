@@ -742,4 +742,9 @@ public class GuiEditStructure extends GuiScreen
     {
         return false;
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiEditStructure.class ? this.nameEdit : super.getDeclaredTextField();
+    }
 }

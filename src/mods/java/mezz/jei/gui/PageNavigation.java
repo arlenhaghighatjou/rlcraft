@@ -1,7 +1,7 @@
 package mezz.jei.gui;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import mezz.jei.Internal;
 import mezz.jei.gui.elements.GuiIconButton;
 import mezz.jei.gui.elements.IMouseClickedButtonCallback;

@@ -1,5 +1,6 @@
 package mezz.jei.startup;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Preconditions;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,18 +24,16 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraftforge.client.event.TextureStitchEvent.Pre;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -60,11 +59,10 @@ public class ProxyCommonClient extends ProxyCommon {
    public void preInit(FMLPreInitializationEvent event) {
       PacketHandlerClient packetHandler = new PacketHandlerClient();
       this.channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("jei");
-      this.channel.register(packetHandler);
+      packetHandler.register(this.channel);
       Config.preInit(event);
       initVersionChecker();
-      ASMDataTable asmDataTable = event.getAsmData();
-      this.plugins = AnnotatedInstanceUtil.getModPlugins(asmDataTable);
+      this.plugins = AnnotatedInstanceUtil.getModPlugins();
       IModPlugin vanillaPlugin = this.getVanillaPlugin(this.plugins);
       if (vanillaPlugin != null) {
          this.plugins.remove(vanillaPlugin);
@@ -77,7 +75,7 @@ public class ProxyCommonClient extends ProxyCommon {
          this.plugins.add(jeiInternalPlugin);
       }
 
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
    }
 
    @Nullable
@@ -128,13 +126,19 @@ public class ProxyCommonClient extends ProxyCommon {
       this.starter.start(this.plugins, this.textures);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientConnectedToServerEvent.class, this::onClientConnectedToServer);
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+      bus.register(Save.class, this::onWorldSave);
+      bus.register(Pre.class, this::handleTextureRemap);
+   }
+
    public void onClientConnectedToServer(ClientConnectedToServerEvent event) {
       if (!event.isLocal() && !event.getConnectionType().equals("MODDED")) {
          ServerInfo.onConnectedToServer(false);
       }
 
-      NetworkManager networkManager = event.getManager();
+      INetworkManager networkManager = event.getManager();
       Config.syncWorldConfig(networkManager);
       MinecraftForge.EVENT_BUS.post(new PlayerJoinedWorldEvent());
    }
@@ -156,7 +160,6 @@ public class ProxyCommonClient extends ProxyCommon {
 
    }
 
-   @SubscribeEvent
    public void onConfigChanged(OnConfigChangedEvent eventArgs) {
       if ("jei".equals(eventArgs.getModID())) {
          if (Config.syncAllConfig()) {
@@ -168,7 +171,6 @@ public class ProxyCommonClient extends ProxyCommon {
 
    }
 
-   @SubscribeEvent
    public void onWorldSave(Save event) {
       try {
          Config.saveFilterText();
@@ -178,7 +180,6 @@ public class ProxyCommonClient extends ProxyCommon {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public void handleTextureRemap(Pre event) {
       this.textures = new Textures(this.textureMap);

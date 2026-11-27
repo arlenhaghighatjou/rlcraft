@@ -285,7 +285,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       ErrorUtil.checkNotNull(recipe, "recipe");
       ErrorUtil.assertMainThread();
 
-      for(IRecipeHandler<Object> recipeHandler : this.getRecipeHandlers(recipe.getClass())) {
+      for(IRecipeHandler<Object> recipeHandler : this.<Object>getRecipeHandlers(recipe.getClass())) {
          String recipeCategoryUid = recipeHandler.getRecipeCategoryUid(recipe);
          this.removeRecipe(recipe, recipeCategoryUid);
       }
@@ -450,7 +450,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       UnmodifiableIterator var4 = recipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().equals(recipeClass)) {
             return recipeHandler;
          }
@@ -459,7 +459,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = this.unsortedRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().equals(recipeClass)) {
             return recipeHandler;
          }
@@ -468,7 +468,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = recipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().isAssignableFrom(recipeClass)) {
             return recipeHandler;
          }
@@ -477,7 +477,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = this.unsortedRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().isAssignableFrom(recipeClass)) {
             return recipeHandler;
          }
@@ -495,7 +495,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       UnmodifiableIterator var4 = allRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().equals(recipeClass)) {
             recipeHandlers.add(recipeHandler);
          }
@@ -504,7 +504,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = this.unsortedRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().equals(recipeClass)) {
             recipeHandlers.add(recipeHandler);
          }
@@ -513,7 +513,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = allRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().isAssignableFrom(recipeClass)) {
             recipeHandlers.add(recipeHandler);
          }
@@ -522,7 +522,7 @@ public class RecipeRegistry implements IRecipeRegistry {
       var4 = this.unsortedRecipeHandlers.iterator();
 
       while(var4.hasNext()) {
-         IRecipeHandler<?> recipeHandler = (IRecipeHandler)var4.next();
+         IRecipeHandler<T> recipeHandler = (IRecipeHandler)var4.next();
          if (recipeHandler.getRecipeClass().isAssignableFrom(recipeClass)) {
             recipeHandlers.add(recipeHandler);
          }

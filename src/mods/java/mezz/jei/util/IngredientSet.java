@@ -44,7 +44,7 @@ public class IngredientSet<V> extends AbstractSet<V> {
    }
 
    public boolean remove(Object o) {
-      String uid = (String)this.uidGenerator.apply(o);
+      String uid = (String)this.uidGenerator.apply((V)o);
       return this.ingredients.remove(uid) != null;
    }
 
@@ -64,7 +64,7 @@ public class IngredientSet<V> extends AbstractSet<V> {
    }
 
    public boolean contains(Object o) {
-      String uid = (String)this.uidGenerator.apply(o);
+      String uid = (String)this.uidGenerator.apply((V)o);
       return this.ingredients.containsKey(uid);
    }
 

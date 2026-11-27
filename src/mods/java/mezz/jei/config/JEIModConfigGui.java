@@ -11,7 +11,7 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
@@ -49,7 +49,7 @@ public class JEIModConfigGui extends GuiConfig {
       if (Minecraft.getMinecraft().world != null) {
          Configuration worldConfig = Config.getWorldConfig();
          if (worldConfig != null) {
-            NetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
+            INetworkManager networkManager = FMLClientHandler.instance().getClientToServerNetworkManager();
             ConfigCategory categoryWorldConfig = worldConfig.getCategory(ServerInfo.getWorldUid(networkManager));
             configElements.addAll((new ConfigElement(categoryWorldConfig)).getChildElements());
          }

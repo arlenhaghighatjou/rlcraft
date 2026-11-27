@@ -150,4 +150,7 @@ public class GuiScreenServerList extends GuiScreen {
 		field_146302_g.fireInputEvent(event, param);
 	}
 
+	public GuiTextField getDeclaredTextField() {
+		return this.getClass() == GuiScreenServerList.class ? this.field_146302_g : super.getDeclaredTextField();
+	}
 }

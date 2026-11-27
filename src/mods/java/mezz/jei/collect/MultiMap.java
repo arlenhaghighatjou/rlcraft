@@ -21,7 +21,7 @@ public class MultiMap<K, V, T extends Collection<V>> {
    public MultiMap(Map<K, T> map, Supplier<T> collectionSupplier) {
       this.map = map;
       this.collectionMappingFunction = (k) -> {
-         return (void)((Collection)collectionSupplier.get());
+         return collectionSupplier.get();
       };
    }
 
@@ -67,7 +67,7 @@ public class MultiMap<K, V, T extends Collection<V>> {
       for(Entry<K, T> entry : this.map.entrySet()) {
          K key = (K)entry.getKey();
 
-         for(V value : (Collection)entry.getValue()) {
+         for(V value : (Collection<V>)entry.getValue()) {
             builder.put(key, value);
          }
       }

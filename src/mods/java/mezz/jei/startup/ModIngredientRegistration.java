@@ -37,7 +37,7 @@ public class ModIngredientRegistration implements IModIngredientRegistration {
    public <V> void register(Class<V> ingredientClass, Collection<V> allIngredients, IIngredientHelper<V> ingredientHelper, IIngredientRenderer<V> ingredientRenderer) {
       ErrorUtil.checkNotNull(ingredientClass, "ingredientClass");
       this.register(() -> {
-         return (void)ingredientClass;
+         return ingredientClass;
       }, allIngredients, ingredientHelper, ingredientRenderer);
    }
 

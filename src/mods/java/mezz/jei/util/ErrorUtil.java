@@ -38,7 +38,7 @@ public final class ErrorUtil {
    }
 
    public static void setModIdHelper(IModIdHelper modIdHelper) {
-      modIdHelper = modIdHelper;
+      ErrorUtil.modIdHelper = modIdHelper;
    }
 
    public static <T> String getInfoFromRecipe(T recipe, IRecipeWrapper recipeWrapper) {

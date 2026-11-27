@@ -132,7 +132,7 @@ public class VanillaPlugin implements IModPlugin {
       ingredientRegistration.register(VanillaTypes.FLUID, fluidStacks, fluidStackHelper, fluidStackRenderer);
       List<EnchantmentData> enchantments = EnchantDataListFactory.create();
       EnchantedBookCache enchantedBookCache = new EnchantedBookCache();
-      MinecraftForge.EVENT_BUS.register(enchantedBookCache);
+      enchantedBookCache.register(MinecraftForge.EVENT_BUS);
       EnchantDataHelper enchantmentHelper = new EnchantDataHelper(enchantedBookCache, itemStackHelper);
       EnchantDataRenderer enchantmentRenderer = new EnchantDataRenderer(itemStackRenderer, enchantedBookCache);
       ingredientRegistration.register(VanillaTypes.ENCHANT, enchantments, enchantmentHelper, enchantmentRenderer);

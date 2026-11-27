@@ -1,6 +1,6 @@
 package mezz.jei.plugins.vanilla.furnace;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collections;
 import java.util.List;
 import mezz.jei.api.ingredients.IIngredients;

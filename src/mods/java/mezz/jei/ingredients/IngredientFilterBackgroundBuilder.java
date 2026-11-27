@@ -1,5 +1,6 @@
 package mezz.jei.ingredients;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import it.unimi.dsi.fastutil.chars.Char2ObjectMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import java.util.Collection;
@@ -9,7 +10,6 @@ import mezz.jei.suffixtree.GeneralizedSuffixTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -25,12 +25,15 @@ public class IngredientFilterBackgroundBuilder {
    public void start() {
       boolean finished = this.run(10000);
       if (!finished) {
-         MinecraftForge.EVENT_BUS.register(this);
+         this.register(MinecraftForge.EVENT_BUS);
       }
 
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientTickEvent.class, this::onClientTick);
+   }
+
    public void onClientTick(ClientTickEvent event) {
       if (event.side == Side.CLIENT && Minecraft.getMinecraft().player != null) {
          boolean finished = this.run(20);

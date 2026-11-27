@@ -1,7 +1,7 @@
 package mezz.jei.gui.ingredients;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

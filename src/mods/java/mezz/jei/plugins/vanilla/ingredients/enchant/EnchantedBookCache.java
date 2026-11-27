@@ -1,5 +1,6 @@
 package mezz.jei.plugins.vanilla.ingredients.enchant;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.function.Supplier;
 import mezz.jei.collect.Table;
 import mezz.jei.startup.PlayerJoinedWorldEvent;
@@ -8,7 +9,6 @@ import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantedBookCache {
    private final Table<ResourceLocation, Integer, ItemStack> cache = Table.<ResourceLocation, Integer, ItemStack>hashBasedTable();
@@ -28,7 +28,10 @@ public class EnchantedBookCache {
       }
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerJoinedWorldEvent.class, this::onPlayerJoinedWorldEvent);
+   }
+
    public void onPlayerJoinedWorldEvent(PlayerJoinedWorldEvent event) {
       this.cache.clear();
    }

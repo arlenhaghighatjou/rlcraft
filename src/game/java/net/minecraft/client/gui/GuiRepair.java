@@ -209,4 +209,9 @@ public class GuiRepair extends GuiContainer implements IContainerListener
     {
         this.nameField.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiRepair.class ? this.nameField : super.getDeclaredTextField();
+    }
 }

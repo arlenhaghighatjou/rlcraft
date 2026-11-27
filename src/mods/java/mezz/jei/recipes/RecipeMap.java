@@ -86,7 +86,7 @@ public class RecipeMap {
             if (!uniqueIds.contains(key)) {
                uniqueIds.add(key);
                List<T> recipeWrappers = (List)recipesWrappersForType.computeIfAbsent(key, (k) -> {
-                  return (void)(new ArrayList());
+                  return new ArrayList();
                });
                recipeWrappers.add(recipeWrapper);
                this.addRecipeCategory(recipeCategory, ingredient, ingredientHelper);

@@ -1,17 +1,12 @@
 package mezz.jei.input;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.lax1dude.eaglercraft.v1_8.Mouse;
 
-@EventBusSubscriber(
-   modid = "jei",
-   value = {Side.CLIENT}
-)
 public final class MouseHelper {
    private static MouseHelper.DisplayInfo INFO = new MouseHelper.DisplayInfo();
 
@@ -26,7 +21,10 @@ public final class MouseHelper {
       return INFO.getY();
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(Post.class, MouseHelper::onGuiInit);
+   }
+
    public static void onGuiInit(Post event) {
       INFO = new MouseHelper.DisplayInfo();
    }

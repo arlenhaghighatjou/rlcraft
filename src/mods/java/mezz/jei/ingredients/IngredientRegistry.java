@@ -223,7 +223,7 @@ public class IngredientRegistry implements IIngredientRegistry {
       Log.get().info("Ingredients are being added at runtime: {} {}", Integer.valueOf(ingredients.size()), ingredientType.getIngredientClass().getName());
       IIngredientHelper<V> ingredientHelper = this.getIngredientHelper(ingredientType);
       Set<V> set = (Set)this.ingredientsMap.computeIfAbsent(ingredientType, (k) -> {
-         return (void)IngredientSet.create(ingredientType, ingredientHelper);
+         return IngredientSet.create(ingredientType, ingredientHelper);
       });
 
       for(V ingredient : ingredients) {
@@ -276,7 +276,7 @@ public class IngredientRegistry implements IIngredientRegistry {
 
    public <V> IIngredientType<V> getIngredientType(V ingredient) {
       ErrorUtil.checkNotNull(ingredient, "ingredient");
-      Class<? extends V> ingredientClass = ingredient.getClass();
+      Class<? extends V> ingredientClass = (Class<? extends V>)ingredient.getClass();
       return this.getIngredientType(ingredientClass);
    }
 
@@ -289,7 +289,7 @@ public class IngredientRegistry implements IIngredientRegistry {
          UnmodifiableIterator var3 = this.ingredientTypeMap.values().iterator();
 
          while(var3.hasNext()) {
-            IIngredientType<?> type = (IIngredientType)var3.next();
+            IIngredientType<V> type = (IIngredientType)var3.next();
             if (type.getIngredientClass().isAssignableFrom(ingredientClass)) {
                return type;
             }

@@ -1,7 +1,8 @@
 package mezz.jei.gui.ingredients;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import net.lax1dude.eaglercraft.v1_8.HString;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -196,10 +197,10 @@ public class GuiIngredient<T> extends Gui implements IGuiIngredient<T> {
 
          FontRenderer fontRenderer = this.ingredientRenderer.getFontRenderer(minecraft, value);
          if (value instanceof ItemStack) {
-            Collection<ItemStack> itemStacks = this.allIngredients;
+            Collection<ItemStack> itemStacks = (Collection<ItemStack>)this.allIngredients;
             String oreDictEquivalent = Internal.getStackHelper().getOreDictEquivalent(itemStacks);
             if (oreDictEquivalent != null) {
-               String acceptsAny = String.format(oreDictionaryIngredient, oreDictEquivalent);
+               String acceptsAny = HString.format(oreDictionaryIngredient, oreDictEquivalent);
                tooltip.add(TextFormatting.GRAY + acceptsAny);
             }
 

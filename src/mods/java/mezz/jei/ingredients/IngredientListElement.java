@@ -63,9 +63,7 @@ public class IngredientListElement<V> implements IIngredientListElement<V> {
          this.modIds.add(modId);
       }
 
-      Stream var10001 = this.modIds.stream();
-      modIdHelper.getClass();
-      this.modNames = (List)var10001.map(modIdHelper::getModNameForModId).collect(Collectors.toList());
+      this.modNames = (List)this.modIds.stream().map(modIdHelper::getModNameForModId).collect(Collectors.toList());
       this.displayName = IngredientInformation.getDisplayName(ingredient, ingredientHelper);
       this.resourceId = LegacyUtil.getResourceId(ingredient, ingredientHelper);
    }

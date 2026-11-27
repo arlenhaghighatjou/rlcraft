@@ -83,11 +83,11 @@ public class PlayerRecipeTransferHandler implements IRecipeTransferHandler<Conta
             }
          }
 
-         badIndexes = new ArrayList();
+         List<IGuiIngredient<ItemStack>> inputIngredients = new ArrayList();
 
          for(IGuiIngredient<ItemStack> guiIngredient : itemStackGroup.getGuiIngredients().values()) {
             if (guiIngredient.isInput()) {
-               badIndexes.add(guiIngredient);
+               inputIngredients.add(guiIngredient);
             }
          }
 
@@ -96,8 +96,8 @@ public class PlayerRecipeTransferHandler implements IRecipeTransferHandler<Conta
 
          for(int i = 0; i < 4; ++i) {
             int index = playerGridIndexes[i];
-            if (index < badIndexes.size()) {
-               IGuiIngredient<ItemStack> ingredient = (IGuiIngredient)badIndexes.get(index);
+            if (index < inputIngredients.size()) {
+               IGuiIngredient<ItemStack> ingredient = (IGuiIngredient)inputIngredients.get(index);
                playerInvItemStackGroup.init(i, true, 0, 0);
                playerInvItemStackGroup.set(i, ingredient.getAllIngredients());
             }

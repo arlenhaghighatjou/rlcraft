@@ -308,4 +308,9 @@ public class GuiCommandBlock extends GuiScreen implements ITabCompleter
         this.commandTextField.fireInputEvent(event, param);
         this.previousOutputTextField.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiCommandBlock.class ? this.commandTextField : super.getDeclaredTextField();
+    }
 }

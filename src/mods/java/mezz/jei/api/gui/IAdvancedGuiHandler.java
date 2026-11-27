@@ -1,6 +1,6 @@
 package mezz.jei.api.gui;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.List;
 import javax.annotation.Nullable;
 import net.minecraft.client.gui.inventory.GuiContainer;

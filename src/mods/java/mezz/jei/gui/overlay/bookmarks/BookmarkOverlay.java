@@ -1,6 +1,6 @@
 package mezz.jei.gui.overlay.bookmarks;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.Set;
 import javax.annotation.Nullable;
 import mezz.jei.api.IBookmarkOverlay;

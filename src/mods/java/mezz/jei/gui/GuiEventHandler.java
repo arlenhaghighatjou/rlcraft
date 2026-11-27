@@ -1,6 +1,6 @@
 package mezz.jei.gui;
 
-import java.time.Duration;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import mezz.jei.config.Config;
 import mezz.jei.config.OverlayToggleEvent;
 import mezz.jei.gui.overlay.IngredientListOverlay;
@@ -17,7 +17,6 @@ import net.minecraftforge.client.event.GuiContainerEvent.DrawForeground;
 import net.minecraftforge.client.event.GuiScreenEvent.BackgroundDrawnEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.PotionShiftEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent.Post;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
@@ -27,7 +26,7 @@ public class GuiEventHandler {
    private final GuiScreenHelper guiScreenHelper;
    private final LeftAreaDispatcher leftAreaDispatcher;
    private final RecipeRegistry recipeRegistry;
-   private final LimitedLogger missingBackgroundLogger = new LimitedLogger(Log.get(), Duration.ofHours(1L));
+   private final LimitedLogger missingBackgroundLogger = new LimitedLogger(Log.get(), 3600000L);
    private boolean drawnOnBackground = false;
 
    public GuiEventHandler(GuiScreenHelper guiScreenHelper, LeftAreaDispatcher leftAreaDispatcher, IngredientListOverlay ingredientListOverlay, RecipeRegistry recipeRegistry) {
@@ -37,28 +36,35 @@ public class GuiEventHandler {
       this.recipeRegistry = recipeRegistry;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(OverlayToggleEvent.class, this::onOverlayToggle);
+      bus.register(Post.class, this::onGuiInit);
+      bus.register(GuiOpenEvent.class, this::onGuiOpen);
+      bus.register(BackgroundDrawnEvent.class, this::onDrawBackgroundEventPost);
+      bus.register(DrawForeground.class, this::onDrawForegroundEvent);
+      bus.register(net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent.Post.class, this::onDrawScreenEventPost);
+      bus.register(ClientTickEvent.class, this::onClientTick);
+      bus.register(PotionShiftEvent.class, this::onPotionShiftEvent);
+   }
+
    public void onOverlayToggle(OverlayToggleEvent event) {
       GuiScreen currentScreen = Minecraft.getMinecraft().currentScreen;
       this.ingredientListOverlay.updateScreen(currentScreen, true);
       this.leftAreaDispatcher.updateScreen(currentScreen, false);
    }
 
-   @SubscribeEvent
    public void onGuiInit(Post event) {
       GuiScreen gui = event.getGui();
       this.ingredientListOverlay.updateScreen(gui, false);
       this.leftAreaDispatcher.updateScreen(gui, false);
    }
 
-   @SubscribeEvent
    public void onGuiOpen(GuiOpenEvent event) {
       GuiScreen gui = event.getGui();
       this.ingredientListOverlay.updateScreen(gui, false);
       this.leftAreaDispatcher.updateScreen(gui, false);
    }
 
-   @SubscribeEvent
    public void onDrawBackgroundEventPost(BackgroundDrawnEvent event) {
       GuiScreen gui = event.getGui();
       Minecraft minecraft = gui.mc;
@@ -72,7 +78,6 @@ public class GuiEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onDrawForegroundEvent(DrawForeground event) {
       GuiContainer gui = event.getGuiContainer();
       Minecraft minecraft = gui.mc;
@@ -82,7 +87,6 @@ public class GuiEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onDrawScreenEventPost(net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent.Post event) {
       GuiScreen gui = event.getGui();
       Minecraft minecraft = gui.mc;
@@ -113,14 +117,12 @@ public class GuiEventHandler {
       }
    }
 
-   @SubscribeEvent
    public void onClientTick(ClientTickEvent event) {
       if (event.phase != Phase.END) {
          this.ingredientListOverlay.handleTick();
       }
    }
 
-   @SubscribeEvent
    public void onPotionShiftEvent(PotionShiftEvent event) {
       if (Config.isOverlayEnabled()) {
          event.setCanceled(true);

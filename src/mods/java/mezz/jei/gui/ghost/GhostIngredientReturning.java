@@ -1,7 +1,7 @@
 package mezz.jei.gui.ghost;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Point;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import javax.annotation.Nullable;
 import mezz.jei.api.ingredients.IIngredientRenderer;
 import net.minecraft.client.Minecraft;

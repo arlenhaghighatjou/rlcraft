@@ -20,7 +20,7 @@ public class Table<R, C, V> {
    public Table(Map<R, Map<C, V>> table, Supplier<Map<C, V>> rowSupplier) {
       this.table = table;
       this.rowMappingFunction = (k) -> {
-         return (void)((Map)rowSupplier.get());
+         return rowSupplier.get();
       };
    }
 
@@ -57,7 +57,7 @@ public class Table<R, C, V> {
       for(Entry<R, Map<C, V>> entry : this.table.entrySet()) {
          R row = (R)entry.getKey();
 
-         for(Entry<C, V> rowEntry : ((Map)entry.getValue()).entrySet()) {
+         for(Entry<C, V> rowEntry : ((Map<C, V>)entry.getValue()).entrySet()) {
             C col = (C)rowEntry.getKey();
             V val = (V)rowEntry.getValue();
             builder.put(row, col, val);

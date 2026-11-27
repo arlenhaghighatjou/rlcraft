@@ -1,6 +1,7 @@
 package mezz.jei.gui.elements;
 
-import java.awt.Rectangle;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -12,8 +13,6 @@ import mezz.jei.gui.TooltipRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 
 public class GuiIconButton extends GuiButton {
    private final Consumer<List<String>> tooltipCallback;
@@ -47,8 +46,8 @@ public class GuiIconButton extends GuiButton {
          this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
          int i = this.getHoverState(this.hovered);
          GlStateManager.enableBlend();
-         GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
          GuiHelper guiHelper = Internal.getHelpers().getGuiHelper();
          DrawableNineSliceTexture texture = guiHelper.getButtonForState(i);
          texture.draw(mc, this.x, this.y, this.width, this.height);

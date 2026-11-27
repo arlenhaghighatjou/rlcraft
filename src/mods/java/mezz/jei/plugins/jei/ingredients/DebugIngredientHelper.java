@@ -1,6 +1,6 @@
 package mezz.jei.plugins.jei.ingredients;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.util.Collections;
 import javax.annotation.Nullable;
 import mezz.jei.api.ingredients.IIngredientHelper;

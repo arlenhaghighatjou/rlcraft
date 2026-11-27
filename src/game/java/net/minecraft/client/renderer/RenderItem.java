@@ -104,7 +104,7 @@ public class RenderItem implements IResourceManagerReloadListener
         this.registerItem(itm, 0, identifier);
     }
 
-    private void renderModel(IBakedModel model, ItemStack stack)
+    public void renderModel(IBakedModel model, ItemStack stack)
     {
         this.renderModel(model, -1, stack);
     }

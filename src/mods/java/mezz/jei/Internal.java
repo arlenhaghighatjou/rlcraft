@@ -39,7 +39,7 @@ public final class Internal {
    }
 
    public static void setStackHelper(StackHelper stackHelper) {
-      stackHelper = stackHelper;
+      Internal.stackHelper = stackHelper;
    }
 
    public static JeiHelpers getHelpers() {
@@ -48,7 +48,7 @@ public final class Internal {
    }
 
    public static void setHelpers(JeiHelpers helpers) {
-      helpers = helpers;
+      Internal.helpers = helpers;
    }
 
    @Nullable
@@ -62,7 +62,7 @@ public final class Internal {
          jeiRuntime.close();
       }
 
-      runtime = runtime;
+      Internal.runtime = runtime;
    }
 
    public static IngredientRegistry getIngredientRegistry() {
@@ -71,7 +71,7 @@ public final class Internal {
    }
 
    public static void setIngredientRegistry(IngredientRegistry ingredientRegistry) {
-      ingredientRegistry = ingredientRegistry;
+      Internal.ingredientRegistry = ingredientRegistry;
    }
 
    public static ColorNamer getColorNamer() {
@@ -80,7 +80,7 @@ public final class Internal {
    }
 
    public static void setColorNamer(ColorNamer colorNamer) {
-      colorNamer = colorNamer;
+      Internal.colorNamer = colorNamer;
    }
 
    public static IngredientFilter getIngredientFilter() {
@@ -93,8 +93,8 @@ public final class Internal {
          MinecraftForge.EVENT_BUS.unregister(ingredientFilter);
       }
 
-      ingredientFilter = ingredientFilter;
-      MinecraftForge.EVENT_BUS.register(ingredientFilter);
+      Internal.ingredientFilter = ingredientFilter;
+      ingredientFilter.register(MinecraftForge.EVENT_BUS);
    }
 
    public static void setGuiEventHandler(GuiEventHandler guiEventHandler) {
@@ -102,8 +102,8 @@ public final class Internal {
          MinecraftForge.EVENT_BUS.unregister(guiEventHandler);
       }
 
-      guiEventHandler = guiEventHandler;
-      MinecraftForge.EVENT_BUS.register(guiEventHandler);
+      Internal.guiEventHandler = guiEventHandler;
+      guiEventHandler.register(MinecraftForge.EVENT_BUS);
    }
 
    public static void setInputHandler(InputHandler inputHandler) {
@@ -111,7 +111,7 @@ public final class Internal {
          MinecraftForge.EVENT_BUS.unregister(inputHandler);
       }
 
-      inputHandler = inputHandler;
-      MinecraftForge.EVENT_BUS.register(inputHandler);
+      Internal.inputHandler = inputHandler;
+      inputHandler.register(MinecraftForge.EVENT_BUS);
    }
 }

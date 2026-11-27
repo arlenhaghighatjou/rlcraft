@@ -1,6 +1,6 @@
 package mezz.jei.gui.elements;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import mezz.jei.api.gui.IDrawable;

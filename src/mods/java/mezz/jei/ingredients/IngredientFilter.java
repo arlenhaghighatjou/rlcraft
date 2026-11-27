@@ -1,5 +1,6 @@
 package mezz.jei.ingredients;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
 import it.unimi.dsi.fastutil.chars.Char2ObjectMap;
@@ -33,7 +34,6 @@ import mezz.jei.util.Translator;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class IngredientFilter implements IIngredientFilter, IIngredientGridSource {
    private static final Pattern QUOTE_PATTERN = Pattern.compile("\"");
@@ -142,7 +142,7 @@ public class IngredientFilter implements IIngredientFilter, IIngredientGridSourc
       IIngredientHelper<V> ingredientHelper = element.getIngredientHelper();
       V ingredient = element.getIngredient();
       String ingredientUid = ingredientHelper.getUniqueId(ingredient);
-      Class<? extends V> ingredientClass = ingredient.getClass();
+      Class<? extends V> ingredientClass = (Class<? extends V>)ingredient.getClass();
       List<IIngredientListElement<V>> matchingElements = new ArrayList();
       IntSet matchingIndexes = this.searchTree.search(Translator.toLowercaseWithLocale(element.getDisplayName()));
       IntIterator iterator = matchingIndexes.iterator();
@@ -169,13 +169,16 @@ public class IngredientFilter implements IIngredientFilter, IIngredientGridSourc
       this.filterCached = null;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(EditModeToggleEvent.class, this::onEditModeToggleEvent);
+      bus.register(PlayerJoinedWorldEvent.class, this::onPlayerJoinedWorldEvent);
+   }
+
    public void onEditModeToggleEvent(EditModeToggleEvent event) {
       this.filterCached = null;
       this.updateHidden();
    }
 
-   @SubscribeEvent
    public void onPlayerJoinedWorldEvent(PlayerJoinedWorldEvent event) {
       this.filterCached = null;
       this.updateHidden();
@@ -290,7 +293,7 @@ public class IngredientFilter implements IIngredientFilter, IIngredientGridSourc
          int startingIndex = iterator.nextInt();
 
          for(int i = startingIndex - 1; i >= 0 && !matchingIndexes.contains(i); --i) {
-            IIngredientListElement<?> element = (IIngredientListElement)this.elementList.get(i);
+            IIngredientListElement<T> element = (IIngredientListElement)this.elementList.get(i);
             String elementWildcardId = (String)uidFunction.apply(element);
             if (!uid.equals(elementWildcardId)) {
                break;
@@ -301,7 +304,7 @@ public class IngredientFilter implements IIngredientFilter, IIngredientGridSourc
          }
 
          for(int i = startingIndex + 1; i < this.elementList.size() && !matchingIndexes.contains(i); ++i) {
-            IIngredientListElement<?> element = (IIngredientListElement)this.elementList.get(i);
+            IIngredientListElement<T> element = (IIngredientListElement)this.elementList.get(i);
             String elementWildcardId = (String)uidFunction.apply(element);
             if (!uid.equals(elementWildcardId)) {
                break;

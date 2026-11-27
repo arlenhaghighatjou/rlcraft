@@ -979,4 +979,10 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     {
         return true;
     }
+
+    @javax.annotation.Nullable
+    public GuiTextField getDeclaredTextField()
+    {
+        return null;
+    }
 }

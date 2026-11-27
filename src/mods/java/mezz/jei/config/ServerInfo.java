@@ -3,7 +3,7 @@ package mezz.jei.config;
 import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.network.NetworkManager;
+import com.arlenh7.eaglercraft.network.INetworkManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
@@ -20,11 +20,11 @@ public final class ServerInfo {
    }
 
    public static void onConnectedToServer(boolean jeiOnServer) {
-      jeiOnServer = jeiOnServer;
+      ServerInfo.jeiOnServer = jeiOnServer;
       worldUid = null;
    }
 
-   public static String getWorldUid(@Nullable NetworkManager networkManager) {
+   public static String getWorldUid(@Nullable INetworkManager networkManager) {
       if (worldUid == null) {
          if (networkManager == null) {
             worldUid = "default";

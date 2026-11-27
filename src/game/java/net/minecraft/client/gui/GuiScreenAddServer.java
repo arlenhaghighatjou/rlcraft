@@ -201,4 +201,7 @@ public class GuiScreenAddServer extends GuiScreen {
 		serverIPField.fireInputEvent(event, param);
 	}
 
+	public GuiTextField getDeclaredTextField() {
+		return this.getClass() == GuiScreenAddServer.class ? this.serverIPField : super.getDeclaredTextField();
+	}
 }

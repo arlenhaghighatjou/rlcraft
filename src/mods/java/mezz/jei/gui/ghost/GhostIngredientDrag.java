@@ -1,7 +1,11 @@
 package mezz.jei.gui.ghost;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.Tessellator;
+import net.lax1dude.eaglercraft.v1_8.opengl.WorldRenderer;
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.List;
 import javax.annotation.Nullable;
 import mezz.jei.api.gui.IGhostIngredientHandler;
@@ -10,7 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
-import org.lwjgl.opengl.GL11;
 
 public class GhostIngredientDrag<T> {
    private static final Color targetColor = new Color(19, 201, 10, 64);
@@ -52,18 +55,18 @@ public class GhostIngredientDrag<T> {
             lineWidth = 1.0F + (1.0F - percentOfDim) * 3.0F;
          }
 
-         GL11.glDisable(3553);
+         GlStateManager.disableTexture2D();
          GlStateManager.disableDepth();
-         GL11.glLineWidth(lineWidth);
-         GL11.glEnable(2848);
-         GL11.glHint(3154, 4354);
-         GL11.glBegin(1);
-         GL11.glColor4f((float)targetColor.getRed() / 255.0F, (float)targetColor.getGreen() / 255.0F, (float)targetColor.getBlue() / 255.0F, (float)targetColor.getAlpha() / 255.0F);
-         GL11.glVertex3f((float)mouseX, (float)mouseY, 150.0F);
-         GL11.glVertex3f((float)originX, (float)originY, 150.0F);
-         GL11.glEnd();
+         EaglercraftGPU.glLineWidth(lineWidth);
+         GlStateManager.color((float)targetColor.getRed() / 255.0F, (float)targetColor.getGreen() / 255.0F, (float)targetColor.getBlue() / 255.0F, (float)targetColor.getAlpha() / 255.0F);
+         Tessellator tessellator = Tessellator.getInstance();
+         WorldRenderer buffer = tessellator.getBuffer();
+         buffer.begin(1, DefaultVertexFormats.POSITION);
+         buffer.pos((double)mouseX, (double)mouseY, 150.0D).endVertex();
+         buffer.pos((double)originX, (double)originY, 150.0D).endVertex();
+         tessellator.draw();
          GlStateManager.enableDepth();
-         GL11.glEnable(3553);
+         GlStateManager.enableTexture2D();
       }
 
       RenderItem renderItem = minecraft.getRenderItem();

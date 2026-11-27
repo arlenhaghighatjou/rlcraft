@@ -1,6 +1,6 @@
 package mezz.jei.api.gui;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.List;
 import java.util.function.Consumer;
 import net.minecraft.client.gui.GuiScreen;

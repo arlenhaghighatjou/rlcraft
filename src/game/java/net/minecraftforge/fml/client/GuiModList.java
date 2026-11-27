@@ -610,4 +610,9 @@ public class GuiModList extends GuiScreen
             }
         }
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiModList.class ? this.search : super.getDeclaredTextField();
+    }
 }

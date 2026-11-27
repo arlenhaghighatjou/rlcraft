@@ -1,6 +1,6 @@
 package mezz.jei.gui;
 
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,9 +55,9 @@ public class GuiScreenHelper {
             for(Entry<Class, IGuiScreenHandler> entry : this.guiScreenHandlers.entrySet()) {
                Class guiScreenClass = (Class)entry.getKey();
                if (guiScreenClass.isInstance(guiScreen)) {
-                  IGuiScreenHandler<T> handler = (IGuiScreenHandler)entry.getValue();
-                  if (handler != null) {
-                     return handler.apply(guiScreen);
+                  IGuiScreenHandler<T> superHandler = (IGuiScreenHandler)entry.getValue();
+                  if (superHandler != null) {
+                     return superHandler.apply(guiScreen);
                   }
                }
             }
@@ -141,9 +141,9 @@ public class GuiScreenHelper {
          for(Entry<Class, IGhostIngredientHandler> entry : this.ghostIngredientHandlers.entrySet()) {
             Class guiScreenClass = (Class)entry.getKey();
             if (guiScreenClass.isInstance(guiScreen)) {
-               IGhostIngredientHandler<T> handler = (IGhostIngredientHandler)entry.getValue();
-               if (handler != null) {
-                  return handler;
+               IGhostIngredientHandler<T> superHandler = (IGhostIngredientHandler)entry.getValue();
+               if (superHandler != null) {
+                  return superHandler;
                }
             }
          }
@@ -170,7 +170,7 @@ public class GuiScreenHelper {
    private <T extends GuiContainer> List<IAdvancedGuiHandler<T>> getActiveAdvancedGuiHandlers(T guiContainer) {
       List<IAdvancedGuiHandler<T>> activeAdvancedGuiHandler = new ArrayList();
 
-      for(IAdvancedGuiHandler<?> advancedGuiHandler : this.advancedGuiHandlers) {
+      for(IAdvancedGuiHandler<T> advancedGuiHandler : (List<IAdvancedGuiHandler<T>>)(List)this.advancedGuiHandlers) {
          Class<?> guiContainerClass = advancedGuiHandler.getGuiContainerClass();
          if (guiContainerClass.isInstance(guiContainer)) {
             activeAdvancedGuiHandler.add(advancedGuiHandler);

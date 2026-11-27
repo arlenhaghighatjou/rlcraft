@@ -1,7 +1,7 @@
 package mezz.jei.plugins.vanilla.furnace;
 
 import com.google.common.base.Preconditions;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;

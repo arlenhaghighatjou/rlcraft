@@ -2,7 +2,7 @@ package mezz.jei.gui.overlay;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableList.Builder;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.Set;
 import javax.annotation.Nullable;
 import mezz.jei.api.IIngredientListOverlay;

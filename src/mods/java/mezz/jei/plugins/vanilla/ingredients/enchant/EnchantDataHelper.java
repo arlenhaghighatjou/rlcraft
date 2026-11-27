@@ -2,7 +2,7 @@ package mezz.jei.plugins.vanilla.ingredients.enchant;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import javax.annotation.Nullable;
 import mezz.jei.api.ingredients.IIngredientHelper;
 import mezz.jei.api.recipe.IFocus;

@@ -1,7 +1,7 @@
 package mezz.jei.input;
 
-import java.awt.Color;
-import java.awt.Rectangle;
+import com.arlenh7.eaglercraft.awt.Color;
+import com.arlenh7.eaglercraft.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 import mezz.jei.Internal;

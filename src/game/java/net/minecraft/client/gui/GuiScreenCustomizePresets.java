@@ -222,4 +222,9 @@ public class GuiScreenCustomizePresets extends GuiScreen
     {
         this.export.fireInputEvent(event, param);
     }
+
+    public GuiTextField getDeclaredTextField()
+    {
+        return this.getClass() == GuiScreenCustomizePresets.class ? this.export : super.getDeclaredTextField();
+    }
 }
