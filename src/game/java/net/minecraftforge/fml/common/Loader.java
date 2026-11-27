@@ -273,6 +273,7 @@ public class Loader
         mods.add(new FMLModContainer<>("materialtweaker", "MaterialTweaker", "1.1.1", "", "", "materialtweaker", materialtweaker.core.MaterialTweaker::new, materialtweaker.core.MaterialTweaker::handleModStateEvent));
         mods.add(new FMLModContainer<>("jei", "Just Enough Items", "4.16.1.302", "required-after:forge@[14.23.5.2816,);", "[1.12.2,1.13)", "jei", mezz.jei.JustEnoughItems::new, mezz.jei.JustEnoughItems::handleModStateEvent).guiFactory(mezz.jei.config.JEIModGuiFactory::new));
         mods.add(new FMLModContainer<>("spartanweaponry", "Spartan Weaponry", "1.5.3", "after:xat@[0.31,);after:bettercombatmod@[2.0.5,);", "[1.12.2]", "spartanweaponry", com.oblivioussp.spartanweaponry.ModSpartanWeaponry::new, com.oblivioussp.spartanweaponry.ModSpartanWeaponry::handleModStateEvent).guiFactory(com.oblivioussp.spartanweaponry.client.gui.GuiFactorySW::new));
+        mods.add(new FMLModContainer<>("spartandefiled", "Spartan Defiled", "1.0", "", "[1.12.2]", "spartandefiled", fr.samlegamer.spartandefiled.SpartanDefiled::new, fr.samlegamer.spartandefiled.SpartanDefiled::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

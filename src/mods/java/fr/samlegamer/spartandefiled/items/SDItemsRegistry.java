@@ -1,5 +1,6 @@
 package fr.samlegamer.spartandefiled.items;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.oblivioussp.spartanweaponry.api.IWeaponCallback;
 import com.oblivioussp.spartanweaponry.api.SpartanWeaponryAPI;
 import com.oblivioussp.spartanweaponry.api.weaponproperty.WeaponProperty;
@@ -19,14 +20,11 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@EventBusSubscriber
 public class SDItemsRegistry {
    public static final Set<SDMatConvert> MATERIALS_TO_REGISTER = new LinkedHashSet();
    public static final String UMBRIUM = "umbrium";
@@ -35,7 +33,11 @@ public class SDItemsRegistry {
    public SDItemsRegistry() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, SDItemsRegistry::registerItems);
+      bus.register(ModelRegistryEvent.class, SDItemsRegistry::registerModels);
+   }
+
    public static void registerItems(Register<Item> ev) {
       Set<Item> item_set = new LinkedHashSet();
       OreDictionary.registerOre("ingotUmbrium", ModItems.umbriumIngot);
@@ -182,13 +184,10 @@ public class SDItemsRegistry {
          ev.getRegistry().register(it);
       }
 
-      Set var10000 = ALL_ITEMS;
-      IForgeRegistry var10001 = ev.getRegistry();
-      var10000.forEach(var10001::register);
+      ALL_ITEMS.forEach(ev.getRegistry()::register);
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void registerModels(ModelRegistryEvent event) {
       ALL_ITEMS.stream().filter((item) -> {
          return item.getRegistryName() != null;

@@ -1,10 +1,12 @@
 package fr.samlegamer.spartandefiled;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import fr.samlegamer.spartandefiled.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -23,29 +25,36 @@ public class SpartanDefiled {
    public static final String VERSION = "1.0";
    public static final String CLIENT_PROXY = "fr.samlegamer.spartandefiled.proxy.ClientProxy";
    public static final String SERVER_PROXY = "fr.samlegamer.spartandefiled.proxy.ServerProxy";
-   @Instance("spartandefiled")
    public static SpartanDefiled instance;
    public static final Logger LOGGER = LogManager.getLogger("spartandefiled");
-   @SidedProxy(
-      clientSide = "fr.samlegamer.spartandefiled.proxy.ClientProxy",
-      serverSide = "fr.samlegamer.spartandefiled.proxy.ServerProxy"
-   )
    public static CommonProxy proxy;
 
    public SpartanDefiled() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new fr.samlegamer.spartandefiled.proxy.ClientProxy() : new fr.samlegamer.spartandefiled.proxy.ServerProxy();
+         fr.samlegamer.spartandefiled.items.SDItemsRegistry.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init();
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
    }
