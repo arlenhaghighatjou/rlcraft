@@ -40,6 +40,20 @@ public enum ObjectHolderRegistry
         objectHolders.add(new ObjectHolderRef<T>(registryType, id, setter));
     }
 
+    public <T extends IForgeRegistryEntry<T>, F> void registerVanilla(Class<T> registryType, ResourceLocation id, Class<F> fieldType, Consumer<F> setter)
+    {
+        objectHolders.add(new ObjectHolderRef<T>(registryType, id, (T thing) -> {
+            if (fieldType.isInstance(thing))
+            {
+                setter.accept(fieldType.cast(thing));
+            }
+            else
+            {
+                FMLLog.log.error("Unable to set {} with value {} ({})", fieldType.getName(), thing, id);
+            }
+        }));
+    }
+
     public void applyObjectHolders()
     {
         FMLLog.log.info("Applying holder lookups");

@@ -1,38 +1,39 @@
 package net.minecraft.init;
 
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import javax.annotation.Nullable;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 
 public class MobEffects
 {
-    public static final Potion SPEED;
-    public static final Potion SLOWNESS;
-    public static final Potion HASTE;
-    public static final Potion MINING_FATIGUE;
-    public static final Potion STRENGTH;
-    public static final Potion INSTANT_HEALTH;
-    public static final Potion INSTANT_DAMAGE;
-    public static final Potion JUMP_BOOST;
-    public static final Potion NAUSEA;
-    public static final Potion REGENERATION;
-    public static final Potion RESISTANCE;
-    public static final Potion FIRE_RESISTANCE;
-    public static final Potion WATER_BREATHING;
-    public static final Potion INVISIBILITY;
-    public static final Potion BLINDNESS;
-    public static final Potion NIGHT_VISION;
-    public static final Potion HUNGER;
-    public static final Potion WEAKNESS;
-    public static final Potion POISON;
-    public static final Potion WITHER;
-    public static final Potion HEALTH_BOOST;
-    public static final Potion ABSORPTION;
+    public static Potion SPEED;
+    public static Potion SLOWNESS;
+    public static Potion HASTE;
+    public static Potion MINING_FATIGUE;
+    public static Potion STRENGTH;
+    public static Potion INSTANT_HEALTH;
+    public static Potion INSTANT_DAMAGE;
+    public static Potion JUMP_BOOST;
+    public static Potion NAUSEA;
+    public static Potion REGENERATION;
+    public static Potion RESISTANCE;
+    public static Potion FIRE_RESISTANCE;
+    public static Potion WATER_BREATHING;
+    public static Potion INVISIBILITY;
+    public static Potion BLINDNESS;
+    public static Potion NIGHT_VISION;
+    public static Potion HUNGER;
+    public static Potion WEAKNESS;
+    public static Potion POISON;
+    public static Potion WITHER;
+    public static Potion HEALTH_BOOST;
+    public static Potion ABSORPTION;
     public static Potion SATURATION;
-    public static final Potion GLOWING;
-    public static final Potion LEVITATION;
-    public static final Potion LUCK;
-    public static final Potion UNLUCK;
+    public static Potion GLOWING;
+    public static Potion LEVITATION;
+    public static Potion LUCK;
+    public static Potion UNLUCK;
 
     @Nullable
     private static Potion getRegisteredMobEffect(String id)
@@ -85,5 +86,36 @@ public class MobEffects
             LUCK = getRegisteredMobEffect("luck");
             UNLUCK = getRegisteredMobEffect("unluck");
         }
+    }
+
+    public static void registerHolders()
+    {
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:speed"), Potion.class, v -> SPEED = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:slowness"), Potion.class, v -> SLOWNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:haste"), Potion.class, v -> HASTE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:mining_fatigue"), Potion.class, v -> MINING_FATIGUE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:strength"), Potion.class, v -> STRENGTH = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:instant_health"), Potion.class, v -> INSTANT_HEALTH = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:instant_damage"), Potion.class, v -> INSTANT_DAMAGE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:jump_boost"), Potion.class, v -> JUMP_BOOST = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:nausea"), Potion.class, v -> NAUSEA = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:regeneration"), Potion.class, v -> REGENERATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:resistance"), Potion.class, v -> RESISTANCE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:fire_resistance"), Potion.class, v -> FIRE_RESISTANCE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:water_breathing"), Potion.class, v -> WATER_BREATHING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:invisibility"), Potion.class, v -> INVISIBILITY = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:blindness"), Potion.class, v -> BLINDNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:night_vision"), Potion.class, v -> NIGHT_VISION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:hunger"), Potion.class, v -> HUNGER = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:weakness"), Potion.class, v -> WEAKNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:poison"), Potion.class, v -> POISON = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:wither"), Potion.class, v -> WITHER = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:health_boost"), Potion.class, v -> HEALTH_BOOST = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:absorption"), Potion.class, v -> ABSORPTION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:saturation"), Potion.class, v -> SATURATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:glowing"), Potion.class, v -> GLOWING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:levitation"), Potion.class, v -> LEVITATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:luck"), Potion.class, v -> LUCK = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(Potion.class, new ResourceLocation("minecraft:unluck"), Potion.class, v -> UNLUCK = v);
     }
 }

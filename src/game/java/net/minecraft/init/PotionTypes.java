@@ -1,5 +1,6 @@
 package net.minecraft.init;
 
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import net.minecraft.potion.PotionType;
@@ -8,42 +9,42 @@ import net.minecraft.util.ResourceLocation;
 public class PotionTypes
 {
     private static final Set<PotionType> CACHE;
-    public static final PotionType EMPTY;
-    public static final PotionType WATER;
-    public static final PotionType MUNDANE;
-    public static final PotionType THICK;
-    public static final PotionType AWKWARD;
-    public static final PotionType NIGHT_VISION;
-    public static final PotionType LONG_NIGHT_VISION;
-    public static final PotionType INVISIBILITY;
-    public static final PotionType LONG_INVISIBILITY;
-    public static final PotionType LEAPING;
-    public static final PotionType LONG_LEAPING;
-    public static final PotionType STRONG_LEAPING;
-    public static final PotionType FIRE_RESISTANCE;
-    public static final PotionType LONG_FIRE_RESISTANCE;
-    public static final PotionType SWIFTNESS;
-    public static final PotionType LONG_SWIFTNESS;
-    public static final PotionType STRONG_SWIFTNESS;
-    public static final PotionType SLOWNESS;
-    public static final PotionType LONG_SLOWNESS;
-    public static final PotionType WATER_BREATHING;
-    public static final PotionType LONG_WATER_BREATHING;
-    public static final PotionType HEALING;
-    public static final PotionType STRONG_HEALING;
-    public static final PotionType HARMING;
-    public static final PotionType STRONG_HARMING;
-    public static final PotionType POISON;
-    public static final PotionType LONG_POISON;
-    public static final PotionType STRONG_POISON;
-    public static final PotionType REGENERATION;
-    public static final PotionType LONG_REGENERATION;
-    public static final PotionType STRONG_REGENERATION;
-    public static final PotionType STRENGTH;
-    public static final PotionType LONG_STRENGTH;
-    public static final PotionType STRONG_STRENGTH;
-    public static final PotionType WEAKNESS;
-    public static final PotionType LONG_WEAKNESS;
+    public static PotionType EMPTY;
+    public static PotionType WATER;
+    public static PotionType MUNDANE;
+    public static PotionType THICK;
+    public static PotionType AWKWARD;
+    public static PotionType NIGHT_VISION;
+    public static PotionType LONG_NIGHT_VISION;
+    public static PotionType INVISIBILITY;
+    public static PotionType LONG_INVISIBILITY;
+    public static PotionType LEAPING;
+    public static PotionType LONG_LEAPING;
+    public static PotionType STRONG_LEAPING;
+    public static PotionType FIRE_RESISTANCE;
+    public static PotionType LONG_FIRE_RESISTANCE;
+    public static PotionType SWIFTNESS;
+    public static PotionType LONG_SWIFTNESS;
+    public static PotionType STRONG_SWIFTNESS;
+    public static PotionType SLOWNESS;
+    public static PotionType LONG_SLOWNESS;
+    public static PotionType WATER_BREATHING;
+    public static PotionType LONG_WATER_BREATHING;
+    public static PotionType HEALING;
+    public static PotionType STRONG_HEALING;
+    public static PotionType HARMING;
+    public static PotionType STRONG_HARMING;
+    public static PotionType POISON;
+    public static PotionType LONG_POISON;
+    public static PotionType STRONG_POISON;
+    public static PotionType REGENERATION;
+    public static PotionType LONG_REGENERATION;
+    public static PotionType STRONG_REGENERATION;
+    public static PotionType STRENGTH;
+    public static PotionType LONG_STRENGTH;
+    public static PotionType STRONG_STRENGTH;
+    public static PotionType WEAKNESS;
+    public static PotionType LONG_WEAKNESS;
 
     private static PotionType getRegisteredPotionType(String id)
     {
@@ -106,5 +107,45 @@ public class PotionTypes
             LONG_WEAKNESS = getRegisteredPotionType("long_weakness");
             CACHE.clear();
         }
+    }
+
+    public static void registerHolders()
+    {
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:empty"), PotionType.class, v -> EMPTY = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:water"), PotionType.class, v -> WATER = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:mundane"), PotionType.class, v -> MUNDANE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:thick"), PotionType.class, v -> THICK = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:awkward"), PotionType.class, v -> AWKWARD = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:night_vision"), PotionType.class, v -> NIGHT_VISION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_night_vision"), PotionType.class, v -> LONG_NIGHT_VISION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:invisibility"), PotionType.class, v -> INVISIBILITY = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_invisibility"), PotionType.class, v -> LONG_INVISIBILITY = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:leaping"), PotionType.class, v -> LEAPING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_leaping"), PotionType.class, v -> LONG_LEAPING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_leaping"), PotionType.class, v -> STRONG_LEAPING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:fire_resistance"), PotionType.class, v -> FIRE_RESISTANCE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_fire_resistance"), PotionType.class, v -> LONG_FIRE_RESISTANCE = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:swiftness"), PotionType.class, v -> SWIFTNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_swiftness"), PotionType.class, v -> LONG_SWIFTNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_swiftness"), PotionType.class, v -> STRONG_SWIFTNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:slowness"), PotionType.class, v -> SLOWNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_slowness"), PotionType.class, v -> LONG_SLOWNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:water_breathing"), PotionType.class, v -> WATER_BREATHING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_water_breathing"), PotionType.class, v -> LONG_WATER_BREATHING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:healing"), PotionType.class, v -> HEALING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_healing"), PotionType.class, v -> STRONG_HEALING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:harming"), PotionType.class, v -> HARMING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_harming"), PotionType.class, v -> STRONG_HARMING = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:poison"), PotionType.class, v -> POISON = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_poison"), PotionType.class, v -> LONG_POISON = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_poison"), PotionType.class, v -> STRONG_POISON = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:regeneration"), PotionType.class, v -> REGENERATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_regeneration"), PotionType.class, v -> LONG_REGENERATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_regeneration"), PotionType.class, v -> STRONG_REGENERATION = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strength"), PotionType.class, v -> STRENGTH = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_strength"), PotionType.class, v -> LONG_STRENGTH = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:strong_strength"), PotionType.class, v -> STRONG_STRENGTH = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:weakness"), PotionType.class, v -> WEAKNESS = v);
+        ObjectHolderRegistry.INSTANCE.registerVanilla(PotionType.class, new ResourceLocation("minecraft:long_weakness"), PotionType.class, v -> LONG_WEAKNESS = v);
     }
 }

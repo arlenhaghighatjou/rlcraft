@@ -310,6 +310,13 @@ public class Loader
         sortModList();
         mods = ImmutableList.copyOf(mods);
 
+        net.minecraft.init.Blocks.registerHolders();
+        net.minecraft.init.Items.registerHolders();
+        net.minecraft.init.MobEffects.registerHolders();
+        net.minecraft.init.Biomes.registerHolders();
+        net.minecraft.init.Enchantments.registerHolders();
+        net.minecraft.init.SoundEvents.registerHolders();
+        net.minecraft.init.PotionTypes.registerHolders();
         modController.transition(LoaderState.CONSTRUCTING, false);
         modController.distributeStateMessage(LoaderState.CONSTRUCTING, com.google.common.collect.ArrayListMultimap.create());
         progressBar.step("Initializing mods Phase 1");
