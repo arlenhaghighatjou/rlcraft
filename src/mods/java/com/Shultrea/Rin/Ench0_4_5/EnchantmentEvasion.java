@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.SoundCategory;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentEvasion extends EnchantmentBase {
    public EnchantmentEvasion() {
@@ -39,10 +39,10 @@ public class EnchantmentEvasion extends EnchantmentBase {
       return super.getMinEnchantability(par1) + 40;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = false
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.LOW, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingAttackEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob" || fEvent.getSource().damageType != "arrow") {
          if (fEvent.getEntity() instanceof EntityLivingBase) {

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -22,7 +23,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class EnchantmentWellTilled extends EnchantmentBase {
@@ -50,9 +50,10 @@ public class EnchantmentWellTilled extends EnchantmentBase {
       worldIn.setBlockState(pos, block.getDefaultState().withProperty(MOISTURE, Integer.valueOf(7)), 3);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(UseHoeEvent.class, EventPriority.LOWEST, false, this::onTill);
+   }
+
    public void onTill(UseHoeEvent fEvent) {
       int level = EnchantmentHelper.getEnchantmentLevel(Smc_040.welltilled, fEvent.getCurrent());
       if (level > 0) {

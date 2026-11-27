@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_2_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_020;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -12,7 +13,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentUnpredictable extends EnchantmentBase implements IEnchantmentCurse {
    public EnchantmentUnpredictable() {
@@ -41,9 +41,10 @@ public class EnchantmentUnpredictable extends EnchantmentBase implements IEnchan
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

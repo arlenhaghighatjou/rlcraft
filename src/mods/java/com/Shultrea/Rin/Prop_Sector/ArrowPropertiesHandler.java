@@ -1,12 +1,12 @@
 package com.Shultrea.Rin.Prop_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
@@ -16,10 +16,10 @@ public class ArrowPropertiesHandler {
    public ArrowPropertiesHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(WorldTickEvent.class, EventPriority.HIGHEST, true, this::onEvent);
+   }
+
    public void onEvent(WorldTickEvent event) {
       if (event.phase == Phase.START) {
          ++this.counter;

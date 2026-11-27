@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -12,7 +13,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentUnsheathing extends EnchantmentBase {
    public EnchantmentUnsheathing() {
@@ -37,9 +37,10 @@ public class EnchantmentUnsheathing extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 30;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.HIGHEST, false, this::onAttack);
+   }
+
    public void onAttack(LivingAttackEvent e) {
       if (!e.isCanceled() && e.getAmount() > 0.0F && e.getSource().getTrueSource() != null && e.getEntityLiving() != null && e.getEntityLiving() instanceof EntityPlayer) {
          EntityPlayer victim = (EntityPlayer)e.getEntityLiving();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Utility_Sector.EnchantmentsUtility;
@@ -19,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentMastery extends EnchantmentBase {
    public static String nbtFlag = "smeFlag";
@@ -50,10 +50,10 @@ public class EnchantmentMastery extends EnchantmentBase {
       return super.canApplyTogether(e) && !(e instanceof EnchantmentSweepingEdge);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, true, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent e) {
       if (e.getSource().damageType == "player" || e.getSource().damageType == "mob") {
          if (e.getSource().getTrueSource() instanceof EntityLivingBase) {

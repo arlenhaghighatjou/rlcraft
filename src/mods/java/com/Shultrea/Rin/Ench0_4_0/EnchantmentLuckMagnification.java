@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Interfaces.IDamageMultiplier;
@@ -17,7 +18,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -48,9 +48,12 @@ public class EnchantmentLuckMagnification extends EnchantmentBase implements IDa
       return super.canApplyTogether(fTest) && !(fTest instanceof IDamageMultiplier);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(CriticalHitEvent.class, EventPriority.LOWEST, false, this::onCritical);
+      bus.register(LootingLevelEvent.class, EventPriority.HIGHEST, false, this::HandleEnchant);
+      bus.register(PlayerTickEvent.class, EventPriority.HIGHEST, false, this::magnifyLuck);
+   }
+
    public void onCritical(CriticalHitEvent e) {
       if (e.getEntityPlayer() != null) {
          if (e.getTarget() != null) {
@@ -71,9 +74,6 @@ public class EnchantmentLuckMagnification extends EnchantmentBase implements IDa
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void HandleEnchant(LootingLevelEvent fEvent) {
       if (fEvent.getDamageSource().getTrueSource() instanceof EntityPlayer) {
          EntityPlayer player = (EntityPlayer)fEvent.getDamageSource().getTrueSource();
@@ -89,9 +89,6 @@ public class EnchantmentLuckMagnification extends EnchantmentBase implements IDa
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void magnifyLuck(PlayerTickEvent e) {
       if (e.player != null) {
          if (e.phase != Phase.START) {

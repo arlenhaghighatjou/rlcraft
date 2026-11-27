@@ -5,7 +5,6 @@ import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Interfaces.IEnchantmentProtection;
 import com.Shultrea.Rin.Interfaces.IEnhancedEnchantment;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.lang.reflect.Field;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -18,7 +17,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 
 public class EnchantmentAdvancedBlastProtection extends EnchantmentBase implements IEnchantmentProtection, IEnhancedEnchantment {
-   private static Field power;
 
    public EnchantmentAdvancedBlastProtection() {
       super(Rarity.RARE, EnumEnchantmentType.ARMOR, new EntityEquipmentSlot[]{EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET});

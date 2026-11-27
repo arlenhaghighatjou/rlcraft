@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Interfaces.IPotionDebuffer;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentDisorientation extends EnchantmentBase implements IPotionDebuffer {
    public EnchantmentDisorientation() {
@@ -43,7 +43,10 @@ public class EnchantmentDisorientation extends EnchantmentBase implements IPotio
       return super.canApplyTogether(fTest) && !(fTest instanceof IPotionDebuffer);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(CriticalHitEvent.class, this::criticalWhenDisoriented);
+   }
+
    public void criticalWhenDisoriented(CriticalHitEvent e) {
       if (e.getTarget() instanceof EntityLivingBase) {
          EntityLivingBase eb = (EntityLivingBase)e.getTarget();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Interfaces.IEnchantmentProtection;
@@ -15,7 +16,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentAdvancedFireProtection extends EnchantmentBase implements IEnchantmentProtection, IEnhancedEnchantment {
    public EnchantmentAdvancedFireProtection() {
@@ -48,9 +48,10 @@ public class EnchantmentAdvancedFireProtection extends EnchantmentBase implement
       return source.canHarmInCreative() ? 0 : (source.isFireDamage() ? level * 3 : 0);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, EventPriority.HIGHEST, false, this::updateFireEntity);
+   }
+
    public void updateFireEntity(LivingUpdateEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase victim = fEvent.getEntityLiving();

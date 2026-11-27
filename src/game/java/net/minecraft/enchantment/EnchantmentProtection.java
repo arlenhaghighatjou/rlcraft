@@ -111,7 +111,7 @@ public class EnchantmentProtection extends Enchantment
             damage -= (double)MathHelper.floor(damage * (double)((float)i * 0.15F));
         }
 
-        return damage;
+        return com.Shultrea.Rin.Hook.HookHelper.modifyBlastDamageReduction(damage, entityLivingBaseIn);
     }
 
     public static enum Type

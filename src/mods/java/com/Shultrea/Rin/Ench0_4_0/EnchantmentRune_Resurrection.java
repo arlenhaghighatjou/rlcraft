@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -28,7 +29,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.Clone;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -57,9 +57,13 @@ public class EnchantmentRune_Resurrection extends EnchantmentBase {
       return super.getMinEnchantability(par1) + 50;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDeathEvent.class, EventPriority.HIGHEST, false, this::onWielderDeath);
+      bus.register(PlayerDropsEvent.class, this::onItemDrop);
+      bus.register(Clone.class, this::onPlayerRessurect);
+      bus.register(PlayerRespawnEvent.class, this::teleportLastDeathLocation);
+   }
+
    public void onWielderDeath(LivingDeathEvent e) {
       int level = 0;
       if (e.getEntityLiving() instanceof EntityPlayer) {
@@ -135,7 +139,6 @@ public class EnchantmentRune_Resurrection extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent
    public void onItemDrop(PlayerDropsEvent e) {
       int level = 0;
       EntityPlayer player = e.getEntityPlayer();
@@ -149,7 +152,6 @@ public class EnchantmentRune_Resurrection extends EnchantmentBase {
 
    }
 
-   @SubscribeEvent
    public void onPlayerRessurect(Clone e) {
       if (e.isWasDeath()) {
          EntityPlayer player = e.getOriginal();
@@ -165,7 +167,6 @@ public class EnchantmentRune_Resurrection extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent
    public void teleportLastDeathLocation(PlayerRespawnEvent e) {
       if (!e.isEndConquered()) {
          EntityPlayer player = e.player;

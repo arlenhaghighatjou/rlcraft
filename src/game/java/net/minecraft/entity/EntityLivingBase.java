@@ -1427,6 +1427,21 @@ public abstract class EntityLivingBase extends Entity
         }
     }
 
+    public void callDamageEntity(DamageSource damageSrc, float damageAmount)
+    {
+        this.damageEntity(damageSrc, damageAmount);
+    }
+
+    public float callApplyArmorCalculations(DamageSource source, float damage)
+    {
+        return this.applyArmorCalculations(source, damage);
+    }
+
+    public float callApplyPotionDamageCalculations(DamageSource source, float damage)
+    {
+        return this.applyPotionDamageCalculations(source, damage);
+    }
+
     public CombatTracker getCombatTracker()
     {
         return this._combatTracker;

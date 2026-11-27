@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IEnchantmentDamage;
@@ -19,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentDefusion extends EnchantmentBase implements IEnchantmentDamage {
    public EnchantmentDefusion() {
@@ -52,9 +52,10 @@ public class EnchantmentDefusion extends EnchantmentBase implements IEnchantment
       return fTest.getItem() instanceof ItemAxe ? true : super.canApply(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

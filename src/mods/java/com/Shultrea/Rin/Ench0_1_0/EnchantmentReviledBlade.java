@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IDamageMultiplier;
@@ -14,7 +15,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentReviledBlade extends EnchantmentBase implements IDamageMultiplier {
    public EnchantmentReviledBlade() {
@@ -43,9 +43,10 @@ public class EnchantmentReviledBlade extends EnchantmentBase implements IDamageM
       return super.canApplyTogether(fTest) && !(fTest instanceof IDamageMultiplier);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingDamageEvent fEvent) {
       if (EnchantmentsUtility.checkEventCondition(fEvent, this)) {
          EntityLivingBase attacker = (EntityLivingBase)fEvent.getSource().getTrueSource();

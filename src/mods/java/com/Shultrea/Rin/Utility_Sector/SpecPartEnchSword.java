@@ -1,6 +1,6 @@
 package com.Shultrea.Rin.Utility_Sector;
 
-import java.awt.Color;
+import com.arlenh7.eaglercraft.awt.Color;
 import net.minecraft.client.particle.ParticleCrit;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;

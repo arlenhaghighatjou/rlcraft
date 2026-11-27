@@ -1,14 +1,13 @@
 package com.Shultrea.Rin.Prop_Sector;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class ArrowPropertiesProvider implements ICapabilitySerializable<NBTTagCompound> {
-   @CapabilityInject(IArrowProperties.class)
-   public static final Capability<IArrowProperties> ARROWPROPERTIES_CAP = null;
+   public static Capability<IArrowProperties> ARROWPROPERTIES_CAP = null;
    private IArrowProperties instance;
 
    public ArrowPropertiesProvider() {
@@ -29,5 +28,9 @@ public class ArrowPropertiesProvider implements ICapabilitySerializable<NBTTagCo
 
    public void deserializeNBT(NBTTagCompound nbt) {
       ARROWPROPERTIES_CAP.getStorage().readNBT(ARROWPROPERTIES_CAP, this.instance, (EnumFacing)null, nbt);
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IArrowProperties.class, capability -> ARROWPROPERTIES_CAP = capability);
    }
 }

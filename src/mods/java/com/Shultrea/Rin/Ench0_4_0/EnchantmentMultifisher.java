@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Utility_Sector.EnchantmentsUtility;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -17,7 +18,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickItem;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentMultifisher extends Enchantment {
    public EnchantmentMultifisher() {
@@ -46,9 +46,11 @@ public class EnchantmentMultifisher extends Enchantment {
       return super.canApply(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.HIGHEST, false, this::onEvent);
+      bus.register(RightClickItem.class, this::onEvent);
+   }
+
    public void onEvent(EntityJoinWorldEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityFishHook) {
          EntityFishHook hook = (EntityFishHook)fEvent.getEntity();
@@ -87,7 +89,6 @@ public class EnchantmentMultifisher extends Enchantment {
 
    }
 
-   @SubscribeEvent
    public void onEvent(RightClickItem event) {
       if (event.getEntityPlayer() != null) {
          EntityPlayer player = event.getEntityPlayer();

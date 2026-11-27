@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Interfaces.IWeatherEnchantment;
@@ -18,7 +19,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentThunderstorm extends EnchantmentBase implements IWeatherEnchantment {
    public EnchantmentThunderstorm() {
@@ -69,9 +69,10 @@ public class EnchantmentThunderstorm extends EnchantmentBase implements IWeather
       return EnchantmentHelper.getEnchantmentLevel(Smc_030.Thunderstorm, stack);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       float SkyDamage = 0.0F;
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {

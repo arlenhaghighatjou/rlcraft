@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -21,7 +22,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class EnchantmentCriticalStrike extends EnchantmentBase implements IDamageMultiplier {
@@ -51,9 +51,10 @@ public class EnchantmentCriticalStrike extends EnchantmentBase implements IDamag
       return super.canApplyTogether(fTest) && !(fTest instanceof IDamageMultiplier);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(CriticalHitEvent.class, EventPriority.LOWEST, false, this::onCritical);
+   }
+
    public void onCritical(CriticalHitEvent e) {
       if (e.getEntityPlayer() != null) {
          EntityPlayer player = e.getEntityPlayer();

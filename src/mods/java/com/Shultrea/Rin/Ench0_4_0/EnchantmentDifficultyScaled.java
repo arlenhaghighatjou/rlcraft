@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Interfaces.IDamageMultiplier;
@@ -16,7 +17,6 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentDifficultyScaled extends EnchantmentBase implements IDamageMultiplier {
    public EnchantmentDifficultyScaled() {
@@ -45,9 +45,11 @@ public class EnchantmentDifficultyScaled extends EnchantmentBase implements IDam
       return fTest.getItem() instanceof ItemSword ? true : super.canApply(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.HIGHEST, false, this::CancelAttack);
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, false, this::HandleEnchant);
+   }
+
    public void CancelAttack(LivingAttackEvent fEvent) {
       if (EnchantmentsUtility.checkEventCondition(fEvent, this)) {
          EntityLivingBase attacker = (EntityLivingBase)fEvent.getSource().getTrueSource();
@@ -61,9 +63,6 @@ public class EnchantmentDifficultyScaled extends EnchantmentBase implements IDam
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public void HandleEnchant(LivingDamageEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

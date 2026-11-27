@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -8,7 +9,6 @@ import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -36,9 +36,10 @@ public class EnchantmentAdvancedRespiration extends Enchantment {
       return i > 0 && entity.getRNG().nextInt(i * 4 + 4) > 0 ? air + 1 : air;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, EventPriority.HIGHEST, false, this::decreaseAir);
+   }
+
    public void decreaseAir(PlayerTickEvent fEvent) {
       if (fEvent.phase == Phase.END) {
          int i = EnchantmentHelper.getMaxEnchantmentLevel(Smc_040.AdvancedRespiration, fEvent.player);

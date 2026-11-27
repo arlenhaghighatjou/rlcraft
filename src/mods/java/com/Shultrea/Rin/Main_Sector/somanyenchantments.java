@@ -1,5 +1,10 @@
 package com.Shultrea.Rin.Main_Sector;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import com.Shultrea.Rin.Enchantments_Sector.OrderedRegistry;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_020;
@@ -20,9 +25,6 @@ import java.util.concurrent.Callable;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -38,12 +40,7 @@ public class somanyenchantments {
    public static final String NAME = "Rin's So Many Enchantments?";
    public static final String VERSION = "0.5.5";
    public static boolean hotbarOnly = true;
-   @Instance("SoManyEnchantments")
    public static somanyenchantments instance;
-   @SidedProxy(
-      clientSide = "com.Shultrea.Rin.Utility_Sector.ClientProxy",
-      serverSide = "com.Shultrea.Rin.Utility_Sector.CommProxy"
-   )
    public static CommProxy proxy;
    public static DamageSource Pure = (new DamageSource("Pure")).setDamageAllowedInCreativeMode().setDamageBypassesArmor().setDamageIsAbsolute();
    public static DamageSource Ethereal = (new DamageSource("Ethereal")).setDamageBypassesArmor();
@@ -57,7 +54,26 @@ public class somanyenchantments {
    public somanyenchantments() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new com.Shultrea.Rin.Utility_Sector.ClientProxy() : new com.Shultrea.Rin.Utility_Sector.CommProxy();
+         com.Shultrea.Rin.Main_Sector.ModConfig.register();
+         com.Shultrea.Rin.Prop_Sector.ArrowPropertiesProvider.registerCapabilities();
+         com.Shultrea.Rin.Prop_Sector.PlayerPropertiesProvider.registerCapabilities();
+         com.Shultrea.Rin.Enchantments_Sector.OrderedRegistry.EventSubscriber.register(MinecraftForge.EVENT_BUS);
+         com.Shultrea.Rin.Main_Sector.ModConfig.EventHandler.register(MinecraftForge.EVENT_BUS);
+         com.Shultrea.Rin.Utility_Sector.SMEsounds.EventSubscriber.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.load((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent fEvent) {
       CapabilityManager.INSTANCE.register(IArrowProperties.class, new ArrowPropertiesStorage(), ArrowProperties::new);
       CapabilityManager.INSTANCE.register(IPlayerProperties.class, new PlayerPropertiesStorage(), PlayerProperties::new);
@@ -69,12 +85,10 @@ public class somanyenchantments {
       Smc_040.init();
    }
 
-   @EventHandler
    public void load(FMLInitializationEvent fEvent) {
       proxy.onInit(fEvent);
    }
 
-   @EventHandler
    public void postInit(FMLPostInitializationEvent fEvent) {
       proxy.postInit(fEvent);
       OrderedRegistry.orderedRegister();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_2_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_020;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -18,7 +19,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentMortalitas extends EnchantmentBase {
    public EnchantmentMortalitas() {
@@ -47,9 +47,11 @@ public class EnchantmentMortalitas extends EnchantmentBase {
       return super.canApplyTogether(e) && !(e instanceof IDamageMultiplier) && !(e instanceof IConditionalDamage);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::onDamage);
+      bus.register(LivingDeathEvent.class, EventPriority.HIGHEST, false, this::Death);
+   }
+
    public void onDamage(LivingHurtEvent e) {
       if (e.getSource().getTrueSource() != null && e.getSource().getTrueSource() instanceof EntityPlayer && e.getSource().damageType.equals("player")) {
          EntityPlayer attacker = (EntityPlayer)e.getSource().getTrueSource();
@@ -77,9 +79,6 @@ public class EnchantmentMortalitas extends EnchantmentBase {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void Death(LivingDeathEvent fEvent) {
       if (fEvent.getSource().getTrueSource() != null) {
          if (fEvent.getSource().getTrueSource() instanceof EntityPlayer) {

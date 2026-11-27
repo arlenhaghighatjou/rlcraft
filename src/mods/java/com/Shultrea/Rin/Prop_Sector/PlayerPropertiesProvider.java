@@ -1,14 +1,13 @@
 package com.Shultrea.Rin.Prop_Sector;
 
+import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class PlayerPropertiesProvider implements ICapabilitySerializable<NBTTagCompound> {
-   @CapabilityInject(IPlayerProperties.class)
-   public static final Capability<IPlayerProperties> PLAYERPROPERTIES_CAP = null;
+   public static Capability<IPlayerProperties> PLAYERPROPERTIES_CAP = null;
    private IPlayerProperties propertyInstance;
 
    public PlayerPropertiesProvider() {
@@ -29,5 +28,9 @@ public class PlayerPropertiesProvider implements ICapabilitySerializable<NBTTagC
 
    public void deserializeNBT(NBTTagCompound nbt) {
       PLAYERPROPERTIES_CAP.getStorage().readNBT(PLAYERPROPERTIES_CAP, this.propertyInstance, (EnumFacing)null, nbt);
+   }
+
+   public static void registerCapabilities() {
+      CapabilityManager.INSTANCE.onRegistered(IPlayerProperties.class, capability -> PLAYERPROPERTIES_CAP = capability);
    }
 }

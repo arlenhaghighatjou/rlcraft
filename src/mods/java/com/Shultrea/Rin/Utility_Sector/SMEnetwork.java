@@ -18,6 +18,6 @@ public class SMEnetwork {
 
    private static void registerNetwork() {
       net = NetworkRegistry.INSTANCE.newSimpleChannel("sme.net");
-      net.registerMessage(MsgSP_Particle.Handler.class, MsgSP_Particle.class, id++, Side.CLIENT);
+      net.registerMessage(new MsgSP_Particle.Handler(), MsgSP_Particle.class, MsgSP_Particle::new, id++, Side.CLIENT);
    }
 }

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -14,7 +15,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.potion.PotionEffect;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -56,7 +56,10 @@ public class EnchantmentCurseofHolding extends EnchantmentBase implements IEncha
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::onExist);
+   }
+
    public void onExist(PlayerTickEvent e) {
       if (e.phase != Phase.START) {
          if (e.player != null) {

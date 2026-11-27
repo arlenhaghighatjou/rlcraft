@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_2_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_020;
@@ -24,7 +25,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentRune_MagicalBlessing extends EnchantmentBase implements IEnchantmentRune {
    public EnchantmentRune_MagicalBlessing() {
@@ -53,9 +53,10 @@ public class EnchantmentRune_MagicalBlessing extends EnchantmentBase implements 
       return super.canApplyTogether(fTest) && !(fTest instanceof IEnchantmentRune);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType.equals("player") || fEvent.getSource().damageType.equals("mob")) {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

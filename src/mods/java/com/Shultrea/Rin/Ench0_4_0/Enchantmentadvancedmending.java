@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.minecraft.enchantment.Enchantment;
@@ -12,7 +13,6 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Enchantmentadvancedmending extends EnchantmentBase {
    public Enchantmentadvancedmending() {
@@ -45,7 +45,10 @@ public class Enchantmentadvancedmending extends EnchantmentBase {
       return stack.isItemStackDamageable() && super.canApplyAtEnchantingTable(stack);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerPickupXpEvent.class, this::onXP);
+   }
+
    public void onXP(PlayerPickupXpEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       EntityXPOrb orb = event.getOrb();

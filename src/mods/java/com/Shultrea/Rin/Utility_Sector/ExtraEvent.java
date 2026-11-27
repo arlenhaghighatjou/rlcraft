@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Prop_Sector.ArrowPropertiesProvider;
@@ -8,13 +9,15 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ExtraEvent {
    public ExtraEvent() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, this::onArrowHit);
+   }
+
    public void onArrowHit(LivingDamageEvent fEvent) {
       if (fEvent.getSource().damageType == "arrow") {
          if (fEvent.getSource().getImmediateSource() instanceof EntityArrow) {

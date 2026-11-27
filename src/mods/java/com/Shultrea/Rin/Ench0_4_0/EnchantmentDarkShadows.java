@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Interfaces.IConditionalDamage;
@@ -16,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentDarkShadows extends EnchantmentBase implements IConditionalDamage {
    public EnchantmentDarkShadows() {
@@ -59,9 +59,10 @@ public class EnchantmentDarkShadows extends EnchantmentBase implements IConditio
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::onEvent);
+   }
+
    public void onEvent(LivingHurtEvent e) {
       if (EnchantmentsUtility.checkEventCondition(e, this)) {
          EntityLivingBase attacker = (EntityLivingBase)e.getSource().getTrueSource();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -20,7 +21,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSplitshot extends EnchantmentBase {
    public EnchantmentSplitshot() {
@@ -45,10 +45,10 @@ public class EnchantmentSplitshot extends EnchantmentBase {
       return super.getMinEnchantability(par1) + 30;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(ArrowLooseEvent.class, EventPriority.LOWEST, true, this::onEvent);
+   }
+
    public void onEvent(ArrowLooseEvent event) {
       if (EnchantmentHelper.getEnchantmentLevel(Smc_040.splitshot, event.getBow()) > 0) {
          int l = EnchantmentHelper.getEnchantmentLevel(Smc_040.splitshot, event.getBow());

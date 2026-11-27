@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -19,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSmelter extends EnchantmentBase {
    EaglercraftRandom random = new EaglercraftRandom();
@@ -46,9 +46,10 @@ public class EnchantmentSmelter extends EnchantmentBase {
       return fTest == Enchantments.SILK_TOUCH ? false : super.canApplyTogether(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, EventPriority.HIGHEST, false, this::onBlockDropSmelt);
+   }
+
    public void onBlockDropSmelt(HarvestDropsEvent fEvent) {
       if (fEvent.getHarvester() != null && ModConfig.enabled.SmelterEnable) {
          int fortuneLevel = fEvent.getFortuneLevel();

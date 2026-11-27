@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -20,7 +21,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.MutableBlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -51,7 +51,11 @@ public class EnchantmentMagmaWalker extends EnchantmentBase {
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::magmaWalk);
+      bus.register(LivingAttackEvent.class, this::onMagmaStep);
+   }
+
    public void magmaWalk(PlayerTickEvent fEvent) {
       if (fEvent.side == Side.SERVER) {
          EntityPlayer p = fEvent.player;
@@ -63,7 +67,6 @@ public class EnchantmentMagmaWalker extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent
    public void onMagmaStep(LivingAttackEvent e) {
       if (e.getSource() == DamageSource.LAVA && e.getSource().getTrueSource() == null && e.getEntityLiving() != null && !e.getEntityLiving().isInLava()) {
          e.setCanceled(true);

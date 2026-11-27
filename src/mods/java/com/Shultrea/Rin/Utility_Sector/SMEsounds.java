@@ -1,13 +1,11 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class SMEsounds {
    public static SoundEvent critattack;
@@ -38,14 +36,16 @@ public class SMEsounds {
       return evt;
    }
 
-   @EventBusSubscriber
    public static class EventSubscriber {
       public EventSubscriber() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, SoundEvent.class, EventSubscriber::registerEnchantment);
+      }
+
       public static void registerEnchantment(Register<SoundEvent> event) {
-         event.getRegistry().registerAll((IForgeRegistryEntry[])SMEsounds.SOUND_EVENTS.toArray(new SoundEvent[0]));
+         event.getRegistry().registerAll(SMEsounds.SOUND_EVENTS.toArray(new SoundEvent[0]));
       }
    }
 }

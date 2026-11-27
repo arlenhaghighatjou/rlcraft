@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
@@ -27,13 +28,18 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class OtherHandler {
    public OtherHandler() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, this::dealwithit);
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::enchHand);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, EventPriority.HIGHEST, true, this::onArrowCapAttach);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, EventPriority.LOWEST, true, this::onPlayerCapAttach);
+   }
+
    public void dealwithit(EntityJoinWorldEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)fEvent.getEntity();
@@ -80,9 +86,6 @@ public class OtherHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
    public void enchHand(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType.equals("player") || fEvent.getSource().damageType.equals("mob")) {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {
@@ -130,10 +133,6 @@ public class OtherHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
    public void onArrowCapAttach(AttachCapabilitiesEvent<Entity> event) {
       if (event.getObject() instanceof EntityArrow && !((Entity)event.getObject()).hasCapability(ArrowPropertiesProvider.ARROWPROPERTIES_CAP, (EnumFacing)null)) {
          event.addCapability(new ResourceLocation("somanyenchantments:arrow_capabilities"), new ArrowPropertiesProvider());
@@ -141,10 +140,6 @@ public class OtherHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
    public void onPlayerCapAttach(AttachCapabilitiesEvent<Entity> event) {
       if (!((Entity)event.getObject()).hasCapability(PlayerPropertiesProvider.PLAYERPROPERTIES_CAP, (EnumFacing)null)) {
          event.addCapability(new ResourceLocation("somanyenchantments:player_capabilities"), new PlayerPropertiesProvider());

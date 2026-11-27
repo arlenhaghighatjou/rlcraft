@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -15,7 +16,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -48,9 +48,10 @@ public class EnchantmentStrengthenedVitality extends EnchantmentBase {
       return super.canApplyTogether(e);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, EventPriority.HIGHEST, false, this::updateHealth);
+   }
+
    public void updateHealth(PlayerTickEvent fEvent) {
       if (fEvent.phase == Phase.END) {
          int i = EnchantmentHelper.getMaxEnchantmentLevel(Smc_040.strengthenedvitality, fEvent.player);

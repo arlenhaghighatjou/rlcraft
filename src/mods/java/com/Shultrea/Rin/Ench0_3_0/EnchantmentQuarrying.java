@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -18,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentQuarrying extends EnchantmentBase {
    public EnchantmentQuarrying() {
@@ -47,10 +47,10 @@ public class EnchantmentQuarrying extends EnchantmentBase {
       return super.canApplyTogether(fTest) && fTest != Enchantments.FORTUNE && fTest != Enchantments.SILK_TOUCH;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(HarvestDropsEvent.class, EventPriority.LOWEST, true, this::onEvent);
+   }
+
    public void onEvent(HarvestDropsEvent e) {
       if (e.getHarvester() != null) {
          ItemStack pick = e.getHarvester().getHeldItemMainhand();

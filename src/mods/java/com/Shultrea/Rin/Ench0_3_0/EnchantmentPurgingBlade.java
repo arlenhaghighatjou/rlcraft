@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -15,7 +16,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentPurgingBlade extends EnchantmentBase {
    public EnchantmentPurgingBlade() {
@@ -40,10 +40,10 @@ public class EnchantmentPurgingBlade extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 40;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, true, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType.equals("player") || fEvent.getSource().damageType.equals("mob")) {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

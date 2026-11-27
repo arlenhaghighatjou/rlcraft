@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -13,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.PlayerEvent.BreakSpeed;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentInefficient extends EnchantmentBase {
    public EnchantmentInefficient() {
@@ -50,7 +50,10 @@ public class EnchantmentInefficient extends EnchantmentBase {
       return super.canApplyTogether(fTest) && fTest != Enchantments.EFFICIENCY && fTest != Smc_010.ExtremeEfficency;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(BreakSpeed.class, this::HandleEnchant);
+   }
+
    public void HandleEnchant(BreakSpeed fEvent) {
       ItemStack tool = fEvent.getEntityLiving().getHeldItemMainhand();
       if (tool != null) {

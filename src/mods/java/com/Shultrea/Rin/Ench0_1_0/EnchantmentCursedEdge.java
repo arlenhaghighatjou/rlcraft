@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IDamageMultiplier;
@@ -15,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentCursedEdge extends EnchantmentBase implements IEnchantmentCurse {
    public EnchantmentCursedEdge() {
@@ -52,9 +52,10 @@ public class EnchantmentCursedEdge extends EnchantmentBase implements IEnchantme
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingDamageEvent fEvent) {
       if (fEvent.getSource().damageType.equals("player") || fEvent.getSource().damageType.equals("mob")) {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

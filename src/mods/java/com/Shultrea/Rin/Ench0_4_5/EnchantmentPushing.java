@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Ench0_3_0.EnchantmentStrafe;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -21,7 +22,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Tick;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentPushing extends EnchantmentBase {
    public EnchantmentPushing() {
@@ -50,10 +50,10 @@ public class EnchantmentPushing extends EnchantmentBase {
       return fTest instanceof EnchantmentStrafe ? false : super.canApplyTogether(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Tick.class, EventPriority.HIGHEST, true, this::onEvent);
+   }
+
    public void onEvent(Tick event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity != null) {

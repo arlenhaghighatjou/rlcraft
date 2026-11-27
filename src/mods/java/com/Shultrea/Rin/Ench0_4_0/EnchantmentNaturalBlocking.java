@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -11,7 +12,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentNaturalBlocking extends EnchantmentBase {
    public EnchantmentNaturalBlocking() {
@@ -36,9 +36,10 @@ public class EnchantmentNaturalBlocking extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 40;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, false, this::naturalBlock);
+   }
+
    public void naturalBlock(LivingDamageEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase victim = (EntityLivingBase)fEvent.getEntity();

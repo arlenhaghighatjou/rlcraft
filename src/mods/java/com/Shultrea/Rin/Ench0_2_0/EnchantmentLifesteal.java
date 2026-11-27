@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_2_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_020;
@@ -15,7 +16,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentLifesteal extends EnchantmentBase {
    public EnchantmentLifesteal() {
@@ -44,9 +44,10 @@ public class EnchantmentLifesteal extends EnchantmentBase {
       return super.canApplyTogether(fTest) && fTest != Smc_010.BlessedEdge && fTest != Smc_010.CursedEdge;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, false, this::HandlingFirst);
+   }
+
    public void HandlingFirst(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {

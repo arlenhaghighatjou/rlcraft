@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -18,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -66,7 +66,10 @@ public class EnchantmentRusted extends EnchantmentBase implements IEnchantmentCu
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::rustEvent);
+   }
+
    public void rustEvent(PlayerTickEvent e) {
       if (e.phase == Phase.END) {
          EntityPlayer p = e.player;

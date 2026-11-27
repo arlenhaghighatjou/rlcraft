@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -17,7 +18,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentHeavyWeight extends EnchantmentBase implements IEnchantmentCurse {
    public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e2765897-134f-4c14-a535-29c3ae5c7a21");
@@ -56,7 +56,10 @@ public class EnchantmentHeavyWeight extends EnchantmentBase implements IEnchantm
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingUpdateEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityPlayer) {
          EntityLivingBase entity = (EntityLivingBase)fEvent.getEntity();

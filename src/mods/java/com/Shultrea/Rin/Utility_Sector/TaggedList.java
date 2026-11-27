@@ -92,7 +92,7 @@ public class TaggedList<E, T> extends ArrayList<E> {
    public String getTagsAsString(E e) {
       String ret = "";
 
-      for(T s : (Set)this.tags.get(e)) {
+      for(T s : (Set<T>)this.tags.get(e)) {
          ret = ret + s.toString() + ",";
       }
 

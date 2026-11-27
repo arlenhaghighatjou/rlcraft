@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Ench0_4_5.EnchantmentTrueStrike;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -15,7 +16,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentCurseofInaccuracy extends EnchantmentBase implements IEnchantmentCurse {
    public EnchantmentCurseofInaccuracy() {
@@ -52,9 +52,11 @@ public class EnchantmentCurseofInaccuracy extends EnchantmentBase implements IEn
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.HIGHEST, false, this::onAttack);
+      bus.register(EntityJoinWorldEvent.class, EventPriority.LOWEST, false, this::onRangeAttack);
+   }
+
    public void onAttack(LivingAttackEvent e) {
       if (EnchantmentsUtility.checkEventCondition(e, this)) {
          EntityLivingBase eb = (EntityLivingBase)e.getSource().getTrueSource();
@@ -68,9 +70,6 @@ public class EnchantmentCurseofInaccuracy extends EnchantmentBase implements IEn
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public void onRangeAttack(EntityJoinWorldEvent e) {
       if (e.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)e.getEntity();

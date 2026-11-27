@@ -268,6 +268,7 @@ public class Loader
         mods.add(new FMLModContainer<>("roguelike", "Roguelike Dungeons -- Fnar Edition", "2.4.4", "", "[1.12.2]", "roguelike", com.github.fnar.roguelike.Roguelike::new, com.github.fnar.roguelike.Roguelike::handleModStateEvent).acceptableRemoteVersions("*"));
         mods.add(new FMLModContainer<>("simpledifficulty", "SimpleDifficulty", "0.3.9", "required-after:forge@[14.23.5.2859,);", "[1.12, 1.13)", "simpledifficulty", com.charles445.simpledifficulty.SimpleDifficulty::new, com.charles445.simpledifficulty.SimpleDifficulty::handleModStateEvent));
         mods.add(new FMLModContainer<>("familiarfauna", "FamiliarFauna", "1.0.11", "required-after:forge@[14.23.5.2768,);after:biomesoplenty;", "[1.12.2]", "familiarfauna", familiarfauna.core.FamiliarFauna::new, familiarfauna.core.FamiliarFauna::handleModStateEvent).guiFactory(familiarfauna.client.gui.GuiFFFactory::new));
+        mods.add(new FMLModContainer<>("somanyenchantments", "Rin's So Many Enchantments?", "0.5.5", "", "[1.12.0, 1.12.2]", "somanyenchantments", com.Shultrea.Rin.Main_Sector.somanyenchantments::new, com.Shultrea.Rin.Main_Sector.somanyenchantments::handleModStateEvent));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

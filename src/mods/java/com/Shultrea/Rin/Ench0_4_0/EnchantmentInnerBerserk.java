@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Utility_Sector.EnchantmentsUtility;
@@ -10,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentInnerBerserk extends EnchantmentBase {
    public EnchantmentInnerBerserk() {
@@ -35,9 +35,10 @@ public class EnchantmentInnerBerserk extends EnchantmentBase {
       return super.getMinEnchantability(par1) + 40;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOW, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingDamageEvent fEvent) {
       if (EnchantmentsUtility.checkEventCondition(fEvent, this)) {
          EntityLivingBase attacker = (EntityLivingBase)fEvent.getSource().getTrueSource();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Prop_Sector.ArrowPropertiesProvider;
 import com.Shultrea.Rin.Prop_Sector.IArrowProperties;
@@ -19,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class EnchantmentRune_StarFall extends Enchantment {
@@ -45,10 +45,11 @@ public class EnchantmentRune_StarFall extends Enchantment {
       return super.canApplyTogether(fTest);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.HIGH, true, this::setDidStarFall);
+      bus.register(WorldTickEvent.class, this::whenitsHigh);
+   }
+
    public void setDidStarFall(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)event.getEntity();
@@ -77,7 +78,6 @@ public class EnchantmentRune_StarFall extends Enchantment {
 
    }
 
-   @SubscribeEvent
    public void whenitsHigh(WorldTickEvent fEvent) {
       if (fEvent.world.getTotalWorldTime() % 30L == 0L) {
          ArrayList<Entity> entities = (ArrayList)fEvent.world.loadedEntityList;

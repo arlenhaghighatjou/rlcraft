@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Interfaces.IEnchantmentRune;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -17,7 +18,6 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentRune_PiercingCapabilities extends EnchantmentBase implements IEnchantmentRune {
    public EnchantmentRune_PiercingCapabilities() {
@@ -46,9 +46,10 @@ public class EnchantmentRune_PiercingCapabilities extends EnchantmentBase implem
       return super.canApplyTogether(fTest) && !(fTest instanceof IEnchantmentRune);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (EnchantmentsUtility.checkEventCondition(fEvent, this)) {
          if (!fEvent.getSource().isUnblockable()) {

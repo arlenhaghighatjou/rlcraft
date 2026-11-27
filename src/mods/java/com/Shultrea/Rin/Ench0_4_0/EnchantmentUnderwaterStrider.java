@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
@@ -16,7 +17,6 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -49,7 +49,10 @@ public class EnchantmentUnderwaterStrider extends EnchantmentBase {
       return super.canApplyTogether(e) && !(e instanceof EnchantmentWaterWalker);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, this::onUnder);
+   }
+
    public void onUnder(PlayerTickEvent e) {
       if (e.phase != Phase.END) {
          EntityPlayer player = e.player;

@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 
 public class HookArthropod {
+   public static boolean offhandAttack = false;
+
    public HookArthropod() {
    }
 
@@ -37,12 +39,7 @@ public class HookArthropod {
 
    public static void hookArthropod(EntityLivingBase user, Entity target) {
       if (user != null) {
-         boolean offhand = false;
-         if (stackTraceHasClass("bettercombat.mod.network.PacketOffhandAttack$Handler")) {
-            offhand = true;
-         }
-
-         ItemStack stack = offhand ? user.getHeldItemOffhand() : user.getHeldItemMainhand();
+         ItemStack stack = offhandAttack ? user.getHeldItemOffhand() : user.getHeldItemMainhand();
          if (!stack.isEmpty()) {
             NBTTagList nbttaglist = stack.getEnchantmentTagList();
 
@@ -62,15 +59,5 @@ public class HookArthropod {
          }
       }
 
-   }
-
-   public static boolean stackTraceHasClass(String clazz) {
-      for(StackTraceElement ste : Thread.currentThread().getStackTrace()) {
-         if (ste.getClassName().equals(clazz)) {
-            return true;
-         }
-      }
-
-      return false;
    }
 }

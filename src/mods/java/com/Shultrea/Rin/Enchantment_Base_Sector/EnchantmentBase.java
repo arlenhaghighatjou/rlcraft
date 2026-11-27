@@ -11,6 +11,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 
 public abstract class EnchantmentBase extends Enchantment {
    private boolean registered = false;
@@ -20,6 +21,9 @@ public abstract class EnchantmentBase extends Enchantment {
    }
 
    public abstract boolean isConfigEnabled();
+
+   public void register(EventBus bus) {
+   }
 
    public boolean isEnabled() {
       return this.isRegistered() && this.isConfigEnabled();

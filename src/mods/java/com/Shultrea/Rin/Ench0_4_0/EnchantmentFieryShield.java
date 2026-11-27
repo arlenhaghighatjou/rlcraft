@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -14,7 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentFieryShield extends EnchantmentBase {
    public EnchantmentFieryShield() {
@@ -39,9 +39,10 @@ public class EnchantmentFieryShield extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 40;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.LOWEST, false, this::shieldBurn);
+   }
+
    public void shieldBurn(LivingAttackEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase victim = (EntityLivingBase)fEvent.getEntity();

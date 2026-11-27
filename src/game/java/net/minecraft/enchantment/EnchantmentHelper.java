@@ -179,6 +179,7 @@ public class EnchantmentHelper
 
     public static void applyArthropodEnchantments(EntityLivingBase p_151385_0_, Entity p_151385_1_)
     {
+        com.Shultrea.Rin.Hook.HookArthropod.hookArthropod(p_151385_0_, p_151385_1_);
         ENCHANTMENT_ITERATOR_DAMAGE.user = p_151385_0_;
         ENCHANTMENT_ITERATOR_DAMAGE.target = p_151385_1_;
 
@@ -249,17 +250,17 @@ public class EnchantmentHelper
 
     public static int getFishingLuckBonus(ItemStack p_191529_0_)
     {
-        return getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, p_191529_0_);
+        return com.Shultrea.Rin.Hook.HookHelper.modifyFishingLuckBonus(getEnchantmentLevel(Enchantments.LUCK_OF_THE_SEA, p_191529_0_), p_191529_0_);
     }
 
     public static int getFishingSpeedBonus(ItemStack p_191528_0_)
     {
-        return getEnchantmentLevel(Enchantments.LURE, p_191528_0_);
+        return com.Shultrea.Rin.Hook.HookHelper.modifyFishingSpeedBonus(getEnchantmentLevel(Enchantments.LURE, p_191528_0_), p_191528_0_);
     }
 
     public static int getLootingModifier(EntityLivingBase p_185283_0_)
     {
-        return getMaxEnchantmentLevel(Enchantments.LOOTING, p_185283_0_);
+        return com.Shultrea.Rin.Hook.HookHelper.modifyLootingModifier(getMaxEnchantmentLevel(Enchantments.LOOTING, p_185283_0_), p_185283_0_);
     }
 
     public static boolean getAquaAffinityModifier(EntityLivingBase p_185287_0_)

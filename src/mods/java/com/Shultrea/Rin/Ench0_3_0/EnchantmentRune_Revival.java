@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.player.PlayerDestroyItemEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentRune_Revival extends EnchantmentBase implements IEnchantmentRune {
    public EnchantmentRune_Revival() {
@@ -50,7 +50,10 @@ public class EnchantmentRune_Revival extends EnchantmentBase implements IEnchant
       return super.canApplyAtEnchantingTable(stack) && !(stack.getItem() instanceof ItemArmor);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerDestroyItemEvent.class, this::TriggeredEvent);
+   }
+
    public void TriggeredEvent(PlayerDestroyItemEvent fEvent) {
       int amount = 0;
       EntityPlayer entity = (EntityPlayer)fEvent.getEntityLiving();

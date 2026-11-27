@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
@@ -28,7 +29,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSwiper extends EnchantmentBase {
    public EnchantmentSwiper() {
@@ -57,10 +57,10 @@ public class EnchantmentSwiper extends EnchantmentBase {
       return super.canApplyTogether(e) && !(e instanceof EnchantmentSweepingEdge);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, true, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingDamageEvent fEvent) {
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {
@@ -80,7 +80,7 @@ public class EnchantmentSwiper extends EnchantmentBase {
                         float splashDamage = fEvent.getAmount() * (float)levelCleave * 0.25F;
                         AxisAlignedBB boundBox = new AxisAlignedBB(attacker.posX - 5.0D - (double)levelCleave, attacker.posY - 5.0D - (double)levelCleave, attacker.posZ - 5.0D - (double)levelCleave, attacker.posX + 5.0D + (double)levelCleave, attacker.posY + 5.0D + (double)levelCleave, attacker.posZ + 5.0D + (double)levelCleave);
 
-                        for(Entity target : new ArrayList(attacker.getEntityWorld().getEntitiesWithinAABBExcludingEntity(fEvent.getEntity(), boundBox))) {
+                        for(Entity target : new ArrayList<Entity>(attacker.getEntityWorld().getEntitiesWithinAABBExcludingEntity(fEvent.getEntity(), boundBox))) {
                            if (target instanceof EntityLivingBase && target != attacker && target != fEvent.getEntityLiving() && target.getDistance(attacker) <= 3.0F + (float)levelCleave * 0.25F) {
                               Vec3d attackerCheck = EnchantmentsUtility.Cleave(target.posX - attacker.posX, target.posY - attacker.posY, target.posZ - attacker.posZ);
                               double angle = Math.toDegrees(Math.acos(attackerCheck.normalize().dotProduct(attacker.getLookVec())));

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -15,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentEmpoweredDefence extends EnchantmentBase {
    public EnchantmentEmpoweredDefence() {
@@ -44,9 +44,10 @@ public class EnchantmentEmpoweredDefence extends EnchantmentBase {
       return super.canApply(e) || e.getItem().isShield(e, (EntityLivingBase)null);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.LOW, false, this::EmpoweredDefenceEvent);
+   }
+
    public void EmpoweredDefenceEvent(LivingAttackEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityLivingBase) {
          EntityLivingBase victim = (EntityLivingBase)fEvent.getEntity();

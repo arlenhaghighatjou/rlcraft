@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -10,7 +11,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentCurseofDecay extends EnchantmentBase implements IEnchantmentCurse {
    public EnchantmentCurseofDecay() {
@@ -43,7 +43,10 @@ public class EnchantmentCurseofDecay extends EnchantmentBase implements IEnchant
       return true;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ItemTossEvent.class, this::onThrow);
+   }
+
    public void onThrow(ItemTossEvent fEvent) {
       if (fEvent.getEntityItem() != null && EnchantmentHelper.getEnchantmentLevel(Smc_040.CurseofDecay, fEvent.getEntityItem().getItem()) > 0) {
          fEvent.getEntityItem().lifespan = 80;

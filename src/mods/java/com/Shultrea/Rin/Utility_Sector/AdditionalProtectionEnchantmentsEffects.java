@@ -1,21 +1,25 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class AdditionalProtectionEnchantmentsEffects {
    public AdditionalProtectionEnchantmentsEffects() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, true, this::protectionOnly);
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, true, this::projprotection);
+      bus.register(LivingDamageEvent.class, EventPriority.LOW, true, this::fireprotection);
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, true, this::blastprotection);
+      bus.register(LivingHurtEvent.class, EventPriority.LOW, true, this::featherfall);
+   }
+
    public void protectionOnly(LivingHurtEvent fEvent) {
       if (ModConfig.miscellaneous.extraProtectionEffects) {
          if (ModConfig.enabled.AdvancedProtection) {
@@ -28,10 +32,6 @@ public class AdditionalProtectionEnchantmentsEffects {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
    public void projprotection(LivingHurtEvent fEvent) {
       if (ModConfig.miscellaneous.extraProtectionEffects) {
          if (ModConfig.enabled.AdvancedProjectileProtection) {
@@ -44,10 +44,6 @@ public class AdditionalProtectionEnchantmentsEffects {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
    public void fireprotection(LivingDamageEvent fEvent) {
       if (ModConfig.miscellaneous.extraProtectionEffects) {
          if (ModConfig.enabled.AdvancedFireProtection) {
@@ -60,10 +56,6 @@ public class AdditionalProtectionEnchantmentsEffects {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
    public void blastprotection(LivingHurtEvent fEvent) {
       if (ModConfig.miscellaneous.extraProtectionEffects) {
          if (ModConfig.enabled.AdvancedBlastProtection) {
@@ -76,10 +68,6 @@ public class AdditionalProtectionEnchantmentsEffects {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
    public void featherfall(LivingHurtEvent fEvent) {
       if (ModConfig.miscellaneous.extraProtectionEffects) {
          if (ModConfig.enabled.AdvancedFeatherFalling) {

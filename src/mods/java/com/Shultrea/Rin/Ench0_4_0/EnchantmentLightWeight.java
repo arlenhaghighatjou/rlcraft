@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -13,7 +14,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
@@ -40,10 +40,12 @@ public class EnchantmentLightWeight extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 30;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(PlayerTickEvent.class, EventPriority.LOW, true, this::onExist);
+      bus.register(LivingJumpEvent.class, this::onJump);
+      bus.register(LivingFallEvent.class, this::onEvent);
+   }
+
    public void onExist(PlayerTickEvent e) {
       if (e.phase != Phase.START) {
          if (e.player != null) {
@@ -86,7 +88,6 @@ public class EnchantmentLightWeight extends EnchantmentBase {
 
    }
 
-   @SubscribeEvent
    public void onJump(LivingJumpEvent e) {
       if (e.getEntityLiving() != null) {
          if (EnchantmentHelper.getMaxEnchantmentLevel(this, e.getEntityLiving()) > 0) {
@@ -97,7 +98,6 @@ public class EnchantmentLightWeight extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent
    public void onEvent(LivingFallEvent e) {
       int level = EnchantmentHelper.getMaxEnchantmentLevel(this, e.getEntityLiving());
       if (level > 0) {

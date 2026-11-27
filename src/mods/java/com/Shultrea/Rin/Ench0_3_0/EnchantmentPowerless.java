@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -15,7 +16,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentPowerless extends EnchantmentBase implements IEnchantmentCurse {
    public EnchantmentPowerless() {
@@ -52,10 +52,10 @@ public class EnchantmentPowerless extends EnchantmentBase implements IEnchantmen
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.HIGHEST, true, this::onEvent);
+   }
+
    public void onEvent(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)event.getEntity();

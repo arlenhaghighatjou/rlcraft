@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Ench0_3_0.EnchantmentAdvancedPunch;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -18,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentPulling extends EnchantmentBase {
    public EnchantmentPulling() {
@@ -47,10 +47,10 @@ public class EnchantmentPulling extends EnchantmentBase {
       return fTest != Enchantments.PUNCH && !(fTest instanceof EnchantmentAdvancedPunch) ? super.canApplyTogether(fTest) : false;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.HIGHEST, true, this::onEvent);
+   }
+
    public void onEvent(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)event.getEntity();

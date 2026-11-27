@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_2_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -9,7 +10,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentCombatVeterancy extends EnchantmentBase {
    public EnchantmentCombatVeterancy() {
@@ -34,9 +34,10 @@ public class EnchantmentCombatVeterancy extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 25;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHealEvent.class, EventPriority.LOW, false, this::onRegen);
+   }
+
    public void onRegen(LivingHealEvent e) {
       EntityLivingBase en = e.getEntityLiving();
       if (en != null) {

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +13,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LivingAttackFixerHandler {
    private static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a21");
@@ -28,10 +28,10 @@ public class LivingAttackFixerHandler {
    public LivingAttackFixerHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingUpdateEvent.class, EventPriority.HIGHEST, true, this::Fix);
+   }
+
    public void Fix(LivingUpdateEvent event) {
       if (event.getEntityLiving() instanceof EntityPlayer) {
          this.RemoveAttackDamage(event.getEntityLiving());

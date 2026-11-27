@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Utility_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -14,17 +15,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HurtPatchHandler {
-   private static final EaglercraftUUID TWEAKER_UUID = EaglercraftUUID.fromString("e6123481-134f-4c54-a535-29c3a241c7a22");
+   private static final EaglercraftUUID TWEAKER_UUID = new EaglercraftUUID(0xE6123481134F4C54L, 0xA5379C3A241C7A22L);
 
    public HurtPatchHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(AttackEntityEvent.class, EventPriority.LOWEST, false, this::applyHurtPatch);
+      bus.register(CriticalHitEvent.class, EventPriority.HIGHEST, true, this::revertHurtPatch);
+   }
+
    public void applyHurtPatch(AttackEntityEvent event) {
       if (ModConfig.miscellaneous.EnableFixEnchantment) {
          EntityPlayer player = event.getEntityPlayer();
@@ -69,10 +71,6 @@ public class HurtPatchHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
    public void revertHurtPatch(CriticalHitEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       if (player != null) {

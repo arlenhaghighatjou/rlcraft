@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Enum.EnumList;
@@ -13,7 +14,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentAdept extends EnchantmentBase {
    public EnchantmentAdept() {
@@ -50,7 +50,10 @@ public class EnchantmentAdept extends EnchantmentBase {
       return fTest.getItem() instanceof ItemAxe ? true : super.canApply(fTest);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LivingExperienceDropEvent.class, this::onDeath);
+   }
+
    public void onDeath(LivingExperienceDropEvent fEvent) {
       EntityPlayer player = fEvent.getAttackingPlayer();
       if (player != null) {

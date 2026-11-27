@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_1_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_010;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -23,7 +24,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentSwifterSlashes extends EnchantmentBase {
    public static final EaglercraftUUID CACHED_UUID = EaglercraftUUID.fromString("e6109481-134f-4c54-a535-29c3ae5c7a21");
@@ -76,7 +76,12 @@ public class EnchantmentSwifterSlashes extends EnchantmentBase {
       return EnchantmentHelper.getEnchantmentLevel(Smc_010.SwifterSlashes, stack);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(AttackEntityEvent.class, this::onEntityHit);
+      bus.register(LivingHurtEvent.class, EventPriority.HIGH, false, this::HandleEnchant);
+      bus.register(LivingUpdateEvent.class, this::HandleEnchant);
+   }
+
    public void onEntityHit(AttackEntityEvent event) {
       if (this.isValidPlayer(event.getEntityPlayer()) || this.isValidMob(event.getEntityLiving())) {
          ItemStack stack = event.getEntityLiving().getHeldItemMainhand();
@@ -92,9 +97,6 @@ public class EnchantmentSwifterSlashes extends EnchantmentBase {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public void HandleEnchant(LivingHurtEvent fEvent) {
       if (fEvent.getSource().damageType == "mob") {
          if (fEvent.getSource().getTrueSource() instanceof EntityLivingBase) {
@@ -115,7 +117,6 @@ public class EnchantmentSwifterSlashes extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent
    public void HandleEnchant(LivingUpdateEvent fEvent) {
       if (fEvent.getEntity() instanceof EntityPlayer) {
          EntityLivingBase entity = (EntityLivingBase)fEvent.getEntity();

@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Interfaces.IEnchantmentRune;
@@ -20,7 +21,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentRune_ArrowPiercing extends EnchantmentBase implements IEnchantmentRune {
    public EnchantmentRune_ArrowPiercing() {
@@ -49,10 +49,11 @@ public class EnchantmentRune_ArrowPiercing extends EnchantmentBase implements IE
       return TextFormatting.GREEN.toString();
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, EventPriority.HIGHEST, true, this::onEvent);
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, false, this::onArrowPierce);
+   }
+
    public void onEvent(EntityJoinWorldEvent event) {
       if (event.getEntity() instanceof EntityArrow) {
          EntityArrow arrow = (EntityArrow)event.getEntity();
@@ -84,9 +85,6 @@ public class EnchantmentRune_ArrowPiercing extends EnchantmentBase implements IE
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public void onArrowPierce(LivingHurtEvent e) {
       if (e.getSource().damageType == "arrow" || !e.getSource().isUnblockable()) {
          if (e.getSource().getImmediateSource() instanceof EntityArrow) {

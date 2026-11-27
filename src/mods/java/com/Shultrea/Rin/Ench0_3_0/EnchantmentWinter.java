@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Interfaces.IWeatherEnchantment;
@@ -17,7 +18,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentWinter extends EnchantmentBase implements IWeatherEnchantment {
    public EnchantmentWinter() {
@@ -50,9 +50,10 @@ public class EnchantmentWinter extends EnchantmentBase implements IWeatherEnchan
       return EnchantmentHelper.getEnchantmentLevel(Smc_030.Winter, stack);
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, false, this::HandleEnchant);
+   }
+
    public void HandleEnchant(LivingHurtEvent fEvent) {
       float SkyDamage = 0.0F;
       if (fEvent.getSource().damageType == "player" || fEvent.getSource().damageType == "mob") {

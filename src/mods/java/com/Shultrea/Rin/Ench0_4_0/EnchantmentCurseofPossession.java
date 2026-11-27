@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_040;
 import com.Shultrea.Rin.Interfaces.IEnchantmentCurse;
@@ -18,7 +19,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
@@ -64,9 +64,11 @@ public class EnchantmentCurseofPossession extends EnchantmentBase implements IEn
    private void damagePlayer(EntityPlayer player) {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST
-   )
+   public void register(EventBus bus) {
+      bus.register(ItemTossEvent.class, EventPriority.HIGHEST, false, this::toss);
+      bus.register(WorldTickEvent.class, this::onExist);
+   }
+
    public void toss(ItemTossEvent event) {
       EntityItem item = event.getEntityItem();
       ItemStack theThrown = item.getItem().copy();
@@ -90,7 +92,6 @@ public class EnchantmentCurseofPossession extends EnchantmentBase implements IEn
       }
    }
 
-   @SubscribeEvent
    public void onExist(WorldTickEvent event) {
       if (event.phase != Phase.START) {
          int dimension = event.world.provider.getDimension();

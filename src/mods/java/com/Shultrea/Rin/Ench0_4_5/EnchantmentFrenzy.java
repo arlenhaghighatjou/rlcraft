@@ -1,9 +1,10 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
-import java.util.Collections;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -16,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentFrenzy extends EnchantmentBase {
    public EnchantmentFrenzy() {
@@ -41,9 +41,10 @@ public class EnchantmentFrenzy extends EnchantmentBase {
       return this.getMinEnchantability(par1) + 30;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingAttackEvent.class, EventPriority.LOWEST, false, this::onAttack);
+   }
+
    public void onAttack(LivingAttackEvent event) {
       if (!event.isCanceled() && event.getAmount() > 0.0F && event.getSource().getTrueSource() != null && event.getSource().damageType.equals("player")) {
          World world = event.getEntityLiving().world;
@@ -62,7 +63,7 @@ public class EnchantmentFrenzy extends EnchantmentBase {
          boolean roll = random.nextInt(10) < level * 200;
          if (roll) {
             List list = world.getEntitiesWithinAABBExcludingEntity(attacker, victim.getEntityBoundingBox().grow((double)(5 + level * 5), (double)(5 + level * 5), (double)(5 + level * 5)));
-            Collections.shuffle(list);
+            ThreadLocalRandom.current().shuffle(list);
 
             for(int x = 0; x < list.size(); ++x) {
                if (list.get(x) instanceof EntityLivingBase) {

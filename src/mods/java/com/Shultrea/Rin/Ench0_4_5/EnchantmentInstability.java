@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_5;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Interfaces.IDamageMultiplier;
@@ -13,7 +14,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentInstability extends EnchantmentBase implements IDamageMultiplier {
    public EnchantmentInstability() {
@@ -46,9 +46,10 @@ public class EnchantmentInstability extends EnchantmentBase implements IDamageMu
       return true;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public void register(EventBus bus) {
+      bus.register(LivingDamageEvent.class, EventPriority.LOWEST, false, this::onAttack);
+   }
+
    public void onAttack(LivingDamageEvent e) {
       if (!e.isCanceled() && e.getAmount() > 0.0F && e.getSource().getTrueSource() != null && e.getSource().damageType.equals("player")) {
          EntityLivingBase attacker = (EntityLivingBase)e.getSource().getTrueSource();

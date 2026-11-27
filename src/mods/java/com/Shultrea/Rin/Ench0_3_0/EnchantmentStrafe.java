@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_3_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enchantments_Sector.Smc_030;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -19,7 +20,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent.Tick;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentStrafe extends EnchantmentBase {
    public EnchantmentStrafe() {
@@ -48,10 +48,11 @@ public class EnchantmentStrafe extends EnchantmentBase {
       return fTest != Enchantments.INFINITY && fTest != Enchantments.PUNCH && fTest != Smc_030.AdvancedPunch ? super.canApplyTogether(fTest) : false;
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Tick.class, EventPriority.HIGHEST, true, this::onEvent);
+      bus.register(LivingHurtEvent.class, EventPriority.HIGHEST, true, this::onEvent);
+   }
+
    public void onEvent(Tick event) {
       EntityLivingBase entity = event.getEntityLiving();
       ItemStack bow = event.getItem();
@@ -81,10 +82,6 @@ public class EnchantmentStrafe extends EnchantmentBase {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
    public void onEvent(LivingHurtEvent fEvent) {
       if (fEvent.getSource().getDamageType().equals("arrow")) {
          if (fEvent.getSource().getImmediateSource() instanceof EntityArrow) {

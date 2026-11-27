@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Enchantments_Sector;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
 import com.Shultrea.Rin.Prop_Sector.ArrowPropertiesHandler;
@@ -7,17 +8,17 @@ import com.Shultrea.Rin.Utility_Sector.AdditionalProtectionEnchantmentsEffects;
 import com.Shultrea.Rin.Utility_Sector.ExtraEvent;
 import com.Shultrea.Rin.Utility_Sector.HurtPatchHandler;
 import com.Shultrea.Rin.Utility_Sector.OtherHandler;
+import com.google.common.collect.Sets;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class OrderedRegistry {
    public static Set<EnchantmentBase> orderedEnchants = new LinkedHashSet();
+   private static final Set<EnchantmentBase> subscribed = Sets.newIdentityHashSet();
 
    public OrderedRegistry() {
    }
@@ -119,11 +120,11 @@ public class OrderedRegistry {
       subscribe(Smc_020.Rune_MagicalBlessing);
       subscribe(Smc_010.Rune_PiercingCapabilities);
       subscribe(Smc_040.EnchantmentMastery);
-      MinecraftForge.EVENT_BUS.register(new HurtPatchHandler());
-      MinecraftForge.EVENT_BUS.register(new OtherHandler());
-      MinecraftForge.EVENT_BUS.register(new ArrowPropertiesHandler());
-      MinecraftForge.EVENT_BUS.register(new AdditionalProtectionEnchantmentsEffects());
-      MinecraftForge.EVENT_BUS.register(new ExtraEvent());
+      (new HurtPatchHandler()).register(MinecraftForge.EVENT_BUS);
+      (new OtherHandler()).register(MinecraftForge.EVENT_BUS);
+      (new ArrowPropertiesHandler()).register(MinecraftForge.EVENT_BUS);
+      (new AdditionalProtectionEnchantmentsEffects()).register(MinecraftForge.EVENT_BUS);
+      (new ExtraEvent()).register(MinecraftForge.EVENT_BUS);
    }
 
    public static EnchantmentBase registerEnchant(EnchantmentBase enchant) {
@@ -139,8 +140,8 @@ public class OrderedRegistry {
    }
 
    public static void subscribe(EnchantmentBase o) {
-      if (o.isEnabled()) {
-         MinecraftForge.EVENT_BUS.register(o);
+      if (o.isEnabled() && subscribed.add(o)) {
+         o.register(MinecraftForge.EVENT_BUS);
       }
 
    }
@@ -153,14 +154,14 @@ public class OrderedRegistry {
       }
    }
 
-   @EventBusSubscriber(
-      modid = "somanyenchantments"
-   )
    public static class EventSubscriber {
       public EventSubscriber() {
       }
 
-      @SubscribeEvent
+      public static void register(EventBus bus) {
+         bus.registerGeneric(Register.class, Enchantment.class, EventSubscriber::registerEnchantment);
+      }
+
       public static void registerEnchantment(Register<Enchantment> event) {
          IForgeRegistry<Enchantment> registry = event.getRegistry();
 

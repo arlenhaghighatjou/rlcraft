@@ -1,5 +1,6 @@
 package com.Shultrea.Rin.Ench0_4_0;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.Shultrea.Rin.Enchantment_Base_Sector.EnchantmentBase;
 import com.Shultrea.Rin.Enum.EnumList;
 import com.Shultrea.Rin.Main_Sector.ModConfig;
@@ -11,7 +12,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.AnvilUpdateEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EnchantmentUpgradedPotentials extends EnchantmentBase {
    public EnchantmentUpgradedPotentials() {
@@ -40,7 +40,10 @@ public class EnchantmentUpgradedPotentials extends EnchantmentBase {
       return false;
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(AnvilUpdateEvent.class, this::onAnvilAttach);
+   }
+
    public void onAnvilAttach(AnvilUpdateEvent event) {
       ItemStack left = event.getLeft();
       ItemStack right = event.getRight();
