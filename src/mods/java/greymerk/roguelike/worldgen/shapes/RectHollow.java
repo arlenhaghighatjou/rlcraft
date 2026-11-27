@@ -31,7 +31,7 @@ public class RectHollow implements IShape {
    }
 
    public IShape fill(WorldEditor editor, BlockBrush block, boolean fillAir, boolean replaceSolid) {
-      super.fill(editor, block, fillAir, replaceSolid);
+      IShape.super.fill(editor, block, fillAir, replaceSolid);
       Coord innerStart = this.start.copy();
       Coord innerEnd = this.end.copy();
       Coord.correct(innerStart, innerEnd);

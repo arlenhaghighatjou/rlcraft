@@ -1,9 +1,10 @@
 package greymerk.roguelike;
 
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.github.fnar.minecraft.EffectType;
 import com.github.fnar.util.Pair;
 import com.github.fnar.util.ReportThisIssueException;
-import com.google.common.primitives.Ints;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.monster.EntityProfiler1_12;
 import java.util.Arrays;
@@ -20,13 +21,15 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityJoinWorld1_12 {
    public EntityJoinWorld1_12() {
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(EntityJoinWorldEvent.class, this::OnEntityJoinWorld);
+   }
+
    public void OnEntityJoinWorld(EntityJoinWorldEvent event) {
       try {
          equipMobIfSpawnedByRoguelikeSpawner(event);
@@ -62,7 +65,7 @@ public class EntityJoinWorld1_12 {
    }
 
    private static void applyMobProfile(World world, EntityLiving entity) {
-      int level = Ints.constrainToRange(getRoguelikeLevel(entity), 0, 4);
+      int level = MathHelper.clamp(getRoguelikeLevel(entity), 0, 4);
       int difficulty = world.getDifficulty().ordinal();
       EntityLiving newEntity = EntityProfiler1_12.applyProfile(entity, level, world.rand, difficulty);
       if (newEntity != null) {

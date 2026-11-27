@@ -6,7 +6,6 @@ import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class VineBlock extends SingleBlockBrush {
    public VineBlock() {
@@ -19,7 +18,7 @@ public class VineBlock extends SingleBlockBrush {
       } else {
          ArrayList<Direction> directions = new ArrayList(Direction.CARDINAL);
          directions.add(Direction.UP);
-         Collections.shuffle(directions, editor.getRandom());
+         editor.getRandom().shuffle(directions);
 
          for(Direction dir : directions) {
             if (dir == Direction.DOWN) {

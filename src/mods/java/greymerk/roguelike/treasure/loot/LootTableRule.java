@@ -1,6 +1,5 @@
 package greymerk.roguelike.treasure.loot;
 
-import com.google.common.base.Predicates;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -108,7 +107,7 @@ public class LootTableRule {
    }
 
    private List<TreasureChest> getMatching(TreasureManager treasureManager) {
-      return treasureManager.findChests(Predicates.and(new com.google.common.base.Predicate[]{TreasureChest::isNotEmpty, this::isChestLevel, this::isChestType}));
+      return treasureManager.findChests(((Predicate<TreasureChest>)TreasureChest::isNotEmpty).and(this::isChestLevel).and(this::isChestType));
    }
 
    private boolean isChestType(TreasureChest chest) {

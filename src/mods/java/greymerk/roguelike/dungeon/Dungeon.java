@@ -283,7 +283,7 @@ public class Dungeon {
    }
 
    public void linkLevels(WorldEditor editor) {
-      this.getLevels().stream().reduce((Object)null, (prev, level) -> {
+      this.getLevels().stream().reduce((DungeonLevel)null, (prev, level) -> {
          return level.generateLinkers(editor, prev);
       });
    }

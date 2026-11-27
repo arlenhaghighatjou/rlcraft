@@ -28,7 +28,7 @@ public class TreasureManager {
    public void addItemToAll(Predicate<TreasureChest> chestPredicate, IWeighted<RldItemStack> items, int amount) {
       this.findChests(chestPredicate).forEach((chest) -> {
          IntStream.range(0, amount).mapToObj((i) -> {
-            return (void)((RldItemStack)items.get(this.random));
+            return (RldItemStack)items.get(this.random);
          }).forEach(chest::setRandomEmptySlot);
       });
    }
@@ -37,7 +37,7 @@ public class TreasureManager {
       List<TreasureChest> chests = this.findChests(chestPredicate);
       if (!chests.isEmpty()) {
          IntStream.range(0, amount).mapToObj((i) -> {
-            return (void)((RldItemStack)items.get(this.random));
+            return (RldItemStack)items.get(this.random);
          }).forEach((item) -> {
             this.addItemToRandomChest(chests, item);
          });
@@ -69,6 +69,6 @@ public class TreasureManager {
    }
 
    public static Predicate<TreasureChest> onLevelAndNotEmpty(int level) {
-      return (TreasureChest::isNotEmpty).and(isOnLevel(level));
+      return ((Predicate<TreasureChest>)TreasureChest::isNotEmpty).and(isOnLevel(level));
    }
 }

@@ -95,7 +95,7 @@ public class SettingsContainer {
    }
 
    public Collection<DungeonSettings> getCustomSettings() {
-      return (Collection)this.settingsByNamespace.entrySet().stream().filter((this::isBuiltIn).negate()).map(Entry::getValue).map(Map::values).flatMap(Collection::stream).collect(Collectors.toList());
+      return (Collection)this.settingsByNamespace.entrySet().stream().filter(((Predicate<Entry<String, Map<String, DungeonSettings>>>)this::isBuiltIn).negate()).map(Entry::getValue).map(Map::values).flatMap(Collection::stream).collect(Collectors.toList());
    }
 
    public DungeonSettings get(SettingIdentifier id) {

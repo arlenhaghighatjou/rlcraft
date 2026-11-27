@@ -210,27 +210,27 @@ public class Mob {
    }
 
    public RldItem getMainhand() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.MAINHAND)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.MAINHAND)).map(RldItemStack::getItem).orElse(null);
    }
 
    public RldItem getOffhand() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.OFFHAND)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.OFFHAND)).map(RldItemStack::getItem).orElse(null);
    }
 
    public RldItem getBoots() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.FEET)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.FEET)).map(RldItemStack::getItem).orElse(null);
    }
 
    public RldItem getLeggings() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.LEGS)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.LEGS)).map(RldItemStack::getItem).orElse(null);
    }
 
    public RldItem getChestplate() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.CHEST)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.CHEST)).map(RldItemStack::getItem).orElse(null);
    }
 
    public RldItem getHelmet() {
-      return (RldItem)Optional.ofNullable(this.items.get(Slot.HEAD)).map(RldItemStack::getItem).orElse((Object)null);
+      return (RldItem)Optional.ofNullable(this.items.get(Slot.HEAD)).map(RldItemStack::getItem).orElse(null);
    }
 
    public void setMobType(MobType mobType) {

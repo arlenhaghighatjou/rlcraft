@@ -75,10 +75,7 @@ public class PitRoom extends BaseRoom {
          Coord end = at.copy().translate(outward, 6).translate(outward.right()).up(3);
          RectSolid trapRect = RectSolid.newRect(start, end);
          List<Coord> trapCoords = trapRect.asList();
-         Stream var10000 = trapCoords.stream();
-         WorldEditor var10001 = this.worldEditor;
-         this.worldEditor.getClass();
-         boolean isValidTrapLocation = var10000.noneMatch(var10001::isAirBlock);
+         boolean isValidTrapLocation = trapCoords.stream().noneMatch(this.worldEditor::isAirBlock);
          if (isValidTrapLocation) {
             trapCoords.forEach((block) -> {
                this.primaryWallBrush().stroke(this.worldEditor, block);

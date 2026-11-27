@@ -82,7 +82,7 @@ public class LevelLayout {
    }
 
    private DungeonNode findFirstConnectingNode() {
-      return (DungeonNode)this.getNodes().stream().filter(this::isNotEdgeNode).filter(DungeonNode::isNotYetGenerated).findFirst().orElse((Object)null);
+      return (DungeonNode)this.getNodes().stream().filter(this::isNotEdgeNode).filter(DungeonNode::isNotYetGenerated).findFirst().orElse(null);
    }
 
    private boolean overlaps(DungeonNode node, int size) {

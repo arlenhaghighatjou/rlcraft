@@ -63,7 +63,7 @@ public class EntityProfiler1_12 {
                newEntity.setItemStackToSlot(slot, toTrade);
             }
 
-            mob.getItems().forEach((slotx, rldItemStack) -> {
+            mob.getItems().forEach((slot, rldItemStack) -> {
                EntityEquipmentSlot equipmentSlot = (new SlotMapper1_12()).map(slot);
                ItemStack item = (new ItemMapper1_12()).map(rldItemStack);
                newEntity.setItemStackToSlot(equipmentSlot, item);

@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.rooms.prototype;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.github.fnar.minecraft.block.BlockType;
 import com.github.fnar.minecraft.block.SingleBlockBrush;
 import com.github.fnar.minecraft.block.normal.StairsBlock;
@@ -16,7 +17,6 @@ import greymerk.roguelike.worldgen.WorldEditor;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MessRoom extends BaseRoom {
@@ -83,7 +83,7 @@ public class MessRoom extends BaseRoom {
          }
       }
 
-      Collections.shuffle(nonDoors);
+      ThreadLocalRandom.current().shuffle(nonDoors);
       switch(nonDoors.size()) {
       case 3:
          this.sideTable((Direction)nonDoors.get(2), at);

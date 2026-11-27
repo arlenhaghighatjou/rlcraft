@@ -1,5 +1,7 @@
 package greymerk.roguelike.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+
 public enum TextFormat {
    BLACK('0'),
    DARKBLUE('1'),
@@ -35,6 +37,6 @@ public enum TextFormat {
    }
 
    public String apply(String text) {
-      return String.format("\u00c2\u00a7%s%s", this.getCodeChar(), text);
+      return HString.format("\u00c2\u00a7%s%s", this.getCodeChar(), text);
    }
 }

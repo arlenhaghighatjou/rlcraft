@@ -1,5 +1,6 @@
 package greymerk.roguelike.command.routes;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import greymerk.roguelike.command.CommandBase;
 import greymerk.roguelike.command.CommandContext1_12;
 import greymerk.roguelike.command.CommandRouteBase;
@@ -102,7 +103,7 @@ public class CommandRouteDungeon extends CommandRouteBase {
    private void generateDungeon(CommandContext1_12 context, Coord coord, WorldEditor editor, DungeonSettings dungeonSettings) {
       Dungeon dungeon = new Dungeon(editor);
       dungeon.generate(dungeonSettings, coord);
-      context.sendSuccess(String.format("Successfully generated dungeon with id %s at %s.%n", dungeonSettings.getId(), coord));
+      context.sendSuccess(HString.format("Successfully generated dungeon with id %s at %s.%n", dungeonSettings.getId(), coord));
    }
 
    private String getSettingName(ArgumentParser argumentParser) {

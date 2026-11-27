@@ -1,10 +1,10 @@
 package greymerk.roguelike.worldgen;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.Lists;
 import greymerk.roguelike.worldgen.shapes.RectHollow;
 import greymerk.roguelike.worldgen.shapes.RectSolid;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 import java.util.stream.Collectors;
@@ -51,7 +51,7 @@ public class Coord {
 
    public static List<Coord> randomFrom(List<Coord> coords, int limit, EaglercraftRandom random) {
       ArrayList<Coord> coordsShuffled = Lists.newArrayList(coords);
-      Collections.shuffle(coordsShuffled, random);
+      random.shuffle(coordsShuffled);
       return (List)coordsShuffled.stream().limit((long)limit).collect(Collectors.toList());
    }
 
@@ -192,7 +192,7 @@ public class Coord {
    }
 
    public String toString() {
-      return String.format("{\"x\": %d, \"y\": %d, \"z\": %d}", this.x, this.y, this.z);
+      return HString.format("{\"x\": %d, \"y\": %d, \"z\": %d}", this.x, this.y, this.z);
    }
 
    public RectSolid newRect(int radius) {

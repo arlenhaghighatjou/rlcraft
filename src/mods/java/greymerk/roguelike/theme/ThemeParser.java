@@ -21,8 +21,8 @@ public class ThemeParser {
 
    public static Theme parse(JsonObject json) throws DungeonSettingParseException {
       Theme theme = parseThemeBase(json);
-      BlockSet primaryBlockSet = (BlockSet)Optional.ofNullable(parsePrimaryBlockSet(json, theme)).orElse(Optional.ofNullable(theme).map(Theme::getPrimary).orElse((Object)null));
-      BlockSet secondaryBlockSet = (BlockSet)Optional.ofNullable(parseSecondaryBlockSet(json, theme)).orElse(Optional.ofNullable(theme).map(Theme::getSecondary).orElse((Object)null));
+      BlockSet primaryBlockSet = (BlockSet)Optional.ofNullable(parsePrimaryBlockSet(json, theme)).orElse(Optional.ofNullable(theme).map(Theme::getPrimary).orElse(null));
+      BlockSet secondaryBlockSet = (BlockSet)Optional.ofNullable(parseSecondaryBlockSet(json, theme)).orElse(Optional.ofNullable(theme).map(Theme::getSecondary).orElse(null));
       return new Theme(primaryBlockSet, secondaryBlockSet);
    }
 

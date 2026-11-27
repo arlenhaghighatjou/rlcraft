@@ -1,18 +1,13 @@
 package greymerk.roguelike.dungeon.settings;
 
-import com.google.common.base.Charsets;
-import com.google.common.collect.Lists;
-import com.google.common.io.Files;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import greymerk.roguelike.config.RogueConfig;
 import greymerk.roguelike.util.WeightedChoice;
 import greymerk.roguelike.util.WeightedRandomizer;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,43 +28,33 @@ public class SettingsResolver {
    }
 
    public static SettingsResolver initSettingsResolver() throws Exception {
-      File settingsDirectoryFile = new File("config/roguelike_dungeons/settings");
-      if (settingsDirectoryFile.exists() && !settingsDirectoryFile.isDirectory()) {
-         throw new Exception("Settings directory is a file");
-      } else {
-         if (!settingsDirectoryFile.exists()) {
-            settingsDirectoryFile.mkdir();
-         }
-
-         Map<String, String> fileByName = collectSettingsFiles(settingsDirectoryFile);
-         SettingsContainer settings = new SettingsContainer(fileByName);
-         return new SettingsResolver(settings);
-      }
+      VFile2 settingsDirectoryFile = new VFile2("config/roguelike_dungeons/settings");
+      Map<String, String> fileByName = collectSettingsFiles(settingsDirectoryFile);
+      SettingsContainer settings = new SettingsContainer(fileByName);
+      return new SettingsResolver(settings);
    }
 
-   private static Map<String, String> collectSettingsFiles(File settingsDirectory) {
-      List<File> files = listFilesRecursively(settingsDirectory);
+   private static Map<String, String> collectSettingsFiles(VFile2 settingsDirectory) {
+      List<VFile2> files = listFilesRecursively(settingsDirectory);
       return mapContentByFilename(files);
    }
 
-   private static List<File> listFilesRecursively(File settingsDirectory) {
-      File[] files = settingsDirectory.listFiles();
-      return Optional.ofNullable(files).isPresent() ? (List)Lists.newArrayList(files).stream().flatMap((file) -> {
-         return file.isDirectory() ? listFilesRecursively(file).stream() : Lists.newArrayList(new File[]{file}).stream();
-      }).filter((file) -> {
+   private static List<VFile2> listFilesRecursively(VFile2 settingsDirectory) {
+      return (List)settingsDirectory.listFiles(true).stream().filter((file) -> {
          return FilenameUtils.getExtension(file.getName()).equals("json");
-      }).collect(Collectors.toList()) : Collections.emptyList();
+      }).collect(Collectors.toList());
    }
 
-   private static Map<String, String> mapContentByFilename(List<File> files) {
-      return (Map)files.stream().collect(Collectors.toMap(File::getAbsolutePath, SettingsResolver::getFileContent));
+   private static Map<String, String> mapContentByFilename(List<VFile2> files) {
+      return (Map)files.stream().collect(Collectors.toMap(VFile2::getPath, SettingsResolver::getFileContent));
    }
 
-   private static String getFileContent(File file) {
-      try {
-         return Files.toString(file, Charsets.UTF_8);
-      } catch (IOException var2) {
+   private static String getFileContent(VFile2 file) {
+      String content = file.getAllChars();
+      if (content == null) {
          throw new RuntimeException("Error reading file : " + file.getName());
+      } else {
+         return content;
       }
    }
 
@@ -90,10 +75,7 @@ public class SettingsResolver {
    }
 
    public DungeonSettings processInheritance(DungeonSettings dungeonSettings) {
-      Stream var10000 = dungeonSettings.getInherit().stream();
-      SettingsContainer var10001 = this.settingsContainer;
-      this.settingsContainer.getClass();
-      DungeonSettings accumulatedInheritedSettings = (DungeonSettings)var10000.map(var10001::get).map(this::processInheritance).reduce(new DungeonSettings(), (accumulation, toInherit) -> {
+      DungeonSettings accumulatedInheritedSettings = (DungeonSettings)dungeonSettings.getInherit().stream().map(this.settingsContainer::get).map(this::processInheritance).reduce(new DungeonSettings(), (accumulation, toInherit) -> {
          return toInherit.inherit(accumulation);
       });
       return dungeonSettings.inherit(accumulatedInheritedSettings);

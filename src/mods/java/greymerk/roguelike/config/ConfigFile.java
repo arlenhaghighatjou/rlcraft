@@ -1,12 +1,11 @@
 package greymerk.roguelike.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import java.nio.charset.StandardCharsets;
+import java.io.StringReader;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import net.lax1dude.eaglercraft.v1_8.log4j.LogManager;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
 
@@ -18,7 +17,7 @@ public class ConfigFile {
 
    public static void read(ConfigurationMap configFile, String filename) {
       try {
-         BufferedReader reader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(filename))));
+         BufferedReader reader = new BufferedReader(new StringReader((new VFile2(filename)).getAllChars()));
 
          while(true) {
             Configuration config = INIParser.readLine(reader);
@@ -35,9 +34,7 @@ public class ConfigFile {
    }
 
    public static void write(ConfigurationMap configFile, String filename) throws Exception {
-      FileOutputStream stream = new FileOutputStream(filename, true);
-      stream.getChannel().truncate(0L);
-      BufferedWriter buffered = new BufferedWriter(new OutputStreamWriter(stream));
+      BufferedWriter buffered = new BufferedWriter(new OutputStreamWriter((new VFile2(filename)).getOutputStream(), StandardCharsets.UTF_8));
 
       for(Configuration configuration : configFile.asList()) {
          INIParser.write(configuration, buffered);

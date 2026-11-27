@@ -1,8 +1,8 @@
 package greymerk.roguelike.treasure.loot;
 
+import net.minecraft.util.math.MathHelper;
 import com.github.fnar.minecraft.item.RldBaseItem;
 import com.github.fnar.minecraft.item.RldItemStack;
-import com.google.common.primitives.Ints;
 import greymerk.roguelike.util.IWeighted;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
 
@@ -33,7 +33,7 @@ public class MinecraftItemLootItem implements Comparable<MinecraftItemLootItem>,
    }
 
    public MinecraftItemLootItem withEnchantmentsOfLevel(int level) {
-      this.enchantingLevel = Ints.constrainToRange(level, 0, 30);
+      this.enchantingLevel = MathHelper.clamp(level, 0, 30);
       return this;
    }
 

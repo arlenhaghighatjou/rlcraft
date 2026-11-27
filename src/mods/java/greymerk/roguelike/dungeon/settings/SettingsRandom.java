@@ -75,21 +75,15 @@ public class SettingsRandom extends DungeonSettings {
       level.setRange(60);
       level.setScatter(15);
       level.setTheme(Themes.random(random));
-      Stream var10000 = RoomType.getIntersections().stream().map((roomType) -> {
+      (RoomType.getIntersections().stream().map((roomType) -> {
          return roomType.newRandomRoomSetting(1);
-      });
-      RoomsSetting var10001 = level.getRooms();
-      var10000.forEach(var10001::add);
-      var10000 = RoomType.getSecrets().stream().map((roomType) -> {
+      })).forEach(level.getRooms()::add);
+      (RoomType.getSecrets().stream().map((roomType) -> {
          return roomType.newRandomRoomSetting(1);
-      });
-      SecretsSetting var6 = level.getSecrets();
-      var10000.forEach(var6::add);
-      var10000 = Arrays.stream(Segment.values()).map((segment) -> {
+      })).forEach(level.getSecrets()::add);
+      (Arrays.stream(Segment.values()).map((segment) -> {
          return (new SegmentGenerator()).with(segment, 1);
-      });
-      SegmentGenerator var7 = level.getSegments();
-      var10000.forEach(var7::add);
+      })).forEach(level.getSegments()::add);
       return level;
    }
 }

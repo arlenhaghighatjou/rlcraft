@@ -24,6 +24,7 @@ public abstract class RldBaseItemMapper1_12<T extends RldBaseItem> extends BaseI
          itemStack = enchantItem(RAND, itemStack, rldItem.getPlzEnchantLevel());
       }
 
+      ItemStack finalItemStack = itemStack;
       rldItem.getEnchantments().forEach((enchantment) -> {
          finalItemStack.addEnchantment(this.enchantmentMapper.map(enchantment), enchantment.getLevel());
       });

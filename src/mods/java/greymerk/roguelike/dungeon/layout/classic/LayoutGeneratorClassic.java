@@ -88,9 +88,7 @@ public class LayoutGeneratorClassic implements LayoutGenerator {
    }
 
    boolean hasNodeNearby(Coord coord) {
-      Stream var10000 = this.graphNodes.stream().map(Node::getPos);
-      coord.getClass();
-      return var10000.mapToInt(coord::distanceAsInt).anyMatch((distance) -> {
+      return this.graphNodes.stream().map(Node::getPos).mapToInt(coord::distanceAsInt).anyMatch((distance) -> {
          return distance < this.scatter;
       });
    }

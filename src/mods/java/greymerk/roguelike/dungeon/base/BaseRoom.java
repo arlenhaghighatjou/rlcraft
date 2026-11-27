@@ -218,10 +218,7 @@ public abstract class BaseRoom {
    }
 
    public boolean isValidLocation(Coord at, Direction facing) {
-      Stream var10000 = at.newHollowRect(this.getWallDist()).withHeight(this.getHeight()).down(this.getDepth()).asList().stream();
-      WorldEditor var10001 = this.worldEditor;
-      this.worldEditor.getClass();
-      return var10000.allMatch(var10001::isSolidBlock);
+      return at.newHollowRect(this.getWallDist()).withHeight(this.getHeight()).down(this.getDepth()).asList().stream().allMatch(this.worldEditor::isSolidBlock);
    }
 
    protected RoomSetting getRoomSetting() {

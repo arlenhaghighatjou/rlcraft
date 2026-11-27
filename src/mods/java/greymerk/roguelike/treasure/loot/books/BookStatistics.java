@@ -29,7 +29,7 @@ public class BookStatistics extends Book {
       int[] counter = new int[]{0};
       StringBuilder[] page = new StringBuilder[]{new StringBuilder()};
       Set<Entry<BlockType, Integer>> entries = stats.entrySet();
-      entries.stream().sorted(Comparator.comparingInt(Entry::getValue).reversed()).forEach((entry) -> {
+      entries.stream().sorted(Comparator.comparingInt((Entry<BlockType, Integer> entry) -> entry.getValue()).reversed()).forEach((entry) -> {
          BlockType blockType = (BlockType)entry.getKey();
          Integer count = (Integer)entry.getValue();
          String name = StringUtils.abbreviate(blockType.toString(), 16);

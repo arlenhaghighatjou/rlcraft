@@ -265,6 +265,7 @@ public class Loader
         mods.add(new FMLModContainer<>("wolfarmor", "Wolf Armor and Storage", "3.8.1+alpha.1", "", "", "wolfarmor", dev.satyrn.wolfarmor.WolfArmorMod::new, dev.satyrn.wolfarmor.WolfArmorMod::handleModStateEvent).guiFactory(dev.satyrn.wolfarmor.client.gui.config.WolfArmorGuiFactory::new));
         mods.add(new FMLModContainer<>("defiledlands", "Defiled Lands", "1.4.3", "required-after:baubles;after:tconstruct", "[1.12,1.13)", "defiledlands", lykrast.defiledlands.core.DefiledLands::new, lykrast.defiledlands.core.DefiledLands::handleModStateEvent));
         mods.add(new FMLModContainer<>("dynamictreesdefiledlands", "Dynamic Trees for Defiled Lands", "1.0", "required-after:dynamictrees@[1.12.2-0.9.21,);required-after:defiledlands", "[1.12.2]", "dynamictreesdefiledlands", maxhyper.dynamictreesdefiledlands.DynamicTreesDefiledLands::new, maxhyper.dynamictreesdefiledlands.DynamicTreesDefiledLands::handleModStateEvent));
+        mods.add(new FMLModContainer<>("roguelike", "Roguelike Dungeons -- Fnar Edition", "2.4.4", "", "[1.12.2]", "roguelike", com.github.fnar.roguelike.Roguelike::new, com.github.fnar.roguelike.Roguelike::handleModStateEvent).acceptableRemoteVersions("*"));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

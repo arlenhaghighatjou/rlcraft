@@ -1,5 +1,6 @@
 package greymerk.roguelike.dungeon.rooms;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import greymerk.roguelike.dungeon.base.RoomType;
@@ -25,7 +26,7 @@ public class RoomSettingParser {
 
    private static RoomType parseType(JsonObject roomSettingJson) {
       if (!roomSettingJson.has("type")) {
-         throw new RuntimeException(String.format("Room setting is missing a value for key '%s' which is required", "type"));
+         throw new RuntimeException(HString.format("Room setting is missing a value for key '%s' which is required", "type"));
       } else {
          return RoomType.valueOf(roomSettingJson.get("type").getAsString().toUpperCase());
       }

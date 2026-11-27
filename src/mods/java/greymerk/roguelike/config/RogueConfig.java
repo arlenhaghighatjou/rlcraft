@@ -1,9 +1,8 @@
 package greymerk.roguelike.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import com.github.fnar.util.Strings;
 import greymerk.roguelike.worldgen.VanillaStructure;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -171,18 +170,9 @@ public class RogueConfig {
 
    private static void init() {
       if (!testing) {
-         File configDir = new File("config/roguelike_dungeons");
-         if (!configDir.exists()) {
-            configDir.mkdir();
-         }
-
-         File cfile = new File("config/roguelike_dungeons/roguelike.cfg");
+         VFile2 cfile = new VFile2("config/roguelike_dungeons/roguelike.cfg");
          if (!cfile.exists()) {
-            try {
-               cfile.createNewFile();
-            } catch (IOException var5) {
-               var5.printStackTrace();
-            }
+            cfile.setAllBytes(new byte[0]);
          }
 
          try {

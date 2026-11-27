@@ -1,5 +1,6 @@
 package greymerk.roguelike.treasure;
 
+import net.lax1dude.eaglercraft.v1_8.ThreadLocalRandom;
 import com.github.fnar.minecraft.block.BlockType;
 import com.github.fnar.minecraft.item.RldItemStack;
 import greymerk.roguelike.dungeon.Dungeon;
@@ -8,7 +9,6 @@ import greymerk.roguelike.worldgen.BlockBrush;
 import greymerk.roguelike.worldgen.Coord;
 import greymerk.roguelike.worldgen.Direction;
 import greymerk.roguelike.worldgen.WorldEditor;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftRandom;
@@ -39,7 +39,7 @@ public class TreasureChest {
 
    public void setRandomEmptySlot(RldItemStack itemStack) {
       List<Integer> slots = (List)IntStream.range(0, this.worldEditor.getCapacity(this)).boxed().collect(Collectors.toList());
-      Collections.shuffle(slots);
+      ThreadLocalRandom.current().shuffle(slots);
       slots.stream().mapToInt((slot) -> {
          return slot.intValue();
       }).filter((slot) -> {

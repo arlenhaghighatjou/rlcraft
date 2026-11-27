@@ -34,16 +34,10 @@ public class TestDungeonSettings extends DungeonSettings {
       levelSettings.setRange(60);
       levelSettings.setScatter(15);
       levelSettings.setTheme(Themes.random(this.random));
-      Stream var10000 = Arrays.stream(RoomType.values()).map(RoomType::newSingleRoomSetting);
-      RoomsSetting var10001 = levelSettings.getRooms();
-      var10000.forEach(var10001::add);
-      var10000 = Arrays.stream(RoomType.values()).map(RoomType::newSingleRoomSetting);
-      SecretsSetting var5 = levelSettings.getSecrets();
-      var10000.forEach(var5::add);
-      var10000 = Arrays.stream(Segment.values()).map((segment) -> {
+      Arrays.stream(RoomType.values()).map(RoomType::newSingleRoomSetting).forEach(levelSettings.getRooms()::add);
+      Arrays.stream(RoomType.values()).map(RoomType::newSingleRoomSetting).forEach(levelSettings.getSecrets()::add);
+      (Arrays.stream(Segment.values()).map((segment) -> {
          return (new SegmentGenerator()).with(segment, 1);
-      });
-      SegmentGenerator var6 = levelSettings.getSegments();
-      var10000.forEach(var6::add);
+      })).forEach(levelSettings.getSegments()::add);
    }
 }

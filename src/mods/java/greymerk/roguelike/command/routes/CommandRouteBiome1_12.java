@@ -29,7 +29,7 @@ public class CommandRouteBiome1_12 extends CommandRouteBase {
          context.sendSpecial(biome.getBiomeName());
          Set<Type> biomeTypes = BiomeDictionary.getTypes(biome);
          String types = (String)biomeTypes.stream().map((type) -> {
-            return (void)(type.getName() + " ");
+            return type.getName() + " ";
          }).collect(Collectors.joining());
          context.sendSpecial(types);
       }
