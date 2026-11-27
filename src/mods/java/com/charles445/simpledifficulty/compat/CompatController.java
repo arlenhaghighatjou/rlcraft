@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 import com.charles445.simpledifficulty.compat.mod.SereneSeasonsModifier;
 import com.charles445.simpledifficulty.compat.mod.BaublesModifier;
 import com.charles445.simpledifficulty.compat.mod.FirstAidCompat;
+import com.charles445.simpledifficulty.compat.mod.InspirationsHandler;
 import com.charles445.simpledifficulty.compat.mod.AUWModifier;
 import com.charles445.simpledifficulty.compat.mod.AUWDynamicModifier;
 import com.charles445.simpledifficulty.SimpleDifficulty;
@@ -23,6 +24,7 @@ public class CompatController {
       Object auwModifier = newCompatObject("armorunder", AUWModifier::new);
       Object baublesModifier = newCompatObject("baubles", BaublesModifier::new);
       Object firstAidCompat = newCompatObject("firstaid", FirstAidCompat::new);
+      Object inspirationsHandler = newCompatObject("inspirations", InspirationsHandler::new);
       Object sereneSeasonsModifier = newCompatObject("sereneseasons", SereneSeasonsModifier::new);
       if (auwDynamicModifier instanceof ITemperatureDynamicModifier && auwModifier instanceof ITemperatureModifier) {
          SimpleDifficulty.logger.info("Armor Underwear Modifiers Enabled");
@@ -33,6 +35,10 @@ public class CompatController {
       if (baublesModifier instanceof ITemperatureModifier) {
          SimpleDifficulty.logger.info("Baubles Modifier Enabled");
          TemperatureRegistry.registerModifier((ITemperatureModifier)baublesModifier);
+      }
+
+      if (inspirationsHandler != null) {
+         SimpleDifficulty.logger.info("Inspirations Handler Enabled");
       }
 
       if (sereneSeasonsModifier instanceof ITemperatureModifier) {
