@@ -1,6 +1,6 @@
 package lykrast.defiledlands.core;
 
-import java.io.File;
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
 import lykrast.defiledlands.common.compat.ModCompat;
 import lykrast.defiledlands.common.init.ModBiomes;
 import lykrast.defiledlands.common.init.ModEntities;
@@ -19,8 +19,8 @@ public class CommonProxy {
 
    @EventHandler
    public void preInit(FMLPreInitializationEvent e) {
-      File directory = e.getModConfigurationDirectory();
-      config = new Configuration(new File(directory.getPath(), "defiled_lands.cfg"));
+      VFile2 directory = e.getModConfigurationDirectory();
+      config = new Configuration(new VFile2(directory, "defiled_lands.cfg"));
       Config.readConfig();
       ModEntities.init();
       ModCompat.preInitCompat();

@@ -1,17 +1,18 @@
 package lykrast.defiledlands.common.potion;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import lykrast.defiledlands.common.init.ModPotions;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber
 public class PotionHooks {
    public PotionHooks() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, PotionHooks::onHurt);
+   }
+
    public static void onHurt(LivingHurtEvent e) {
       if (e.getEntityLiving().isPotionActive(ModPotions.vulnerability)) {
          PotionEffect effect = e.getEntityLiving().getActivePotionEffect(ModPotions.vulnerability);

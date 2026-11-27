@@ -1,12 +1,11 @@
 package lykrast.defiledlands.client.render.entity.layers;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import lykrast.defiledlands.client.render.entity.RenderShamblerTwisted;
 import lykrast.defiledlands.common.entity.monster.EntityShamblerTwisted;
 import net.minecraft.client.Minecraft;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
 import net.lax1dude.eaglercraft.v1_8.opengl.OpenGlHelper;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,7 +24,7 @@ public class LayerShamblerTwistedEyes implements LayerRenderer<EntityShamblerTwi
       this.endermanRenderer.bindTexture(RES_ENDERMAN_EYES);
       GlStateManager.enableBlend();
       GlStateManager.disableAlpha();
-      GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.ONE);
+      GlStateManager.blendFunc(RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ONE);
       if (entitylivingbaseIn.isInvisible()) {
          GlStateManager.depthMask(false);
       } else {

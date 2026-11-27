@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import lykrast.defiledlands.common.block.BlockBlastem;
@@ -45,14 +46,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber
 public class ModBlocks {
+   private static List<Block> blockList = new ArrayList();
    public static Block stoneDefiled = registerBlock(new BlockCorrupted(Material.ROCK, SoundType.STONE, 1.5F, 30.0F, "pickaxe", 0), "stone_defiled");
    public static Block sandDefiled = registerBlock(new BlockFallingCorrupted(Material.SAND, SoundType.SAND, 0.5F, 2.5F, "shovel", 0), "sand_defiled");
    public static Block sandstoneDefiled = registerBlock(new BlockCorrupted(Material.ROCK, SoundType.STONE, 0.8F, 4.0F, "pickaxe", 0), "sandstone_defiled");
@@ -86,12 +85,15 @@ public class ModBlocks {
    public static Block scuronotte = registerBlock(new BlockScuronotte(), "scuronotte");
    public static Block healingPad = registerBlock(new BlockHealingPad(3.0F, 15.0F), "healing_pad");
    public static Block conjuringAltar = registerBlock(new BlockConjuringAltar(3.0F, 15.0F), "conjuring_altar");
-   private static List<Block> blockList = new ArrayList();
 
    public ModBlocks() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Block.class, ModBlocks::registerBlocks);
+      bus.register(ModelRegistryEvent.class, ModBlocks::registerModels);
+   }
+
    public static void registerBlocks(Register<Block> event) {
       for(Block b : blockList) {
          event.getRegistry().register(b);
@@ -99,7 +101,6 @@ public class ModBlocks {
 
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void registerModels(ModelRegistryEvent evt) {
       for(Block b : blockList) {
@@ -152,6 +153,6 @@ public class ModBlocks {
    }
 
    static {
-      GameRegistry.registerTileEntity(TileConjuringAltar.class, new ResourceLocation("defiledlands", "conjuring_altar"));
+      GameRegistry.registerTileEntity(TileConjuringAltar.class, new ResourceLocation("defiledlands", "conjuring_altar"), TileConjuringAltar::new);
    }
 }

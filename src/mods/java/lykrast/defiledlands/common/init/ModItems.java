@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import baubles.api.BaubleType;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +55,12 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber
 public class ModItems {
+   private static List<Item> itemList = new ArrayList();
+   static List<Item> itemBlockList = new ArrayList();
    public static Item tenebraDoor = registerItem(new ItemDoor(ModBlocks.tenebraDoor), "tenebra_door");
    public static Item hephaestite = registerItem(new ItemHephaestite(), "hephaestite");
    public static Item umbriumIngot = registerItem(new Item(), "umbrium_ingot");
@@ -136,8 +136,6 @@ public class ModItems {
    public static Item remorsefulGem = registerItem(new ItemSimpleFoiled(), "remorseful_gem");
    public static Item tearsFlame = registerItem(new ItemTears.Flame(2107), "tears_flame");
    public static Item tearsShulker = registerItem(new ItemTears.Shulker(2107), "tears_shulker");
-   private static List<Item> itemList = new ArrayList();
-   static List<Item> itemBlockList = new ArrayList();
    public static ToolMaterial materialUmbrium = EnumHelper.addToolMaterial("umbrium", 2, 302, 5.0F, 2.0F, 20).setRepairItem(new ItemStack(umbriumIngot));
    public static ToolMaterial materialScarlite = EnumHelper.addToolMaterial("scarlite", 3, 1561, 6.0F, 2.0F, 14).setRepairItem(new ItemStack(scarlite));
    public static ToolMaterial materialScarliteRazor = EnumHelper.addToolMaterial("scarlite_razor", 3, 31, 6.0F, -1.0F, 14).setRepairItem(new ItemStack(umbriumIngot));
@@ -149,7 +147,11 @@ public class ModItems {
    public ModItems() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Item.class, ModItems::registerItems);
+      bus.register(ModelRegistryEvent.class, ModItems::registerModels);
+   }
+
    public static void registerItems(Register<Item> event) {
       for(Item i : itemBlockList) {
          event.getRegistry().register(i);
@@ -162,7 +164,6 @@ public class ModItems {
       ModRecipes.initOreDict();
    }
 
-   @SubscribeEvent
    @SideOnly(Side.CLIENT)
    public static void registerModels(ModelRegistryEvent evt) {
       for(Item i : itemBlockList) {

@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 import lykrast.defiledlands.client.render.entity.RenderBlastemFruit;
@@ -33,14 +34,11 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@EventBusSubscriber
 public class ModEntities {
    private static int id = 1;
    private static List<EntityEntry> entityList = new ArrayList();
@@ -74,7 +72,10 @@ public class ModEntities {
       LootTableList.register(WorldGenDungeonsDefiled.LOOT);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, EntityEntry.class, ModEntities::registerEntities);
+   }
+
    public static void registerEntities(Register<EntityEntry> event) {
       for(EntityEntry e : entityList) {
          event.getRegistry().register(e);

@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,9 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.enchantment.Enchantment.Rarity;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber
 public class ModEnchantments {
+   private static List<Enchantment> enchantmentList = new ArrayList();
    public static final EnumEnchantmentType GUN = EnumHelper.addEnchantmentType("GUN", (item) -> {
       return item instanceof ItemGun;
    });
@@ -35,12 +34,14 @@ public class ModEnchantments {
    public static Enchantment destructive = register(new EnchantmentDestructive(Rarity.COMMON), "destructive");
    public static Enchantment safeguard = register(new EnchantmentSafeguard(Rarity.COMMON), "safeguard");
    public static Enchantment blazing = register(new EnchantmentBlazing(Rarity.VERY_RARE), "blazing");
-   private static List<Enchantment> enchantmentList = new ArrayList();
 
    public ModEnchantments() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Enchantment.class, ModEnchantments::registerEnchantments);
+   }
+
    public static void registerEnchantments(Register<Enchantment> event) {
       for(Enchantment e : enchantmentList) {
          event.getRegistry().register(e);

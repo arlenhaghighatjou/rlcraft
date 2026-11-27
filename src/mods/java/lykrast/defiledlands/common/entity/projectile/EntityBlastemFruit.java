@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.entity.projectile;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -16,7 +17,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.ExplosionEvent.Detonate;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityBlastemFruit extends EntityThrowable {
    protected float damage;
@@ -57,20 +57,17 @@ public class EntityBlastemFruit extends EntityThrowable {
    protected void explosion(boolean isFlaming) {
       final Explosion explosion = new EntityBlastemFruit.ExplosionBlastem(this.world, this, this.posX, this.posY, this.posZ, this.explosion, isFlaming, this.destructive);
       if (!ForgeEventFactory.onExplosionStart(this.world, explosion)) {
-         Object listener = new Object() {
-            @SubscribeEvent
-            public void onDetonate(Detonate event) {
-               if (event.getExplosion() == explosion) {
-                  event.getAffectedEntities().removeIf((ent) -> {
-                     return ent instanceof EntityItem;
-                  });
-               }
-
+         Consumer<Detonate> listener = (event) -> {
+            if (event.getExplosion() == explosion) {
+               event.getAffectedEntities().removeIf((ent) -> {
+                  return ent instanceof EntityItem;
+               });
             }
+
          };
 
          try {
-            MinecraftForge.EVENT_BUS.register(listener);
+            MinecraftForge.EVENT_BUS.register(Detonate.class, listener);
             explosion.doExplosionA();
          } finally {
             MinecraftForge.EVENT_BUS.unregister(listener);

@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import lykrast.defiledlands.common.util.Config;
 import lykrast.defiledlands.common.world.biome.BiomeDefiled;
 import lykrast.defiledlands.common.world.biome.BiomeDesertDefiled;
@@ -17,10 +18,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@EventBusSubscriber
 public class ModBiomes {
    public static BiomeDefiled desertDefiled = new BiomeDesertDefiled();
    public static BiomeDefiled plainsDefiled = new BiomePlainsDefiled();
@@ -33,7 +31,10 @@ public class ModBiomes {
    public ModBiomes() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, Biome.class, ModBiomes::registerBiomes);
+   }
+
    public static void registerBiomes(Register<Biome> event) {
       register(event, desertDefiled, BiomeType.DESERT, "desert_defiled", Config.weightDesertDefiled, Type.SPOOKY, Type.HOT, Type.DRY, Type.SANDY);
       register(event, plainsDefiled, BiomeType.WARM, "plains_defiled", Config.weightPlainsDefiled, Type.SPOOKY, Type.PLAINS);

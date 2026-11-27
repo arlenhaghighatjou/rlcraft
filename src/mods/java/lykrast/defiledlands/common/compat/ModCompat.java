@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.compat;
 
+import java.util.function.Supplier;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,18 +10,18 @@ import lykrast.defiledlands.core.DefiledLands;
 import net.minecraftforge.fml.common.Loader;
 
 public abstract class ModCompat {
-   public static HashMap<String, Class<? extends ModCompat>> compat = new HashMap();
+   public static HashMap<String, Supplier<? extends ModCompat>> compat = new HashMap();
    public static Set<ModCompat> compatLoaded = new HashSet();
 
    public ModCompat() {
    }
 
    public static void preInitCompat() {
-      for(Entry<String, Class<? extends ModCompat>> e : compat.entrySet()) {
-         if (Loader.isModLoaded((String)e.getKey())) {
+      for(Entry<String, Supplier<? extends ModCompat>> e : compat.entrySet()) {
+         if (e.getValue() != null && Loader.isModLoaded((String)e.getKey())) {
             try {
                if (((Boolean)Config.compatEnabled.get(e.getKey())).booleanValue()) {
-                  ModCompat c = (ModCompat)((Class)e.getValue()).newInstance();
+                  ModCompat c = (ModCompat)((Supplier)e.getValue()).get();
                   compatLoaded.add(c);
                   c.preInit();
                }
@@ -56,9 +57,9 @@ public abstract class ModCompat {
    }
 
    static {
-      compat.put("chisel", CompatChisel.class);
-      compat.put("projecte", CompatProjectE.class);
-      compat.put("immersiveengineering", CompatImmersiveEngineering.class);
-      compat.put("tconstruct", CompatTinkersConstruct.class);
+      compat.put("chisel", CompatChisel::new);
+      compat.put("projecte", null);
+      compat.put("immersiveengineering", null);
+      compat.put("tconstruct", null);
    }
 }

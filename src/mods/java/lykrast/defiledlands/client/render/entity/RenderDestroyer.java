@@ -1,10 +1,9 @@
 package lykrast.defiledlands.client.render.entity;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import lykrast.defiledlands.client.model.ModelDestroyer;
 import lykrast.defiledlands.common.entity.boss.EntityDestroyer;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
@@ -52,7 +51,7 @@ public class RenderDestroyer extends RenderLiving<EntityDestroyer> {
          GlStateManager.depthFunc(514);
          GlStateManager.disableTexture2D();
          GlStateManager.enableBlend();
-         GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+         GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
          GlStateManager.color(1.0F, 0.0F, 0.0F, 0.5F);
          this.mainModel.render(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scaleFactor);
          GlStateManager.enableTexture2D();

@@ -1,5 +1,6 @@
 package lykrast.defiledlands.common.util;
 
+import java.util.function.Supplier;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import lykrast.defiledlands.common.compat.ModCompat;
@@ -72,7 +73,7 @@ public class Config {
       weightSwampDefiled = cfg.getInt("weightSwampDefiled", "World", 3, 0, 100, "Weight of Defiled Swamps in generation with greater weight meaning more common, 10 is most vanilla biomes, 0 prevents generation");
       weightIcePlainsDefiled = cfg.getInt("weightIcePlainsDefiled", "World", 3, 0, 100, "Weight of Defiled Ice Plains in generation with greater weight meaning more common, 10 is most vanilla biomes, 0 prevents generation");
 
-      for(Entry<String, Class<? extends ModCompat>> e : ModCompat.compat.entrySet()) {
+      for(Entry<String, Supplier<? extends ModCompat>> e : ModCompat.compat.entrySet()) {
          compatEnabled.put(e.getKey(), Boolean.valueOf(cfg.getBoolean((String)e.getKey(), "Compatibility", true, "Enables compatibility with " + (String)e.getKey())));
       }
 

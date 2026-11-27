@@ -572,39 +572,42 @@ public class EntityMourner extends EntityMob implements IEntityDefiled {
             --this.attackStep;
             this.attackTime = 3;
             switch(this.mourner.getCurrentAttack()) {
-            case 0:
-               double d0 = this.mourner.getDistanceSq(entitylivingbase);
-               double d1 = entitylivingbase.posX - this.mourner.posX;
-               double var10001 = (double)entitylivingbase.height;
-               double d2 = entitylivingbase.getEntityBoundingBox().minY + var10001 / 2.0D - (this.mourner.posY + (double)this.mourner.height / 2.0D);
-               double d3 = entitylivingbase.posZ - this.mourner.posZ;
-               float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
-               this.mourner.world.playEvent((EntityPlayer)null, 1018, new BlockPos((int)this.mourner.posX, (int)this.mourner.posY, (int)this.mourner.posZ), 0);
-               EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.mourner.world, this.mourner, d1 + this.mourner.getRNG().nextGaussian() * (double)f, d2, d3 + this.mourner.getRNG().nextGaussian() * (double)f);
-               entitysmallfireball.posY = this.mourner.posY + (double)this.mourner.height / 2.0D + 0.5D;
-               this.mourner.world.spawnEntity(entitysmallfireball);
-               break;
-            case 1:
-               Axis axis = Axis.values()[this.mourner.rand.nextInt(3)];
-               EntityShulkerBullet entityshulkerbullet = new EntityShulkerBullet(this.mourner.world, this.mourner, entitylivingbase, axis);
-               entityshulkerbullet.posY += (double)this.mourner.height / 2.0D + 0.5D;
-               this.mourner.world.spawnEntity(entityshulkerbullet);
-               this.mourner.playSound(SoundEvents.ENTITY_SHULKER_SHOOT, 2.0F, (this.mourner.rand.nextFloat() - this.mourner.rand.nextFloat()) * 0.2F + 1.0F);
-               break;
-            case 2:
-               Vec3d vec3d = this.mourner.getLook(1.0F);
-               double d2 = entitylivingbase.posX - (this.mourner.posX + vec3d.x * 4.0D);
-               double d3 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (0.5D + this.mourner.posY + (double)(this.mourner.height / 2.0F));
-               double d4 = entitylivingbase.posZ - (this.mourner.posZ + vec3d.z * 4.0D);
-               this.mourner.world.playEvent((EntityPlayer)null, 1016, new BlockPos(this.mourner), 0);
-               EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.mourner.world, this.mourner, d2, d3, d4);
-               entitylargefireball.explosionPower = this.mourner.getRageFactor();
-               entitylargefireball.posX = this.mourner.posX;
-               entitylargefireball.posY = this.mourner.posY + (double)this.mourner.height + 0.5D;
-               entitylargefireball.posZ = this.mourner.posZ;
-               this.mourner.world.spawnEntity(entitylargefireball);
-               --this.attackStep;
-               this.attackTime = 10;
+            case 0: {
+                  double d0 = this.mourner.getDistanceSq(entitylivingbase);
+                  double d1 = entitylivingbase.posX - this.mourner.posX;
+                  double var10001 = (double)entitylivingbase.height;
+                  double d2 = entitylivingbase.getEntityBoundingBox().minY + var10001 / 2.0D - (this.mourner.posY + (double)this.mourner.height / 2.0D);
+                  double d3 = entitylivingbase.posZ - this.mourner.posZ;
+                  float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
+                  this.mourner.world.playEvent((EntityPlayer)null, 1018, new BlockPos((int)this.mourner.posX, (int)this.mourner.posY, (int)this.mourner.posZ), 0);
+                  EntitySmallFireball entitysmallfireball = new EntitySmallFireball(this.mourner.world, this.mourner, d1 + this.mourner.getRNG().nextGaussian() * (double)f, d2, d3 + this.mourner.getRNG().nextGaussian() * (double)f);
+                  entitysmallfireball.posY = this.mourner.posY + (double)this.mourner.height / 2.0D + 0.5D;
+                  this.mourner.world.spawnEntity(entitysmallfireball);
+                  break;
+            }
+            case 1: {
+                  Axis axis = Axis.values()[this.mourner.rand.nextInt(3)];
+                  EntityShulkerBullet entityshulkerbullet = new EntityShulkerBullet(this.mourner.world, this.mourner, entitylivingbase, axis);
+                  entityshulkerbullet.posY += (double)this.mourner.height / 2.0D + 0.5D;
+                  this.mourner.world.spawnEntity(entityshulkerbullet);
+                  this.mourner.playSound(SoundEvents.ENTITY_SHULKER_SHOOT, 2.0F, (this.mourner.rand.nextFloat() - this.mourner.rand.nextFloat()) * 0.2F + 1.0F);
+                  break;
+            }
+            case 2: {
+                  Vec3d vec3d = this.mourner.getLook(1.0F);
+                  double d2 = entitylivingbase.posX - (this.mourner.posX + vec3d.x * 4.0D);
+                  double d3 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (0.5D + this.mourner.posY + (double)(this.mourner.height / 2.0F));
+                  double d4 = entitylivingbase.posZ - (this.mourner.posZ + vec3d.z * 4.0D);
+                  this.mourner.world.playEvent((EntityPlayer)null, 1016, new BlockPos(this.mourner), 0);
+                  EntityLargeFireball entitylargefireball = new EntityLargeFireball(this.mourner.world, this.mourner, d2, d3, d4);
+                  entitylargefireball.explosionPower = this.mourner.getRageFactor();
+                  entitylargefireball.posX = this.mourner.posX;
+                  entitylargefireball.posY = this.mourner.posY + (double)this.mourner.height + 0.5D;
+                  entitylargefireball.posZ = this.mourner.posZ;
+                  this.mourner.world.spawnEntity(entitylargefireball);
+                  --this.attackStep;
+                  this.attackTime = 10;
+            }
             }
          }
 

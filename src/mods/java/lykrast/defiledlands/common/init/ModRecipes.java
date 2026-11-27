@@ -1,17 +1,15 @@
 package lykrast.defiledlands.common.init;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import lykrast.defiledlands.common.block.BlockStoneDefiledDecoration;
 import lykrast.defiledlands.common.util.CorruptionRecipes;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
-@EventBusSubscriber
 public class ModRecipes {
    public ModRecipes() {
    }
@@ -46,7 +44,10 @@ public class ModRecipes {
       OreDictionary.registerOre("listAllmushroom", ModBlocks.scuronotte);
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.registerGeneric(Register.class, IRecipe.class, ModRecipes::registerRecipes);
+   }
+
    public static void registerRecipes(Register<IRecipe> event) {
       CorruptionRecipes.init();
       GameRegistry.addSmelting(ModBlocks.hephaestiteOre, new ItemStack(ModItems.hephaestite, 2), 0.1F);

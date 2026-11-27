@@ -150,7 +150,7 @@ public class EntityBookWyrm extends EntityAnimal implements IEntityDefiled, IEnt
          if (!this.world.isRemote) {
             List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, new ItemStack(Items.BOOK), this.getMaxLevel(), this.isGolden());
             if (!list.isEmpty()) {
-               Collections.sort(list, Comparator.comparingInt((ex) -> {
+               Collections.sort(list, Comparator.comparingInt((e) -> {
                   return -e.enchantment.getMinEnchantability(e.enchantmentLevel);
                }));
                int remaining = (int)((float)this.getMaxLevel() / Config.conversionRate);
