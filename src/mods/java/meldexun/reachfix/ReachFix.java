@@ -1,26 +1,24 @@
 package meldexun.reachfix;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
-import meldexun.configutil.ConfigUtil;
 import meldexun.reachfix.config.ReachFixConfig;
 import meldexun.reachfix.network.CPacketHandlerSyncConfig;
 import meldexun.reachfix.network.SPacketSyncConfig;
 import meldexun.reachfix.util.ReachFixUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -42,75 +40,73 @@ public class ReachFix {
    public ReachFix() {
    }
 
-   @EventHandler
-   public void onFMLConstructionEvent(FMLConstructionEvent event) {
-      MinecraftForge.EVENT_BUS.register(this);
-      NETWORK.registerMessage(CPacketHandlerSyncConfig.class, SPacketSyncConfig.class, 1, Side.CLIENT);
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         this.onFMLConstructionEvent((FMLConstructionEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.onFMLPostInitializationEvent((FMLPostInitializationEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.onFMLServerStartingEvent((FMLServerStartingEvent)event);
+      }
+
    }
 
-   @EventHandler
+   public void onFMLConstructionEvent(FMLConstructionEvent event) {
+      this.register(MinecraftForge.EVENT_BUS);
+      NETWORK.registerMessage(new CPacketHandlerSyncConfig(), SPacketSyncConfig.class, SPacketSyncConfig::new, 1, Side.CLIENT);
+   }
+
    public void onFMLPostInitializationEvent(FMLPostInitializationEvent event) {
       isSpartanWeaponryInstalled = Loader.isModLoaded("spartanweaponry");
    }
 
-   @EventHandler
    public void onFMLServerStartingEvent(FMLServerStartingEvent event) {
       loadLocalConfig(true);
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLoggedInEvent);
+      bus.register(PlayerChangedDimensionEvent.class, this::onPlayerChangedDimensionEvent);
+      bus.register(PlayerRespawnEvent.class, this::onPlayerRespawnEvent);
+      bus.register(OnConfigChangedEvent.class, this::onConfigChangedEvent);
+   }
+
    public void onPlayerLoggedInEvent(PlayerLoggedInEvent event) {
       sendServerConfig((EntityPlayerMP)event.player);
       ReachFixUtil.updateBaseReachModifier(event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerChangedDimensionEvent(PlayerChangedDimensionEvent event) {
       ReachFixUtil.updateBaseReachModifier(event.player);
    }
 
-   @SubscribeEvent
    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
       ReachFixUtil.updateBaseReachModifier(event.player);
    }
 
-   @SubscribeEvent
    public void onConfigChangedEvent(OnConfigChangedEvent event) {
       if (event.getModID().equals("reachfix")) {
          ConfigManager.sync("reachfix", Type.INSTANCE);
          Minecraft mc = Minecraft.getMinecraft();
-         IntegratedServer server = mc.getIntegratedServer();
-         loadLocalConfig(mc.world == null || server != null);
-         if (server != null) {
-            sendServerConfig((EntityPlayerMP)null);
-            server.getPlayerList().getPlayers().forEach(ReachFixUtil::updateBaseReachModifier);
-         }
+         loadLocalConfig(mc.world == null || mc.isIntegratedServerRunning());
       }
 
    }
 
    public static void loadLocalConfig(boolean loadAllSettings) {
-      try {
-         if (loadAllSettings) {
-            ConfigUtil.copyAllSettings(ReachFixConfig.MASTER_CONFIG, ReachFixConfig.SLAVE_CONFIG);
-         } else {
-            ConfigUtil.copyClientSettings(ReachFixConfig.MASTER_CONFIG, ReachFixConfig.SLAVE_CONFIG);
-         }
-      } catch (ReflectiveOperationException var2) {
-         LOGGER.error("Failed to copy config", var2);
+      if (loadAllSettings) {
+         ReachFixConfig.MASTER_CONFIG.copyAllSettings(ReachFixConfig.SLAVE_CONFIG);
+      } else {
+         ReachFixConfig.MASTER_CONFIG.copyClientSettings(ReachFixConfig.SLAVE_CONFIG);
       }
 
    }
 
    public static void sendServerConfig(@Nullable EntityPlayerMP player) {
-      try {
-         if (player != null) {
-            NETWORK.sendTo(new SPacketSyncConfig(ReachFixConfig.MASTER_CONFIG), player);
-         } else {
-            NETWORK.sendToAll(new SPacketSyncConfig(ReachFixConfig.MASTER_CONFIG));
-         }
-      } catch (ReflectiveOperationException var2) {
-         LOGGER.error("Failed to send server config", var2);
+      if (player != null) {
+         NETWORK.sendTo(new SPacketSyncConfig(ReachFixConfig.MASTER_CONFIG), player);
+      } else {
+         NETWORK.sendToAll(new SPacketSyncConfig(ReachFixConfig.MASTER_CONFIG));
       }
 
    }

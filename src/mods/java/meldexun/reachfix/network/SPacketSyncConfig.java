@@ -2,7 +2,6 @@ package meldexun.reachfix.network;
 
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
-import meldexun.configutil.ConfigUtil;
 import meldexun.reachfix.config.ReachFixConfig;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
@@ -12,9 +11,9 @@ public class SPacketSyncConfig implements IMessage {
    public SPacketSyncConfig() {
    }
 
-   public SPacketSyncConfig(ReachFixConfig config) throws ReflectiveOperationException {
+   public SPacketSyncConfig(ReachFixConfig config) {
       this.buffer = Unpooled.buffer();
-      ConfigUtil.writeServerSettings(config, this.buffer);
+      config.writeServerSettings(this.buffer);
    }
 
    public void fromBytes(ByteBuf buf) {

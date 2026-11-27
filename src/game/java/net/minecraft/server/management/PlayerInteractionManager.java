@@ -47,6 +47,7 @@ public class PlayerInteractionManager
 
     public void setGameType(GameType type)
     {
+        meldexun.reachfix.hook.PlayerInteractionManagerHook.onUpdateGameMode(this, type);
         this.gameType = type;
         type.configurePlayerCapabilities(this.player.capabilities);
         this.player.sendPlayerAbilities();

@@ -2,6 +2,7 @@ package com.oblivioussp.spartanweaponry.event;
 
 import net.lax1dude.eaglercraft.v1_8.HString;
 import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -92,6 +93,10 @@ public class EventHandlerClient {
 
    @SideOnly(Side.CLIENT)
    public static void onMouseEvent(MouseEvent ev) {
+      if (Loader.isModLoaded("reachfix")) {
+         return;
+      }
+
       if (!ModSpartanWeaponry.isRLCombatLoaded) {
          KeyBinding keyAttack = Minecraft.getMinecraft().gameSettings.keyBindAttack;
          if (keyAttack.getKeyCode() < 0 && ev.getButton() == keyAttack.getKeyCode() + 100 && ev.isButtonstate()) {

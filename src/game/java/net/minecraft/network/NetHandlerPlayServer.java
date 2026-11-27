@@ -704,7 +704,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
             case ABORT_DESTROY_BLOCK:
             case STOP_DESTROY_BLOCK:
                 double d0 = this.player.posX - ((double)blockpos.getX() + 0.5D);
-                double d1 = this.player.posY - ((double)blockpos.getY() + 0.5D) + 1.5D;
+                double d1 = this.player.posY - ((double)blockpos.getY() + 0.5D) + (1.5D + meldexun.reachfix.hook.NetHandlerPlayServerHook.getEyeHeightMinusOnePointFive(this));
                 double d2 = this.player.posZ - ((double)blockpos.getZ() + 0.5D);
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
 
@@ -1094,15 +1094,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, ITickable
 
         if (entity != null)
         {
-            boolean flag = this.player.canEntityBeSeen(entity);
-            double d0 = 36.0D;
-
-            if (!flag)
-            {
-                d0 = 9.0D;
-            }
-
-            if (this.player.getDistanceSq(entity) < d0)
+            if (meldexun.reachfix.hook.NetHandlerPlayServerHook.isEntityInRange(this, entity, EnumHand.MAIN_HAND))
             {
                 if (packetIn.getAction() == CPacketUseEntity.Action.INTERACT)
                 {

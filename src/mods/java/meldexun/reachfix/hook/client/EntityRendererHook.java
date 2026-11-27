@@ -73,7 +73,7 @@ public class EntityRendererHook {
    private static RayTraceResult getPointedEntity(Entity viewEntity, World world, Vec3d start, Vec3d end, float partialTicks) {
       AxisAlignedBB aabb = (new AxisAlignedBB(start, end)).grow(1.0D);
       Entity lowestRidingEntity = viewEntity.getLowestRidingEntity();
-      List<Entity> possibleEntities = world.getEntitiesInAABBexcluding(viewEntity, aabb, (entityx) -> {
+      List<Entity> possibleEntities = world.getEntitiesInAABBexcluding(viewEntity, aabb, (entity) -> {
          return !EntitySelectors.NOT_SPECTATING.apply(entity) ? false : entity.canBeCollidedWith();
       });
       RayTraceResult result = null;

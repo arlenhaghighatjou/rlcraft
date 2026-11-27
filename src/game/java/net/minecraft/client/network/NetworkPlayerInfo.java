@@ -54,6 +54,7 @@ public class NetworkPlayerInfo
 
     protected void setGameType(GameType gameMode)
     {
+        meldexun.reachfix.hook.client.NetworkPlayerInfoHook.onUpdateGameMode(this, gameMode);
         this.gameType = gameMode;
     }
 

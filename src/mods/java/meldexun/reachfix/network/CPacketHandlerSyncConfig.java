@@ -1,7 +1,5 @@
 package meldexun.reachfix.network;
 
-import meldexun.configutil.ConfigUtil;
-import meldexun.reachfix.ReachFix;
 import meldexun.reachfix.config.ReachFixConfig;
 import meldexun.reachfix.util.ReachFixUtil;
 import net.minecraft.client.Minecraft;
@@ -19,11 +17,7 @@ public class CPacketHandlerSyncConfig implements IMessageHandler<SPacketSyncConf
 
    public IMessage onMessage(SPacketSyncConfig message, MessageContext ctx) {
       FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> {
-         try {
-            ConfigUtil.readServerSettings(ReachFixConfig.SLAVE_CONFIG, message.getBuffer());
-         } catch (ReflectiveOperationException var2) {
-            ReachFix.LOGGER.error("Failed to read server config", var2);
-         }
+         ReachFixConfig.SLAVE_CONFIG.readServerSettings(message.getBuffer());
 
          ReachFixUtil.updateBaseReachModifier(getPlayer());
       });
