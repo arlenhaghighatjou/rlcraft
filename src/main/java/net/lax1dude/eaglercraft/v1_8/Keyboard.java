@@ -26,6 +26,10 @@ public class Keyboard {
 		PlatformInput.keyboardEnableRepeatEvents(b);
 	}
 
+	public static boolean areRepeatEventsEnabled() {
+		return PlatformInput.keyboardAreRepeatEventsEnabled();
+	}
+
 	public static boolean isCreated() {
 		return true;
 	}

@@ -62,6 +62,8 @@ public class PlatformInput {
 
 	public static native void keyboardEnableRepeatEvents(boolean b);
 
+	public static native boolean keyboardAreRepeatEventsEnabled();
+
 	public static native boolean keyboardAreKeysLocked();
 
 	public static native boolean mouseNext();

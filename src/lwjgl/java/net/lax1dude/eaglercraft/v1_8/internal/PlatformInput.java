@@ -455,6 +455,10 @@ public class PlatformInput {
 		enableRepeatEvents = b;
 	}
 
+	public static boolean keyboardAreRepeatEventsEnabled() {
+		return enableRepeatEvents;
+	}
+
 	public static boolean keyboardAreKeysLocked() {
 		return false;
 	}
