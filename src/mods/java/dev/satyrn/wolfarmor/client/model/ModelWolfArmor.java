@@ -1,6 +1,5 @@
 package dev.satyrn.wolfarmor.client.model;
 
-import dev.satyrn.wolfarmor.mixin.accessors.ModelWolfAccessor;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelWolf;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,8 +35,7 @@ public class ModelWolfArmor extends ModelWolf {
       ModelRenderer wolfTail = new ModelRenderer(this, 9, 18);
       wolfTail.addBox(0.0F, 0.0F, -1.0F, 2, 8, 2, scale);
       wolfTail.setRotationPoint(-1.0F, 12.0F, 8.0F);
-      ModelWolfAccessor accessor = (ModelWolfAccessor)this;
-      accessor.setWolfTail(wolfTail);
-      accessor.setWolfMane(wolfMane);
+      this.wolfTail = wolfTail;
+      this.wolfMane = wolfMane;
    }
 }

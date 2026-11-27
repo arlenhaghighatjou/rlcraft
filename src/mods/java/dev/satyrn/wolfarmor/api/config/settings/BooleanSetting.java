@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.api.config.settings;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import javax.annotation.Nonnull;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByte;
@@ -41,7 +42,7 @@ public class BooleanSetting extends ValueSetting<Boolean> {
       case 1:
          return false;
       default:
-         throw new IllegalArgumentException(String.format("The string '%s' is not a valid boolean.", value));
+         throw new IllegalArgumentException(HString.format("The string '%s' is not a valid boolean.", value));
       }
    }
 }

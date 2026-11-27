@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.common.network;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public abstract class MessageBase<T extends MessageBase<T>> implements IMessage,
 
    public final IMessage onMessage(T message, MessageContext context) {
       if (!this.isSideValid(context.side)) {
-         throw new RuntimeException(String.format("The side %s is not valid for packet %s", context.side.name(), message.getClass().getSimpleName()));
+         throw new RuntimeException(HString.format("The side %s is not valid for packet %s", context.side.name(), message.getClass().getSimpleName()));
       } else if (this.isScheduled()) {
          this.enqueue(message, context);
          return null;
@@ -61,7 +62,7 @@ public abstract class MessageBase<T extends MessageBase<T>> implements IMessage,
       try {
          this.read(new PacketBuffer(buf));
       } catch (IOException var3) {
-         throw new RuntimeException(String.format("The packet %s failed to deserialize.", this.getClass().getSimpleName()), var3);
+         throw new RuntimeException(HString.format("The packet %s failed to deserialize.", this.getClass().getSimpleName()), var3);
       }
    }
 
@@ -69,7 +70,7 @@ public abstract class MessageBase<T extends MessageBase<T>> implements IMessage,
       try {
          this.write(new PacketBuffer(buf));
       } catch (IOException var3) {
-         throw new RuntimeException(String.format("The packet %s failed to serialize.", this.getClass().getSimpleName()), var3);
+         throw new RuntimeException(HString.format("The packet %s failed to serialize.", this.getClass().getSimpleName()), var3);
       }
    }
 

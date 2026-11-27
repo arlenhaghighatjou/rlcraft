@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.client.renderer.entity.layer;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import com.google.common.collect.Maps;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import dev.satyrn.wolfarmor.api.entity.passive.IArmoredWolf;
@@ -109,7 +110,7 @@ public class LayerWolfArmor implements LayerRenderer<EntityWolf> {
          texture = texture.substring(i);
       }
 
-      String path = String.format("%s:textures/entity/wolf/armor/%s_layer_%d%s.png", domain, texture, layer + 1, isOverlay ? "_overlay" : "");
+      String path = HString.format("%s:textures/entity/wolf/armor/%s_layer_%d%s.png", domain, texture, layer + 1, isOverlay ? "_overlay" : "");
       ResourceLocation resource = (ResourceLocation)WOLF_ARMOR_TEXTURE_MAP.get(path);
       if (resource == null) {
          resource = new ResourceLocation(path);

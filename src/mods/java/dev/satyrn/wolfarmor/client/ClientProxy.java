@@ -96,7 +96,7 @@ public class ClientProxy extends CommonProxy {
 
    public void registerEventListeners() {
       super.registerEventListeners();
-      MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
+      (new RenderEventHandler()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit(FMLPostInitializationEvent event) {

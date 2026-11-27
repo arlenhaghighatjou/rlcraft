@@ -1,28 +1,26 @@
 package dev.satyrn.wolfarmor.client.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import dev.satyrn.wolfarmor.api.entity.passive.IArmoredWolf;
 import dev.satyrn.wolfarmor.client.renderer.WolfRenderHelper;
-import dev.satyrn.wolfarmor.mixin.accessors.RenderAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLivingBase;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraftforge.client.event.RenderLivingEvent.Post;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-@EventBusSubscriber({Side.CLIENT})
 public class RenderEventHandler {
    public RenderEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
+   public void register(EventBus bus) {
+      bus.register(Post.class, EventPriority.HIGH, false, this::onRenderLiving);
+   }
+
    public void onRenderLiving(Post<EntityWolf> event) {
       Minecraft mc = Minecraft.getMinecraft();
       if (!mc.gameSettings.hideGUI) {
@@ -37,7 +35,7 @@ public class RenderEventHandler {
                   float playerViewY = renderer.getRenderManager().playerViewY;
                   boolean isThirdPerson = renderer.getRenderManager().options.thirdPersonView == 2;
                   float heightOffset = wolf.height + 0.5F - (isSneaking ? 0.25F : 0.0F);
-                  boolean showNameplate = ((RenderAccessor)renderer).callCanRenderName(wolf);
+                  boolean showNameplate = renderer.callCanRenderName(wolf);
                   WolfRenderHelper.drawStats(wolf, showNameplate, event.getX(), event.getY() + (double)heightOffset, event.getZ(), playerViewX, playerViewY, isThirdPerson, isSneaking);
                }
             }

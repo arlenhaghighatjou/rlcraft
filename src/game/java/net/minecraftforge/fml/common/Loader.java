@@ -262,6 +262,7 @@ public class Loader
         mods.add(new FMLModContainer<>("dttraverse", "Dynamic Trees Traverse", "1.12.2-2.1", "required-after:dynamictrees@[1.12.2-0.9.18,);required-after:traverse", "[1.12.2]", "dttraverse", dttraverse.DynamicTreesTraverse::new, dttraverse.DynamicTreesTraverse::handleModStateEvent));
         mods.add(new FMLModContainer<>("tschipplib", "TschippLib", "1.1.6", "", "", "tschipplib", tschipp.tschipplib.TschippLib::new, tschipp.tschipplib.TschippLib::handleModStateEvent).acceptableRemoteVersions("[1.1.3,)"));
         mods.add(new FMLModContainer<>("forgottenitems", "Forgotten Items", "1.2.1", "required-after:tschipplib", "[1.12,1.13)", "forgottenitems", tschipp.forgottenitems.FIM::new, tschipp.forgottenitems.FIM::handleModStateEvent));
+        mods.add(new FMLModContainer<>("wolfarmor", "Wolf Armor and Storage", "3.8.1+alpha.1", "", "", "wolfarmor", dev.satyrn.wolfarmor.WolfArmorMod::new, dev.satyrn.wolfarmor.WolfArmorMod::handleModStateEvent).guiFactory(dev.satyrn.wolfarmor.client.gui.config.WolfArmorGuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

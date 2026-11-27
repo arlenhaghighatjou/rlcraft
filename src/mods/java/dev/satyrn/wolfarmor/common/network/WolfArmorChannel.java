@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.common.network;
 
+import java.util.function.Supplier;
 import dev.satyrn.wolfarmor.common.network.packets.ConfigSyncMessage;
 import dev.satyrn.wolfarmor.common.network.packets.RemovePotionEffectMessage;
 import dev.satyrn.wolfarmor.common.network.packets.UpdateFoodStatsMessage;
@@ -21,23 +22,24 @@ public class WolfArmorChannel extends SimpleNetworkWrapper {
 
    public WolfArmorChannel() {
       super("wolfarmor");
-      this.registerMessage(WolfEatMessage.class);
-      this.registerMessage(WolfHealMessage.class);
-      this.registerMessage(WolfDropChestMessage.class);
-      this.registerMessage(ConfigSyncMessage.class);
-      this.registerMessage(UpdateFoodStatsMessage.class);
-      this.registerMessage(UpdatePotionEffectMessage.class);
-      this.registerMessage(RemovePotionEffectMessage.class);
+      this.registerMessage(WolfEatMessage.class, WolfEatMessage::new);
+      this.registerMessage(WolfHealMessage.class, WolfHealMessage::new);
+      this.registerMessage(WolfDropChestMessage.class, WolfDropChestMessage::new);
+      this.registerMessage(ConfigSyncMessage.class, ConfigSyncMessage::new);
+      this.registerMessage(UpdateFoodStatsMessage.class, UpdateFoodStatsMessage::new);
+      this.registerMessage(UpdatePotionEffectMessage.class, UpdatePotionEffectMessage::new);
+      this.registerMessage(RemovePotionEffectMessage.class, RemovePotionEffectMessage::new);
    }
 
-   private <T extends MessageBase<T> & IMessageHandler<T, IMessage>> void registerMessage(Class<T> clazz) {
-      if (MessageBase.ClientMessageBase.class.isAssignableFrom(clazz)) {
-         this.registerMessage(clazz, clazz, ID++, Side.CLIENT);
-      } else if (MessageBase.ServerMessageBase.class.isAssignableFrom(clazz)) {
-         this.registerMessage(clazz, clazz, ID++, Side.SERVER);
+   private <T extends MessageBase<T> & IMessageHandler<T, IMessage>> void registerMessage(Class<T> clazz, Supplier<T> factory) {
+      T handler = factory.get();
+      if (handler instanceof MessageBase.ClientMessageBase) {
+         this.registerMessage(handler, clazz, factory, ID++, Side.CLIENT);
+      } else if (handler instanceof MessageBase.ServerMessageBase) {
+         this.registerMessage(handler, clazz, factory, ID++, Side.SERVER);
       } else {
-         this.registerMessage(clazz, clazz, ID, Side.CLIENT);
-         this.registerMessage(clazz, clazz, ID++, Side.SERVER);
+         this.registerMessage(handler, clazz, factory, ID, Side.CLIENT);
+         this.registerMessage(factory.get(), clazz, factory, ID++, Side.SERVER);
       }
    }
 

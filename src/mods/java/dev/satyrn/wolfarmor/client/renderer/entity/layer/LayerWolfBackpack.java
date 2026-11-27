@@ -1,5 +1,7 @@
 package dev.satyrn.wolfarmor.client.renderer.entity.layer;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import com.google.common.collect.Maps;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import dev.satyrn.wolfarmor.api.entity.passive.IArmoredWolf;
@@ -9,8 +11,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.client.model.ModelBase;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.entity.passive.EntityWolf;
@@ -51,7 +51,7 @@ public class LayerWolfBackpack implements LayerRenderer<EntityWolf> {
                GlStateManager.color(1.0F, 1.0F, 1.0F, 0.15F);
                GlStateManager.depthMask(false);
                GlStateManager.enableBlend();
-               GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+               GlStateManager.blendFunc(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA);
                this.modelWolfBackpack.render(entityWolf, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
                GlStateManager.depthMask(true);
                GlStateManager.disableBlend();
@@ -72,7 +72,7 @@ public class LayerWolfBackpack implements LayerRenderer<EntityWolf> {
          }
       }
 
-      String path = String.format("%s:textures/entity/wolf/chest/%schest.png", "wolfarmor", chestType == null ? "" : chestType + "_");
+      String path = HString.format("%s:textures/entity/wolf/chest/%schest.png", "wolfarmor", chestType == null ? "" : chestType + "_");
       ResourceLocation resource = (ResourceLocation)WOLF_PACK_TEXTURE_MAP.get(path);
       if (resource == null) {
          resource = new ResourceLocation(path);

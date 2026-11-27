@@ -4,7 +4,6 @@ import dev.satyrn.wolfarmor.api.util.ILogHelper;
 import javax.annotation.Nonnull;
 import net.lax1dude.eaglercraft.v1_8.log4j.Level;
 import net.lax1dude.eaglercraft.v1_8.log4j.Logger;
-import org.apache.logging.log4j.LoggingException;
 
 public class LogHelper implements ILogHelper {
    private Logger logger;
@@ -22,7 +21,7 @@ public class LogHelper implements ILogHelper {
 
    public void log(@Nonnull Level level, @Nonnull String message) {
       if (this.logger == null) {
-         throw new LoggingException("Logger has not been initialized");
+         throw new IllegalStateException("Logger has not been initialized");
       } else {
          this.logger.log(level, message);
       }

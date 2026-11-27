@@ -91,6 +91,11 @@ public abstract class Render<T extends Entity>
         }
     }
 
+    public boolean callCanRenderName(T entity)
+    {
+        return this.canRenderName(entity);
+    }
+
     protected boolean canRenderName(T entity)
     {
         return entity.getAlwaysRenderNameTagForRender() && entity.hasCustomName();

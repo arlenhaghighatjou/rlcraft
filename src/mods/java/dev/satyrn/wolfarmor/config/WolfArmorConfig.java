@@ -1,5 +1,7 @@
 package dev.satyrn.wolfarmor.config;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.google.common.collect.Maps;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import dev.satyrn.wolfarmor.api.config.settings.BooleanSetting;
@@ -9,9 +11,6 @@ import dev.satyrn.wolfarmor.config.settings.WolfFoodStatsSetting;
 import dev.satyrn.wolfarmor.config.settings.WolfInventorySizeSetting;
 import dev.satyrn.wolfarmor.util.WolfFoodStatsLevel;
 import dev.satyrn.wolfarmor.util.WolfInventorySize;
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -24,7 +23,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent.ClientDisconnectionFromServerEvent;
@@ -46,20 +44,8 @@ public class WolfArmorConfig {
    public WolfArmorConfig() {
    }
 
-   private void addSettingsFromClass(Object object) {
-      for(Field field : object.getClass().getDeclaredFields()) {
-         if (Setting.class.isAssignableFrom(field.getType())) {
-            Setting<?> setting;
-            try {
-               setting = (Setting)field.get(object);
-            } catch (IllegalAccessException var8) {
-               throw new RuntimeException(var8);
-            }
-
-            this.settings.put(setting.getFullName(), setting);
-         }
-      }
-
+   private void addSetting(Setting<?> setting) {
+      this.settings.put(setting.getFullName(), setting);
    }
 
    public Collection<Setting<?>> getSettings() {
@@ -134,34 +120,25 @@ public class WolfArmorConfig {
    }
 
    public void initialize(String configDirectory) {
-      File directory = new File(configDirectory);
-      if (!directory.exists()) {
-         WolfArmorMod.getLogger().debug(String.format("Creating new configuration directory '%s'", configDirectory));
-         if (!directory.mkdirs()) {
-            WolfArmorMod.getLogger().error("Unable to create new configuration directory!");
-            throw new RuntimeException("Failed to create configuration directory");
-         }
-      }
-
-      File configFile = new File(directory.getPath() + "/" + "wolfarmor" + ".cfg");
+      VFile2 configFile = new VFile2(configDirectory, "wolfarmor" + ".cfg");
       if (!configFile.exists()) {
          WolfArmorMod.getLogger().debug("Config file not found; a new configuration file will be initialized.");
       }
 
       this.configuration = new Configuration(configFile);
-      this.addSettingsFromClass(this);
-
-      for(Field field : this.getClass().getDeclaredFields()) {
-         if (field.getType().getName().endsWith("Category")) {
-            try {
-               field.set(this, field.getType().getConstructors()[0].newInstance());
-               this.addSettingsFromClass(field.get(this));
-            } catch (InvocationTargetException | IllegalAccessException | InstantiationException var9) {
-               throw new RuntimeException(var9);
-            }
-         }
-      }
-
+      this.addSetting(this.chestEnabled);
+      this.addSetting(this.chestSize);
+      this.addSetting(this.enableRecipes);
+      this.behavior = new WolfArmorConfig.BehaviorCategory();
+      this.addSetting(this.behavior.howlAtMoonEnabled);
+      this.addSetting(this.behavior.autoHealEnabled);
+      this.addSetting(this.behavior.useFoodStats);
+      this.addSetting(this.behavior.wolvesCanStarve);
+      this.client = new WolfArmorConfig.ClientCategory();
+      this.addSetting(this.client.armorRendered);
+      this.addSetting(this.client.chestRendered);
+      this.addSetting(this.client.statsInGui);
+      this.addSetting(this.client.wolfStatsRendered);
       this.load();
       if (this.configuration.hasChanged()) {
          this.save();
@@ -184,13 +161,18 @@ public class WolfArmorConfig {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(ClientConnectedToServerEvent.class, this::onClientConnect);
+      bus.register(ClientDisconnectionFromServerEvent.class, this::onClientDisconnect);
+      bus.register(PlayerLoggedInEvent.class, this::onPlayerLogin);
+      bus.register(OnConfigChangedEvent.class, this::onConfigChanged);
+   }
+
    public void onClientConnect(ClientConnectedToServerEvent event) {
       this.connected = true;
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public void onClientDisconnect(ClientDisconnectionFromServerEvent event) {
       if (this.connected) {
          this.getSettings().forEach(Setting::onDisconnect);
@@ -198,7 +180,6 @@ public class WolfArmorConfig {
       }
    }
 
-   @SubscribeEvent
    public void onConfigChanged(@Nonnull OnConfigChangedEvent event) {
       if (event.getModID().equals("wolfarmor")) {
          if (event.isWorldRunning()) {
@@ -209,7 +190,6 @@ public class WolfArmorConfig {
       }
    }
 
-   @SubscribeEvent
    public void onPlayerLogin(PlayerLoggedInEvent event) {
       if (!isNotServerOwner(event.player) && event.player instanceof EntityPlayerMP) {
          WolfArmorMod.getNetworkChannel().sendTo(ConfigSyncMessage.create(), (EntityPlayerMP)event.player);

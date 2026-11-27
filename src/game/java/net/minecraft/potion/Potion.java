@@ -1,5 +1,7 @@
 package net.minecraft.potion;
 
+import dev.satyrn.wolfarmor.common.event.PotionEffectEvent;
+import net.minecraftforge.common.MinecraftForge;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import net.lax1dude.eaglercraft.v1_8.EaglercraftUUID;
@@ -74,6 +76,11 @@ public class Potion extends net.minecraftforge.registries.IForgeRegistryEntry.Im
 
     public void performEffect(EntityLivingBase entityLivingBaseIn, int amplifier)
     {
+        if (MinecraftForge.EVENT_BUS.post(new PotionEffectEvent(this, entityLivingBaseIn, amplifier)))
+        {
+            return;
+        }
+
         if (this == MobEffects.REGENERATION)
         {
             if (entityLivingBaseIn.getHealth() < entityLivingBaseIn.getMaxHealth())

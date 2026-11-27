@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.minecraft.nbt.NBTTagByteArray;
@@ -36,7 +37,7 @@ public final class WolfInventorySize implements INBTSerializable<NBTTagByteArray
       if (value >= DIMS[0][0] && value <= DIMS[0][1]) {
          this.columns = value;
       } else {
-         throw new IllegalArgumentException(String.format("The desired column count '%d' was outside the bounds [%d..%d]", value, DIMS[0][0], DIMS[0][1]));
+         throw new IllegalArgumentException(HString.format("The desired column count '%d' was outside the bounds [%d..%d]", value, DIMS[0][0], DIMS[0][1]));
       }
    }
 
@@ -48,7 +49,7 @@ public final class WolfInventorySize implements INBTSerializable<NBTTagByteArray
       if (value >= DIMS[1][0] && value <= DIMS[1][1]) {
          this.rows = value;
       } else {
-         throw new IllegalArgumentException(String.format("The desired row count '%d' was outside the bounds [%d..%d]", value, DIMS[1][0], DIMS[1][1]));
+         throw new IllegalArgumentException(HString.format("The desired row count '%d' was outside the bounds [%d..%d]", value, DIMS[1][0], DIMS[1][1]));
       }
    }
 
@@ -64,14 +65,14 @@ public final class WolfInventorySize implements INBTSerializable<NBTTagByteArray
    }
 
    public String toString() {
-      return String.format("%dx%d", this.columns, this.rows);
+      return HString.format("%dx%d", this.columns, this.rows);
    }
 
    public static WolfInventorySize parseWolfInventorySize(String s) {
-      Pattern pattern = Pattern.compile(String.format("([%d-%d])x([%d-%d])", DIMS[0][0], DIMS[0][1], DIMS[1][0], DIMS[1][1]));
+      Pattern pattern = Pattern.compile(HString.format("([%d-%d])x([%d-%d])", DIMS[0][0], DIMS[0][1], DIMS[1][0], DIMS[1][1]));
       Matcher matcher = pattern.matcher(s);
       if (!matcher.matches()) {
-         throw new IllegalArgumentException(String.format("The input string was not in the proper format."));
+         throw new IllegalArgumentException(HString.format("The input string was not in the proper format."));
       } else {
          return new WolfInventorySize(Byte.parseByte(matcher.group(1)), Byte.parseByte(matcher.group(2)));
       }

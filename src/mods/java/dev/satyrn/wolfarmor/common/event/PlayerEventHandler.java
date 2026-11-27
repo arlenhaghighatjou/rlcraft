@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.common.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import dev.satyrn.wolfarmor.item.ItemWolfArmor;
 import javax.annotation.Nonnull;
 import net.minecraft.block.Block;
@@ -12,17 +13,16 @@ import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickBlock;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class PlayerEventHandler {
+   public void register(EventBus bus) {
+      bus.register(RightClickBlock.class, EventPriority.HIGHEST, true, this::onPlayerInteract);
+   }
+
    public PlayerEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGHEST,
-      receiveCanceled = true
-   )
    public void onPlayerInteract(@Nonnull RightClickBlock event) {
       Block block = event.getWorld().getBlockState(event.getPos()).getBlock();
       if (block == Blocks.CAULDRON) {

@@ -74,11 +74,11 @@ public class CommonProxy implements IProxy {
    }
 
    public void registerEventListeners() {
-      MinecraftForge.EVENT_BUS.register(new EntityEventHandler());
-      MinecraftForge.EVENT_BUS.register(new PlayerEventHandler());
-      MinecraftForge.EVENT_BUS.register(new RegistrationEventHandler());
-      MinecraftForge.EVENT_BUS.register(new PotionEventHandler());
-      MinecraftForge.EVENT_BUS.register(WolfArmorMod.getConfig());
+      (new EntityEventHandler()).register(MinecraftForge.EVENT_BUS);
+      (new PlayerEventHandler()).register(MinecraftForge.EVENT_BUS);
+      (new RegistrationEventHandler()).register(MinecraftForge.EVENT_BUS);
+      (new PotionEventHandler()).register(MinecraftForge.EVENT_BUS);
+      WolfArmorMod.getConfig().register(MinecraftForge.EVENT_BUS);
    }
 
    public void postInit(@Nonnull FMLPostInitializationEvent postInitializationEvent) {

@@ -36,31 +36,19 @@ public class Compatibility {
    public Compatibility() {
    }
 
-   public static synchronized boolean register(@Nonnull String providerName) {
-      try {
-         Class<?> providerClass = Compatibility.class.getClassLoader().loadClass(providerName);
-         if (CompatibilityProvider.class.isAssignableFrom(providerClass) && providerClass.isAnnotationPresent(Provider.class)) {
-            CompatibilityProvider instance = (CompatibilityProvider)Compatibility.class.getClassLoader().loadClass(providerName).newInstance();
-            String modId = instance.getModId();
-            CompatibilityProvider registeredProvider = (CompatibilityProvider)compatibilityProviders.get(modId);
-            if (registeredProvider == null) {
-               compatibilityProviders.put(modId, instance);
-               logger.info("Registered new provider {} for mod {}", instance.getClass().getSimpleName(), modId);
-               return true;
-            } else if (instance.getPriority() == 32767 || registeredProvider.getPriority() < instance.getPriority() && instance.getPriority() != -32768) {
-               logger.warn("Replacing provider {} with higher priority provider {} for mod {}", registeredProvider.getClass().getSimpleName(), instance.getClass().getSimpleName(), modId);
-               compatibilityProviders.replace(modId, instance);
-               return true;
-            } else {
-               logger.warn("Skipped registering provider {} for {}: the provider {} is already registered for this mod", instance.getClass().getSimpleName(), modId, registeredProvider.getClass().getSimpleName());
-               return false;
-            }
-         } else {
-            logger.info("Skipped invalid provider {}.", providerName);
-            return false;
-         }
-      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoClassDefFoundError var5) {
-         logger.info("Skipped registering provider {}: {}", providerName, var5.toString());
+   public static synchronized boolean register(@Nonnull CompatibilityProvider instance) {
+      String modId = instance.getModId();
+      CompatibilityProvider registeredProvider = (CompatibilityProvider)compatibilityProviders.get(modId);
+      if (registeredProvider == null) {
+         compatibilityProviders.put(modId, instance);
+         logger.info("Registered new provider {} for mod {}", instance.getClass().getSimpleName(), modId);
+         return true;
+      } else if (instance.getPriority() == 32767 || registeredProvider.getPriority() < instance.getPriority() && instance.getPriority() != -32768) {
+         logger.warn("Replacing provider {} with higher priority provider {} for mod {}", registeredProvider.getClass().getSimpleName(), instance.getClass().getSimpleName(), modId);
+         compatibilityProviders.replace(modId, instance);
+         return true;
+      } else {
+         logger.warn("Skipped registering provider {} for {}: the provider {} is already registered for this mod", instance.getClass().getSimpleName(), modId, registeredProvider.getClass().getSimpleName());
          return false;
       }
    }
@@ -107,7 +95,7 @@ public class Compatibility {
 
       return (LayerRenderer)provider.map((layerProvider) -> {
          return layerProvider.getArmorLayer(renderer);
-      }).orElse(new LayerWolfArmor(renderer));
+      }).orElse((LayerRenderer)new LayerWolfArmor(renderer));
    }
 
    @SideOnly(Side.CLIENT)
@@ -137,7 +125,7 @@ public class Compatibility {
 
       return (LayerRenderer)provider.map((layerProvider) -> {
          return layerProvider.getBackpackLayer(renderer);
-      }).orElse(new LayerWolfBackpack(renderer));
+      }).orElse((LayerRenderer)new LayerWolfBackpack(renderer));
    }
 
    public static boolean isModLoaded(String modId) {

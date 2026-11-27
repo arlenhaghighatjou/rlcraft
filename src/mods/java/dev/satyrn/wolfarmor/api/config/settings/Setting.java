@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.api.config.settings;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import dev.satyrn.wolfarmor.api.config.IConfigurationSetting;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -100,7 +101,7 @@ public abstract class Setting<T> implements IConfigurationSetting<T> {
 
    @Nonnull
    public String getFullName() {
-      return String.format("%s.%s", this.category, this.name);
+      return HString.format("%s.%s", this.category, this.name);
    }
 
    @Nonnull

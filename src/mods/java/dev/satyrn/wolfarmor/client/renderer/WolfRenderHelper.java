@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.client.renderer;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.EaglercraftGPU;
 import dev.satyrn.wolfarmor.WolfArmorMod;
 import dev.satyrn.wolfarmor.api.entity.IFoodStatsCreature;
 import dev.satyrn.wolfarmor.api.entity.passive.IArmoredWolf;
@@ -18,7 +19,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.util.Point;
+import com.arlenh7.eaglercraft.lwjgl.Point;
 
 @SideOnly(Side.CLIENT)
 public class WolfRenderHelper {
@@ -46,7 +47,7 @@ public class WolfRenderHelper {
       if (wolf.isTamed()) {
          GlStateManager.pushMatrix();
          GlStateManager.translate(x, y, z);
-         GlStateManager.glNormal3f(0.0F, 1.0F, 0.0F);
+         EaglercraftGPU.glNormal3f(0.0F, 1.0F, 0.0F);
          GlStateManager.rotate(-playerViewY, 0.0F, 1.0F, 0.0F);
          GlStateManager.rotate((isThirdPerson ? -1.0F : 1.0F) * playerViewX, 1.0F, 0.0F, 0.0F);
          GlStateManager.scale(-0.01F, -0.01F, 0.01F);

@@ -1,5 +1,6 @@
 package dev.satyrn.wolfarmor.common.loot;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import dev.satyrn.wolfarmor.api.util.Resources;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootEntry;
@@ -10,11 +11,10 @@ import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.LootTableLoadEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class LootHandler {
    private LootHandler() {
-      MinecraftForge.EVENT_BUS.register(this);
+      this.register(MinecraftForge.EVENT_BUS);
       LootTableList.register(Resources.LOOT_TABLE_DUNGEON_CHEST_INJECT);
    }
 
@@ -22,7 +22,10 @@ public class LootHandler {
       new LootHandler();
    }
 
-   @SubscribeEvent
+   public void register(EventBus bus) {
+      bus.register(LootTableLoadEvent.class, this::dungeonLootLoad);
+   }
+
    public void dungeonLootLoad(LootTableLoadEvent event) {
       String name = event.getName().toString();
       String chests = "minecraft:chests/";

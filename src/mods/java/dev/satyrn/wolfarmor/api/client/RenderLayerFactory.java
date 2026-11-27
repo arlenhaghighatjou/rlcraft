@@ -1,5 +1,7 @@
 package dev.satyrn.wolfarmor.api.client;
 
+import dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfBackpack;
+import dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfArmor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -17,22 +19,12 @@ public abstract class RenderLayerFactory {
    /** @deprecated */
    @Nullable
    public static LayerRenderer<?> createArmorLayer(@Nonnull RenderLiving<?> renderLiving) {
-      try {
-         Class<?> clazz = RenderLayerFactory.class.getClassLoader().loadClass("dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfArmor");
-         return (LayerRenderer)clazz.getConstructor(RenderLiving.class).newInstance(renderLiving);
-      } catch (Exception var2) {
-         return null;
-      }
+      return new LayerWolfArmor(renderLiving);
    }
 
    /** @deprecated */
    @Nullable
    public static LayerRenderer<?> createBackpackLayer(@Nonnull RenderLiving<?> renderLiving) {
-      try {
-         Class<?> clazz = RenderLayerFactory.class.getClassLoader().loadClass("dev.satyrn.wolfarmor.client.renderer.entity.layer.LayerWolfBackpack");
-         return (LayerRenderer)clazz.getConstructor(RenderLiving.class).newInstance(renderLiving);
-      } catch (Exception var2) {
-         return null;
-      }
+      return new LayerWolfBackpack(renderLiving);
    }
 }
