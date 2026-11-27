@@ -1,10 +1,12 @@
 package maxhyper.dynamictreesdefiledlands;
 
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import maxhyper.dynamictreesdefiledlands.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -20,29 +22,36 @@ public class DynamicTreesDefiledLands {
    public static final String MODID = "dynamictreesdefiledlands";
    public static final String NAME = "Dynamic Trees for Defiled Lands";
    public static final String DEPENDENCIES = "required-after:dynamictrees@[1.12.2-0.9.21,);required-after:defiledlands";
-   @Instance
    public static DynamicTreesDefiledLands instance;
-   @SidedProxy(
-      clientSide = "maxhyper.dynamictreesdefiledlands.proxy.ClientProxy",
-      serverSide = "maxhyper.dynamictreesdefiledlands.proxy.CommonProxy"
-   )
    public static CommonProxy proxy;
 
    public DynamicTreesDefiledLands() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         instance = this;
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new maxhyper.dynamictreesdefiledlands.proxy.ClientProxy() : new maxhyper.dynamictreesdefiledlands.proxy.CommonProxy();
+         maxhyper.dynamictreesdefiledlands.ModContent.register(MinecraftForge.EVENT_BUS);
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLPostInitializationEvent) {
+         this.postInit((FMLPostInitializationEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       proxy.preInit();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       proxy.init();
    }
 
-   @EventHandler
-   public void postInit(FMLPostInitializationEvent event) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+   public void postInit(FMLPostInitializationEvent event) {
       proxy.postInit();
    }
 }

@@ -1,5 +1,6 @@
 package maxhyper.dynamictreesdefiledlands;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.ModItems;
 import com.ferreusveritas.dynamictrees.ModRecipes;
 import com.ferreusveritas.dynamictrees.api.TreeRegistry;
@@ -33,18 +34,10 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
-@EventBusSubscriber(
-   modid = "dynamictreesdefiledlands"
-)
-@ObjectHolder("dynamictreesdefiledlands")
 public class ModContent {
    public static ILeavesProperties dyingLeavesProperties;
    public static BlockRooty rootyDefiledDirt;
@@ -56,12 +49,18 @@ public class ModContent {
    public ModContent() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(BiomeDataBasePopulatorRegistryEvent.class, ModContent::registerDataBasePopulators);
+      bus.registerGeneric(Register.class, Block.class, ModContent::registerBlocks);
+      bus.registerGeneric(Register.class, Item.class, ModContent::registerItems);
+      bus.registerGeneric(Register.class, IRecipe.class, ModContent::registerRecipes);
+      bus.register(ModelRegistryEvent.class, ModContent::registerModels);
+   }
+
    public static void registerDataBasePopulators(BiomeDataBasePopulatorRegistryEvent event) {
       event.register(new BiomeDataBasePopulator());
    }
 
-   @SubscribeEvent
    public static void registerBlocks(Register<Block> event) {
       DirtHelper.createNewAdjective(CORRUPTDIRTLIKE);
       DirtHelper.createNewAdjective(CORRUPTSANDLIKE);
@@ -89,7 +88,7 @@ public class ModContent {
          tree.getRegisterableBlocks(treeBlocks);
       });
       treeBlocks.addAll(LeavesPaging.getLeavesMapForModId("dynamictreesdefiledlands").values());
-      registry.registerAll((IForgeRegistryEntry[])treeBlocks.toArray(new Block[treeBlocks.size()]));
+      registry.registerAll(treeBlocks.toArray(new Block[treeBlocks.size()]));
       DirtHelper.registerSoil(rootyDefiledDirt, CORRUPTDIRTLIKE);
       DirtHelper.registerSoil(ModBlocks.dirtDefiled, CORRUPTDIRTLIKE);
       DirtHelper.registerSoil(ModBlocks.grassDefiled, CORRUPTDIRTLIKE);
@@ -110,17 +109,15 @@ public class ModContent {
       return leavesProperties;
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       IForgeRegistry<Item> registry = event.getRegistry();
       ArrayList<Item> treeItems = new ArrayList();
       trees.forEach((tree) -> {
          tree.getRegisterableItems(treeItems);
       });
-      registry.registerAll((IForgeRegistryEntry[])treeItems.toArray(new Item[treeItems.size()]));
+      registry.registerAll(treeItems.toArray(new Item[treeItems.size()]));
    }
 
-   @SubscribeEvent
    public static void registerRecipes(Register<IRecipe> event) {
    }
 
@@ -133,7 +130,6 @@ public class ModContent {
    }
 
    @SideOnly(Side.CLIENT)
-   @SubscribeEvent
    public static void registerModels(ModelRegistryEvent event) {
       for(TreeFamily tree : trees) {
          ModelHelper.regModel(tree.getDynamicBranch());

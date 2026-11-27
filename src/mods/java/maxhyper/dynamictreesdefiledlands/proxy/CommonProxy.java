@@ -10,7 +10,7 @@ public class CommonProxy {
 
    public void preInit() {
       CellKits.init();
-      MinecraftForge.TERRAIN_GEN_BUS.register(new TreeGenCancelDefiledEventHandler());
+      (new TreeGenCancelDefiledEventHandler()).register(MinecraftForge.TERRAIN_GEN_BUS);
    }
 
    public void init() {

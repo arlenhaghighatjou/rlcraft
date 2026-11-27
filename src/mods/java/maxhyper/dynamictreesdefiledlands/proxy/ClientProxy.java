@@ -25,7 +25,7 @@ public class ClientProxy extends CommonProxy {
 
    public void preInit() {
       super.preInit();
-      MinecraftForge.EVENT_BUS.register(new EventListenerDefiledLands());
+      (new EventListenerDefiledLands()).register(MinecraftForge.EVENT_BUS);
    }
 
    public void init() {

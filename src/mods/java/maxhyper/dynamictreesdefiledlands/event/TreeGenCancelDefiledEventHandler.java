@@ -1,5 +1,6 @@
 package maxhyper.dynamictreesdefiledlands.event;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import com.ferreusveritas.dynamictrees.ModConfigs;
 import com.ferreusveritas.dynamictrees.worldgen.BiomeDataBase;
 import com.ferreusveritas.dynamictrees.worldgen.TreeGenerator;
@@ -9,7 +10,6 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 
 public class TreeGenCancelDefiledEventHandler {
@@ -18,10 +18,10 @@ public class TreeGenCancelDefiledEventHandler {
    public TreeGenCancelDefiledEventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.NORMAL,
-      receiveCanceled = true
-   )
+   public void register(EventBus bus) {
+      bus.register(Decorate.class, EventPriority.NORMAL, true, this::onEvent);
+   }
+
    public void onEvent(Decorate event) {
       int dimensionId = event.getWorld().provider.getDimension();
       BiomeDataBase dbase = TreeGenerator.getTreeGenerator().getBiomeDataBase(dimensionId);
