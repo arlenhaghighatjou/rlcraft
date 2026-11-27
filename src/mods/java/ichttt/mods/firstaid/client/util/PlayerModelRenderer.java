@@ -1,5 +1,6 @@
 package ichttt.mods.firstaid.client.util;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import ichttt.mods.firstaid.FirstAidConfig;
 import ichttt.mods.firstaid.api.damagesystem.AbstractDamageablePart;
 import ichttt.mods.firstaid.api.damagesystem.AbstractPlayerDamageModel;
@@ -29,7 +30,7 @@ public class PlayerModelRenderer {
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F - alpha / 255.0F);
       Minecraft.getMinecraft().getTextureManager().bindTexture(oldModel ? HEALTH_RENDER_LOCATION_OLD : HEALTH_RENDER_LOCATION);
       if (FirstAidConfig.overlay.enableEasterEggs && (EventCalendar.isAFDay() || EventCalendar.isHalloween())) {
-         float angle = (float)angle;
+         float angle = (float)PlayerModelRenderer.angle;
          if (cooldown == 0) {
             angle += (otherWay ? -partialTicks : partialTicks) * 2.0F;
          }
@@ -83,7 +84,7 @@ public class PlayerModelRenderer {
                   return !fourColors && healthPercentage > 0.25F ? 3 : 4;
                }
             } else {
-               throw new RuntimeException(String.format("Calculated invalid health for part %s with current health %s and max health %d. Got value %s", part.part, part.currentHealth, maxHealth, healthPercentage));
+               throw new RuntimeException(HString.format("Calculated invalid health for part %s with current health %s and max health %d. Got value %s", part.part, part.currentHealth, maxHealth, healthPercentage));
             }
          }
       }

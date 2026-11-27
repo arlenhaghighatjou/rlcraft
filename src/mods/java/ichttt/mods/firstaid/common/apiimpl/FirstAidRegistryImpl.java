@@ -166,7 +166,7 @@ public class FirstAidRegistryImpl extends FirstAidRegistry {
          throw new IllegalStateException("Registration must take place before FMLLoadCompleteEvent");
       } else if (slot.playerParts.length > 1 && !(debuff instanceof SharedDebuff)) {
          this.debuffs.put(slot, () -> {
-            return (void)(new SharedDebuff((IDebuff)debuff.get(), slot));
+            return new SharedDebuff((IDebuff)debuff.get(), slot);
          });
       } else {
          this.debuffs.put(slot, debuff);

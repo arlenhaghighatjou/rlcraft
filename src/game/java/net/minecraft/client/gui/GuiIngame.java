@@ -72,11 +72,11 @@ public class GuiIngame extends Gui
     protected static final ResourceLocation VIGNETTE_TEX_PATH = new ResourceLocation("textures/misc/vignette.png");
     protected static final ResourceLocation WIDGETS_TEX_PATH = new ResourceLocation("textures/gui/widgets.png");
     protected static final ResourceLocation PUMPKIN_BLUR_TEX_PATH = new ResourceLocation("textures/misc/pumpkinblur.png");
-    protected final EaglercraftRandom rand = new EaglercraftRandom();
+    public final EaglercraftRandom rand = new EaglercraftRandom();
     protected final Minecraft mc;
     protected final RenderItem itemRenderer;
     protected final GuiNewChat persistantChatGUI;
-    protected int updateCounter;
+    public int updateCounter;
     protected String overlayMessage = "";
     protected int overlayMessageTime;
     protected boolean animateOverlayMessageColor;
@@ -94,10 +94,10 @@ public class GuiIngame extends Gui
     protected int titleFadeIn;
     protected int titleDisplayTime;
     protected int titleFadeOut;
-    protected int playerHealth;
-    protected int lastPlayerHealth;
-    protected long lastSystemTime;
-    protected long healthUpdateCounter;
+    public int playerHealth;
+    public int lastPlayerHealth;
+    public long lastSystemTime;
+    public long healthUpdateCounter;
     protected final Map<ChatType, List<IChatListener>> chatListeners = Maps.<ChatType, List<IChatListener>>newHashMap();
 
     public void addChatListener(ChatType type, IChatListener listener)

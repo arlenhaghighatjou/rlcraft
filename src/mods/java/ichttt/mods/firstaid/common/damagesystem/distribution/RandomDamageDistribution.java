@@ -44,7 +44,7 @@ public class RandomDamageDistribution extends DamageDistribution {
       } else {
          List<Pair<EntityEquipmentSlot, EnumPlayerPart[]>> partList = new ArrayList();
          List<EntityEquipmentSlot> slots = Arrays.asList(EntityEquipmentSlot.values());
-         Collections.shuffle(slots, RANDOM);
+         RANDOM.shuffle(slots);
 
          for(EntityEquipmentSlot slot : slots) {
             if (CommonUtils.isValidArmorSlot(slot)) {

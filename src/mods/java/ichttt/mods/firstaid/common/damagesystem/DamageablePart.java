@@ -46,6 +46,7 @@ public class DamageablePart extends AbstractDamageablePart {
 
          if (applyDebuff) {
             Objects.requireNonNull(player, "Got null player with applyDebuff = true");
+            float finalNotFitting = notFitting;
             Arrays.stream(this.debuffs).forEach((debuff) -> {
                debuff.handleHealing(amount - finalNotFitting, this.currentHealth / (float)this.maxHealth, (EntityPlayerMP)player);
             });

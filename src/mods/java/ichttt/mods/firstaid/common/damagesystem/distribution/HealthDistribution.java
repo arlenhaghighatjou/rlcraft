@@ -8,7 +8,6 @@ import ichttt.mods.firstaid.api.enums.EnumPlayerPart;
 import ichttt.mods.firstaid.common.network.MessageAddHealth;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.ToDoubleFunction;
@@ -31,7 +30,7 @@ public class HealthDistribution {
       }
 
       float toHeal = distribute ? health / 8.0F : health;
-      Collections.shuffle(parts, player.world.rand);
+      player.world.rand.shuffle(parts);
       List<AbstractDamageablePart> damageableParts = new ArrayList(parts.size());
 
       for(EnumPlayerPart part : parts) {

@@ -51,7 +51,7 @@ public class GuiConfigScreen extends GuiConfig {
 
          while(iterator.hasNext()) {
             IConfigEntry next = (IConfigEntry)iterator.next();
-            if (ClientProxy.advancedConfigOptions.stream().anyMatch((entryx) -> {
+            if (ClientProxy.advancedConfigOptions.stream().anyMatch((entry) -> {
                return entry.property.matches(next.getConfigElement());
             })) {
                this.removedEntries.add(next);

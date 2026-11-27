@@ -85,7 +85,7 @@ public abstract class EntityLivingBase extends Entity
     private static final AttributeModifier SPRINTING_SPEED_BOOST = (new AttributeModifier(SPRINTING_SPEED_BOOST_ID, "Sprinting speed boost", 0.30000001192092896D, 2)).setSaved(false);
     public static final net.minecraft.entity.ai.attributes.IAttribute SWIM_SPEED = new net.minecraft.entity.ai.attributes.RangedAttribute(null, "forge.swimSpeed", 1.0D, 0.0D, 1024.0D).setShouldWatch(true);
     protected static final DataParameter<Byte> HAND_STATES = EntityDataManager.<Byte>createKey(EntityLivingBase.class, DataSerializers.BYTE);
-    private static final DataParameter<Float> HEALTH = EntityDataManager.<Float>createKey(EntityLivingBase.class, DataSerializers.FLOAT);
+    public static final DataParameter<Float> HEALTH = EntityDataManager.<Float>createKey(EntityLivingBase.class, DataSerializers.FLOAT);
     private static final DataParameter<Integer> POTION_EFFECTS = EntityDataManager.<Integer>createKey(EntityLivingBase.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> HIDE_PARTICLES = EntityDataManager.<Boolean>createKey(EntityLivingBase.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> ARROW_COUNT_IN_ENTITY = EntityDataManager.<Integer>createKey(EntityLivingBase.class, DataSerializers.VARINT);
@@ -1057,7 +1057,7 @@ public abstract class EntityLivingBase extends Entity
         p_190629_1_.knockBack(this, 0.5F, this.posX - p_190629_1_.posX, this.posZ - p_190629_1_.posZ);
     }
 
-    private boolean checkTotemDeathProtection(DamageSource p_190628_1_)
+    public boolean checkTotemDeathProtection(DamageSource p_190628_1_)
     {
         if (p_190628_1_.canHarmInCreative())
         {
@@ -1461,6 +1461,21 @@ public abstract class EntityLivingBase extends Entity
     public float callApplyPotionDamageCalculations(DamageSource source, float damage)
     {
         return this.applyPotionDamageCalculations(source, damage);
+    }
+
+    public SoundEvent callGetHurtSound(DamageSource damageSourceIn)
+    {
+        return this.getHurtSound(damageSourceIn);
+    }
+
+    public float callGetSoundVolume()
+    {
+        return this.getSoundVolume();
+    }
+
+    public float callGetSoundPitch()
+    {
+        return this.getSoundPitch();
     }
 
     public CombatTracker getCombatTracker()

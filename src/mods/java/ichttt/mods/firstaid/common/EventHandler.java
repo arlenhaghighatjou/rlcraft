@@ -1,5 +1,8 @@
 package ichttt.mods.firstaid.common;
 
+import net.lax1dude.eaglercraft.v1_8.netty.Unpooled;
+import net.minecraftforge.fml.common.eventhandler.EventBus;
+import net.minecraftforge.registries.ObjectHolderRegistry;
 import com.creativemd.playerrevive.api.event.PlayerKilledEvent;
 import com.creativemd.playerrevive.api.event.PlayerRevivedEvent;
 import ichttt.mods.firstaid.FirstAid;
@@ -24,8 +27,6 @@ import ichttt.mods.firstaid.common.potion.PotionPoisonPatched;
 import ichttt.mods.firstaid.common.util.CommonUtils;
 import ichttt.mods.firstaid.common.util.PlayerSizeHelper;
 import net.lax1dude.eaglercraft.v1_8.netty.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -43,7 +44,6 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.RayTraceResult;
@@ -67,7 +67,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
@@ -76,7 +75,6 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class EventHandler {
@@ -84,16 +82,33 @@ public class EventHandler {
    public static final SoundEvent HEARTBEAT = (SoundEvent)(new SoundEvent(new ResourceLocation("firstaid", "debuff.heartbeat"))).setRegistryName(new ResourceLocation("firstaid", "debuff.heartbeat"));
    public static final Potion MORPHINE = (new FirstAidPotion(false, 3549, "morphine")).setBeneficial();
    public static final Potion POISEN_PATCHED = PotionPoisonPatched.INSTANCE;
-   @ObjectHolder("minecraft:resistance")
-   public static final Potion RESISTANCE = null;
+   public static Potion RESISTANCE = null;
    public static final Map<EntityPlayer, Pair<Entity, RayTraceResult>> HIT_LIST = new WeakHashMap();
 
    public EventHandler() {
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
+   public static void register(EventBus bus) {
+      bus.register(LivingHurtEvent.class, EventPriority.LOWEST, false, EventHandler::onLivingHurt);
+      bus.register(ProjectileImpactEvent.class, EventPriority.LOWEST, false, EventHandler::onProjectileImpact);
+      bus.registerGeneric(AttachCapabilitiesEvent.class, Entity.class, EventHandler::registerCapability);
+      bus.registerGeneric(Register.class, Item.class, EventHandler::registerItems);
+      bus.registerGeneric(Register.class, Potion.class, EventHandler::registerPotion);
+      bus.registerGeneric(Register.class, SoundEvent.class, EventHandler::registerSound);
+      bus.register(PlayerTickEvent.class, EventHandler::tickPlayers);
+      bus.register(WorldTickEvent.class, EventHandler::tickWorld);
+      bus.register(LootTableLoadEvent.class, EventHandler::onLootTableLoad);
+      bus.register(OnConfigChangedEvent.class, EventHandler::onConfigChange);
+      bus.register(LivingHealEvent.class, EventPriority.LOW, false, EventHandler::onHeal);
+      bus.register(PlayerLoggedInEvent.class, EventPriority.HIGH, false, EventHandler::onLogin);
+      bus.register(PlayerLoggedOutEvent.class, EventPriority.LOW, false, EventHandler::onLogout);
+      bus.register(Load.class, EventHandler::onWorldLoad);
+      bus.register(PlayerChangedDimensionEvent.class, EventHandler::onDimensionChange);
+      bus.register(PlayerKilledEvent.class, EventHandler::onPlayerBleedToDeath);
+      bus.register(PlayerRevivedEvent.class, EventHandler::onPlayerRevived);
+      bus.register(PlayerRespawnEvent.class, EventPriority.LOW, false, EventHandler::onPlayerRespawn);
+   }
+
    public static void onLivingHurt(LivingHurtEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (!entity.world.isRemote && entity instanceof EntityPlayer && !(entity instanceof FakePlayer)) {
@@ -140,9 +155,6 @@ public class EventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOWEST
-   )
    public static void onProjectileImpact(ProjectileImpactEvent event) {
       RayTraceResult result = event.getRayTraceResult();
       if (result.typeOfHit == Type.ENTITY) {
@@ -154,7 +166,6 @@ public class EventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void registerCapability(AttachCapabilitiesEvent<Entity> event) {
       Entity obj = (Entity)event.getObject();
       if (obj instanceof EntityPlayer && !(obj instanceof FakePlayer)) {
@@ -166,23 +177,19 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void registerItems(Register<Item> event) {
       FirstAidItems.registerItems(event.getRegistry());
    }
 
-   @SubscribeEvent
    public static void registerPotion(Register<Potion> event) {
       event.getRegistry().register(MORPHINE);
       event.getRegistry().register(POISEN_PATCHED);
    }
 
-   @SubscribeEvent
    public static void registerSound(Register<SoundEvent> event) {
       event.getRegistry().register(HEARTBEAT);
    }
 
-   @SubscribeEvent
    public static void tickPlayers(PlayerTickEvent event) {
       if (event.phase == Phase.END && CommonUtils.isSurvivalOrAdventure(event.player)) {
          ((AbstractPlayerDamageModel)Objects.requireNonNull(event.player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null))).tick(event.player.world, event.player);
@@ -191,7 +198,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void tickWorld(WorldTickEvent event) {
       if (event.phase != Phase.END) {
          if (FirstAidConfig.externalHealing.sleepHealPercentage > 0.0D) {
@@ -207,7 +213,6 @@ public class EventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onLootTableLoad(LootTableLoadEvent event) {
       ResourceLocation tableName = event.getName();
       LootPool pool = null;
@@ -234,14 +239,13 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onConfigChange(OnConfigChangedEvent event) {
       if (event.getModID().equals("firstaid")) {
          Map<ConfigEntry<ExtraConfig.Sync>, ByteBuf> map = new LinkedHashMap();
 
          for(ConfigEntry<ExtraConfig.Sync> option : FirstAid.syncedConfigOptions) {
             if (option.hasRemoteData()) {
-               ByteBuf buf = ByteBufAllocator.DEFAULT.buffer();
+               ByteBuf buf = Unpooled.buffer();
                option.writeToBuf(buf);
                map.put(option, buf);
                option.revert();
@@ -255,7 +259,6 @@ public class EventHandler {
             if (map.containsKey(option)) {
                ByteBuf buf = (ByteBuf)map.get(option);
                option.readFromBuf(buf);
-               buf.release();
             }
          }
 
@@ -264,18 +267,13 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void onHeal(LivingHealEvent event) {
       EntityLivingBase entity = event.getEntityLiving();
       if (entity.hasCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null)) {
          event.setCanceled(true);
          if (!entity.world.isRemote && FirstAidConfig.externalHealing.allowOtherHealingItems) {
             float amount = event.getAmount();
-            if (Arrays.stream(Thread.currentThread().getStackTrace()).anyMatch((stackTraceElement) -> {
-               return stackTraceElement.getClassName().equals(FoodStats.class.getName());
-            })) {
+            if (entity instanceof EntityPlayer && ((EntityPlayer)entity).getFoodStats().healingPlayer) {
                if (FirstAidConfig.externalHealing.allowNaturalRegeneration) {
                   amount *= (float)FirstAidConfig.externalHealing.naturalRegenMultiplier;
                }
@@ -292,9 +290,6 @@ public class EventHandler {
       }
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.HIGH
-   )
    public static void onLogin(PlayerLoggedInEvent event) {
       if (!event.player.world.isRemote) {
          FirstAid.LOGGER.debug("Sending damage model to " + event.player.getName());
@@ -309,14 +304,10 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void onLogout(PlayerLoggedOutEvent event) {
       HIT_LIST.remove(event.player);
    }
 
-   @SubscribeEvent
    public static void onWorldLoad(Load event) {
       World world = event.getWorld();
       if (!world.isRemote) {
@@ -325,7 +316,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onDimensionChange(PlayerChangedDimensionEvent event) {
       if (!event.player.world.isRemote && event.player instanceof EntityPlayerMP) {
          FirstAid.NETWORKING.sendTo(new MessageSyncDamageModel((AbstractPlayerDamageModel)Objects.requireNonNull(event.player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null)), true), (EntityPlayerMP)event.player);
@@ -333,7 +323,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onPlayerBleedToDeath(PlayerKilledEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       AbstractPlayerDamageModel damageModel = (AbstractPlayerDamageModel)player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null);
@@ -343,7 +332,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onPlayerRevived(PlayerRevivedEvent event) {
       EntityPlayer player = event.getEntityPlayer();
       AbstractPlayerDamageModel damageModel = (AbstractPlayerDamageModel)player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null);
@@ -354,9 +342,6 @@ public class EventHandler {
 
    }
 
-   @SubscribeEvent(
-      priority = EventPriority.LOW
-   )
    public static void onPlayerRespawn(PlayerRespawnEvent event) {
       if (!event.isEndConquered() && !event.player.world.isRemote && event.player instanceof EntityPlayerMP) {
          AbstractPlayerDamageModel damageModel = (AbstractPlayerDamageModel)Objects.requireNonNull(event.player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null));
@@ -367,5 +352,9 @@ public class EventHandler {
          damageModel.scheduleResync();
       }
 
+   }
+
+   public static void registerHolders() {
+      ObjectHolderRegistry.INSTANCE.register(Potion.class, new ResourceLocation("minecraft:resistance"), v -> RESISTANCE = v);
    }
 }

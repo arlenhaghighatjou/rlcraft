@@ -1,5 +1,8 @@
 package ichttt.mods.firstaid;
 
+import net.lax1dude.eaglercraft.v1_8.internal.vfs2.VFile2;
+import net.minecraftforge.fml.common.event.FMLConstructionEvent;
+import net.minecraftforge.fml.common.event.FMLEvent;
 import ichttt.mods.firstaid.api.damagesystem.AbstractPlayerDamageModel;
 import ichttt.mods.firstaid.common.CapProvider;
 import ichttt.mods.firstaid.common.DebugDamageCommand;
@@ -18,12 +21,6 @@ import ichttt.mods.firstaid.common.network.MessageConfiguration;
 import ichttt.mods.firstaid.common.network.MessagePlayHurtSound;
 import ichttt.mods.firstaid.common.network.MessageSyncDamageModel;
 import ichttt.mods.firstaid.common.network.MessageUpdatePart;
-import ichttt.mods.firstaid.common.util.MorpheusHelper;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.Callable;
 import javax.annotation.Nullable;
@@ -39,9 +36,6 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -70,10 +64,6 @@ public class FirstAid {
    public static final Logger LOGGER = LogManager.getLogger("firstaid");
    public static boolean isSynced = false;
    public static List<ConfigEntry<ExtraConfig.Sync>> syncedConfigOptions;
-   @SidedProxy(
-      clientSide = "ichttt.mods.firstaid.client.ClientProxy",
-      serverSide = "ichttt.mods.firstaid.server.ServerProxy"
-   )
    public static IProxy proxy;
    public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("firstaid") {
       public ItemStack getTabIconItem() {
@@ -86,7 +76,27 @@ public class FirstAid {
    public FirstAid() {
    }
 
-   @EventHandler
+   public void handleModStateEvent(FMLEvent event) {
+      if (event instanceof FMLConstructionEvent) {
+         proxy = FMLCommonHandler.instance().getSide() == Side.CLIENT ? new ichttt.mods.firstaid.client.ClientProxy() : new ichttt.mods.firstaid.server.ServerProxy();
+         ichttt.mods.firstaid.FirstAidConfig.register();
+         ichttt.mods.firstaid.common.EventHandler.registerHolders();
+         ichttt.mods.firstaid.common.items.FirstAidItems.registerHolders();
+         ichttt.mods.firstaid.api.CapabilityExtendedHealthSystem.registerCapabilities();
+      } else if (event instanceof FMLPreInitializationEvent) {
+         this.preInit((FMLPreInitializationEvent)event);
+      } else if (event instanceof FMLInitializationEvent) {
+         this.init((FMLInitializationEvent)event);
+      } else if (event instanceof FMLLoadCompleteEvent) {
+         this.loadComplete((FMLLoadCompleteEvent)event);
+      } else if (event instanceof FMLServerStartingEvent) {
+         this.beforeServerStart((FMLServerStartingEvent)event);
+      } else if (event instanceof FMLServerStoppedEvent) {
+         this.onServerStop((FMLServerStoppedEvent)event);
+      }
+
+   }
+
    public void preInit(FMLPreInitializationEvent event) {
       LOGGER.info("{} version {} starting", "First Aid", "1.6.22");
       if (FirstAidConfig.debug) {
@@ -95,14 +105,13 @@ public class FirstAid {
          LOGGER.warn("Disable debug in firstaid config");
       }
 
-      MinecraftForge.EVENT_BUS.register(ichttt.mods.firstaid.common.EventHandler.class);
+      ichttt.mods.firstaid.common.EventHandler.register(MinecraftForge.EVENT_BUS);
       proxy.preInit();
       HealingItemApiHelperImpl.init();
       RegistryManager.setupRegistries();
       checkEarlyExit();
    }
 
-   @EventHandler
    public void init(FMLInitializationEvent event) {
       CapabilityManager.INSTANCE.register(AbstractPlayerDamageModel.class, new IStorage<AbstractPlayerDamageModel>() {
          @Nullable
@@ -116,7 +125,7 @@ public class FirstAid {
       }, () -> {
          throw new UnsupportedOperationException("No default implementation");
       });
-      syncedConfigOptions = ExtraConfigManager.getAnnotatedFields(ExtraConfig.Sync.class, FirstAidConfig.class);
+      syncedConfigOptions = ExtraConfigManager.getSyncedEntries();
       ExtraConfigManager.scheduleDelete("Overlay.hudScale");
       ExtraConfigManager.scheduleDelete("Overlay.displayHealthAsNumber");
       ExtraConfigManager.scheduleDelete("Overlay.heartThreshold");
@@ -133,54 +142,31 @@ public class FirstAid {
       int i = 0;
       NETWORKING = NetworkRegistry.INSTANCE.newSimpleChannel("firstaid");
       ++i;
-      NETWORKING.registerMessage(MessageUpdatePart.Handler.class, MessageUpdatePart.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessageUpdatePart.Handler(), MessageUpdatePart.class, MessageUpdatePart::new, i, Side.CLIENT);
       ++i;
-      NETWORKING.registerMessage(MessageApplyHealingItem.Handler.class, MessageApplyHealingItem.class, i, Side.SERVER);
+      NETWORKING.registerMessage(new MessageApplyHealingItem.Handler(), MessageApplyHealingItem.class, MessageApplyHealingItem::new, i, Side.SERVER);
       ++i;
-      NETWORKING.registerMessage(MessageConfiguration.Handler.class, MessageConfiguration.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessageConfiguration.Handler(), MessageConfiguration.class, MessageConfiguration::new, i, Side.CLIENT);
       ++i;
-      NETWORKING.registerMessage(MessageApplyAbsorption.Handler.class, MessageApplyAbsorption.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessageApplyAbsorption.Handler(), MessageApplyAbsorption.class, MessageApplyAbsorption::new, i, Side.CLIENT);
       ++i;
-      NETWORKING.registerMessage(MessageAddHealth.Handler.class, MessageAddHealth.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessageAddHealth.Handler(), MessageAddHealth.class, MessageAddHealth::new, i, Side.CLIENT);
       ++i;
-      NETWORKING.registerMessage(MessagePlayHurtSound.Handler.class, MessagePlayHurtSound.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessagePlayHurtSound.Handler(), MessagePlayHurtSound.class, MessagePlayHurtSound::new, i, Side.CLIENT);
       ++i;
-      NETWORKING.registerMessage(MessageClientRequest.Handler.class, MessageClientRequest.class, i, Side.SERVER);
+      NETWORKING.registerMessage(new MessageClientRequest.Handler(), MessageClientRequest.class, MessageClientRequest::new, i, Side.SERVER);
       ++i;
-      NETWORKING.registerMessage(MessageSyncDamageModel.Handler.class, MessageSyncDamageModel.class, i, Side.CLIENT);
+      NETWORKING.registerMessage(new MessageSyncDamageModel.Handler(), MessageSyncDamageModel.class, MessageSyncDamageModel::new, i, Side.CLIENT);
       proxy.init();
-      if (Loader.isModLoaded("morpheus")) {
-         MorpheusHelper.register();
-         morpheusLoaded = true;
-      }
-
       RegistryManager.registerDefaults();
       checkEarlyExit();
    }
 
-   @EventHandler
    public void loadComplete(FMLLoadCompleteEvent event) {
       RegistryManager.finalizeRegistries();
       checkEarlyExit();
    }
 
-   @EventHandler
-   public void wrongFingerprint(FMLFingerprintViolationEvent event) {
-      if (event.getExpectedFingerprint().equals("7904c4e13947c8a616c5f39b26bdeba796500722")) {
-         if (event.getFingerprints().isEmpty()) {
-            LOGGER.warn("NO VALID FINGERPRINT FOR FIRST AID! EXPECTED " + event.getExpectedFingerprint() + " BUT FOUND NONE!");
-         } else {
-            LOGGER.warn("FOUND AN INVALID FINGERPRINT FOR FIRST AID! EXPECTED " + event.getExpectedFingerprint() + " BUT GOT THE FOLLOWING:");
-
-            for(String fingerprint : event.getFingerprints()) {
-               LOGGER.warn(fingerprint);
-            }
-         }
-
-         LOGGER.warn("THIS IS NOT AN OFFICIAL BUILD OF FIRST AID!");
-         LOGGER.warn("Please download the official version from CurseForge");
-      }
-   }
 
    private static void checkEarlyExit() {
       if (FMLCommonHandler.instance().isDisplayCloseRequested()) {
@@ -190,12 +176,10 @@ public class FirstAid {
 
    }
 
-   @EventHandler
    public void beforeServerStart(FMLServerStartingEvent event) {
       event.registerServerCommand(new DebugDamageCommand());
    }
 
-   @EventHandler
    public void onServerStop(FMLServerStoppedEvent event) {
       LOGGER.debug("Cleaning up");
       CapProvider.tutorialDone.clear();
@@ -203,15 +187,14 @@ public class FirstAid {
    }
 
    static {
-      File configDir = Loader.instance().getConfigDir();
-      Path oldConfigPath = configDir.toPath().resolve("First Aid.cfg");
-      Path newConfigPath = configDir.toPath().resolve("firstaid.cfg");
-      if (Files.exists(oldConfigPath, new LinkOption[0]) && !Files.isDirectory(oldConfigPath, new LinkOption[0]) && !Files.exists(newConfigPath, new LinkOption[0])) {
-         try {
-            Files.move(oldConfigPath, newConfigPath);
+      VFile2 configDir = Loader.instance().getConfigDir();
+      VFile2 oldConfigPath = new VFile2(configDir, "First Aid.cfg");
+      VFile2 newConfigPath = new VFile2(configDir, "firstaid.cfg");
+      if (oldConfigPath.exists() && !newConfigPath.exists()) {
+         if (oldConfigPath.renameTo(newConfigPath)) {
             LOGGER.info("Moved config file to new home");
-         } catch (IOException var4) {
-            LOGGER.error("Failed to move config file to new correct location!", var4);
+         } else {
+            LOGGER.error("Failed to move config file to new correct location!");
          }
       }
 

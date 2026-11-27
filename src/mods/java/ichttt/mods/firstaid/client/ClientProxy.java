@@ -32,14 +32,14 @@ public class ClientProxy implements IProxy {
 
    public void preInit() {
       FirstAid.LOGGER.debug("Loading ClientProxy");
-      MinecraftForge.EVENT_BUS.register(ClientEventHandler.class);
+      ClientEventHandler.register(MinecraftForge.EVENT_BUS);
       ClientRegistry.registerKeyBinding(showWounds);
    }
 
    public void init() {
       EventCalendar.checkDate();
       ((IReloadableResourceManager)Minecraft.getMinecraft().getResourceManager()).registerReloadListener(HUDHandler.INSTANCE);
-      advancedConfigOptions = ExtraConfigManager.getAnnotatedFields(ExtraConfig.Advanced.class, FirstAidConfig.class);
+      advancedConfigOptions = ExtraConfigManager.getAdvancedEntries();
    }
 
    public void showGuiApplyHealth(EnumHand activeHand) {

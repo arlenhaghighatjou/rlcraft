@@ -60,8 +60,7 @@ public abstract class DamageDistribution implements IDamageDistribution {
          IDamageDistribution var10 = hasTriedNoKill ? RandomDamageDistribution.NEAREST_KILL : RandomDamageDistribution.getDefault();
          left = var10.distributeDamage(left, player, source, addStat);
          if (left > 0.0F && !hasTriedNoKill) {
-            var10 = RandomDamageDistribution.NEAREST_KILL;
-            left = var10.distributeDamage(left, player, source, addStat);
+            left = RandomDamageDistribution.NEAREST_KILL.distributeDamage(left, player, source, addStat);
          }
       }
 
@@ -141,9 +140,7 @@ public abstract class DamageDistribution implements IDamageDistribution {
                Pair<EntityEquipmentSlot, EnumPlayerPart[]> pair = (Pair)var6.next();
                EntityEquipmentSlot slot = (EntityEquipmentSlot)pair.getLeft();
                EnumPlayerPart[] parts = (EnumPlayerPart[])pair.getRight();
-               Stream var10000 = Arrays.stream(parts);
-               damageModel.getClass();
-               if (!var10000.map(damageModel::getFromEnum).anyMatch((part) -> {
+               if (!Arrays.stream(parts).map(damageModel::getFromEnum).anyMatch((part) -> {
                   return part.currentHealth > this.minHealth(player, part);
                })) {
                   if (FirstAidConfig.debug) {

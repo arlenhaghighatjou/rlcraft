@@ -91,7 +91,7 @@ public class GuiIngameForge extends GuiIngame
 
     private ScaledResolution res = null;
     private FontRenderer fontrenderer = null;
-    private RenderGameOverlayEvent eventParent;
+    public RenderGameOverlayEvent eventParent;
     //private static final String MC_VERSION = MinecraftForge.MC_VERSION;
     private GuiOverlayDebugForge debugOverlay;
 

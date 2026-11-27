@@ -275,6 +275,7 @@ public class Loader
         mods.add(new FMLModContainer<>("spartanweaponry", "Spartan Weaponry", "1.5.3", "after:xat@[0.31,);after:bettercombatmod@[2.0.5,);", "[1.12.2]", "spartanweaponry", com.oblivioussp.spartanweaponry.ModSpartanWeaponry::new, com.oblivioussp.spartanweaponry.ModSpartanWeaponry::handleModStateEvent).guiFactory(com.oblivioussp.spartanweaponry.client.gui.GuiFactorySW::new));
         mods.add(new FMLModContainer<>("spartandefiled", "Spartan Defiled", "1.0", "", "[1.12.2]", "spartandefiled", fr.samlegamer.spartandefiled.SpartanDefiled::new, fr.samlegamer.spartandefiled.SpartanDefiled::handleModStateEvent));
         mods.add(new FMLModContainer<>("reachfix", "reachfix", "1.0", "", "", "reachfix", meldexun.reachfix.ReachFix::new, meldexun.reachfix.ReachFix::handleModStateEvent));
+        mods.add(new FMLModContainer<>("firstaid", "First Aid", "1.6.22", "required-after:forge@[14.23.5.2803,);", "[1.12.2,1.13)", "firstaid", ichttt.mods.firstaid.FirstAid::new, ichttt.mods.firstaid.FirstAid::handleModStateEvent).guiFactory(ichttt.mods.firstaid.client.config.GuiFactory::new));
         namedMods = Maps.uniqueIndex(mods, ModContainer::getModId);
         for (int i = 0, l = mods.size(); i < l; ++i)
         {

@@ -4,7 +4,6 @@ import ichttt.mods.firstaid.FirstAid;
 import ichttt.mods.firstaid.api.CapabilityExtendedHealthSystem;
 import ichttt.mods.firstaid.api.damagesystem.AbstractDamageablePart;
 import ichttt.mods.firstaid.api.damagesystem.AbstractPlayerDamageModel;
-import java.lang.reflect.Field;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiIngame;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
@@ -24,7 +23,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class FirstaidIngameGui {
-   private static final Field eventParentField;
 
    public FirstaidIngameGui() {
    }
@@ -153,32 +151,10 @@ public class FirstaidIngameGui {
 
       GlStateManager.disableBlend();
       mc.mcProfiler.endSection();
-      if (eventParentField != null) {
-         RenderGameOverlayEvent event;
-         try {
-            event = (RenderGameOverlayEvent)eventParentField.get(gui);
-         } catch (IllegalAccessException var28) {
-            FirstAid.LOGGER.error("Failed to access eventParentField", var28);
-            event = null;
-         }
-
-         if (event != null) {
-            MinecraftForge.EVENT_BUS.post(new Post(event, ElementType.HEALTH));
-         }
+      RenderGameOverlayEvent event = ((GuiIngameForge)gui).eventParent;
+      if (event != null) {
+         MinecraftForge.EVENT_BUS.post(new Post(event, ElementType.HEALTH));
       }
 
-   }
-
-   static {
-      Field f;
-      try {
-         f = GuiIngameForge.class.getDeclaredField("eventParent");
-         f.setAccessible(true);
-      } catch (ReflectiveOperationException var2) {
-         FirstAid.LOGGER.error("Failed to get eventParent", var2);
-         f = null;
-      }
-
-      eventParentField = f;
    }
 }

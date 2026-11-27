@@ -1,5 +1,6 @@
 package ichttt.mods.firstaid.common.apiimpl;
 
+import net.lax1dude.eaglercraft.v1_8.HString;
 import ichttt.mods.firstaid.FirstAid;
 import ichttt.mods.firstaid.FirstAidConfig;
 import ichttt.mods.firstaid.api.FirstAidRegistry;
@@ -119,7 +120,7 @@ public class RegistryManager {
    }
 
    private static void logError(String error, String potionName, EnumDebuffSlot slot) {
-      String errorMsg = String.format("Invalid config entry for debuff %s at part %s: %s", potionName, slot.toString(), error);
+      String errorMsg = HString.format("Invalid config entry for debuff %s at part %s: %s", potionName, slot.toString(), error);
       FirstAid.LOGGER.warn(errorMsg);
       debuffConfigErrors.add(errorMsg);
    }

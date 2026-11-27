@@ -1,10 +1,6 @@
 package ichttt.mods.firstaid.common.config;
 
-import java.lang.reflect.Field;
-import java.util.Locale;
 import java.util.Objects;
-import net.minecraftforge.common.config.Config.LangKey;
-import net.minecraftforge.common.config.Config.Name;
 import net.minecraftforge.fml.client.config.ConfigGuiType;
 import net.minecraftforge.fml.client.config.IConfigElement;
 
@@ -12,23 +8,6 @@ public class UniqueProperty {
    private final String name;
    private final String langKey;
    private final UniqueProperty.Type type;
-
-   public static String getLangKey(Field field, String modid, String category) {
-      LangKey la = (LangKey)field.getAnnotation(LangKey.class);
-      return la != null ? la.value() : modid + "." + (category.isEmpty() ? "" : category + ".") + field.getName().toLowerCase(Locale.ENGLISH);
-   }
-
-   public static UniqueProperty fromProperty(Field field, String modid, String category, UniqueProperty.Type type) {
-      String name;
-      if (field.isAnnotationPresent(Name.class)) {
-         name = ((Name)field.getAnnotation(Name.class)).value();
-      } else {
-         name = field.getName();
-      }
-
-      String langKey = getLangKey(field, modid, category);
-      return new UniqueProperty(name, langKey, type);
-   }
 
    public UniqueProperty(String name, String langKey, UniqueProperty.Type type) {
       this.name = name;

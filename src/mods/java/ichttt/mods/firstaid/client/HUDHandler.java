@@ -1,5 +1,6 @@
 package ichttt.mods.firstaid.client;
 
+import net.lax1dude.eaglercraft.v1_8.opengl.RealOpenGLEnums;
 import ichttt.mods.firstaid.FirstAid;
 import ichttt.mods.firstaid.FirstAidConfig;
 import ichttt.mods.firstaid.api.CapabilityExtendedHealthSystem;
@@ -22,8 +23,6 @@ import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.ScaledResolution;
 import net.lax1dude.eaglercraft.v1_8.opengl.GlStateManager;
-import net.minecraft.client.renderer.GlStateManager.DestFactor;
-import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.EnumFacing;
@@ -137,7 +136,7 @@ public class HUDHandler implements ISelectiveResourceReloadListener {
                         GlStateManager.translate((float)xOffset, (float)yOffset, 0.0F);
                         if (enableAlphaBlend) {
                            GlStateManager.enableBlend();
-                           GlStateManager.tryBlendFuncSeparate(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA, SourceFactor.ONE, DestFactor.ZERO);
+                           GlStateManager.tryBlendFuncSeparate(RealOpenGLEnums.GL_SRC_ALPHA, RealOpenGLEnums.GL_ONE_MINUS_SRC_ALPHA, RealOpenGLEnums.GL_ONE, RealOpenGLEnums.GL_ZERO);
                         }
 
                         mc.mcProfiler.endStartSection("render");

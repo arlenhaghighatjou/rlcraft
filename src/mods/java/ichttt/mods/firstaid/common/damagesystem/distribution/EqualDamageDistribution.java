@@ -10,11 +10,8 @@ import ichttt.mods.firstaid.common.EventHandler;
 import ichttt.mods.firstaid.common.network.MessageSyncDamageModel;
 import ichttt.mods.firstaid.common.util.ArmorUtils;
 import ichttt.mods.firstaid.common.util.CommonUtils;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -23,10 +20,8 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EqualDamageDistribution implements IDamageDistribution {
-   private static final Method applyPotionDamageCalculationsMethod = ObfuscationReflectionHelper.findMethod(EntityLivingBase.class, "applyPotionDamageCalculations", Float.TYPE, new Class[]{DamageSource.class, Float.TYPE});
    private final boolean tryNoKill;
    private final float reductionMultiplier;
 
@@ -46,11 +41,7 @@ public class EqualDamageDistribution implements IDamageDistribution {
          }
       }
 
-      try {
-         damage = ((Float)applyPotionDamageCalculationsMethod.invoke(player, source, damage)).floatValue();
-      } catch (InvocationTargetException | IllegalAccessException var10) {
-         FirstAid.LOGGER.error("Could not invoke applyPotionDamageCalculations!", var10);
-      }
+      damage = player.callApplyPotionDamageCalculations(source, damage);
 
       if (damage <= 0.0F) {
          return 0.0F;

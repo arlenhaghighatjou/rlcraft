@@ -1,5 +1,6 @@
 package ichttt.mods.firstaid.client;
 
+import net.minecraftforge.fml.common.eventhandler.EventBus;
 import ichttt.mods.firstaid.FirstAid;
 import ichttt.mods.firstaid.FirstAidConfig;
 import ichttt.mods.firstaid.api.CapabilityExtendedHealthSystem;
@@ -57,7 +58,6 @@ import net.minecraftforge.client.event.RenderLivingEvent.Post;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent.KeyInputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
@@ -73,14 +73,23 @@ public class ClientEventHandler {
    public ClientEventHandler() {
    }
 
-   @SubscribeEvent
+   public static void register(EventBus bus) {
+      bus.register(ModelRegistryEvent.class, ClientEventHandler::registerModels);
+      bus.register(ClientTickEvent.class, ClientEventHandler::clientTick);
+      bus.register(KeyInputEvent.class, ClientEventHandler::onKeyPress);
+      bus.register(Pre.class, ClientEventHandler::preRender);
+      bus.register(net.minecraftforge.client.event.RenderGameOverlayEvent.Post.class, ClientEventHandler::renderOverlay);
+      bus.register(Post.class, ClientEventHandler::onLivingRender);
+      bus.register(ItemTooltipEvent.class, ClientEventHandler::tooltipItems);
+      bus.register(ClientDisconnectionFromServerEvent.class, ClientEventHandler::onDisconnect);
+   }
+
    public static void registerModels(ModelRegistryEvent event) {
       ModelLoader.setCustomModelResourceLocation(FirstAidItems.BANDAGE, 0, new ModelResourceLocation("firstaid:bandage"));
       ModelLoader.setCustomModelResourceLocation(FirstAidItems.PLASTER, 0, new ModelResourceLocation("firstaid:plaster"));
       ModelLoader.setCustomModelResourceLocation(FirstAidItems.MORPHINE, 0, new ModelResourceLocation("firstaid:morphine"));
    }
 
-   @SubscribeEvent
    public static void clientTick(ClientTickEvent event) {
       if (event.phase != Phase.END) {
          Minecraft mc = Minecraft.getMinecraft();
@@ -116,7 +125,6 @@ public class ClientEventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onKeyPress(KeyInputEvent event) {
       if (ClientProxy.showWounds.isPressed()) {
          Minecraft mc = Minecraft.getMinecraft();
@@ -132,7 +140,6 @@ public class ClientEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void preRender(Pre event) {
       ElementType type = event.getType();
       if (type == ElementType.HEALTH) {
@@ -147,7 +154,6 @@ public class ClientEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void renderOverlay(net.minecraftforge.client.event.RenderGameOverlayEvent.Post event) {
       ElementType type = event.getType();
       if (type == ElementType.ALL || type == ElementType.TEXT && FirstAidConfig.overlay.overlayMode != FirstAidConfig.Overlay.OverlayMode.OFF && FirstAidConfig.overlay.pos == FirstAidConfig.Overlay.Position.BOTTOM_LEFT) {
@@ -164,7 +170,6 @@ public class ClientEventHandler {
 
    }
 
-   @SubscribeEvent
    public static void onLivingRender(Post<EntityPlayer> event) {
       Entity entity = event.getEntity();
       if (entity instanceof EntityPlayer) {
@@ -228,7 +233,6 @@ public class ClientEventHandler {
       return startFormatting + " " + net.minecraft.util.text.translation.I18n.translateToLocalFormatted("attribute.modifier." + plusOrTake + ".0", new Object[]{FORMAT.format(val), net.minecraft.util.text.translation.I18n.translateToLocal("attribute.name.generic." + attribute)});
    }
 
-   @SubscribeEvent
    public static void tooltipItems(ItemTooltipEvent event) {
       ItemStack stack = event.getItemStack();
       Item item = stack.getItem();
@@ -333,7 +337,6 @@ public class ClientEventHandler {
       }
    }
 
-   @SubscribeEvent
    public static void onDisconnect(ClientDisconnectionFromServerEvent event) {
       FirstAid.isSynced = false;
 

@@ -87,7 +87,7 @@ public class StandardDamageDistribution extends DamageDistribution {
                List<Pair<EntityEquipmentSlot, EnumPlayerPart[]>> neighbourDistributions = new ArrayList();
 
                for(Entry<EntityEquipmentSlot, List<EnumPlayerPart>> entry : neighbourMapping.entrySet()) {
-                  neighbourDistributions.add(Pair.of(entry.getKey(), ((List)entry.getValue()).toArray(new EnumPlayerPart[0])));
+                  neighbourDistributions.add(Pair.of(entry.getKey(), ((List<EnumPlayerPart>)entry.getValue()).toArray(new EnumPlayerPart[0])));
                }
 
                StandardDamageDistribution remainingDistribution = new StandardDamageDistribution(neighbourDistributions, false, true, blockedParts);

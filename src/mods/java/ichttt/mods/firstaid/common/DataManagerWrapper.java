@@ -42,7 +42,7 @@ public class DataManagerWrapper extends EntityDataManager {
    @Nonnull
    public <T> T get(@Nonnull DataParameter<T> key) {
       if (key == EntityPlayer.ABSORPTION) {
-         this.parent.set(key, ((AbstractPlayerDamageModel)Objects.requireNonNull(this.player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null))).getAbsorption());
+         this.parent.set(EntityPlayer.ABSORPTION, ((AbstractPlayerDamageModel)Objects.requireNonNull(this.player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, (EnumFacing)null))).getAbsorption());
       }
 
       return (T)this.parent.get(key);

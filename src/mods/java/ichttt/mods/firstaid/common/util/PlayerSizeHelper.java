@@ -81,7 +81,7 @@ public class PlayerSizeHelper {
       Entity causingEntity = source.getTrueSource();
       if (causingEntity != null && causingEntity == source.getImmediateSource() && causingEntity instanceof EntityMob) {
          EntityMob mobEntity = (EntityMob)causingEntity;
-         if (mobEntity.getAttackTarget() == player && mobEntity.tasks.taskEntries.stream().filter((entryx) -> {
+         if (mobEntity.getAttackTarget() == player && mobEntity.tasks.taskEntries.stream().filter((entry) -> {
             return entry.using;
          }).anyMatch((prioritizedGoal) -> {
             return prioritizedGoal.action instanceof EntityAIAttackMelee;

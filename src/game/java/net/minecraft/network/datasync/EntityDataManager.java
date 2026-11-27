@@ -96,7 +96,7 @@ public class EntityDataManager
         this.empty = false;
     }
 
-    private <T> EntityDataManager.DataEntry<T> getEntry(DataParameter<T> key)
+    public <T> EntityDataManager.DataEntry<T> getEntry(DataParameter<T> key)
     {
         EntityDataManager.DataEntry<T> dataentry;
 
@@ -281,7 +281,7 @@ public class EntityDataManager
     }
 
     @SideOnly(Side.CLIENT)
-    protected <T> void setEntryValue(EntityDataManager.DataEntry<T> target, EntityDataManager.DataEntry<?> source)
+    public <T> void setEntryValue(EntityDataManager.DataEntry<T> target, EntityDataManager.DataEntry<?> source)
     {
         target.setValue((T)source.getValue());
     }

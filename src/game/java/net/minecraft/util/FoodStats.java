@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FoodStats
 {
+    public boolean healingPlayer;
     private int foodLevel = 20;
     private float foodSaturationLevel = 5.0F;
     private float foodExhaustionLevel;
@@ -55,7 +56,17 @@ public class FoodStats
             if (this.foodTimer >= 10)
             {
                 float f = Math.min(this.foodSaturationLevel, 6.0F);
-                player.heal(f / 6.0F);
+                this.healingPlayer = true;
+
+                try
+                {
+                    player.heal(f / 6.0F);
+                }
+                finally
+                {
+                    this.healingPlayer = false;
+                }
+
                 this.addExhaustion(f);
                 this.foodTimer = 0;
             }
@@ -66,7 +77,17 @@ public class FoodStats
 
             if (this.foodTimer >= 80)
             {
-                player.heal(1.0F);
+                this.healingPlayer = true;
+
+                try
+                {
+                    player.heal(1.0F);
+                }
+                finally
+                {
+                    this.healingPlayer = false;
+                }
+
                 this.addExhaustion(6.0F);
                 this.foodTimer = 0;
             }

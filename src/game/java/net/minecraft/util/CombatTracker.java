@@ -15,14 +15,14 @@ import net.minecraft.util.text.TextComponentTranslation;
 
 public class CombatTracker
 {
-    private final List<CombatEntry> combatEntries = Lists.<CombatEntry>newArrayList();
+    public final List<CombatEntry> combatEntries = Lists.<CombatEntry>newArrayList();
     private final EntityLivingBase fighter;
-    private int lastDamageTime;
-    private int combatStartTime;
-    private int combatEndTime;
-    private boolean inCombat;
-    private boolean takingDamage;
-    private String fallSuffix;
+    public int lastDamageTime;
+    public int combatStartTime;
+    public int combatEndTime;
+    public boolean inCombat;
+    public boolean takingDamage;
+    public String fallSuffix;
 
     public CombatTracker(EntityLivingBase fighterIn)
     {
