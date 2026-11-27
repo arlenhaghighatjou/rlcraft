@@ -3,6 +3,7 @@ package com.charles445.simpledifficulty.compat;
 import java.util.function.Supplier;
 import com.charles445.simpledifficulty.compat.mod.SereneSeasonsModifier;
 import com.charles445.simpledifficulty.compat.mod.BaublesModifier;
+import com.charles445.simpledifficulty.compat.mod.FirstAidCompat;
 import com.charles445.simpledifficulty.compat.mod.AUWModifier;
 import com.charles445.simpledifficulty.compat.mod.AUWDynamicModifier;
 import com.charles445.simpledifficulty.SimpleDifficulty;
@@ -21,6 +22,7 @@ public class CompatController {
       Object auwDynamicModifier = newCompatObject("armorunder", AUWDynamicModifier::new);
       Object auwModifier = newCompatObject("armorunder", AUWModifier::new);
       Object baublesModifier = newCompatObject("baubles", BaublesModifier::new);
+      Object firstAidCompat = newCompatObject("firstaid", FirstAidCompat::new);
       Object sereneSeasonsModifier = newCompatObject("sereneseasons", SereneSeasonsModifier::new);
       if (auwDynamicModifier instanceof ITemperatureDynamicModifier && auwModifier instanceof ITemperatureModifier) {
          SimpleDifficulty.logger.info("Armor Underwear Modifiers Enabled");
